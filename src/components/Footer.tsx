@@ -1,4 +1,3 @@
-
 import { Instagram, Phone, Mail } from 'lucide-react';
 
 const Footer = () => {
@@ -15,10 +14,10 @@ const Footer = () => {
               Transformando o marketing digital através da inteligência artificial para empresas de todos os tamanhos.
             </p>
             <div className="flex space-x-4">
-              <a href="https://www.instagram.com/designoai" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-designoai-blue transition-colors">
+              <a href="https://www.instagram.com/designoai.app" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-designoai-blue transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="https://www.threads.net/@designoai" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-designoai-blue transition-colors">
+              <a href="https://www.threads.com/@designoai.app" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-designoai-blue transition-colors">
                 {/* Custom Threads icon SVG */}
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 2c-2.8 0-5 2.2-5 5v10c0 2.8 2.2 5 5 5s5-2.2 5-5V7c0-2.8-2.2-5-5-5z" />
