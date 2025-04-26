@@ -1,4 +1,5 @@
-import { Facebook, Twitter, Instagram, Linkedin, Phone, Mail, Threads } from 'lucide-react';
+
+import { Instagram, Phone, Mail } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -18,7 +19,13 @@ const Footer = () => {
                 <Instagram size={20} />
               </a>
               <a href="https://www.threads.net/@designoai" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-designoai-blue transition-colors">
-                <Threads size={20} />
+                {/* Custom Threads icon SVG */}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2c-2.8 0-5 2.2-5 5v10c0 2.8 2.2 5 5 5s5-2.2 5-5V7c0-2.8-2.2-5-5-5z" />
+                  <path d="M12 2v20" />
+                  <path d="M17 6h1c1.1 0 2 .9 2 2v8c0 1.1-.9 2-2 2h-1" />
+                  <path d="M7 6H6c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h1" />
+                </svg>
               </a>
             </div>
           </div>
