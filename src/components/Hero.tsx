@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 
 const Hero = () => {
@@ -14,9 +13,6 @@ const Hero = () => {
               Revolucione suas estratégias de marketing e mídias sociais com soluções inteligentes que analisam, criam e otimizam seu conteúdo automaticamente.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-              <Button size="lg" className="bg-designoai-blue hover:bg-designoai-blue/90 text-white">
-                Comece Agora
-              </Button>
               <Button size="lg" variant="outline" className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue-light">
                 Agende uma Demo
               </Button>

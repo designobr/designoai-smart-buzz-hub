@@ -45,7 +45,6 @@ const Navbar = () => {
           {/* Call to Action */}
           <div className="hidden md:flex items-center space-x-4">
             <Button variant="ghost" className="text-designoai-blue-dark hover:text-designoai-blue transition">Login</Button>
-            <Button className="bg-designoai-blue hover:bg-designoai-blue/90 text-white">Experimente Grátis</Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -76,7 +75,6 @@ const Navbar = () => {
           </div>
           <div className="px-5 py-4 border-t border-gray-200">
             <Button variant="ghost" className="w-full text-designoai-blue-dark mb-2">Login</Button>
-            <Button className="w-full bg-designoai-blue hover:bg-designoai-blue/90">Experimente Grátis</Button>
           </div>
         </div>
       )}
@@ -85,3 +83,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
