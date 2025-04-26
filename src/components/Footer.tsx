@@ -1,5 +1,4 @@
-
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, Phone, Mail } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -57,11 +56,11 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-center">
                 <Mail size={18} className="mr-2 text-designoai-blue" />
-                <a href="mailto:contato@designoai.com" className="text-gray-300 hover:text-white transition-colors">contato@designoai.com</a>
+                <a href="mailto:suportedesigno@gmail.com" className="text-gray-300 hover:text-white transition-colors">suportedesigno@gmail.com</a>
               </li>
               <li className="flex items-center">
                 <Phone size={18} className="mr-2 text-designoai-blue" />
-                <a href="tel:+551199999999" className="text-gray-300 hover:text-white transition-colors">+55 11 9999-9999</a>
+                <a href="https://wa.me/5511947968158" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">+55 11 94796-8158</a>
               </li>
             </ul>
             <div className="mt-6">
