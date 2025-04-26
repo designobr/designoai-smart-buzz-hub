@@ -1,4 +1,4 @@
-import { Facebook, Twitter, Instagram, Linkedin, Phone, Mail } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, Phone, Mail, Threads } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -14,17 +14,11 @@ const Footer = () => {
               Transformando o marketing digital através da inteligência artificial para empresas de todos os tamanhos.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-300 hover:text-designoai-blue transition-colors">
-                <Facebook size={20} />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-designoai-blue transition-colors">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-designoai-blue transition-colors">
+              <a href="https://www.instagram.com/designoai" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-designoai-blue transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-gray-300 hover:text-designoai-blue transition-colors">
-                <Linkedin size={20} />
+              <a href="https://www.threads.net/@designoai" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-designoai-blue transition-colors">
+                <Threads size={20} />
               </a>
             </div>
           </div>
