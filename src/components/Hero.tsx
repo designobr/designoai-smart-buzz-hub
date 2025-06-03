@@ -14,7 +14,7 @@ const Hero = () => {
         <div className="flex flex-col lg:flex-row items-center">
           <div className="lg:w-1/2 lg:pr-12 mb-10 lg:mb-0">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-designoai-blue-dark leading-tight mb-6 animate-fade-in">
-              Marketing Digital <br/> Potencializado por IA
+              Sua marca em <br/> todos os lugares
             </h1>
             <p className="text-lg md:text-xl text-gray-600 mb-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
               Revolucione suas estratégias de marketing e mídias sociais com soluções inteligentes que analisam, criam e otimizam seu conteúdo automaticamente.
@@ -26,7 +26,7 @@ const Hero = () => {
                 className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue-light"
                 onClick={handleDemoClick}
               >
-                Agende uma Demo
+                Agende uma Conversa
               </Button>
             </div>
           </div>
