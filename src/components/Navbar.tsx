@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,18 +29,20 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <div className="flex items-center">
-            <a href="/" className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2">
               <img src="/star-icon.svg" alt="DesignoAI Logo" className="w-8 h-8" />
               <span className="text-designoai-blue-dark text-xl font-bold">DesignoAI</span>
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#services" className="text-sm font-medium text-designoai-blue-dark hover:text-designoai-blue transition">Serviços</a>
+            <Link to="/services" className="text-sm font-medium text-designoai-blue-dark hover:text-designoai-blue transition">Serviços</Link>
             <a href="#features" className="text-sm font-medium text-designoai-blue-dark hover:text-designoai-blue transition">Recursos</a>
             <a href="#how-it-works" className="text-sm font-medium text-designoai-blue-dark hover:text-designoai-blue transition">Como Funciona</a>
-            <a href="#testimonials" className="text-sm font-medium text-designoai-blue-dark hover:text-designoai-blue transition">Depoimentos</a>
+            <a href="#pricing" className="text-sm font-medium text-designoai-blue-dark hover:text-designoai-blue transition">Preços</a>
+            <a href="#calculator" className="text-sm font-medium text-designoai-blue-dark hover:text-designoai-blue transition">Calculadora</a>
+            <a href="#contact" className="text-sm font-medium text-designoai-blue-dark hover:text-designoai-blue transition">Contato</a>
           </nav>
 
           {/* Call to Action */}
@@ -68,10 +71,12 @@ const Navbar = () => {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-t">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a href="#services" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Serviços</a>
+            <Link to="/services" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Serviços</Link>
             <a href="#features" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Recursos</a>
             <a href="#how-it-works" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Como Funciona</a>
-            <a href="#testimonials" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Depoimentos</a>
+            <a href="#pricing" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Preços</a>
+            <a href="#calculator" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Calculadora</a>
+            <a href="#contact" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Contato</a>
           </div>
           <div className="px-5 py-4 border-t border-gray-200">
             <Button variant="ghost" className="w-full text-designoai-blue-dark mb-2">Login</Button>
@@ -83,4 +88,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
