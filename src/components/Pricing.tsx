@@ -1,7 +1,7 @@
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check, Star, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Pricing = () => {
   const digitalFeatures = [
@@ -25,6 +25,20 @@ const Pricing = () => {
     "Assistente por WhatsApp com IA",
     "Diagnóstico de marketing automático"
   ];
+
+  const handleContractClick = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleCalculatorClick = () => {
+    const calculatorSection = document.getElementById('calculator');
+    if (calculatorSection) {
+      calculatorSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <section id="pricing" className="py-16 md:py-24 bg-gray-50">
@@ -58,6 +72,7 @@ const Pricing = () => {
               </CardDescription>
             </CardHeader>
 
+            
             <CardContent className="grid md:grid-cols-3 gap-8 pb-8">
               <div>
                 <h3 className="text-xl font-semibold text-designoai-blue-dark mb-4 flex items-center">
@@ -113,13 +128,18 @@ const Pricing = () => {
                   </p>
                 </div>
                 <div className="flex space-x-3">
-                  <Button className="bg-designoai-blue hover:bg-designoai-blue-dark">
+                  <Button 
+                    className="bg-designoai-blue hover:bg-designoai-blue-dark"
+                    onClick={handleContractClick}
+                  >
                     Contratar Agora
                   </Button>
-                  <Button variant="outline" className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue-light">
-                    Ver Detalhes
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
+                  <Link to="/services">
+                    <Button variant="outline" className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue-light">
+                      Ver Detalhes
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -130,7 +150,11 @@ const Pricing = () => {
           <p className="text-gray-600 mb-4">
             Quer personalizar seu pacote? Temos adicionais disponíveis!
           </p>
-          <Button variant="ghost" className="text-designoai-blue hover:text-designoai-blue-dark">
+          <Button 
+            variant="ghost" 
+            className="text-designoai-blue hover:text-designoai-blue-dark"
+            onClick={handleCalculatorClick}
+          >
             Ver Calculadora de Preços →
           </Button>
         </div>

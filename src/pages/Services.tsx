@@ -17,6 +17,18 @@ const Services = () => {
     { name: "Google Meu Negócio otimizado", price: "R$ 200" }
   ];
 
+  const handleConsultationClick = () => {
+    window.open('https://wa.me/5511999999999?text=Olá! Gostaria de agendar uma consultoria gratuita sobre o Plano Fusion.', '_blank');
+  };
+
+  const handleCallClick = () => {
+    window.open('tel:+5511999999999', '_self');
+  };
+
+  const handleEmailClick = () => {
+    window.open('mailto:contato@designoai.com?subject=Interesse no Plano Fusion', '_self');
+  };
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -35,7 +47,11 @@ const Services = () => {
               <Star className="w-8 h-8 text-designoai-blue mr-2" />
               <span className="text-3xl font-bold text-designoai-blue">R$ 4.000/mês</span>
             </div>
-            <Button size="lg" className="bg-designoai-blue hover:bg-designoai-blue-dark">
+            <Button 
+              size="lg" 
+              className="bg-designoai-blue hover:bg-designoai-blue-dark"
+              onClick={handleConsultationClick}
+            >
               Agende sua Consultoria Gratuita
             </Button>
           </div>
@@ -184,11 +200,20 @@ const Services = () => {
               Entre em contato conosco e descubra como podemos impulsionar sua empresa
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-              <Button size="lg" className="bg-designoai-blue hover:bg-designoai-blue-dark">
+              <Button 
+                size="lg" 
+                className="bg-designoai-blue hover:bg-designoai-blue-dark"
+                onClick={handleCallClick}
+              >
                 <Phone className="w-4 h-4 mr-2" />
                 Ligar Agora
               </Button>
-              <Button size="lg" variant="outline" className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue-light">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue-light"
+                onClick={handleEmailClick}
+              >
                 <Mail className="w-4 h-4 mr-2" />
                 Enviar E-mail
               </Button>

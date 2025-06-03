@@ -2,6 +2,17 @@
 import { Button } from '@/components/ui/button';
 
 const CTA = () => {
+  const handleStartClick = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleSpecialistClick = () => {
+    window.open('https://wa.me/5511999999999?text=Olá! Gostaria de falar com um especialista sobre o Plano Fusion.', '_blank');
+  };
+
   return (
     <section className="py-16 md:py-24 bg-designoai-blue-light">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,10 +35,19 @@ const CTA = () => {
               Comece hoje mesmo e veja resultados em 30 dias ou seu dinheiro de volta.
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-              <Button size="lg" className="bg-white text-designoai-blue hover:bg-gray-100 text-lg">
+              <Button 
+                size="lg" 
+                className="bg-white text-designoai-blue hover:bg-gray-100 text-lg"
+                onClick={handleStartClick}
+              >
                 Comece Gratuitamente
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 text-lg">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-white text-white hover:bg-white/10 text-lg"
+                onClick={handleSpecialistClick}
+              >
                 Fale com um Especialista
               </Button>
             </div>

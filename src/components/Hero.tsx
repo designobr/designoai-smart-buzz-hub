@@ -1,6 +1,13 @@
 import { Button } from '@/components/ui/button';
 
 const Hero = () => {
+  const handleDemoClick = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="pt-20 md:pt-32 pb-16 md:pb-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,7 +20,12 @@ const Hero = () => {
               Revolucione suas estratégias de marketing e mídias sociais com soluções inteligentes que analisam, criam e otimizam seu conteúdo automaticamente.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-              <Button size="lg" variant="outline" className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue-light">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue-light"
+                onClick={handleDemoClick}
+              >
                 Agende uma Demo
               </Button>
             </div>
