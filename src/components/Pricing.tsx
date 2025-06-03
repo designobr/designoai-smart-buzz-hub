@@ -31,7 +31,7 @@ const Pricing = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-designoai-blue-dark mb-4">
-            Plano Híbrido DesignoAI
+            Plano Fusion
           </h2>
           <p className="text-xl text-gray-600">
             Solução completa para empresas que querem unir presença física e digital
@@ -46,7 +46,7 @@ const Pricing = () => {
               <div className="flex items-center justify-center mb-4">
                 <Star className="w-8 h-8 text-designoai-blue mr-2" />
                 <CardTitle className="text-3xl font-bold text-designoai-blue-dark">
-                  Pacote Completo
+                  Fusion
                 </CardTitle>
               </div>
               <div className="flex items-center justify-center mb-4">
