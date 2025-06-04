@@ -5,6 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Phone, Mail, MessageCircle, Send } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -15,11 +17,46 @@ const ContactForm = () => {
     budget: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aqui você implementaria o envio do formulário
-    console.log('Formulário enviado:', formData);
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase
+        .from('leads')
+        .insert([formData]);
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Solicitação enviada com sucesso!",
+        description: "Entraremos em contato em até 24 horas.",
+      });
+
+      // Limpar formulário
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        budget: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error);
+      toast({
+        title: "Erro ao enviar solicitação",
+        description: "Tente novamente ou entre em contato pelo WhatsApp.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -138,9 +175,13 @@ const ContactForm = () => {
                     />
                   </div>
 
-                  <Button type="submit" className="w-full bg-designoai-blue hover:bg-designoai-blue-dark">
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-designoai-blue hover:bg-designoai-blue-dark"
+                    disabled={isSubmitting}
+                  >
                     <Send className="w-4 h-4 mr-2" />
-                    Enviar Solicitação
+                    {isSubmitting ? 'Enviando...' : 'Enviar Solicitação'}
                   </Button>
                 </form>
               </CardContent>

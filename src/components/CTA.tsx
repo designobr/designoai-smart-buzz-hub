@@ -10,7 +10,7 @@ const CTA = () => {
   };
 
   const handleSpecialistClick = () => {
-    window.open('https://wa.me/5511999999999?text=Olá! Gostaria de falar com um especialista sobre o Plano Fusion.', '_blank');
+    window.open('https://wa.me/5511947968158?text=Olá! Gostaria de falar com um especialista sobre o Plano Fusion.', '_blank');
   };
 
   return (
@@ -32,7 +32,7 @@ const CTA = () => {
               Pronto para revolucionar seu marketing digital?
             </h2>
             <p className="text-xl text-white/90 mb-8">
-              Comece hoje mesmo e veja resultados em 30 dias ou seu dinheiro de volta.
+              Começe agora e conte com suporte total da nossa equipe desde o primeiro dia
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
               <Button 
@@ -40,7 +40,7 @@ const CTA = () => {
                 className="bg-white text-designoai-blue hover:bg-gray-100 text-lg"
                 onClick={handleStartClick}
               >
-                Comece Gratuitamente
+                Começe Agora
               </Button>
               <Button 
                 size="lg" 

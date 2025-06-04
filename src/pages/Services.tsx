@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Check, Star, Phone, Mail, ArrowRight } from 'lucide-react';
+import { Check, Star } from 'lucide-react';
 
 const Services = () => {
   const additionalServices = [
@@ -18,15 +18,7 @@ const Services = () => {
   ];
 
   const handleConsultationClick = () => {
-    window.open('https://wa.me/5511999999999?text=Olá! Gostaria de agendar uma consultoria gratuita sobre o Plano Fusion.', '_blank');
-  };
-
-  const handleCallClick = () => {
-    window.open('tel:+5511999999999', '_self');
-  };
-
-  const handleEmailClick = () => {
-    window.open('mailto:contato@designoai.com?subject=Interesse no Plano Fusion', '_self');
+    window.open('https://wa.me/5511947968158?text=Olá! Gostaria de agendar uma consultoria gratuita sobre o Plano Fusion.', '_blank');
   };
 
   return (
@@ -199,25 +191,13 @@ const Services = () => {
             <p className="text-xl text-gray-600 mb-8">
               Entre em contato conosco e descubra como podemos impulsionar sua empresa
             </p>
-            <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-              <Button 
-                size="lg" 
-                className="bg-designoai-blue hover:bg-designoai-blue-dark"
-                onClick={handleCallClick}
-              >
-                <Phone className="w-4 h-4 mr-2" />
-                Ligar Agora
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue-light"
-                onClick={handleEmailClick}
-              >
-                <Mail className="w-4 h-4 mr-2" />
-                Enviar E-mail
-              </Button>
-            </div>
+            <Button 
+              size="lg" 
+              className="bg-designoai-blue hover:bg-designoai-blue-dark"
+              onClick={handleConsultationClick}
+            >
+              Fale Conosco no WhatsApp
+            </Button>
           </div>
         </div>
       </section>

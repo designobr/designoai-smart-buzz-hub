@@ -1,7 +1,8 @@
+
 import { Button } from '@/components/ui/button';
 
 const Hero = () => {
-  const handleDemoClick = () => {
+  const handleCallClick = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
@@ -24,7 +25,7 @@ const Hero = () => {
                 size="lg" 
                 variant="outline" 
                 className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue-light"
-                onClick={handleDemoClick}
+                onClick={handleCallClick}
               >
                 Agende uma Conversa
               </Button>
