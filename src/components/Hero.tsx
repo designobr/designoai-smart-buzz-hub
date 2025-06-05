@@ -14,6 +14,13 @@ const Hero = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center">
           <div className="lg:w-1/2 lg:pr-12 mb-10 lg:mb-0">
+            <div className="mb-6 animate-fade-in">
+              <img 
+                src="/lovable-uploads/f3d9e115-20f9-4e21-8131-b13ad5504d5e.png" 
+                alt="DesignoAI Logo" 
+                className="h-16 md:h-20 w-auto"
+              />
+            </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-designoai-blue-dark leading-tight mb-6 animate-fade-in">
               Sua marca em <br/> todos os lugares
             </h1>
