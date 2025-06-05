@@ -2,46 +2,27 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check, Star, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
 const Pricing = () => {
-  const digitalFeatures = [
-    "Gestão de Redes Sociais (12 posts/mês)",
-    "Stories diários programados",
-    "Design Gráfico completo",
-    "Copywriting otimizado",
-    "Tráfego Pago (Instagram/Facebook)",
-    "Site One Page Responsivo"
-  ];
-
-  const physicalFeatures = [
-    "Cartão de Visita Digital com QR Code",
-    "1 Sessão de Fotos Presencial",
-    "1 Vídeo Institucional",
-    "Material físico sob demanda"
-  ];
-
-  const aiFeatures = [
-    "Relatórios mensais de desempenho",
-    "Assistente por WhatsApp com IA",
-    "Diagnóstico de marketing automático"
-  ];
-
+  const digitalFeatures = ["Gestão de Redes Sociais (12 posts/mês)", "Stories diários programados", "Design Gráfico completo", "Copywriting otimizado", "Tráfego Pago (Instagram/Facebook)", "Site One Page Responsivo"];
+  const physicalFeatures = ["Cartão de Visita Digital com QR Code", "1 Sessão de Fotos Presencial", "1 Vídeo Institucional", "Material físico sob demanda"];
+  const aiFeatures = ["Relatórios mensais de desempenho", "Assistente por WhatsApp com IA", "Diagnóstico de marketing automático"];
   const handleContractClick = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+      contactSection.scrollIntoView({
+        behavior: 'smooth'
+      });
     }
   };
-
   const handleCalculatorClick = () => {
     const calculatorSection = document.getElementById('calculator');
     if (calculatorSection) {
-      calculatorSection.scrollIntoView({ behavior: 'smooth' });
+      calculatorSection.scrollIntoView({
+        behavior: 'smooth'
+      });
     }
   };
-
-  return (
-    <section id="pricing" className="py-16 md:py-24 bg-gray-50">
+  return <section id="pricing" className="py-16 md:py-24 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-designoai-blue-dark mb-4">
@@ -79,12 +60,10 @@ const Pricing = () => {
                   📱 Digital
                 </h3>
                 <ul className="space-y-3">
-                  {digitalFeatures.map((feature, index) => (
-                    <li key={index} className="flex items-start">
+                  {digitalFeatures.map((feature, index) => <li key={index} className="flex items-start">
                       <Check className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
                       <span className="text-sm text-gray-700">{feature}</span>
-                    </li>
-                  ))}
+                    </li>)}
                 </ul>
               </div>
 
@@ -93,12 +72,10 @@ const Pricing = () => {
                   🧾 Físico
                 </h3>
                 <ul className="space-y-3">
-                  {physicalFeatures.map((feature, index) => (
-                    <li key={index} className="flex items-start">
+                  {physicalFeatures.map((feature, index) => <li key={index} className="flex items-start">
                       <Check className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
                       <span className="text-sm text-gray-700">{feature}</span>
-                    </li>
-                  ))}
+                    </li>)}
                 </ul>
               </div>
 
@@ -107,12 +84,10 @@ const Pricing = () => {
                   🤖 IA
                 </h3>
                 <ul className="space-y-3">
-                  {aiFeatures.map((feature, index) => (
-                    <li key={index} className="flex items-start">
+                  {aiFeatures.map((feature, index) => <li key={index} className="flex items-start">
                       <Check className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
                       <span className="text-sm text-gray-700">{feature}</span>
-                    </li>
-                  ))}
+                    </li>)}
                 </ul>
               </div>
             </CardContent>
@@ -123,15 +98,10 @@ const Pricing = () => {
                   <p className="text-designoai-blue-dark font-semibold mb-1">
                     🔗 Vantagens Exclusivas:
                   </p>
-                  <p className="text-sm text-gray-700">
-                    Atendimento humanizado + IA • Suporte contínuo • Pagamento em 2x sem juros
-                  </p>
+                  <p className="text-sm text-gray-700">Atendimento humanizado + IA • Suporte contínuo </p>
                 </div>
                 <div className="flex space-x-3">
-                  <Button 
-                    className="bg-designoai-blue hover:bg-designoai-blue-dark"
-                    onClick={handleContractClick}
-                  >
+                  <Button className="bg-designoai-blue hover:bg-designoai-blue-dark" onClick={handleContractClick}>
                     Contratar Agora
                   </Button>
                   <Link to="/services">
@@ -150,17 +120,11 @@ const Pricing = () => {
           <p className="text-gray-600 mb-4">
             Quer personalizar seu pacote? Temos adicionais disponíveis!
           </p>
-          <Button 
-            variant="ghost" 
-            className="text-designoai-blue hover:text-designoai-blue-dark"
-            onClick={handleCalculatorClick}
-          >
+          <Button variant="ghost" className="text-designoai-blue hover:text-designoai-blue-dark" onClick={handleCalculatorClick}>
             Ver Calculadora de Preços →
           </Button>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Pricing;
