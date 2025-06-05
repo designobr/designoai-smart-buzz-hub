@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, Star } from 'lucide-react';
 const Hero = () => {
@@ -141,7 +142,6 @@ const Hero = () => {
                     <div className="w-3 h-3 rounded-full bg-yellow-400 shadow-lg"></div>
                     <div className="w-3 h-3 rounded-full bg-green-400 shadow-lg"></div>
                   </div>
-                  <div className="text-white/80 text-sm font-medium">DesignoAI Dashboard</div>
                 </div>
                 
                 <div className="p-8">
