@@ -60,7 +60,7 @@ const Hero = () => {
               <div className="mb-8 animate-fade-in">
                 <div className="relative inline-block group">
                   <img 
-                    src="/lovable-uploads/f3d9e115-20f9-4e21-8131-b13ad5504d5e.png" 
+                    src="/lovable-uploads/643dfebb-85f6-4868-920c-35c1901aaf13.png" 
                     alt="DesignoAI Logo" 
                     className="w-[400px] md:w-[480px] lg:w-[560px] h-auto object-contain mx-auto lg:mx-0 drop-shadow-2xl transform group-hover:scale-105 transition-all duration-700" 
                   />
