@@ -1,6 +1,6 @@
-
 import { Star, Zap, BarChart3, PenTool, Share2, Brain } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
 
 const servicesData = [
   {
@@ -50,13 +50,14 @@ const servicesData = [
 const Services = () => {
   return (
     <section id="services" className="py-20 md:py-28 bg-gradient-to-b from-white via-slate-50/50 to-gray-50 relative overflow-hidden">
-      {/* Enhanced background elements */}
+      {/* ... keep existing code (background elements) */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-designoai-blue/5 to-purple-500/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-indigo-500/5 to-designoai-blue/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* ... keep existing code (header section) */}
         <div className="text-center max-w-4xl mx-auto mb-20">
           <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-designoai-blue-light to-purple-50 rounded-full text-designoai-blue font-medium mb-6 shadow-lg border border-designoai-blue/20">
             <span className="w-2 h-2 bg-designoai-blue rounded-full mr-2 animate-pulse"></span>
@@ -76,16 +77,14 @@ const Services = () => {
           </p>
         </div>
 
+        {/* ... keep existing code (services grid) */}
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {servicesData.map((service, index) => (
             <Card 
               key={index} 
               className="group border-0 bg-white/90 backdrop-blur-sm hover:bg-white shadow-lg hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 relative overflow-hidden"
             >
-              {/* Enhanced gradient background on hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${service.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700`}></div>
-              
-              {/* Subtle border gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-slate-200/50 via-transparent to-slate-200/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               <CardHeader className="relative z-10 pb-4">
@@ -94,7 +93,6 @@ const Services = () => {
                     {service.icon}
                     <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} rounded-2xl blur opacity-50 group-hover:opacity-75 transition-opacity duration-500`}></div>
                   </div>
-                  {/* Floating particles */}
                   <div className="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity duration-300"></div>
                 </div>
                 <CardTitle className="text-xl font-bold text-slate-800 group-hover:text-designoai-blue transition-colors duration-500">
@@ -106,7 +104,6 @@ const Services = () => {
                   {service.description}
                 </CardDescription>
                 
-                {/* Enhanced arrow indicator */}
                 <div className="mt-6 inline-flex items-center text-designoai-blue font-medium opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
                   <span className="relative">
                     Saiba mais
@@ -121,17 +118,19 @@ const Services = () => {
           ))}
         </div>
 
-        {/* Enhanced bottom CTA */}
+        {/* Enhanced bottom CTA with correct link */}
         <div className="text-center mt-20">
           <div className="relative inline-block">
             <div className="absolute -inset-1 bg-gradient-to-r from-designoai-blue via-purple-600 to-indigo-600 rounded-full blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
-            <div className="relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-designoai-blue via-purple-600 to-indigo-600 text-white rounded-full font-medium hover:shadow-xl transition-all duration-500 cursor-pointer group transform hover:-translate-y-1">
-              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
-              Ver todos os recursos
-              <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
+            <Link to="/recursos">
+              <div className="relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-designoai-blue via-purple-600 to-indigo-600 text-white rounded-full font-medium hover:shadow-xl transition-all duration-500 cursor-pointer group transform hover:-translate-y-1">
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
+                Ver todos os recursos
+                <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </Link>
           </div>
         </div>
       </div>
