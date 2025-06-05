@@ -28,7 +28,7 @@ const Hero = () => {
                 <img 
                   src="/lovable-uploads/f3d9e115-20f9-4e21-8131-b13ad5504d5e.png" 
                   alt="DesignoAI Logo" 
-                  className="w-80 h-auto object-contain mx-auto lg:mx-0 drop-shadow-2xl" 
+                  className="w-96 md:w-[28rem] lg:w-[32rem] h-auto object-contain mx-auto lg:mx-0 drop-shadow-2xl" 
                 />
                 <div className="absolute -inset-4 bg-gradient-to-r from-designoai-blue/20 to-transparent rounded-full blur-2xl -z-10"></div>
               </div>
