@@ -106,7 +106,7 @@ const PriceCalculator = () => {
               <CardContent>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center pb-4 border-b">
-                    <span className="font-medium text-gray-800">Pacote Base DesignoAI</span>
+                    <span className="font-medium text-gray-800">Pacote Base DesignoAI Fusion</span>
                     <span className="text-xl font-bold text-designoai-blue">R$ {basePrice.toLocaleString()}</span>
                   </div>
                   
@@ -127,9 +127,7 @@ const PriceCalculator = () => {
                         R$ {calculateTotal().toLocaleString()}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-600 mt-2">
-                      Ou 2x de R$ {(calculateTotal() / 2).toLocaleString()} sem juros
-                    </p>
+                    
                   </div>
                 </div>
               </CardContent>
