@@ -9,42 +9,48 @@ const servicesData = [
     title: "Criação de Conteúdo",
     description: "Textos, imagens e gráficos gerados por IA para suas campanhas de marketing digital.",
     gradient: "from-blue-500 via-blue-600 to-cyan-500",
-    bgGradient: "from-blue-50 to-cyan-50"
+    bgGradient: "from-blue-50 to-cyan-50",
+    link: "/criacao-conteudo"
   },
   {
     icon: <BarChart3 className="h-10 w-10 text-white" />,
     title: "Análise de Dados",
     description: "Insights precisos e em tempo real sobre o desempenho de suas estratégias de marketing.",
     gradient: "from-purple-500 via-purple-600 to-pink-500",
-    bgGradient: "from-purple-50 to-pink-50"
+    bgGradient: "from-purple-50 to-pink-50",
+    link: "/analyse-dados"
   },
   {
     icon: <PenTool className="h-10 w-10 text-white" />,
     title: "Design Automatizado",
     description: "Criação de designs profissionais para suas publicações em redes sociais.",
     gradient: "from-green-500 via-green-600 to-emerald-500",
-    bgGradient: "from-green-50 to-emerald-50"
+    bgGradient: "from-green-50 to-emerald-50",
+    link: "/design-automatizado"
   },
   {
     icon: <Share2 className="h-10 w-10 text-white" />,
     title: "Gestão de Redes Sociais",
     description: "Automação inteligente para postagens, engajamento e monitoramento de suas redes.",
     gradient: "from-orange-500 via-orange-600 to-red-500",
-    bgGradient: "from-orange-50 to-red-50"
+    bgGradient: "from-orange-50 to-red-50",
+    link: "/gestao-redes-sociais"
   },
   {
     icon: <Zap className="h-10 w-10 text-white" />,
     title: "SEO Inteligente",
     description: "Otimização automática para melhorar seu posicionamento nos mecanismos de busca.",
     gradient: "from-yellow-500 via-yellow-600 to-orange-500",
-    bgGradient: "from-yellow-50 to-orange-50"
+    bgGradient: "from-yellow-50 to-orange-50",
+    link: "/seo-inteligente"
   },
   {
     icon: <Brain className="h-10 w-10 text-white" />,
     title: "Estratégias Personalizadas",
     description: "Recomendações baseadas em IA para maximizar seus resultados de marketing.",
     gradient: "from-indigo-500 via-indigo-600 to-purple-500",
-    bgGradient: "from-indigo-50 to-purple-50"
+    bgGradient: "from-indigo-50 to-purple-50",
+    link: "/estrategias-personalizadas"
   }
 ];
 
@@ -78,7 +84,7 @@ const Services = () => {
           </p>
         </div>
 
-        {/* ... keep existing code (services grid) */}
+        {/* Services grid with updated links */}
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {servicesData.map((service, index) => (
             <Card 
@@ -105,7 +111,7 @@ const Services = () => {
                   {service.description}
                 </CardDescription>
                 
-                <div className="mt-6 inline-flex items-center text-designoai-blue font-medium opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                <Link to={service.link} className="mt-6 inline-flex items-center text-designoai-blue font-medium opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
                   <span className="relative">
                     Saiba mais
                     <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-designoai-blue to-purple-600 group-hover:w-full transition-all duration-300"></div>
@@ -113,7 +119,7 @@ const Services = () => {
                   <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                </div>
+                </Link>
               </CardContent>
             </Card>
           ))}

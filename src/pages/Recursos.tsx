@@ -1,62 +1,74 @@
+
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles, Star, CheckCircle, Zap, BarChart3, PenTool, Share2, Brain, MessageCircle } from 'lucide-react';
+
 const Recursos = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   const features = [{
     title: "Geração de Conteúdo com IA",
     description: "Crie posts, artigos, legendas e materiais visuais automaticamente, adaptados ao seu nicho e público-alvo.",
     icon: <Sparkles className="w-8 h-8 text-white" />,
     gradient: "from-blue-500 via-blue-600 to-cyan-500",
-    bgGradient: "from-blue-50 to-cyan-50"
+    bgGradient: "from-blue-50 to-cyan-50",
+    link: "/criacao-conteudo"
   }, {
     title: "Análise de Concorrência",
     description: "Monitore e analise as estratégias dos seus concorrentes para se manter sempre à frente no mercado.",
     icon: <BarChart3 className="w-8 h-8 text-white" />,
     gradient: "from-purple-500 via-purple-600 to-pink-500",
-    bgGradient: "from-purple-50 to-pink-50"
+    bgGradient: "from-purple-50 to-pink-50",
+    link: "/analyse-dados"
   }, {
     title: "Agendamento Automático",
     description: "Programe suas publicações nos melhores horários para maximizar o engajamento e alcance.",
     icon: <Zap className="w-8 h-8 text-white" />,
     gradient: "from-green-500 via-green-600 to-emerald-500",
-    bgGradient: "from-green-50 to-emerald-50"
+    bgGradient: "from-green-50 to-emerald-50",
+    link: "/gestao-redes-sociais"
   }, {
     title: "Dashboard Analytics",
     description: "Acompanhe métricas importantes em tempo real com relatórios detalhados e insights acionáveis.",
     icon: <BarChart3 className="w-8 h-8 text-white" />,
     gradient: "from-orange-500 via-orange-600 to-red-500",
-    bgGradient: "from-orange-50 to-red-50"
+    bgGradient: "from-orange-50 to-red-50",
+    link: "/analyse-dados"
   }, {
     title: "Otimização de SEO",
     description: "Melhore automaticamente o SEO do seu conteúdo para aumentar a visibilidade online.",
     icon: <Star className="w-8 h-8 text-white" />,
     gradient: "from-yellow-500 via-yellow-600 to-orange-500",
-    bgGradient: "from-yellow-50 to-orange-50"
+    bgGradient: "from-yellow-50 to-orange-50",
+    link: "/seo-inteligente"
   }, {
     title: "Integração Multi-plataforma",
     description: "Conecte todas as suas redes sociais e canais de marketing em uma única plataforma.",
     icon: <Share2 className="w-8 h-8 text-white" />,
     gradient: "from-indigo-500 via-indigo-600 to-purple-500",
-    bgGradient: "from-indigo-50 to-purple-50"
+    bgGradient: "from-indigo-50 to-purple-50",
+    link: "/gestao-redes-sociais"
   }, {
     title: "Personalização Avançada",
     description: "Adapte o tom, estilo e formato do conteúdo para diferentes segmentos do seu público.",
     icon: <PenTool className="w-8 h-8 text-white" />,
     gradient: "from-pink-500 via-pink-600 to-rose-500",
-    bgGradient: "from-pink-50 to-rose-50"
+    bgGradient: "from-pink-50 to-rose-50",
+    link: "/estrategias-personalizadas"
   }, {
     title: "Suporte 24/7",
     description: "Nossa equipe está sempre disponível para ajudar você a maximizar seus resultados.",
     icon: <MessageCircle className="w-8 h-8 text-white" />,
     gradient: "from-teal-500 via-teal-600 to-cyan-500",
-    bgGradient: "from-teal-50 to-cyan-50"
+    bgGradient: "from-teal-50 to-cyan-50",
+    link: "/#contact"
   }];
+
   return <div className="min-h-screen">
       <Navbar />
       
@@ -150,13 +162,13 @@ const Recursos = () => {
                   </p>
                   
                   {/* Enhanced arrow indicator */}
-                  <div className="mt-6 inline-flex items-center text-designoai-blue font-medium opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                  <Link to={feature.link} className="mt-6 inline-flex items-center text-designoai-blue font-medium opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
                     <span className="relative">
                       Saiba mais
                       <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-designoai-blue to-purple-600 group-hover:w-full transition-all duration-300"></div>
                     </span>
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                  </div>
+                  </Link>
                 </div>
               </div>)}
           </div>
@@ -165,7 +177,6 @@ const Recursos = () => {
 
       {/* Enhanced CTA Section */}
       <section className="py-20 md:py-28 bg-gradient-to-br from-designoai-blue via-purple-600 to-indigo-600 relative overflow-hidden">
-        {/* Enhanced background pattern */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/0"></div>
         <div className="absolute top-0 left-0 w-full h-full opacity-10">
           <div className="absolute top-10 left-10">
@@ -215,4 +226,5 @@ const Recursos = () => {
       <Footer />
     </div>;
 };
+
 export default Recursos;
