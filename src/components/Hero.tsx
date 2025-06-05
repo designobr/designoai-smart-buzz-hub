@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, Star } from 'lucide-react';
 
@@ -71,7 +72,7 @@ const Hero = () => {
               <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-6 animate-fade-in text-white" style={{
                 animationDelay: '0.2s'
               }}>
-                <span className="block bg-gradient-to-r from-yellow-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent mb-2">
+                <span className="block bg-gradient-to-r from-yellow-400 via-white to-yellow-300 bg-clip-text text-transparent mb-2">
                   Sua marca no futuro
                 </span>
                 <span className="relative block">
