@@ -39,9 +39,7 @@ const Pricing = () => {
           {/* Pacote Start */}
           <Card className="relative overflow-hidden shadow-lg border border-gray-200 hover:shadow-xl transition-shadow">
             <CardHeader className="text-center pb-6 pt-6">
-              <CardTitle className="text-2xl font-bold text-designoai-blue-dark">
-                Pacote Start
-              </CardTitle>
+              <CardTitle className="text-2xl font-bold text-designoai-blue-dark">Start</CardTitle>
               <div className="flex items-center justify-center mb-4">
                 <span className="text-3xl font-bold text-designoai-blue">R$ 1.200</span>
                 <span className="text-gray-600 ml-2">/mês</span>
