@@ -5,28 +5,43 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Check, Star, Sparkles, ArrowRight, Camera, Smartphone, BarChart3, Brain, Globe, Users } from 'lucide-react';
-
 const Services = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const additionalServices = [
-    { name: "Impressão de 100 cartões de visita", price: "R$ 80 a R$ 120", icon: "🎴" },
-    { name: "Catálogo digital interativo", price: "R$ 300", icon: "📱" },
-    { name: "Vídeos Reels (extra)", price: "R$ 80 a R$ 150 cada", icon: "🎬" },
-    { name: "Landing Page para campanha específica", price: "R$ 400", icon: "🌐" },
-    { name: "Consultoria estratégica mensal", price: "R$ 250", icon: "💡" },
-    { name: "Criação de e-mail profissional", price: "R$ 100 (setup)", icon: "📧" },
-    { name: "Google Meu Negócio otimizado", price: "R$ 200", icon: "🗺️" }
-  ];
-
+  const additionalServices = [{
+    name: "Impressão de 100 cartões de visita",
+    price: "R$ 80 a R$ 120",
+    icon: "🎴"
+  }, {
+    name: "Catálogo digital interativo",
+    price: "R$ 300",
+    icon: "📱"
+  }, {
+    name: "Vídeos Reels (extra)",
+    price: "R$ 80 a R$ 150 cada",
+    icon: "🎬"
+  }, {
+    name: "Landing Page para campanha específica",
+    price: "R$ 400",
+    icon: "🌐"
+  }, {
+    name: "Consultoria estratégica mensal",
+    price: "R$ 250",
+    icon: "💡"
+  }, {
+    name: "Criação de e-mail profissional",
+    price: "R$ 100 (setup)",
+    icon: "📧"
+  }, {
+    name: "Google Meu Negócio otimizado",
+    price: "R$ 200",
+    icon: "🗺️"
+  }];
   const handleConsultationClick = () => {
     window.open('https://wa.me/5511947968158?text=Olá! Gostaria de agendar uma consultoria gratuita sobre o Plano Fusion.', '_blank');
   };
-
-  return (
-    <div className="min-h-screen">
+  return <div className="min-h-screen">
       <Navbar />
       
       {/* Enhanced Hero Section */}
@@ -34,7 +49,9 @@ const Services = () => {
         {/* Enhanced background elements */}
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-designoai-blue/10 to-purple-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-indigo-500/10 to-designoai-blue/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-indigo-500/10 to-designoai-blue/10 rounded-full blur-3xl animate-pulse-slow" style={{
+          animationDelay: '1s'
+        }}></div>
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -71,11 +88,7 @@ const Services = () => {
               </div>
             </div>
             
-            <Button 
-              size="lg" 
-              className="relative overflow-hidden bg-gradient-to-r from-designoai-blue to-indigo-600 hover:from-indigo-600 hover:to-designoai-blue text-white shadow-xl hover:shadow-2xl transition-all duration-500 group transform hover:-translate-y-1 px-8 py-4"
-              onClick={handleConsultationClick}
-            >
+            <Button size="lg" className="relative overflow-hidden bg-gradient-to-r from-designoai-blue to-indigo-600 hover:from-indigo-600 hover:to-designoai-blue text-white shadow-xl hover:shadow-2xl transition-all duration-500 group transform hover:-translate-y-1 px-8 py-4" onClick={handleConsultationClick}>
               <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
               Agende sua Consultoria Gratuita
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
@@ -232,15 +245,13 @@ const Services = () => {
                 </CardHeader>
                 <CardContent className="p-8">
                   <div className="grid md:grid-cols-2 gap-6">
-                    {additionalServices.map((service, index) => (
-                      <div key={index} className="group flex items-center justify-between p-6 border border-slate-200 rounded-2xl hover:bg-gradient-to-br hover:from-orange-50 hover:to-red-50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    {additionalServices.map((service, index) => <div key={index} className="group flex items-center justify-between p-6 border border-slate-200 rounded-2xl hover:bg-gradient-to-br hover:from-orange-50 hover:to-red-50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                         <div className="flex items-center">
                           <span className="text-2xl mr-4">{service.icon}</span>
                           <span className="font-medium text-slate-700 group-hover:text-slate-800">{service.name}</span>
                         </div>
                         <span className="text-designoai-blue font-semibold group-hover:text-orange-600 transition-colors">{service.price}</span>
-                      </div>
-                    ))}
+                      </div>)}
                   </div>
                 </CardContent>
               </Card>
@@ -258,10 +269,15 @@ const Services = () => {
             <Star className="w-16 h-16 text-white animate-pulse-slow" />
           </div>
           <div className="absolute top-20 right-20">
-            <Sparkles className="w-12 h-12 text-white animate-bounce" style={{ animationDelay: '1s', animationDuration: '3s' }} />
+            <Sparkles className="w-12 h-12 text-white animate-bounce" style={{
+            animationDelay: '1s',
+            animationDuration: '3s'
+          }} />
           </div>
           <div className="absolute bottom-10 left-20">
-            <div className="w-8 h-8 bg-white rounded-full animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+            <div className="w-8 h-8 bg-white rounded-full animate-pulse-slow" style={{
+            animationDelay: '2s'
+          }}></div>
           </div>
         </div>
 
@@ -269,18 +285,14 @@ const Services = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
               <span className="block">Pronto para transformar</span>
-              <span className="block bg-gradient-to-r from-yellow-300 via-white to-yellow-300 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-yellow-300 via-white to-yellow-300 bg-clip-text text-transparent my-0 py-[11px]">
                 seu negócio?
               </span>
             </h2>
             <p className="text-xl md:text-2xl text-white/90 mb-10 leading-relaxed">
               Entre em contato conosco e descubra como podemos impulsionar sua empresa
             </p>
-            <Button 
-              size="lg" 
-              className="relative overflow-hidden bg-white text-designoai-blue hover:bg-gray-50 text-lg font-semibold px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 group transform hover:-translate-y-1"
-              onClick={handleConsultationClick}
-            >
+            <Button size="lg" className="relative overflow-hidden bg-white text-designoai-blue hover:bg-gray-50 text-lg font-semibold px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 group transform hover:-translate-y-1" onClick={handleConsultationClick}>
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-100/50 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
               Fale Conosco no WhatsApp
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
@@ -290,8 +302,6 @@ const Services = () => {
       </section>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Services;
