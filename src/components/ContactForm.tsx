@@ -209,8 +209,8 @@ const ContactForm = () => {
                     <Mail className="w-5 h-5 text-designoai-blue mr-3" />
                     <div>
                       <p className="font-medium">E-mail</p>
-                      <a href="mailto:suportedesigno@gmail.com" className="text-designoai-blue hover:underline">
-                        suportedesigno@gmail.com
+                      <a href="mailto:contato@designoai.com.br" className="text-designoai-blue hover:underline">
+                        contato@designoai.com.br
                       </a>
                     </div>
                   </div>
