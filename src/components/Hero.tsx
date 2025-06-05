@@ -51,17 +51,7 @@ const Hero = () => {
               </div>
             </div>
             
-            <div className="flex items-center mb-6 animate-fade-in" style={{
-            animationDelay: '0.1s'
-          }}>
-              <div className="relative">
-                <Sparkles className="w-6 h-6 text-designoai-blue mr-2 animate-pulse" />
-                <div className="absolute -inset-1 bg-designoai-blue/20 rounded-full blur animate-pulse"></div>
-              </div>
-              <span className="text-sm font-medium bg-gradient-to-r from-designoai-blue to-purple-600 bg-clip-text text-transparent">
-                Powered by Advanced AI
-              </span>
-            </div>
+            
             
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-6 animate-fade-in" style={{
             animationDelay: '0.2s'
