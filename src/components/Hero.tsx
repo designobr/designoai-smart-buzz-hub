@@ -1,7 +1,5 @@
-
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles } from 'lucide-react';
-
 const Hero = () => {
   const handleCallClick = () => {
     const contactSection = document.getElementById('contact');
@@ -11,9 +9,7 @@ const Hero = () => {
       });
     }
   };
-
-  return (
-    <section className="pt-20 md:pt-32 pb-16 md:pb-24 bg-gradient-to-br from-white via-designoai-blue-light/30 to-white relative overflow-hidden">
+  return <section className="pt-20 md:pt-32 pb-16 md:pb-24 bg-gradient-to-br from-white via-designoai-blue-light/30 to-white relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-designoai-blue/5 rounded-full blur-3xl"></div>
@@ -26,21 +22,21 @@ const Hero = () => {
             {/* Logo com efeito moderno */}
             <div className="mb-8 animate-fade-in">
               <div className="relative inline-block">
-                <img 
-                  src="/lovable-uploads/f3d9e115-20f9-4e21-8131-b13ad5504d5e.png" 
-                  alt="DesignoAI Logo" 
-                  className="w-80 h-auto object-contain mx-auto lg:mx-0 drop-shadow-2xl" 
-                />
+                <img src="/lovable-uploads/f3d9e115-20f9-4e21-8131-b13ad5504d5e.png" alt="DesignoAI Logo" className="w-80 h-auto object-contain mx-auto lg:mx-0 drop-shadow-2xl" />
                 <div className="absolute -inset-4 bg-gradient-to-r from-designoai-blue/20 to-transparent rounded-full blur-2xl -z-10"></div>
               </div>
             </div>
             
-            <div className="flex items-center mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <div className="flex items-center mb-6 animate-fade-in" style={{
+            animationDelay: '0.1s'
+          }}>
               <Sparkles className="w-6 h-6 text-designoai-blue mr-2" />
               <span className="text-designoai-blue font-medium">Powered by Artificial Intelligence</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-designoai-blue-dark via-designoai-blue to-designoai-blue-dark bg-clip-text text-transparent leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-designoai-blue-dark via-designoai-blue to-designoai-blue-dark bg-clip-text text-transparent leading-tight mb-6 animate-fade-in" style={{
+            animationDelay: '0.2s'
+          }}>
               Sua marca em <br /> 
               <span className="relative">
                 todos os lugares
@@ -48,32 +44,30 @@ const Hero = () => {
               </span>
             </h1>
             
-            <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed animate-fade-in" style={{
+            animationDelay: '0.3s'
+          }}>
               Revolucione suas estratégias de marketing e mídias sociais com soluções inteligentes que 
               <span className="font-semibold text-designoai-blue"> analisam, criam e otimizam</span> seu conteúdo automaticamente.
             </p>
             
-            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-designoai-blue to-designoai-blue-dark hover:from-designoai-blue-dark hover:to-designoai-blue text-white shadow-lg hover:shadow-xl transition-all duration-300 group"
-                onClick={handleCallClick}
-              >
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in" style={{
+            animationDelay: '0.4s'
+          }}>
+              <Button size="lg" className="bg-gradient-to-r from-designoai-blue to-designoai-blue-dark hover:from-designoai-blue-dark hover:to-designoai-blue text-white shadow-lg hover:shadow-xl transition-all duration-300 group" onClick={handleCallClick}>
                 Agende uma Conversa
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
               
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-2 border-designoai-blue text-designoai-blue hover:bg-designoai-blue hover:text-white transition-all duration-300 shadow-lg backdrop-blur-sm"
-              >
+              <Button size="lg" variant="outline" className="border-2 border-designoai-blue text-designoai-blue hover:bg-designoai-blue hover:text-white transition-all duration-300 shadow-lg backdrop-blur-sm">
                 Ver Demo
               </Button>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 mt-12 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+            <div className="grid grid-cols-3 gap-6 mt-12 animate-fade-in" style={{
+            animationDelay: '0.5s'
+          }}>
               <div className="text-center">
                 <div className="text-2xl font-bold text-designoai-blue-dark">500+</div>
                 <div className="text-sm text-gray-600">Empresas</div>
@@ -89,7 +83,9 @@ const Hero = () => {
             </div>
           </div>
           
-          <div className="lg:w-1/2 relative animate-fade-in" style={{ animationDelay: '0.6s' }}>
+          <div className="lg:w-1/2 relative animate-fade-in" style={{
+          animationDelay: '0.6s'
+        }}>
             <div className="relative">
               {/* Floating elements */}
               <div className="absolute -top-8 -left-8 w-16 h-16 bg-gradient-to-br from-designoai-blue to-designoai-blue-dark rounded-2xl opacity-80 rotate-12 animate-pulse-slow"></div>
@@ -103,7 +99,7 @@ const Hero = () => {
                     <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
                     <div className="w-3 h-3 rounded-full bg-green-400"></div>
                   </div>
-                  <div className="text-white text-sm font-medium">DesignoAI Dashboard</div>
+                  
                   <div className="w-6"></div>
                 </div>
                 
@@ -116,16 +112,26 @@ const Hero = () => {
                       </div>
                       <div className="space-y-2">
                         <div className="h-4 w-56 bg-gradient-to-r from-gray-200 to-gray-300 rounded-full mx-auto animate-pulse"></div>
-                        <div className="h-4 w-48 bg-gradient-to-r from-gray-200 to-gray-300 rounded-full mx-auto animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                        <div className="h-4 w-40 bg-gradient-to-r from-gray-200 to-gray-300 rounded-full mx-auto animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                        <div className="h-4 w-48 bg-gradient-to-r from-gray-200 to-gray-300 rounded-full mx-auto animate-pulse" style={{
+                        animationDelay: '0.2s'
+                      }}></div>
+                        <div className="h-4 w-40 bg-gradient-to-r from-gray-200 to-gray-300 rounded-full mx-auto animate-pulse" style={{
+                        animationDelay: '0.4s'
+                      }}></div>
                       </div>
                     </div>
                     
                     {/* Floating cards */}
-                    <div className="absolute top-4 left-4 bg-white p-3 rounded-lg shadow-lg animate-bounce" style={{ animationDelay: '1s', animationDuration: '3s' }}>
+                    <div className="absolute top-4 left-4 bg-white p-3 rounded-lg shadow-lg animate-bounce" style={{
+                    animationDelay: '1s',
+                    animationDuration: '3s'
+                  }}>
                       <div className="w-8 h-8 bg-designoai-blue rounded text-white text-xs flex items-center justify-center">AI</div>
                     </div>
-                    <div className="absolute bottom-4 right-4 bg-white p-3 rounded-lg shadow-lg animate-bounce" style={{ animationDelay: '2s', animationDuration: '3s' }}>
+                    <div className="absolute bottom-4 right-4 bg-white p-3 rounded-lg shadow-lg animate-bounce" style={{
+                    animationDelay: '2s',
+                    animationDuration: '3s'
+                  }}>
                       <div className="w-8 h-8 bg-green-500 rounded text-white text-xs flex items-center justify-center">✓</div>
                     </div>
                   </div>
@@ -135,8 +141,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;
