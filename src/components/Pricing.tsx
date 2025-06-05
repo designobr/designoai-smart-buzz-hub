@@ -71,7 +71,7 @@ const Pricing = () => {
             
             <CardHeader className="text-center pb-6 pt-6">
               <div className="flex items-center justify-center mb-2">
-                <AlertTriangle className="w-6 h-6 text-yellow-500 mr-2" />
+                
                 <CardTitle className="text-2xl font-bold text-designoai-blue-dark">
                   Plano Plus
                 </CardTitle>
