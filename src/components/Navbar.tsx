@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
@@ -25,6 +25,10 @@ const Navbar = () => {
 
   const handleConsultorClick = () => {
     window.open('https://wa.me/5511947968158?text=Olá! Gostaria de falar com um consultor sobre o DesignoAI.', '_blank');
+  };
+
+  const handleWhatsAppClick = () => {
+    window.open('https://wa.me/5511947968158?text=Olá! Gostaria de saber mais sobre o DesignoAI.', '_blank');
   };
 
   return (
@@ -57,6 +61,14 @@ const Navbar = () => {
               onClick={handleConsultorClick}
             >
               Falar com Consultor
+            </Button>
+            <Button 
+              variant="default" 
+              className="bg-green-500 hover:bg-green-600 text-white"
+              onClick={handleWhatsAppClick}
+            >
+              <MessageCircle className="w-4 h-4 mr-2" />
+              WhatsApp
             </Button>
           </div>
 
@@ -95,6 +107,14 @@ const Navbar = () => {
               onClick={handleConsultorClick}
             >
               Falar com Consultor
+            </Button>
+            <Button 
+              variant="default" 
+              className="w-full bg-green-500 hover:bg-green-600 text-white"
+              onClick={handleWhatsAppClick}
+            >
+              <MessageCircle className="w-4 h-4 mr-2" />
+              WhatsApp
             </Button>
           </div>
         </div>
