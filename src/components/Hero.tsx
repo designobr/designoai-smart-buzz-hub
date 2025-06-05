@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles } from 'lucide-react';
 const Hero = () => {
@@ -37,9 +38,9 @@ const Hero = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-designoai-blue-dark via-designoai-blue to-designoai-blue-dark bg-clip-text text-transparent leading-tight mb-6 animate-fade-in" style={{
             animationDelay: '0.2s'
           }}>
-              Sua marca em <br /> 
+              Sua marca no <br /> 
               <span className="relative">
-                todos os lugares
+                futuro
                 <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-designoai-blue to-designoai-blue-dark rounded-full"></div>
               </span>
             </h1>
