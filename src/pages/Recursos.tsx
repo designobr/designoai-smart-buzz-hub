@@ -1,42 +1,60 @@
+
+import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+
 const Recursos = () => {
-  const features = [{
-    title: "Geração de Conteúdo com IA",
-    description: "Crie posts, artigos, legendas e materiais visuais automaticamente, adaptados ao seu nicho e público-alvo.",
-    icon: "✨"
-  }, {
-    title: "Análise de Concorrência",
-    description: "Monitore e analise as estratégias dos seus concorrentes para se manter sempre à frente no mercado.",
-    icon: "🔍"
-  }, {
-    title: "Agendamento Automático",
-    description: "Programe suas publicações nos melhores horários para maximizar o engajamento e alcance.",
-    icon: "⏰"
-  }, {
-    title: "Dashboard Analytics",
-    description: "Acompanhe métricas importantes em tempo real com relatórios detalhados e insights acionáveis.",
-    icon: "📊"
-  }, {
-    title: "Otimização de SEO",
-    description: "Melhore automaticamente o SEO do seu conteúdo para aumentar a visibilidade online.",
-    icon: "🎯"
-  }, {
-    title: "Integração Multi-plataforma",
-    description: "Conecte todas as suas redes sociais e canais de marketing em uma única plataforma.",
-    icon: "🔗"
-  }, {
-    title: "Personalização Avançada",
-    description: "Adapte o tom, estilo e formato do conteúdo para diferentes segmentos do seu público.",
-    icon: "🎨"
-  }, {
-    title: "Suporte 24/7",
-    description: "Nossa equipe está sempre disponível para ajudar você a maximizar seus resultados.",
-    icon: "💬"
-  }];
-  return <div className="min-h-screen">
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const features = [
+    {
+      title: "Geração de Conteúdo com IA",
+      description: "Crie posts, artigos, legendas e materiais visuais automaticamente, adaptados ao seu nicho e público-alvo.",
+      icon: "✨"
+    },
+    {
+      title: "Análise de Concorrência",
+      description: "Monitore e analise as estratégias dos seus concorrentes para se manter sempre à frente no mercado.",
+      icon: "🔍"
+    },
+    {
+      title: "Agendamento Automático",
+      description: "Programe suas publicações nos melhores horários para maximizar o engajamento e alcance.",
+      icon: "⏰"
+    },
+    {
+      title: "Dashboard Analytics",
+      description: "Acompanhe métricas importantes em tempo real com relatórios detalhados e insights acionáveis.",
+      icon: "📊"
+    },
+    {
+      title: "Otimização de SEO",
+      description: "Melhore automaticamente o SEO do seu conteúdo para aumentar a visibilidade online.",
+      icon: "🎯"
+    },
+    {
+      title: "Integração Multi-plataforma",
+      description: "Conecte todas as suas redes sociais e canais de marketing em uma única plataforma.",
+      icon: "🔗"
+    },
+    {
+      title: "Personalização Avançada",
+      description: "Adapte o tom, estilo e formato do conteúdo para diferentes segmentos do seu público.",
+      icon: "🎨"
+    },
+    {
+      title: "Suporte 24/7",
+      description: "Nossa equipe está sempre disponível para ajudar você a maximizar seus resultados.",
+      icon: "💬"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen">
       <Navbar />
       
       {/* Hero Section */}
@@ -62,11 +80,13 @@ const Recursos = () => {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => <div key={index} className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
+            {features.map((feature, index) => (
+              <div key={index} className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
                 <div className="text-4xl mb-4">{feature.icon}</div>
                 <h3 className="text-xl font-semibold text-designoai-blue-dark mb-4">{feature.title}</h3>
                 <p className="text-gray-600">{feature.description}</p>
-              </div>)}
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -87,7 +107,12 @@ const Recursos = () => {
                   Começar Agora
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" onClick={() => window.open('https://wa.me/5511947968158?text=Olá! Gostaria de saber mais sobre os recursos do DesignoAI.', '_blank')} className="border-white hover:bg-white/10 text-zinc-700">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                onClick={() => window.open('https://wa.me/5511947968158?text=Olá! Gostaria de saber mais sobre os recursos do DesignoAI.', '_blank')} 
+                className="border-white hover:bg-white/10 text-zinc-700"
+              >
                 Falar com Consultor
               </Button>
             </div>
@@ -96,6 +121,8 @@ const Recursos = () => {
       </section>
 
       <Footer />
-    </div>;
+    </div>
+  );
 };
+
 export default Recursos;

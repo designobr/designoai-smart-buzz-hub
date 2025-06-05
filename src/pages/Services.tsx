@@ -1,4 +1,4 @@
-
+import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -7,6 +7,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Check, Star } from 'lucide-react';
 
 const Services = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const additionalServices = [
     { name: "Impressão de 100 cartões de visita", price: "R$ 80 a R$ 120" },
     { name: "Catálogo digital interativo", price: "R$ 300" },
