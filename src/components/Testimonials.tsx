@@ -32,30 +32,12 @@ const Testimonials = () => {
               <p className="text-gray-700 mb-6">{testimonial.content}</p>
               <div>
                 <p className="font-medium text-designoai-blue-dark">{testimonial.author}</p>
-                <p className="text-sm text-gray-500">{testimonial.role}</p>
+                
               </div>
             </div>)}
         </div>
 
-        <div className="mt-16 text-center">
-          <div className="flex justify-center space-x-8 px-0 mx-0 my-0 py-[40px]">
-            <div className="grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-              <img alt="Logo Cliente" src="https://img.freepik.com/vetores-gratis/logo-halal-da-indonesia-nova-marca-2022_17005-1495.jpg?uid=R96181324&ga=GA1.1.2139499696.1746653631&semt=ais_hybrid&w=740" className="h-8 object-none" />
-            </div>
-            <div className="grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-              <img src="https://via.placeholder.com/120x40" alt="Logo Cliente" className="h-8" />
-            </div>
-            <div className="grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-              <img src="https://via.placeholder.com/120x40" alt="Logo Cliente" className="h-8" />
-            </div>
-            <div className="grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-              <img src="https://via.placeholder.com/120x40" alt="Logo Cliente" className="h-8" />
-            </div>
-            <div className="grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-              <img src="https://via.placeholder.com/120x40" alt="Logo Cliente" className="h-8" />
-            </div>
-          </div>
-        </div>
+        
       </div>
     </section>;
 };
