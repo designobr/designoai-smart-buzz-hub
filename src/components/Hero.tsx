@@ -31,7 +31,7 @@ const Hero = () => {
             animationDelay: '0.1s'
           }}>
               <Sparkles className="w-6 h-6 text-designoai-blue mr-2" />
-              <span className="text-designoai-blue font-medium">Powered by Artificial Intelligence</span>
+              
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-designoai-blue-dark via-designoai-blue to-designoai-blue-dark bg-clip-text text-transparent leading-tight mb-6 animate-fade-in" style={{
