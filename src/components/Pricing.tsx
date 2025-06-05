@@ -133,11 +133,11 @@ const Pricing = () => {
           {/* Plano Fusion */}
           <Card className="relative overflow-hidden shadow-xl border-2 border-designoai-blue transform scale-105">
             <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-designoai-blue to-designoai-blue-dark"></div>
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-designoai-blue to-designoai-blue-dark text-white px-6 py-2 rounded-full text-sm font-semibold">
+            <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-designoai-blue to-designoai-blue-dark text-white px-4 py-1 rounded-full text-xs font-semibold">
               MELHOR CUSTO-BENEFÍCIO
             </div>
             
-            <CardHeader className="text-center pb-6 pt-8">
+            <CardHeader className="text-center pb-6 pt-6">
               <div className="flex items-center justify-center mb-4">
                 <Star className="w-8 h-8 text-designoai-blue mr-2" />
                 <CardTitle className="text-3xl font-bold text-designoai-blue-dark">
