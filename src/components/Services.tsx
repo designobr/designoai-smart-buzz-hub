@@ -1,3 +1,4 @@
+
 import { Star, Zap, BarChart3, PenTool, Share2, Brain } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
@@ -118,11 +119,11 @@ const Services = () => {
           ))}
         </div>
 
-        {/* Enhanced bottom CTA with correct link */}
+        {/* Enhanced bottom CTA with correct link to services page */}
         <div className="text-center mt-20">
           <div className="relative inline-block">
             <div className="absolute -inset-1 bg-gradient-to-r from-designoai-blue via-purple-600 to-indigo-600 rounded-full blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
-            <Link to="/recursos">
+            <Link to="/services">
               <div className="relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-designoai-blue via-purple-600 to-indigo-600 text-white rounded-full font-medium hover:shadow-xl transition-all duration-500 cursor-pointer group transform hover:-translate-y-1">
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
                 Ver todos os recursos
