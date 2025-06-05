@@ -17,7 +17,7 @@ const Hero = () => {
               <img 
                 src="/lovable-uploads/f3d9e115-20f9-4e21-8131-b13ad5504d5e.png" 
                 alt="DesignoAI Logo" 
-                className="h-24 md:h-32 lg:h-40 w-auto"
+                className="h-32 md:h-40 lg:h-48 w-auto"
               />
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-designoai-blue-dark leading-tight mb-6 animate-fade-in">
