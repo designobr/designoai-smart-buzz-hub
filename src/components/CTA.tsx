@@ -1,7 +1,5 @@
-
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, Star } from 'lucide-react';
-
 const CTA = () => {
   const handleStartClick = () => {
     const contactSection = document.getElementById('contact');
@@ -11,17 +9,16 @@ const CTA = () => {
       });
     }
   };
-
   const handleSpecialistClick = () => {
     window.open('https://wa.me/5511947968158?text=Olá! Gostaria de falar com um especialista sobre o Plano Fusion.', '_blank');
   };
-
-  return (
-    <section className="py-20 md:py-28 bg-gradient-to-b from-white to-designoai-blue-light relative overflow-hidden">
+  return <section className="py-20 md:py-28 bg-gradient-to-b from-white to-designoai-blue-light relative overflow-hidden">
       {/* Enhanced background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-designoai-blue/10 to-purple-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-indigo-500/10 to-designoai-blue/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-indigo-500/10 to-designoai-blue/10 rounded-full blur-3xl animate-pulse-slow" style={{
+        animationDelay: '1s'
+      }}></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -34,16 +31,25 @@ const CTA = () => {
               <Star className="w-16 h-16 text-white animate-pulse-slow" />
             </div>
             <div className="absolute top-20 right-20">
-              <Sparkles className="w-12 h-12 text-white animate-bounce" style={{ animationDelay: '1s', animationDuration: '3s' }} />
+              <Sparkles className="w-12 h-12 text-white animate-bounce" style={{
+              animationDelay: '1s',
+              animationDuration: '3s'
+            }} />
             </div>
             <div className="absolute bottom-10 left-20">
-              <div className="w-8 h-8 bg-white rounded-full animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+              <div className="w-8 h-8 bg-white rounded-full animate-pulse-slow" style={{
+              animationDelay: '2s'
+            }}></div>
             </div>
             <div className="absolute bottom-20 right-10">
-              <Star className="w-20 h-20 text-white animate-pulse-slow" style={{ animationDelay: '0.5s' }} />
+              <Star className="w-20 h-20 text-white animate-pulse-slow" style={{
+              animationDelay: '0.5s'
+            }} />
             </div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <div className="w-32 h-32 border-2 border-white/20 rounded-full animate-spin" style={{ animationDuration: '20s' }}></div>
+              <div className="w-32 h-32 border-2 border-white/20 rounded-full animate-spin" style={{
+              animationDuration: '20s'
+            }}></div>
             </div>
           </div>
           
@@ -71,22 +77,13 @@ const CTA = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-8">
-              <Button 
-                size="lg" 
-                className="relative overflow-hidden bg-white text-designoai-blue hover:bg-gray-50 text-lg font-semibold px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 group transform hover:-translate-y-1 min-w-[200px]" 
-                onClick={handleStartClick}
-              >
+              <Button size="lg" className="relative overflow-hidden bg-white text-designoai-blue hover:bg-gray-50 text-lg font-semibold px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 group transform hover:-translate-y-1 min-w-[200px]" onClick={handleStartClick}>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-100/50 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
                 Começe Agora
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
               </Button>
               
-              <Button 
-                size="lg" 
-                variant="outline" 
-                onClick={handleSpecialistClick} 
-                className="relative overflow-hidden border-2 border-white/30 text-white hover:bg-white/10 text-lg font-semibold px-8 py-4 rounded-2xl backdrop-blur-sm transition-all duration-500 group transform hover:-translate-y-1 min-w-[200px]"
-              >
+              <Button size="lg" variant="outline" onClick={handleSpecialistClick} className="relative overflow-hidden border-2 border-white/30 text-white text-lg font-semibold px-8 py-4 rounded-2xl backdrop-blur-sm transition-all duration-500 group transform hover:-translate-y-1 min-w-[200px] bg-cyan-400 hover:bg-cyan-300">
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
                 Fale com um Especialista
               </Button>
@@ -99,19 +96,21 @@ const CTA = () => {
                 Não é necessário cartão de crédito
               </div>
               <div className="flex items-center justify-center text-white/90 text-sm">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full mr-2 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                <div className="w-2 h-2 bg-yellow-400 rounded-full mr-2 animate-pulse" style={{
+                animationDelay: '0.5s'
+              }}></div>
                 Cancelamento a qualquer momento
               </div>
               <div className="flex items-center justify-center text-white/90 text-sm">
-                <div className="w-2 h-2 bg-blue-400 rounded-full mr-2 animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <div className="w-2 h-2 bg-blue-400 rounded-full mr-2 animate-pulse" style={{
+                animationDelay: '1s'
+              }}></div>
                 Suporte premium incluído
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default CTA;
