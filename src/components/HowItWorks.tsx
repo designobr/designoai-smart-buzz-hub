@@ -25,6 +25,13 @@ const steps = [
 ];
 
 const HowItWorks = () => {
+  const handleContactClick = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="how-it-works" className="py-16 md:py-24 bg-designoai-blue-dark text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,8 +60,11 @@ const HowItWorks = () => {
           <p className="text-xl mb-6 max-w-2xl mx-auto">
             Pronto para transformar seu marketing digital com o poder da inteligência artificial?
           </p>
-          <Button className="bg-white text-designoai-blue-dark hover:bg-gray-100">
-            Agende uma Demonstração
+          <Button 
+            className="bg-white text-designoai-blue-dark hover:bg-gray-100"
+            onClick={handleContactClick}
+          >
+            Agende uma Conversa
           </Button>
         </div>
       </div>

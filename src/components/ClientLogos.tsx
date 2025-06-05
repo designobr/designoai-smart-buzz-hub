@@ -1,14 +1,14 @@
 
 const ClientLogos = () => {
   const clients = [
-    { name: "TechSolutions", logo: "🚀" },
-    { name: "BeautyMax", logo: "💄" },
-    { name: "FoodHub", logo: "🍕" },
-    { name: "FitStudio", logo: "💪" },
-    { name: "EcoGreen", logo: "🌱" },
-    { name: "AutoParts", logo: "🔧" },
-    { name: "PetCare", logo: "🐕" },
-    { name: "StyleShop", logo: "👗" }
+    { name: "TechFlow Solutions", logo: "💼" },
+    { name: "GlobalVentures", logo: "🌐" },
+    { name: "InnovaCorp", logo: "⚡" },
+    { name: "DigitalPrime", logo: "💎" },
+    { name: "NextGen Industries", logo: "🚀" },
+    { name: "ProBusiness Group", logo: "📊" },
+    { name: "SmartLogistics", logo: "📦" },
+    { name: "EliteConsulting", logo: "🎯" }
   ];
 
   return (

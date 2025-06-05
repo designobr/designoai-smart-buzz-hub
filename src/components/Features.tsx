@@ -1,5 +1,6 @@
 
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const Features = () => {
   return (
@@ -63,9 +64,11 @@ const Features = () => {
               </li>
             </ul>
 
-            <Button className="bg-designoai-blue hover:bg-designoai-blue/90">
-              Conheça todos os recursos
-            </Button>
+            <Link to="/recursos">
+              <Button className="bg-designoai-blue hover:bg-designoai-blue/90">
+                Conheça todos os recursos
+              </Button>
+            </Link>
           </div>
         </div>
 
@@ -104,10 +107,6 @@ const Features = () => {
                 </div>
               </li>
             </ul>
-
-            <Button className="bg-designoai-blue hover:bg-designoai-blue/90">
-              Ver demonstração
-            </Button>
           </div>
 
           <div>

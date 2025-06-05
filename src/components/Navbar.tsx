@@ -23,6 +23,10 @@ const Navbar = () => {
     };
   }, []);
 
+  const handleConsultorClick = () => {
+    window.open('https://wa.me/5511947968158?text=Olá! Gostaria de falar com um consultor sobre o DesignoAI.', '_blank');
+  };
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,7 +42,7 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/services" className="text-sm font-medium text-designoai-blue-dark hover:text-designoai-blue transition">Serviços</Link>
-            <a href="#features" className="text-sm font-medium text-designoai-blue-dark hover:text-designoai-blue transition">Recursos</a>
+            <Link to="/recursos" className="text-sm font-medium text-designoai-blue-dark hover:text-designoai-blue transition">Recursos</Link>
             <a href="#how-it-works" className="text-sm font-medium text-designoai-blue-dark hover:text-designoai-blue transition">Como Funciona</a>
             <a href="#pricing" className="text-sm font-medium text-designoai-blue-dark hover:text-designoai-blue transition">Preços</a>
             <a href="#calculator" className="text-sm font-medium text-designoai-blue-dark hover:text-designoai-blue transition">Calculadora</a>
@@ -47,7 +51,13 @@ const Navbar = () => {
 
           {/* Call to Action */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" className="text-designoai-blue-dark hover:text-designoai-blue transition">Login</Button>
+            <Button 
+              variant="ghost" 
+              className="text-designoai-blue-dark hover:text-designoai-blue transition"
+              onClick={handleConsultorClick}
+            >
+              Falar com Consultor
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -72,14 +82,20 @@ const Navbar = () => {
         <div className="md:hidden bg-white border-t">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link to="/services" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Serviços</Link>
-            <a href="#features" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Recursos</a>
+            <Link to="/recursos" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Recursos</Link>
             <a href="#how-it-works" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Como Funciona</a>
             <a href="#pricing" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Preços</a>
             <a href="#calculator" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Calculadora</a>
             <a href="#contact" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Contato</a>
           </div>
           <div className="px-5 py-4 border-t border-gray-200">
-            <Button variant="ghost" className="w-full text-designoai-blue-dark mb-2">Login</Button>
+            <Button 
+              variant="ghost" 
+              className="w-full text-designoai-blue-dark mb-2"
+              onClick={handleConsultorClick}
+            >
+              Falar com Consultor
+            </Button>
           </div>
         </div>
       )}
