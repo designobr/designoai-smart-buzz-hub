@@ -80,7 +80,7 @@ const Pricing = () => {
                 <span className="text-3xl font-bold text-designoai-blue">R$ 2.600</span>
                 <span className="text-gray-600 ml-2">/mês</span>
               </div>
-              <CardDescription className="text-base">Plano intermediário com mais artes, ma</CardDescription>
+              <CardDescription className="text-base">Plano intermediário com mais artes</CardDescription>
             </CardHeader>
             
             <CardContent className="pb-6">
