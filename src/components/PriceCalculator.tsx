@@ -1,32 +1,42 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check, Calculator, Plus } from 'lucide-react';
-
 const PriceCalculator = () => {
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
-  
   const basePrice = 4000;
-  
-  const addons = [
-    { id: 'cards', name: 'Impressão de 100 cartões de visita', price: 100 },
-    { id: 'catalog', name: 'Catálogo digital interativo', price: 300 },
-    { id: 'reels', name: 'Vídeos Reels extras (2 unidades)', price: 260 },
-    { id: 'landing', name: 'Landing Page para campanha específica', price: 400 },
-    { id: 'consulting', name: 'Consultoria estratégica mensal', price: 250 },
-    { id: 'email', name: 'Criação de e-mail profissional', price: 100 },
-    { id: 'gmb', name: 'Google Meu Negócio otimizado', price: 200 }
-  ];
-
+  const addons = [{
+    id: 'cards',
+    name: 'Impressão de 100 cartões de visita',
+    price: 100
+  }, {
+    id: 'catalog',
+    name: 'Catálogo digital interativo',
+    price: 300
+  }, {
+    id: 'reels',
+    name: 'Vídeos Reels extras (2 unidades)',
+    price: 260
+  }, {
+    id: 'landing',
+    name: 'Landing Page para campanha específica',
+    price: 400
+  }, {
+    id: 'consulting',
+    name: 'Consultoria estratégica mensal',
+    price: 250
+  }, {
+    id: 'email',
+    name: 'Criação de e-mail profissional',
+    price: 100
+  }, {
+    id: 'gmb',
+    name: 'Google Meu Negócio otimizado',
+    price: 200
+  }];
   const toggleAddon = (addonId: string) => {
-    setSelectedAddons(prev => 
-      prev.includes(addonId) 
-        ? prev.filter(id => id !== addonId)
-        : [...prev, addonId]
-    );
+    setSelectedAddons(prev => prev.includes(addonId) ? prev.filter(id => id !== addonId) : [...prev, addonId]);
   };
-
   const calculateTotal = () => {
     const addonsTotal = selectedAddons.reduce((total, addonId) => {
       const addon = addons.find(a => a.id === addonId);
@@ -34,13 +44,10 @@ const PriceCalculator = () => {
     }, 0);
     return basePrice + addonsTotal;
   };
-
   const getSelectedAddons = () => {
     return addons.filter(addon => selectedAddons.includes(addon.id));
   };
-
-  return (
-    <section id="calculator" className="py-16 md:py-24 bg-gray-50">
+  return <section id="calculator" className="py-16 md:py-24 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="flex items-center justify-center mb-4">
@@ -67,26 +74,11 @@ const PriceCalculator = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {addons.map((addon) => (
-                  <div
-                    key={addon.id}
-                    className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                      selectedAddons.includes(addon.id)
-                        ? 'border-designoai-blue bg-designoai-blue-light'
-                        : 'border-gray-200 hover:border-designoai-blue-light'
-                    }`}
-                    onClick={() => toggleAddon(addon.id)}
-                  >
+                {addons.map(addon => <div key={addon.id} className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${selectedAddons.includes(addon.id) ? 'border-designoai-blue bg-designoai-blue-light' : 'border-gray-200 hover:border-designoai-blue-light'}`} onClick={() => toggleAddon(addon.id)}>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
-                        <div className={`w-5 h-5 rounded border-2 mr-3 flex items-center justify-center ${
-                          selectedAddons.includes(addon.id)
-                            ? 'border-designoai-blue bg-designoai-blue'
-                            : 'border-gray-300'
-                        }`}>
-                          {selectedAddons.includes(addon.id) && (
-                            <Check className="w-3 h-3 text-white" />
-                          )}
+                        <div className={`w-5 h-5 rounded border-2 mr-3 flex items-center justify-center ${selectedAddons.includes(addon.id) ? 'border-designoai-blue bg-designoai-blue' : 'border-gray-300'}`}>
+                          {selectedAddons.includes(addon.id) && <Check className="w-3 h-3 text-white" />}
                         </div>
                         <div>
                           <h3 className="font-medium text-gray-800">{addon.name}</h3>
@@ -98,8 +90,7 @@ const PriceCalculator = () => {
                         </span>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  </div>)}
               </div>
             </CardContent>
           </Card>
@@ -119,19 +110,15 @@ const PriceCalculator = () => {
                     <span className="text-xl font-bold text-designoai-blue">R$ {basePrice.toLocaleString()}</span>
                   </div>
                   
-                  {getSelectedAddons().length > 0 && (
-                    <div>
+                  {getSelectedAddons().length > 0 && <div>
                       <h4 className="font-medium text-gray-800 mb-3">Serviços Adicionais:</h4>
                       <div className="space-y-2">
-                        {getSelectedAddons().map((addon) => (
-                          <div key={addon.id} className="flex justify-between items-center text-sm">
+                        {getSelectedAddons().map(addon => <div key={addon.id} className="flex justify-between items-center text-sm">
                             <span className="text-gray-600">{addon.name}</span>
                             <span className="font-medium text-designoai-blue">+R$ {addon.price}</span>
-                          </div>
-                        ))}
+                          </div>)}
                       </div>
-                    </div>
-                  )}
+                    </div>}
                   
                   <div className="pt-4 border-t">
                     <div className="flex justify-between items-center">
@@ -159,7 +146,7 @@ const PriceCalculator = () => {
                     <Button className="w-full bg-white text-designoai-blue hover:bg-gray-100">
                       Solicitar Proposta Personalizada
                     </Button>
-                    <Button variant="outline" className="w-full border-white text-white hover:bg-white/10">
+                    <Button variant="outline" className="w-full border-white text-slate-50 bg-zinc-950 hover:bg-zinc-800">
                       Falar com Consultor
                     </Button>
                   </div>
@@ -189,8 +176,6 @@ const PriceCalculator = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default PriceCalculator;
