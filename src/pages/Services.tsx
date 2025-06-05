@@ -176,8 +176,8 @@ const Services = () => {
                   <div className="group p-6 bg-gradient-to-br from-teal-50 to-cyan-50 rounded-2xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                     <h3 className="text-xl font-semibold mb-4 text-slate-800 group-hover:text-teal-600 transition-colors">Produção Audiovisual</h3>
                     <ul className="space-y-3">
-                      <li className="flex items-center"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />1 Sessão de Fotos Presencial (semestre)</li>
-                      <li className="flex items-center"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />1 Gravação de Vídeo Institucional (semestre)</li>
+                      <li className="flex items-center"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />1 Sessão de Fotos Presencial (mês)</li>
+                      <li className="flex items-center"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />1 Gravação de Vídeo Institucional (mês)</li>
                       <li className="flex items-center"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />Material profissional para redes sociais</li>
                     </ul>
                   </div>
