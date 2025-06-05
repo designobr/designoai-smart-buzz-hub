@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -94,6 +93,40 @@ const PriceCalculator = () => {
 
   const getSelectedAddons = () => {
     return addons.filter(addon => selectedAddons.includes(addon.id));
+  };
+
+  const handleSolicitarProposta = () => {
+    const selectedPkg = getSelectedPackage();
+    const selectedAddonsList = getSelectedAddons();
+    const total = calculateTotal();
+    
+    let message = 'Olá! Gostaria de solicitar uma proposta personalizada do DesignoAI.\n\n';
+    
+    if (selectedPkg) {
+      message += `📦 Pacote selecionado: ${selectedPkg.name} - R$ ${selectedPkg.price.toLocaleString()}\n`;
+    }
+    
+    if (selectedAddonsList.length > 0) {
+      message += '\n🔧 Serviços adicionais:\n';
+      selectedAddonsList.forEach(addon => {
+        message += `• ${addon.name} - R$ ${addon.price}\n`;
+      });
+    }
+    
+    if (total > 0) {
+      message += `\n💰 Total calculado: R$ ${total.toLocaleString()}\n`;
+    }
+    
+    message += '\nGostaria de receber uma proposta detalhada!';
+    
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/5511947968158?text=${encodedMessage}`, '_blank');
+  };
+
+  const handleFalarConsultor = () => {
+    const message = 'Olá! Gostaria de falar com um consultor sobre os serviços do DesignoAI. Preciso de mais informações para escolher o melhor pacote para minha empresa.';
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/5511947968158?text=${encodedMessage}`, '_blank');
   };
 
   return (
@@ -275,10 +308,17 @@ const PriceCalculator = () => {
                         Contratando anualmente, você economiza até R$ 2.400
                       </p>
                       <div className="space-y-3">
-                        <Button className="w-full bg-white text-designoai-blue hover:bg-gray-100">
+                        <Button 
+                          className="w-full bg-white text-designoai-blue hover:bg-gray-100"
+                          onClick={handleSolicitarProposta}
+                        >
                           Solicitar Proposta Personalizada
                         </Button>
-                        <Button variant="outline" className="w-full border-white text-slate-50 font-normal bg-slate-700 hover:bg-slate-600">
+                        <Button 
+                          variant="outline" 
+                          className="w-full border-white text-slate-50 font-normal bg-slate-700 hover:bg-slate-600"
+                          onClick={handleFalarConsultor}
+                        >
                           Falar com Consultor
                         </Button>
                       </div>
