@@ -1,3 +1,4 @@
+
 import { Instagram, Phone, Mail } from 'lucide-react';
 
 const Footer = () => {
@@ -56,7 +57,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-center">
                 <Mail size={18} className="mr-2 text-designoai-blue" />
-                <a href="mailto:suportedesigno@gmail.com" className="text-gray-300 hover:text-white transition-colors">suportedesigno@gmail.com</a>
+                <a href="mailto:contato@designoai.com.br" className="text-gray-300 hover:text-white transition-colors">contato@designoai.com.br</a>
               </li>
               <li className="flex items-center">
                 <Phone size={18} className="mr-2 text-designoai-blue" />

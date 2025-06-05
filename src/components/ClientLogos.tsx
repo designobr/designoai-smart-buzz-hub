@@ -1,3 +1,4 @@
+
 const ClientLogos = () => {
   const clients = [{
     name: "TechFlow Solutions",
@@ -24,7 +25,9 @@ const ClientLogos = () => {
     name: "EliteConsulting",
     logo: "🎯"
   }];
-  return <section className="py-16 bg-gray-50">
+
+  return (
+    <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-designoai-blue-dark mb-4">
@@ -36,9 +39,16 @@ const ClientLogos = () => {
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-8 items-center">
-          {clients.map((client, index) => {})}
+          {clients.map((client, index) => (
+            <div key={index} className="flex flex-col items-center text-center">
+              <div className="text-3xl mb-2">{client.logo}</div>
+              <span className="text-sm font-medium text-gray-600">{client.name}</span>
+            </div>
+          ))}
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default ClientLogos;
