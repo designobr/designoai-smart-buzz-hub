@@ -1,6 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles } from 'lucide-react';
+
 const Hero = () => {
   const handleCallClick = () => {
     const contactSection = document.getElementById('contact');
@@ -10,7 +11,9 @@ const Hero = () => {
       });
     }
   };
-  return <section className="pt-20 md:pt-32 pb-16 md:pb-24 bg-gradient-to-br from-white via-designoai-blue-light/30 to-white relative overflow-hidden">
+
+  return (
+    <section className="pt-20 md:pt-32 pb-16 md:pb-24 bg-gradient-to-br from-white via-designoai-blue-light/30 to-white relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-designoai-blue/5 rounded-full blur-3xl"></div>
@@ -23,23 +26,22 @@ const Hero = () => {
             {/* Logo com efeito moderno */}
             <div className="mb-8 animate-fade-in">
               <div className="relative inline-block">
-                <img src="/lovable-uploads/f3d9e115-20f9-4e21-8131-b13ad5504d5e.png" alt="DesignoAI Logo" className="w-80 h-auto object-contain mx-auto lg:mx-0 drop-shadow-2xl" />
+                <img 
+                  src="/lovable-uploads/f3d9e115-20f9-4e21-8131-b13ad5504d5e.png" 
+                  alt="DesignoAI Logo" 
+                  className="w-80 h-auto object-contain mx-auto lg:mx-0 drop-shadow-2xl" 
+                />
                 <div className="absolute -inset-4 bg-gradient-to-r from-designoai-blue/20 to-transparent rounded-full blur-2xl -z-10"></div>
               </div>
             </div>
             
-            <div className="flex items-center mb-6 animate-fade-in" style={{
-            animationDelay: '0.1s'
-          }}>
+            <div className="flex items-center mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
               <Sparkles className="w-6 h-6 text-designoai-blue mr-2" />
-              
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-designoai-blue-dark via-designoai-blue to-designoai-blue-dark bg-clip-text text-transparent leading-tight mb-6 animate-fade-in" style={{
-            animationDelay: '0.2s'
-          }}>
-              Sua marca no <br /> 
-              <span className="relative">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-designoai-blue-dark via-designoai-blue to-designoai-blue-dark bg-clip-text text-transparent leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <span className="block">Sua marca no</span>
+              <span className="relative block">
                 futuro
                 <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-designoai-blue to-designoai-blue-dark rounded-full"></div>
               </span>
@@ -142,6 +144,8 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default Hero;
