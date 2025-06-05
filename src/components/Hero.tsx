@@ -1,43 +1,36 @@
 import { Button } from '@/components/ui/button';
-
 const Hero = () => {
   const handleCallClick = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+      contactSection.scrollIntoView({
+        behavior: 'smooth'
+      });
     }
   };
-
-  return (
-    <section className="pt-20 md:pt-32 pb-16 md:pb-24">
+  return <section className="pt-20 md:pt-32 pb-16 md:pb-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center">
           <div className="lg:w-1/2 lg:pr-12 mb-10 lg:mb-0">
-            <div className="mb-6 animate-fade-in">
-              <img 
-                src="/lovable-uploads/f3d9e115-20f9-4e21-8131-b13ad5504d5e.png" 
-                alt="DesignoAI Logo" 
-                className="h-32 md:h-40 lg:h-48 w-auto"
-              />
-            </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-designoai-blue-dark leading-tight mb-6 animate-fade-in">
-              Sua marca em <br/> todos os lugares
+              Sua marca em <br /> todos os lugares
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 mb-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <p className="text-lg md:text-xl text-gray-600 mb-8 animate-fade-in" style={{
+            animationDelay: '0.2s'
+          }}>
               Revolucione suas estratégias de marketing e mídias sociais com soluções inteligentes que analisam, criam e otimizam seu conteúdo automaticamente.
             </p>
-            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue-light"
-                onClick={handleCallClick}
-              >
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in" style={{
+            animationDelay: '0.4s'
+          }}>
+              <Button size="lg" variant="outline" className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue-light" onClick={handleCallClick}>
                 Agende uma Conversa
               </Button>
             </div>
           </div>
-          <div className="lg:w-1/2 relative animate-fade-in" style={{ animationDelay: '0.6s' }}>
+          <div className="lg:w-1/2 relative animate-fade-in" style={{
+          animationDelay: '0.6s'
+        }}>
             <div className="relative">
               <div className="absolute -top-6 -left-6 w-12 h-12 bg-designoai-blue rounded-full opacity-20"></div>
               <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-designoai-blue rounded-full opacity-10"></div>
@@ -54,7 +47,7 @@ const Hero = () => {
                   <div className="flex items-center justify-center h-64 md:h-80 bg-designoai-blue-light rounded-lg">
                     <div className="text-center">
                       <img src="/star-icon.svg" alt="DesignoAI Star" className="w-16 h-16 mx-auto mb-4 star-icon animate-pulse-slow" />
-                      <div className="h-6 w-32 bg-gray-200 rounded mx-auto mb-3 animate-pulse"></div>
+                      
                       <div className="h-4 w-48 bg-gray-200 rounded mx-auto mb-3 animate-pulse"></div>
                       <div className="h-4 w-40 bg-gray-200 rounded mx-auto animate-pulse"></div>
                     </div>
@@ -65,8 +58,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;
