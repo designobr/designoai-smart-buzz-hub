@@ -1,13 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 20) {
@@ -16,30 +13,25 @@ const Navbar = () => {
         setIsScrolled(false);
       }
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
   const handleConsultorClick = () => {
     window.open('https://wa.me/5511947968158?text=Olá! Gostaria de falar com um consultor sobre o DesignoAI.', '_blank');
   };
-
   const handleWhatsAppClick = () => {
     window.open('https://wa.me/5511947968158?text=Olá! Gostaria de saber mais sobre o DesignoAI.', '_blank');
   };
-
-  return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm' : 'bg-transparent'}`}>
+  return <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-              <img src="/star-icon.svg" alt="DesignoAI Logo" className="w-8 h-8" />
-              <span className="text-designoai-blue-dark text-xl font-bold">DesignoAI</span>
+              <img alt="DesignoAI Logo" src="/lovable-uploads/09cb8eca-27b9-431a-97cf-fd9a75f478f8.png" className="w-8 h-8 object-contain" />
+              
             </Link>
           </div>
 
@@ -55,18 +47,10 @@ const Navbar = () => {
 
           {/* Call to Action */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button 
-              variant="ghost" 
-              className="text-designoai-blue-dark hover:text-designoai-blue transition"
-              onClick={handleConsultorClick}
-            >
+            <Button variant="ghost" className="text-designoai-blue-dark hover:text-designoai-blue transition" onClick={handleConsultorClick}>
               Falar com Consultor
             </Button>
-            <Button 
-              variant="default" 
-              className="bg-green-500 hover:bg-green-600 text-white"
-              onClick={handleWhatsAppClick}
-            >
+            <Button variant="default" className="bg-green-500 hover:bg-green-600 text-white" onClick={handleWhatsAppClick}>
               <MessageCircle className="w-4 h-4 mr-2" />
               WhatsApp
             </Button>
@@ -74,24 +58,15 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <button
-              type="button"
-              className="p-2 text-designoai-blue-dark"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
+            <button type="button" className="p-2 text-designoai-blue-dark" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t">
+      {mobileMenuOpen && <div className="md:hidden bg-white border-t">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link to="/services" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Serviços</Link>
             <Link to="/recursos" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Recursos</Link>
@@ -101,26 +76,15 @@ const Navbar = () => {
             <a href="#contact" className="block px-3 py-2 text-designoai-blue-dark hover:bg-designoai-blue-light rounded-md">Contato</a>
           </div>
           <div className="px-5 py-4 border-t border-gray-200">
-            <Button 
-              variant="ghost" 
-              className="w-full text-designoai-blue-dark mb-2"
-              onClick={handleConsultorClick}
-            >
+            <Button variant="ghost" className="w-full text-designoai-blue-dark mb-2" onClick={handleConsultorClick}>
               Falar com Consultor
             </Button>
-            <Button 
-              variant="default" 
-              className="w-full bg-green-500 hover:bg-green-600 text-white"
-              onClick={handleWhatsAppClick}
-            >
+            <Button variant="default" className="w-full bg-green-500 hover:bg-green-600 text-white" onClick={handleWhatsAppClick}>
               <MessageCircle className="w-4 h-4 mr-2" />
               WhatsApp
             </Button>
           </div>
-        </div>
-      )}
-    </header>
-  );
+        </div>}
+    </header>;
 };
-
 export default Navbar;
