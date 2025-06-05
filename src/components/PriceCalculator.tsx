@@ -146,7 +146,7 @@ const PriceCalculator = () => {
                     <Button className="w-full bg-white text-designoai-blue hover:bg-gray-100">
                       Solicitar Proposta Personalizada
                     </Button>
-                    <Button variant="outline" className="w-full border-white text-slate-50 bg-zinc-950 hover:bg-zinc-800">
+                    <Button variant="outline" className="w-full border-white text-slate-50 font-normal bg-slate-700 hover:bg-slate-600">
                       Falar com Consultor
                     </Button>
                   </div>
