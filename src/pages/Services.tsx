@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -11,6 +10,29 @@ const Services = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const digitalServices = [
+    {
+      title: "Gestão de Redes Sociais",
+      description: "12 posts mensais personalizados com design premium e copywriting otimizado para engajamento.",
+      features: ["12 posts/mês", "Stories diários programados", "Design profissional", "Copywriting otimizado"]
+    },
+    {
+      title: "Tráfego Pago",
+      description: "Campanhas estratégicas no Instagram e Facebook para aumentar sua visibilidade e conversões.",
+      features: ["Campanhas Instagram/Facebook", "Otimização de conversões", "Relatórios de performance", "Segmentação avançada"]
+    },
+    {
+      title: "Site One Page",
+      description: "Site responsivo e profissional para estabelecer sua presença digital com design moderno.",
+      features: ["Design responsivo", "Otimizado para SEO", "Formulário de contato", "Integração redes sociais"]
+    },
+    {
+      title: "Design Gráfico Completo",
+      description: "Identidade visual consistente em todos os materiais digitais da sua empresa.",
+      features: ["Logotipo profissional", "Paleta de cores", "Tipografia personalizada", "Manual de marca"]
+    }
+  ];
 
   const additionalServices = [
     {
@@ -73,7 +95,6 @@ const Services = () => {
       
       {/* Enhanced Hero Section */}
       <section className="pt-32 pb-20 bg-gradient-to-br from-designoai-blue-light via-white to-slate-50 relative overflow-hidden">
-        {/* Enhanced background elements */}
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-designoai-blue/10 to-purple-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-indigo-500/10 to-designoai-blue/10 rounded-full blur-3xl animate-pulse-slow" style={{
@@ -142,11 +163,40 @@ const Services = () => {
             </TabsList>
 
             <TabsContent value="digital">
+              <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-0 rounded-3xl overflow-hidden mb-8">
+                <CardHeader className="bg-gradient-to-r from-designoai-blue to-indigo-600 text-white relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5"></div>
+                  <div className="relative z-10">
+                    <CardTitle className="text-3xl font-bold flex items-center">
+                      <Smartphone className="w-8 h-8 mr-3" />
+                      Serviços Digitais
+                    </CardTitle>
+                    <CardDescription className="text-blue-100 text-lg">Transforme sua presença digital com soluções completas</CardDescription>
+                  </div>
+                </CardHeader>
+                <CardContent className="grid md:grid-cols-2 gap-8 p-8">
+                  {digitalServices.map((service, index) => (
+                    <div key={index} className="group p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                      <h3 className="text-xl font-semibold mb-4 text-slate-800 group-hover:text-designoai-blue transition-colors">{service.title}</h3>
+                      <p className="text-slate-600 mb-4 leading-relaxed">{service.description}</p>
+                      <ul className="space-y-2">
+                        {service.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center">
+                            <Check className="w-4 h-4 text-green-500 mr-3 flex-shrink-0" />
+                            <span className="text-sm text-slate-600">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+
+              {/* Enhanced CTA Section */}
               <div className="relative overflow-hidden bg-gradient-to-br from-designoai-blue via-purple-600 to-indigo-600 rounded-3xl p-8 md:p-12 lg:p-20 shadow-2xl">
                 {/* Enhanced background pattern */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/0"></div>
                 <div className="absolute top-0 left-0 w-full h-full opacity-10">
-                  {/* Floating elements */}
                   <div className="absolute top-10 left-10">
                     <Star className="w-16 h-16 text-white animate-pulse-slow" />
                   </div>
@@ -233,6 +283,7 @@ const Services = () => {
             </TabsContent>
 
             <TabsContent value="physical">
+              {/* physical tab content */}
               <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-0 rounded-3xl overflow-hidden">
                 <CardHeader className="bg-gradient-to-r from-green-500 to-emerald-500 text-white relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5"></div>
@@ -266,6 +317,7 @@ const Services = () => {
             </TabsContent>
 
             <TabsContent value="ai">
+              {/* ai tab content */}
               <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-0 rounded-3xl overflow-hidden">
                 <CardHeader className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5"></div>
@@ -299,6 +351,7 @@ const Services = () => {
             </TabsContent>
 
             <TabsContent value="extras">
+              {/* extras tab content */}
               <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-0 rounded-3xl overflow-hidden">
                 <CardHeader className="bg-gradient-to-r from-orange-500 to-red-500 text-white relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5"></div>
@@ -329,7 +382,6 @@ const Services = () => {
 
       {/* Enhanced Contact Section */}
       <section className="py-20 md:py-28 bg-gradient-to-br from-designoai-blue via-purple-600 to-indigo-600 relative overflow-hidden">
-        {/* Enhanced background pattern */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/0"></div>
         <div className="absolute top-0 left-0 w-full h-full opacity-10">
           <div className="absolute top-10 left-10">
