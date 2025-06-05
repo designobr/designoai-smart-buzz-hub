@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, Star } from 'lucide-react';
 
@@ -72,14 +71,14 @@ const Hero = () => {
               <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-6 animate-fade-in text-white" style={{
                 animationDelay: '0.2s'
               }}>
-                <span className="block bg-gradient-to-r from-yellow-300 via-white to-yellow-300 bg-clip-text text-transparent mb-2">
-                  Sua marca no
+                <span className="block bg-gradient-to-r from-yellow-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent mb-2">
+                  Sua marca no futuro
                 </span>
                 <span className="relative block">
-                  <span className="bg-gradient-to-r from-yellow-300 via-white to-yellow-300 bg-clip-text text-transparent">
-                    futuro agora!
+                  <span className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent">
+                    agora!
                   </span>
-                  <div className="absolute -bottom-4 left-0 w-3/4 h-0.5 bg-gradient-to-r from-white/50 to-transparent rounded-full"></div>
+                  <div className="absolute -bottom-4 left-0 w-3/4 h-0.5 bg-gradient-to-r from-yellow-400/50 to-transparent rounded-full"></div>
                 </span>
               </h1>
               
@@ -87,9 +86,10 @@ const Hero = () => {
                 animationDelay: '0.3s'
               }}>
                 Revolucione suas estratégias de marketing e mídias sociais com soluções inteligentes que 
-                <span className="font-semibold bg-gradient-to-r from-yellow-300 to-white bg-clip-text text-transparent"> analisam, criam e otimizam</span> seu conteúdo automaticamente.
+                <span className="font-semibold bg-gradient-to-r from-yellow-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent"> analisam, criam e otimizam</span> seu conteúdo automaticamente.
               </p>
               
+              {/* Enhanced Stats */}
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in mb-8" style={{
                 animationDelay: '0.4s'
               }}>
@@ -104,13 +104,12 @@ const Hero = () => {
                 </Button>
               </div>
 
-              {/* Enhanced Stats */}
               <div className="grid grid-cols-3 gap-6 animate-fade-in" style={{
                 animationDelay: '0.5s'
               }}>
                 <div className="text-center group">
                   <div className="relative">
-                    <div className="text-3xl font-bold bg-gradient-to-r from-yellow-300 to-white bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">500+</div>
+                    <div className="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">500+</div>
                     <div className="absolute -inset-2 bg-gradient-to-r from-white/10 to-white/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur"></div>
                   </div>
                   <div className="text-sm text-white/80 font-medium">Empresas</div>
@@ -152,6 +151,7 @@ const Hero = () => {
               </div>
             </div>
             
+            {/* Premium dashboard mockup */}
             <div className="lg:w-1/2 relative animate-fade-in" style={{
               animationDelay: '0.6s'
             }}>
