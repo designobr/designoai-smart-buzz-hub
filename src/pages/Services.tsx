@@ -118,7 +118,7 @@ const Services = () => {
                   <div className="group p-6 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                     <h3 className="text-xl font-semibold mb-4 text-slate-800 group-hover:text-blue-600 transition-colors">Gestão de Redes Sociais</h3>
                     <ul className="space-y-3">
-                      <li className="flex items-center"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />12 posts/mês (imagem + legenda + hashtag #inteligenciaartificial)</li>
+                      <li className="flex items-center"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />12 posts/mês (imagem + legenda + hashtag)</li>
                       <li className="flex items-center"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />Stories diários programados</li>
                       <li className="flex items-center"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />Calendário de conteúdo com planejamento estratégico</li>
                     </ul>
