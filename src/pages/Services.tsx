@@ -119,7 +119,7 @@ const Services = () => {
             </h1>
             
             <p className="text-xl md:text-2xl text-slate-600 mb-8 leading-relaxed max-w-4xl mx-auto">
-              Atendemos empresas pequenas e médias que atuam no físico, mas ainda não possuem presença digital estratégica
+              Atendemos empresas pequenas, médias e grandes, que querem atuar tanto no físico como também no digital
             </p>
             
             <div className="flex items-center justify-center mb-10">
