@@ -41,7 +41,7 @@ const Hero = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
               <span className="block bg-gradient-to-r from-designoai-blue-dark via-designoai-blue to-designoai-blue-dark bg-clip-text text-transparent">Sua marca no</span>
               <span className="relative block text-designoai-blue-dark">
-                futuro
+                futuro agora!
                 <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-designoai-blue to-designoai-blue-dark rounded-full"></div>
               </span>
             </h1>
