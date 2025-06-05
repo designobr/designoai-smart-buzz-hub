@@ -2,12 +2,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check, Star, ArrowRight, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
 const Pricing = () => {
   const startFeatures = ["12 artes premium personalizadas", "Suporte de Inteligência Artificial na criação visual", "Sugestão de temas com base em tendências e perfil do cliente", "Processo de aprovação com até 2 rodadas de revisão por arte", "Canal de atendimento via WhatsApp (horário comercial)"];
   const plusFeatures = ["18 artes premium personalizadas", "Suporte de Inteligência Artificial no processo criativo", "Sugestão de temas com base em tendências", "Processo de aprovação com até 2 rodadas de revisão por arte", "Canal de atendimento via WhatsApp (horário comercial)"];
   const digitalFeatures = ["Gestão de Redes Sociais (12 posts/mês)", "Stories diários programados", "Design Gráfico completo", "Copywriting otimizado", "Tráfego Pago (Instagram/Facebook)", "Site One Page Responsivo"];
   const physicalFeatures = ["Cartão de Visita Digital com QR Code", "1 Sessão de Fotos Presencial", "1 Vídeo Institucional", "Material físico sob demanda"];
   const aiFeatures = ["Relatórios mensais de desempenho", "Assistente por WhatsApp com IA", "Diagnóstico de marketing automático"];
+
   const handleContractClick = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
@@ -16,6 +18,7 @@ const Pricing = () => {
       });
     }
   };
+
   const handleCalculatorClick = () => {
     const calculatorSection = document.getElementById('calculator');
     if (calculatorSection) {
@@ -24,6 +27,7 @@ const Pricing = () => {
       });
     }
   };
+
   return <section id="pricing" className="py-16 md:py-24 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -71,7 +75,7 @@ const Pricing = () => {
               <div className="flex items-center justify-center mb-2">
                 
                 <CardTitle className="text-2xl font-bold text-designoai-blue-dark">
-                  Plano Plus
+                  Plus
                 </CardTitle>
               </div>
               <div className="flex items-center justify-center mb-4">
@@ -191,4 +195,5 @@ const Pricing = () => {
       </div>
     </section>;
 };
+
 export default Pricing;
