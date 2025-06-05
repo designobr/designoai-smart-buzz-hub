@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, Star } from 'lucide-react';
 const Hero = () => {
@@ -85,10 +84,7 @@ const Hero = () => {
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
               </Button>
               
-              <Button size="lg" variant="outline" className="relative border-2 border-designoai-blue/30 text-designoai-blue hover:bg-designoai-blue hover:text-white transition-all duration-300 shadow-lg backdrop-blur-sm hover:shadow-xl hover:border-designoai-blue transform hover:-translate-y-1 bg-white/80">
-                <div className="absolute inset-0 bg-gradient-to-r from-designoai-blue/0 to-designoai-blue/10 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                Ver Demo
-              </Button>
+              
             </div>
 
             {/* Enhanced Stats */}
