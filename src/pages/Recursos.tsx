@@ -87,7 +87,7 @@ const Recursos = () => {
                   Começar Agora
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" onClick={() => window.open('https://wa.me/5511947968158?text=Olá! Gostaria de saber mais sobre os recursos do DesignoAI.', '_blank')} className="border-white hover:bg-white/10 text-gray-100">
+              <Button size="lg" variant="outline" onClick={() => window.open('https://wa.me/5511947968158?text=Olá! Gostaria de saber mais sobre os recursos do DesignoAI.', '_blank')} className="border-white hover:bg-white/10 text-zinc-700">
                 Falar com Consultor
               </Button>
             </div>
