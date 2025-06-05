@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
@@ -39,13 +38,14 @@ const Hero = () => {
               <Sparkles className="w-6 h-6 text-designoai-blue mr-2" />
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-designoai-blue-dark via-designoai-blue to-designoai-blue-dark bg-clip-text text-transparent leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              <span className="block">Sua marca no</span>
-              <span className="relative block">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <span className="block bg-gradient-to-r from-designoai-blue-dark via-designoai-blue to-designoai-blue-dark bg-clip-text text-transparent">Sua marca no</span>
+              <span className="relative block text-designoai-blue-dark">
                 futuro
                 <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-designoai-blue to-designoai-blue-dark rounded-full"></div>
               </span>
             </h1>
+            
             
             <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed animate-fade-in" style={{
             animationDelay: '0.3s'
