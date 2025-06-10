@@ -63,7 +63,6 @@ const CasosSucesso = () => {
       <Navbar />
       
       <main className="pt-20">
-        {/* Hero Section */}
         <section className="py-16 md:py-24 bg-gradient-to-br from-designoai-blue-light to-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
@@ -81,7 +80,6 @@ const CasosSucesso = () => {
           </div>
         </section>
 
-        {/* Success Cases */}
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="space-y-16">
@@ -99,17 +97,17 @@ const CasosSucesso = () => {
                     
                     <div className="space-y-6">
                       <div>
-                        <h3 className="font-semibold text-lg text-gray-800 mb-2">🎯 Desafio</h3>
+                        <h3 className="font-semibold text-lg text-gray-800 mb-2">Desafio</h3>
                         <p className="text-gray-600">{case.challenge}</p>
                       </div>
                       
                       <div>
-                        <h3 className="font-semibold text-lg text-gray-800 mb-2">💡 Solução</h3>
+                        <h3 className="font-semibold text-lg text-gray-800 mb-2">Solução</h3>
                         <p className="text-gray-600">{case.solution}</p>
                       </div>
                       
                       <div>
-                        <h3 className="font-semibold text-lg text-gray-800 mb-2">⏱️ Tempo para Resultados</h3>
+                        <h3 className="font-semibold text-lg text-gray-800 mb-2">Tempo para Resultados</h3>
                         <p className="text-designoai-blue font-semibold">{case.timeframe}</p>
                       </div>
                     </div>
@@ -146,7 +144,6 @@ const CasosSucesso = () => {
           </div>
         </section>
 
-        {/* Overall Stats */}
         <section className="py-16 md:py-24 bg-gray-50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
@@ -179,7 +176,6 @@ const CasosSucesso = () => {
           </div>
         </section>
 
-        {/* Testimonials */}
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
@@ -249,7 +245,6 @@ const CasosSucesso = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
         <section className="py-16 md:py-24 bg-designoai-blue">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
