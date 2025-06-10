@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -72,8 +71,8 @@ const PriceCalculator = () => {
 
   const durationOptions = [
     { months: 1, label: '1 mês', discount: 0 },
-    { months: 6, label: '6 meses', discount: 10 },
-    { months: 12, label: '12 meses', discount: 20 }
+    { months: 6, label: '6 meses', discount: 5 },
+    { months: 12, label: '12 meses', discount: 10 }
   ];
 
   const togglePackage = (packageId: string) => {
