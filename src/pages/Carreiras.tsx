@@ -4,9 +4,12 @@ import Footer from '@/components/Footer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Code, Brain, Palette, TrendingUp, Users, Headphones, Target, Clock, Globe, Heart } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/components/ui/use-toast';
 
 const Carreiras = () => {
   const [selectedJob, setSelectedJob] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -102,20 +105,65 @@ const Carreiras = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const subject = `Candidatura - ${formData.position}`;
-    const body = `Nome: ${formData.name}
-Email: ${formData.email}
-Telefone: ${formData.phone}
-Cargo de Interesse: ${formData.position}
-Experiência: ${formData.experience}
-Portfólio/LinkedIn: ${formData.portfolio}
-Motivação: ${formData.motivation}`;
-    
-    const encodedBody = encodeURIComponent(body);
-    const encodedSubject = encodeURIComponent(subject);
-    window.open(`mailto:carreiras@designoai.com.br?subject=${encodedSubject}&body=${encodedBody}`, '_blank');
+    setIsSubmitting(true);
+
+    try {
+      // Validar campos obrigatórios
+      if (!formData.name || !formData.email || !formData.position || 
+          !formData.experience || !formData.motivation) {
+        toast({
+          title: "Erro",
+          description: "Por favor, preencha todos os campos obrigatórios.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Chamar a edge function
+      const { data, error } = await supabase.functions.invoke('submit-job-application', {
+        body: formData
+      });
+
+      if (error) {
+        console.error('Erro ao enviar candidatura:', error);
+        toast({
+          title: "Erro",
+          description: "Ocorreu um erro ao enviar sua candidatura. Tente novamente.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Sucesso
+      toast({
+        title: "Candidatura enviada!",
+        description: "Sua candidatura foi enviada com sucesso. Entraremos em contato em breve.",
+      });
+
+      // Limpar formulário
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        position: '',
+        experience: '',
+        portfolio: '',
+        motivation: ''
+      });
+
+    } catch (error) {
+      console.error('Erro ao enviar candidatura:', error);
+      toast({
+        title: "Erro",
+        description: "Ocorreu um erro inesperado. Tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -293,7 +341,7 @@ Motivação: ${formData.motivation}`;
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                    Nome Completo
+                    Nome Completo *
                   </label>
                   <input
                     type="text"
@@ -308,7 +356,7 @@ Motivação: ${formData.motivation}`;
                   
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    E-mail
+                    E-mail *
                   </label>
                   <input
                     type="email"
@@ -337,7 +385,7 @@ Motivação: ${formData.motivation}`;
                   
                 <div>
                   <label htmlFor="position" className="block text-sm font-medium text-gray-700 mb-1">
-                    Cargo de Interesse
+                    Cargo de Interesse *
                   </label>
                   <select
                     id="position"
@@ -356,7 +404,7 @@ Motivação: ${formData.motivation}`;
                   
                 <div>
                   <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-1">
-                    Experiência Profissional
+                    Experiência Profissional *
                   </label>
                   <textarea
                     id="experience"
@@ -387,7 +435,7 @@ Motivação: ${formData.motivation}`;
                   
                 <div>
                   <label htmlFor="motivation" className="block text-sm font-medium text-gray-700 mb-1">
-                    Por que quer trabalhar na DesignoAI?
+                    Por que quer trabalhar na DesignoAI? *
                   </label>
                   <textarea
                     id="motivation"
@@ -401,8 +449,12 @@ Motivação: ${formData.motivation}`;
                   />
                 </div>
                 
-                <Button type="submit" className="w-full bg-designoai-blue hover:bg-designoai-blue-dark text-white py-3 text-lg">
-                  Enviar Candidatura
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="w-full bg-designoai-blue hover:bg-designoai-blue-dark text-white py-3 text-lg disabled:opacity-50"
+                >
+                  {isSubmitting ? "Enviando..." : "Enviar Candidatura"}
                 </Button>
               </form>
             </CardContent>
