@@ -23,6 +23,9 @@ import Carreiras from "./pages/Carreiras";
 import Blog from "./pages/Blog";
 import CasosSucesso from "./pages/CasosSucesso";
 import Parcerias from "./pages/Parcerias";
+import TermosUso from "./pages/TermosUso";
+import PoliticaPrivacidade from "./pages/PoliticaPrivacidade";
+import Cookies from "./pages/Cookies";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +52,9 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/casos-sucesso" element={<CasosSucesso />} />
           <Route path="/parcerias" element={<Parcerias />} />
+          <Route path="/termos-uso" element={<TermosUso />} />
+          <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
+          <Route path="/cookies" element={<Cookies />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="*" element={<NotFound />} />

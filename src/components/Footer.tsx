@@ -87,9 +87,9 @@ const Footer = () => {
               © 2025 DesignoAI. Todos os direitos reservados.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-gray-400 hover:text-white text-sm">Termos de Uso</a>
-              <a href="#" className="text-gray-400 hover:text-white text-sm">Política de Privacidade</a>
-              <a href="#" className="text-gray-400 hover:text-white text-sm">Cookies</a>
+              <Link to="/termos-uso" className="text-gray-400 hover:text-white text-sm">Termos de Uso</Link>
+              <Link to="/politica-privacidade" className="text-gray-400 hover:text-white text-sm">Política de Privacidade</Link>
+              <Link to="/cookies" className="text-gray-400 hover:text-white text-sm">Cookies</Link>
             </div>
           </div>
         </div>
