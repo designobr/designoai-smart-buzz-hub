@@ -2,9 +2,6 @@
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Star, BarChart3, TrendingUp, Target, PieChart } from 'lucide-react';
 
 const AnalyseDados = () => {
   useEffect(() => {
@@ -15,67 +12,82 @@ const AnalyseDados = () => {
     <div className="min-h-screen">
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-to-br from-purple-50 via-white to-pink-50 relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full text-purple-600 font-medium mb-8 shadow-lg border border-purple-200">
-              <Star className="w-4 h-4 mr-2 animate-pulse" />
-              📊 Análise de Dados
-            </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold mb-8 leading-tight">
-              <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-purple-800 bg-clip-text text-transparent">
-                Análise de Dados
-              </span>
-              <br />
-              <span className="text-slate-800">Inteligente</span>
+      <main className="pt-20">
+        <section className="py-16 md:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+            <h1 className="text-4xl md:text-5xl font-bold text-designoai-blue-dark mb-8 text-center">
+              Análise de Dados
             </h1>
             
-            <p className="text-xl text-slate-600 mb-10 leading-relaxed">
-              Insights precisos e em tempo real sobre o desempenho de suas estratégias de marketing
-            </p>
-            
-            <Link to="/#contact">
-              <Button size="lg" className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white shadow-xl hover:shadow-2xl transition-all duration-500">
-                Começar Agora
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </Link>
+            <div className="prose prose-lg mx-auto text-gray-600">
+              <p className="text-xl leading-relaxed mb-6">
+                Nossa plataforma de Análise de Dados com inteligência artificial transforma informações brutas em insights acionáveis, permitindo que você tome decisões estratégicas baseadas em dados concretos.
+              </p>
+              
+              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Capacidades Analíticas</h2>
+              
+              <p className="mb-4">
+                Nossa solução de análise utiliza algoritmos avançados de machine learning para processar e interpretar grandes volumes de dados:
+              </p>
+              
+              <ul className="list-disc pl-6 mb-6 space-y-2">
+                <li>Análise comportamental de clientes em tempo real</li>
+                <li>Identificação de padrões e tendências de mercado</li>
+                <li>Segmentação automática de audiência</li>
+                <li>Previsão de demanda e sazonalidade</li>
+                <li>Análise de sentimento em redes sociais</li>
+                <li>Otimização de funil de vendas</li>
+                <li>ROI detalhado por canal de marketing</li>
+              </ul>
+              
+              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Dashboards Inteligentes</h2>
+              
+              <p className="mb-4">
+                Nossos dashboards apresentam informações complexas de forma visual e intuitiva, permitindo que você acompanhe KPIs importantes e identifique oportunidades de melhoria rapidamente.
+              </p>
+              
+              <p className="mb-4">
+                A IA automaticamente destaca anomalias, tendências emergentes e recomenda ações específicas baseadas nos dados analisados, transformando insights em estratégias concretas.
+              </p>
+              
+              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Análise Preditiva</h2>
+              
+              <p className="mb-4">
+                Utilizamos modelos preditivos avançados para antecipar comportamentos e tendências:
+              </p>
+              
+              <ul className="list-disc pl-6 mb-6 space-y-2">
+                <li>Previsão de churn de clientes</li>
+                <li>Identificação de clientes com maior potencial de compra</li>
+                <li>Previsão de receita e crescimento</li>
+                <li>Análise de lifetime value dos clientes</li>
+                <li>Otimização de preços baseada em demanda</li>
+                <li>Previsão de performance de campanhas</li>
+              </ul>
+              
+              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Integração de Dados</h2>
+              
+              <p className="mb-4">
+                Nossa plataforma se integra com múltiplas fontes de dados, incluindo sistemas de CRM, plataformas de e-commerce, redes sociais, ferramentas de email marketing e sistemas internos da empresa.
+              </p>
+              
+              <p className="mb-4">
+                A IA processa e correlaciona informações de diferentes fontes para criar uma visão 360° do seu negócio, identificando conexões e insights que não seriam óbvios através de análises isoladas.
+              </p>
+              
+              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Relatórios Automatizados</h2>
+              
+              <p className="mb-4">
+                Geramos relatórios personalizados automaticamente, com insights relevantes para diferentes níveis da organização. Os relatórios incluem análises de performance, recomendações estratégicas e projeções futuras.
+              </p>
+              
+              <p className="text-lg">
+                Com nossa solução de Análise de Dados, você transforma informações em vantagem competitiva, tomando decisões mais precisas e estratégicas para impulsionar o crescimento sustentável do seu negócio.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-8 bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <BarChart3 className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Relatórios Detalhados</h3>
-              <p className="text-slate-600">Análises completas com métricas importantes do seu negócio</p>
-            </div>
-            
-            <div className="text-center p-8 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-3xl">
-              <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <TrendingUp className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Tendências de Mercado</h3>
-              <p className="text-slate-600">Identificação de oportunidades e tendências em tempo real</p>
-            </div>
-            
-            <div className="text-center p-8 bg-gradient-to-br from-green-50 to-teal-50 rounded-3xl">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Target className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">ROI Otimizado</h3>
-              <p className="text-slate-600">Maximização do retorno sobre investimento com dados precisos</p>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

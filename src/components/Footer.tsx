@@ -1,5 +1,6 @@
 
 import { Instagram, Phone, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -33,22 +34,22 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-6">Soluções</h3>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Social Media</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Criação de Conteúdo</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">SEO Inteligente</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Email Marketing</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Análise de Dados</a></li>
+              <li><Link to="/social-media" className="text-gray-300 hover:text-white transition-colors">Social Media</Link></li>
+              <li><Link to="/criacao-conteudo" className="text-gray-300 hover:text-white transition-colors">Criação de Conteúdo</Link></li>
+              <li><Link to="/seo-inteligente" className="text-gray-300 hover:text-white transition-colors">SEO Inteligente</Link></li>
+              <li><Link to="/email-marketing" className="text-gray-300 hover:text-white transition-colors">Email Marketing</Link></li>
+              <li><Link to="/analise-dados" className="text-gray-300 hover:text-white transition-colors">Análise de Dados</Link></li>
             </ul>
           </div>
 
           <div>
             <h3 className="text-lg font-semibold mb-6">Empresa</h3>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Sobre Nós</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Carreiras</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Blog</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Casos de Sucesso</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Parcerias</a></li>
+              <li><Link to="/sobre-nos" className="text-gray-300 hover:text-white transition-colors">Sobre Nós</Link></li>
+              <li><Link to="/carreiras" className="text-gray-300 hover:text-white transition-colors">Carreiras</Link></li>
+              <li><Link to="/blog" className="text-gray-300 hover:text-white transition-colors">Blog</Link></li>
+              <li><Link to="/casos-sucesso" className="text-gray-300 hover:text-white transition-colors">Casos de Sucesso</Link></li>
+              <li><Link to="/parcerias" className="text-gray-300 hover:text-white transition-colors">Parcerias</Link></li>
             </ul>
           </div>
 
