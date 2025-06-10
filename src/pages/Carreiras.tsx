@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Code, Brain, Palette, TrendingUp, Users, Headphones, Target, Clock, Globe, Heart } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/components/ui/use-toast';
+
 const Carreiras = () => {
   const [selectedJob, setSelectedJob] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -18,65 +19,73 @@ const Carreiras = () => {
     portfolio: '',
     motivation: ''
   });
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const benefits = [{
-    icon: Target,
-    title: "Ambiente Colaborativo",
-    description: "Trabalhe em equipe inspiradora"
-  }, {
-    icon: Brain,
-    title: "Aprendizado Contínuo",
-    description: "Tecnologias de ponta sempre"
-  }, {
-    icon: Clock,
-    title: "Flexibilidade",
-    description: "Horários e trabalho remoto"
-  }, {
-    icon: Globe,
-    title: "Projetos de Impacto",
-    description: "Transforme empresas pelo Brasil"
-  }];
-  const handleInputChange = e => {
+
+  const benefits = [
+    {
+      icon: Target,
+      title: "Ambiente Colaborativo",
+      description: "Trabalhe em equipe inspiradora"
+    },
+    {
+      icon: Brain,
+      title: "Aprendizado Contínuo",
+      description: "Tecnologias de ponta sempre"
+    },
+    {
+      icon: Clock,
+      title: "Flexibilidade",
+      description: "Horários e trabalho remoto"
+    },
+    {
+      icon: Globe,
+      title: "Projetos de Impacto",
+      description: "Transforme empresas pelo Brasil"
+    }
+  ];
+
+  const handleInputChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
-  const handleSubmit = async e => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+
     try {
       // Validar campos obrigatórios
-      if (!formData.name || !formData.email || !formData.position || !formData.experience || !formData.motivation) {
+      if (!formData.name || !formData.email || !formData.position || 
+          !formData.experience || !formData.motivation) {
         toast({
           title: "Erro",
           description: "Por favor, preencha todos os campos obrigatórios.",
-          variant: "destructive"
+          variant: "destructive",
         });
         setIsSubmitting(false);
         return;
       }
+
       console.log('Enviando candidatura:', formData);
 
       // Chamar a edge function
-      const {
-        data,
-        error
-      } = await supabase.functions.invoke('submit-job-application', {
+      const { data, error } = await supabase.functions.invoke('submit-job-application', {
         body: formData
       });
-      console.log('Resposta da função:', {
-        data,
-        error
-      });
+
+      console.log('Resposta da função:', { data, error });
+
       if (error) {
         console.error('Erro ao enviar candidatura:', error);
         toast({
           title: "Erro",
           description: `Ocorreu um erro ao enviar sua candidatura: ${error.message || 'Erro desconhecido'}`,
-          variant: "destructive"
+          variant: "destructive",
         });
         return;
       }
@@ -87,7 +96,7 @@ const Carreiras = () => {
         toast({
           title: "Erro",
           description: `Erro: ${data.error}${data.details ? ` - ${data.details}` : ''}`,
-          variant: "destructive"
+          variant: "destructive",
         });
         return;
       }
@@ -95,7 +104,7 @@ const Carreiras = () => {
       // Sucesso
       toast({
         title: "Candidatura enviada!",
-        description: "Sua candidatura foi enviada com sucesso. Entraremos em contato em breve."
+        description: "Sua candidatura foi enviada com sucesso. Entraremos em contato em breve.",
       });
 
       // Limpar formulário
@@ -108,61 +117,72 @@ const Carreiras = () => {
         portfolio: '',
         motivation: ''
       });
+
     } catch (error) {
       console.error('Erro inesperado ao enviar candidatura:', error);
       toast({
         title: "Erro",
         description: `Ocorreu um erro inesperado: ${error.message || 'Erro desconhecido'}`,
-        variant: "destructive"
+        variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
     }
   };
-  const jobs = [{
-    id: 1,
-    title: "Desenvolvedor Full Stack",
-    department: "Tecnologia",
-    icon: Code,
-    description: "Responsável pelo desenvolvimento de funcionalidades front-end e back-end da nossa plataforma de IA.",
-    requirements: ["React.js", "Node.js", "TypeScript", "Python", "Experiência com APIs"]
-  }, {
-    id: 2,
-    title: "Cientista de Dados",
-    department: "Tecnologia",
-    icon: Brain,
-    description: "Desenvolvimento de modelos de machine learning e análise de dados para otimização das campanhas.",
-    requirements: ["Python", "Machine Learning", "TensorFlow", "SQL", "Estatística"]
-  }, {
-    id: 3,
-    title: "Especialista em Marketing Digital",
-    department: "Marketing",
-    icon: TrendingUp,
-    description: "Criação e execução de estratégias de marketing digital para nossos clientes e para a própria empresa.",
-    requirements: ["Google Ads", "Facebook Ads", "SEO/SEM", "Analytics", "Growth Hacking"]
-  }, {
-    id: 4,
-    title: "Designer UX/UI",
-    department: "Design",
-    icon: Palette,
-    description: "Design de interfaces intuitivas e experiências de usuário excepcionais para nossa plataforma.",
-    requirements: ["Figma", "Adobe Creative Suite", "Prototipagem", "Design System", "User Research"]
-  }, {
-    id: 5,
-    title: "Consultor Comercial",
-    department: "Vendas",
-    icon: Users,
-    description: "Prospecção e fechamento de novos clientes, apresentação de soluções e consultoria comercial.",
-    requirements: ["Vendas B2B", "CRM", "Negociação", "Consultiva", "Relacionamento"]
-  }, {
-    id: 6,
-    title: "Customer Success",
-    department: "Atendimento",
-    icon: Headphones,
-    description: "Garantir o sucesso dos nossos clientes, onboarding, suporte e identificação de oportunidades de upsell.",
-    requirements: ["Atendimento ao Cliente", "Análise de Dados", "Comunicação", "Proatividade"]
-  }];
-  return <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-designoai-blue-light/20">
+
+  const jobs = [
+    {
+      id: 1,
+      title: "Desenvolvedor Full Stack",
+      department: "Tecnologia",
+      icon: Code,
+      description: "Responsável pelo desenvolvimento de funcionalidades front-end e back-end da nossa plataforma de IA.",
+      requirements: ["React.js", "Node.js", "TypeScript", "Python", "Experiência com APIs"]
+    },
+    {
+      id: 2,
+      title: "Cientista de Dados",
+      department: "Tecnologia",
+      icon: Brain,
+      description: "Desenvolvimento de modelos de machine learning e análise de dados para otimização das campanhas.",
+      requirements: ["Python", "Machine Learning", "TensorFlow", "SQL", "Estatística"]
+    },
+    {
+      id: 3,
+      title: "Especialista em Marketing Digital",
+      department: "Marketing",
+      icon: TrendingUp,
+      description: "Criação e execução de estratégias de marketing digital para nossos clientes e para a própria empresa.",
+      requirements: ["Google Ads", "Facebook Ads", "SEO/SEM", "Analytics", "Growth Hacking"]
+    },
+    {
+      id: 4,
+      title: "Designer UX/UI",
+      department: "Design",
+      icon: Palette,
+      description: "Design de interfaces intuitivas e experiências de usuário excepcionais para nossa plataforma.",
+      requirements: ["Figma", "Adobe Creative Suite", "Prototipagem", "Design System", "User Research"]
+    },
+    {
+      id: 5,
+      title: "Consultor Comercial",
+      department: "Vendas",
+      icon: Users,
+      description: "Prospecção e fechamento de novos clientes, apresentação de soluções e consultoria comercial.",
+      requirements: ["Vendas B2B", "CRM", "Negociação", "Consultiva", "Relacionamento"]
+    },
+    {
+      id: 6,
+      title: "Customer Success",
+      department: "Atendimento",
+      icon: Headphones,
+      description: "Garantir o sucesso dos nossos clientes, onboarding, suporte e identificação de oportunidades de upsell.",
+      requirements: ["Atendimento ao Cliente", "Análise de Dados", "Comunicação", "Proatividade"]
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-designoai-blue-light/20">
       <Navbar />
       
       {/* Hero Section */}
@@ -191,7 +211,8 @@ const Carreiras = () => {
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            {benefits.map((benefit, index) => <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg bg-white/70 backdrop-blur-sm hover:scale-105">
+            {benefits.map((benefit, index) => (
+              <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg bg-white/70 backdrop-blur-sm hover:scale-105">
                 <CardHeader className="text-center pb-4">
                   <div className="mx-auto mb-4 p-3 bg-gradient-to-r from-designoai-blue/20 to-purple-400/20 rounded-2xl w-fit group-hover:scale-110 transition-transform duration-300">
                     <benefit.icon className="w-8 h-8 text-designoai-blue" />
@@ -203,7 +224,8 @@ const Carreiras = () => {
                 <CardContent className="text-center">
                   <p className="text-gray-600 leading-relaxed">{benefit.description}</p>
                 </CardContent>
-              </Card>)}
+              </Card>
+            ))}
           </div>
 
           <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
@@ -214,12 +236,18 @@ const Carreiras = () => {
               
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-3">
-                  
+                  <div className="flex items-center">
+                    <Heart className="w-5 h-5 text-designoai-blue mr-3" />
+                    <span className="text-gray-700">Plano de saúde e odontológico</span>
+                  </div>
                   <div className="flex items-center">
                     <Target className="w-5 h-5 text-designoai-blue mr-3" />
                     <span className="text-gray-700">Planos de carreira personalizados</span>
                   </div>
-                  
+                  <div className="flex items-center">
+                    <Brain className="w-5 h-5 text-designoai-blue mr-3" />
+                    <span className="text-gray-700">Budget para cursos e certificações</span>
+                  </div>
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center">
@@ -249,7 +277,8 @@ const Carreiras = () => {
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            {jobs.map(job => <Card key={job.id} className="cursor-pointer hover:shadow-xl transition-all duration-300 border-0 shadow-lg bg-white/70 backdrop-blur-sm hover:scale-105" onClick={() => setSelectedJob(job)}>
+            {jobs.map((job) => (
+              <Card key={job.id} className="cursor-pointer hover:shadow-xl transition-all duration-300 border-0 shadow-lg bg-white/70 backdrop-blur-sm hover:scale-105" onClick={() => setSelectedJob(job)}>
                 <CardHeader className="text-center">
                   <div className="mx-auto mb-4 p-3 bg-gradient-to-r from-designoai-blue/20 to-purple-400/20 rounded-2xl w-fit">
                     <job.icon className="w-8 h-8 text-designoai-blue" />
@@ -261,16 +290,22 @@ const Carreiras = () => {
                   <p className="text-gray-600 mb-4 leading-relaxed">{job.description}</p>
                   <div className="space-y-1">
                     <p className="font-semibold text-sm text-gray-700">Principais requisitos:</p>
-                    {job.requirements.slice(0, 3).map((req, index) => <span key={index} className="inline-block bg-gradient-to-r from-designoai-blue-light/50 to-purple-100 text-designoai-blue-dark px-3 py-1 rounded-full text-xs mr-1 mb-1">
+                    {job.requirements.slice(0, 3).map((req, index) => (
+                      <span key={index} className="inline-block bg-gradient-to-r from-designoai-blue-light/50 to-purple-100 text-designoai-blue-dark px-3 py-1 rounded-full text-xs mr-1 mb-1">
                         {req}
-                      </span>)}
-                    {job.requirements.length > 3 && <span className="text-xs text-gray-500">+{job.requirements.length - 3} mais</span>}
+                      </span>
+                    ))}
+                    {job.requirements.length > 3 && (
+                      <span className="text-xs text-gray-500">+{job.requirements.length - 3} mais</span>
+                    )}
                   </div>
                 </CardContent>
-              </Card>)}
+              </Card>
+            ))}
           </div>
 
-          {selectedJob && <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm mb-16">
+          {selectedJob && (
+            <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm mb-16">
               <CardContent className="p-8">
                 <div className="flex items-center mb-6">
                   <div className="p-3 bg-gradient-to-r from-designoai-blue/20 to-purple-400/20 rounded-2xl mr-4">
@@ -286,19 +321,22 @@ const Carreiras = () => {
                 
                 <h4 className="font-semibold mb-3 text-designoai-blue-dark">Todos os requisitos:</h4>
                 <div className="grid md:grid-cols-2 gap-3 mb-6">
-                  {selectedJob.requirements.map((req, index) => <div key={index} className="flex items-center p-3 bg-gradient-to-r from-designoai-blue-light/30 to-purple-50 rounded-lg">
+                  {selectedJob.requirements.map((req, index) => (
+                    <div key={index} className="flex items-center p-3 bg-gradient-to-r from-designoai-blue-light/30 to-purple-50 rounded-lg">
                       <div className="bg-designoai-blue rounded-full p-1 mr-3">
                         <div className="bg-white rounded-full w-2 h-2"></div>
                       </div>
                       <span className="text-gray-700">{req}</span>
-                    </div>)}
+                    </div>
+                  ))}
                 </div>
                 
                 <Button onClick={() => setSelectedJob(null)} variant="outline" className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue hover:text-white">
                   Fechar Detalhes
                 </Button>
               </CardContent>
-            </Card>}
+            </Card>
+          )}
         </div>
       </section>
 
@@ -320,30 +358,62 @@ const Carreiras = () => {
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                     Nome Completo *
                   </label>
-                  <input type="text" id="name" name="name" required value={formData.name} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" />
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors"
+                  />
                 </div>
                   
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                     E-mail *
                   </label>
-                  <input type="email" id="email" name="email" required value={formData.email} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" />
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors"
+                  />
                 </div>
                   
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
                     Telefone
                   </label>
-                  <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" />
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors"
+                  />
                 </div>
                   
                 <div>
                   <label htmlFor="position" className="block text-sm font-medium text-gray-700 mb-1">
                     Cargo de Interesse *
                   </label>
-                  <select id="position" name="position" required value={formData.position} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors">
+                  <select
+                    id="position"
+                    name="position"
+                    required
+                    value={formData.position}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors"
+                  >
                     <option value="">Selecione um cargo</option>
-                    {jobs.map(job => <option key={job.id} value={job.title}>{job.title}</option>)}
+                    {jobs.map((job) => (
+                      <option key={job.id} value={job.title}>{job.title}</option>
+                    ))}
                   </select>
                 </div>
                   
@@ -351,24 +421,54 @@ const Carreiras = () => {
                   <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-1">
                     Experiência Profissional *
                   </label>
-                  <textarea id="experience" name="experience" rows={3} required value={formData.experience} onChange={handleInputChange} placeholder="Descreva sua experiência relevante..." className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" />
+                  <textarea
+                    id="experience"
+                    name="experience"
+                    rows={3}
+                    required
+                    value={formData.experience}
+                    onChange={handleInputChange}
+                    placeholder="Descreva sua experiência relevante..."
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors"
+                  />
                 </div>
                   
                 <div>
                   <label htmlFor="portfolio" className="block text-sm font-medium text-gray-700 mb-1">
                     Portfólio/LinkedIn
                   </label>
-                  <input type="url" id="portfolio" name="portfolio" value={formData.portfolio} onChange={handleInputChange} placeholder="https://..." className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" />
+                  <input
+                    type="url"
+                    id="portfolio"
+                    name="portfolio"
+                    value={formData.portfolio}
+                    onChange={handleInputChange}
+                    placeholder="https://..."
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors"
+                  />
                 </div>
                   
                 <div>
                   <label htmlFor="motivation" className="block text-sm font-medium text-gray-700 mb-1">
                     Por que quer trabalhar na DesignoAI? *
                   </label>
-                  <textarea id="motivation" name="motivation" rows={3} required value={formData.motivation} onChange={handleInputChange} placeholder="Conte-nos sua motivação..." className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" />
+                  <textarea
+                    id="motivation"
+                    name="motivation"
+                    rows={3}
+                    required
+                    value={formData.motivation}
+                    onChange={handleInputChange}
+                    placeholder="Conte-nos sua motivação..."
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors"
+                  />
                 </div>
                 
-                <Button type="submit" disabled={isSubmitting} className="w-full bg-designoai-blue hover:bg-designoai-blue-dark text-white py-3 text-lg disabled:opacity-50">
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="w-full bg-designoai-blue hover:bg-designoai-blue-dark text-white py-3 text-lg disabled:opacity-50"
+                >
                   {isSubmitting ? "Enviando..." : "Enviar Candidatura"}
                 </Button>
               </form>
@@ -378,6 +478,8 @@ const Carreiras = () => {
       </section>
 
       <Footer />
-    </div>;
+    </div>
+  );
 };
+
 export default Carreiras;
