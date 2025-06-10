@@ -71,8 +71,8 @@ const PriceCalculator = () => {
 
   const durationOptions = [
     { months: 1, label: '1 mês', discount: 0 },
-    { months: 6, label: '6 meses', discount: 5 },
-    { months: 12, label: '12 meses', discount: 10 }
+    { months: 6, label: '6 meses', discount: 3 },
+    { months: 12, label: '12 meses', discount: 5 }
   ];
 
   const togglePackage = (packageId: string) => {

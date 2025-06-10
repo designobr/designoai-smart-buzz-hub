@@ -13,6 +13,13 @@ import DesignAutomatizado from "./pages/DesignAutomatizado";
 import EstrategiasPersonalizadas from "./pages/EstrategiasPersonalizadas";
 import AnalyseDados from "./pages/AnalyseDados";
 import SEOInteligente from "./pages/SEOInteligente";
+import SocialMedia from "./pages/SocialMedia";
+import EmailMarketing from "./pages/EmailMarketing";
+import SobreNos from "./pages/SobreNos";
+import Carreiras from "./pages/Carreiras";
+import Blog from "./pages/Blog";
+import CasosSucesso from "./pages/CasosSucesso";
+import Parcerias from "./pages/Parcerias";
 import NotFound from "./pages/NotFound";
 import Checkout from "./pages/Checkout";
 import PaymentSuccess from "./pages/PaymentSuccess";
@@ -35,6 +42,13 @@ const App = () => (
           <Route path="/estrategias-personalizadas" element={<EstrategiasPersonalizadas />} />
           <Route path="/analise-dados" element={<AnalyseDados />} />
           <Route path="/seo-inteligente" element={<SEOInteligente />} />
+          <Route path="/social-media" element={<SocialMedia />} />
+          <Route path="/email-marketing" element={<EmailMarketing />} />
+          <Route path="/sobre-nos" element={<SobreNos />} />
+          <Route path="/carreiras" element={<Carreiras />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/casos-sucesso" element={<CasosSucesso />} />
+          <Route path="/parcerias" element={<Parcerias />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="*" element={<NotFound />} />
