@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -7,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { ArrowLeft, CreditCard, QrCode, FileText, Shield } from 'lucide-react';
+import { ArrowLeft, CreditCard, Shield } from 'lucide-react';
 
 const Checkout = () => {
   const location = useLocation();
@@ -21,7 +20,6 @@ const Checkout = () => {
     phone: '',
     company: ''
   });
-  const [paymentMethod, setPaymentMethod] = useState('credit_card');
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
@@ -72,7 +70,7 @@ const Checkout = () => {
           subtotal: orderData.subtotal,
           discount_amount: orderData.discountAmount,
           total_amount: orderData.total,
-          payment_method: paymentMethod,
+          payment_method: 'credit_card',
           payment_status: 'pending'
         })
         .select()
@@ -88,7 +86,7 @@ const Checkout = () => {
       const { data: paymentResponse, error: paymentError } = await supabase.functions.invoke('process-payment', {
         body: {
           orderId: order.id,
-          paymentMethod: paymentMethod,
+          paymentMethod: 'credit_card',
           amount: orderData.total,
           customerData: {
             name: formData.name,
@@ -123,30 +121,6 @@ const Checkout = () => {
     }
   };
 
-  const paymentMethods = [
-    {
-      id: 'credit_card',
-      name: 'Cartão de Crédito',
-      description: 'Pagamento seguro via Stripe',
-      icon: CreditCard,
-      discount: null
-    },
-    {
-      id: 'pix',
-      name: 'PIX',
-      description: 'Processado via Stripe',
-      icon: QrCode,
-      discount: '5% de desconto adicional'
-    },
-    {
-      id: 'boleto',
-      name: 'Boleto Bancário',
-      description: 'Convertido para cartão via Stripe',
-      icon: FileText,
-      discount: null
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
@@ -165,7 +139,7 @@ const Checkout = () => {
               Finalizar Compra
             </h1>
             <p className="text-gray-600">
-              Complete seus dados e escolha a forma de pagamento
+              Complete seus dados para pagar com cartão de crédito via Stripe
             </p>
           </div>
         </div>
@@ -243,47 +217,27 @@ const Checkout = () => {
               <CardHeader>
                 <CardTitle>Forma de Pagamento</CardTitle>
                 <CardDescription>
-                  Processamento seguro via Stripe
+                  Pagamento seguro via Stripe
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
-                  {paymentMethods.map(method => {
-                    const Icon = method.icon;
-                    return (
-                      <div
-                        key={method.id}
-                        className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                          paymentMethod === method.id
-                            ? 'border-designoai-blue bg-designoai-blue-light'
-                            : 'border-gray-200 hover:border-designoai-blue-light'
-                        }`}
-                        onClick={() => setPaymentMethod(method.id)}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
-                              paymentMethod === method.id
-                                ? 'border-designoai-blue bg-designoai-blue'
-                                : 'border-gray-300'
-                            }`}>
-                              {paymentMethod === method.id && (
-                                <div className="w-2 h-2 bg-white rounded-full" />
-                              )}
-                            </div>
-                            <Icon className="w-5 h-5 mr-3 text-gray-600" />
-                            <div>
-                              <h3 className="font-medium text-gray-800">{method.name}</h3>
-                              <p className="text-sm text-gray-600">{method.description}</p>
-                              {method.discount && (
-                                <p className="text-sm text-green-600 font-medium">{method.discount}</p>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
+                <div className="p-4 border-2 border-designoai-blue bg-designoai-blue-light rounded-lg">
+                  <div className="flex items-center">
+                    <div className="w-5 h-5 rounded-full border-2 border-designoai-blue bg-designoai-blue mr-3 flex items-center justify-center">
+                      <div className="w-2 h-2 bg-white rounded-full" />
+                    </div>
+                    <CreditCard className="w-5 h-5 mr-3 text-gray-600" />
+                    <div>
+                      <h3 className="font-medium text-gray-800">Cartão de Crédito</h3>
+                      <p className="text-sm text-gray-600">Pagamento seguro via Stripe</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+                  <p className="text-sm text-blue-700">
+                    💳 Aceitamos Visa, Mastercard, American Express e outros cartões principais
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -370,7 +324,7 @@ const Checkout = () => {
               {isProcessing ? (
                 "Processando..."
               ) : (
-                `Pagar com Stripe - R$ ${orderData.total.toLocaleString()}`
+                `Pagar com Cartão - R$ ${orderData.total.toLocaleString()}`
               )}
             </Button>
           </div>

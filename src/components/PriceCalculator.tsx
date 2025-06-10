@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -474,7 +473,7 @@ const PriceCalculator = () => {
                       <p className="mb-4">
                         {getSelectedPackage()?.isTest 
                           ? 'Teste a integração com valor simbólico' 
-                          : 'Pagamento seguro via PagBank com PIX, cartão ou boleto'
+                          : 'Pagamento seguro com cartão de crédito via Stripe'
                         }
                       </p>
                       <div className="space-y-3">
@@ -488,7 +487,7 @@ const PriceCalculator = () => {
                           <ShoppingCart className="w-4 h-4 mr-2" />
                           {getSelectedPackage()?.isTest 
                             ? `Testar Pagamento - R$ ${calculateTotal().toLocaleString()}`
-                            : `Pagar Agora - R$ ${calculateTotal().toLocaleString()}`
+                            : `Pagar com Cartão - R$ ${calculateTotal().toLocaleString()}`
                           }
                         </Button>
                         {!getSelectedPackage()?.isTest && (

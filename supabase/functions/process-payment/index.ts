@@ -10,7 +10,7 @@ const corsHeaders = {
 
 interface PaymentRequest {
   orderId: string
-  paymentMethod: 'pix' | 'credit_card' | 'boleto'
+  paymentMethod: 'credit_card'
   amount: number
   customerData: {
     name: string
@@ -35,6 +35,11 @@ serve(async (req) => {
     const { orderId, paymentMethod, amount, customerData }: PaymentRequest = await req.json()
     
     console.log('Processing payment with Stripe:', { orderId, paymentMethod, amount })
+
+    // Validate payment method
+    if (paymentMethod !== 'credit_card') {
+      throw new Error('Apenas cartão de crédito é suportado via Stripe')
+    }
 
     // Get Stripe secret key
     const stripeKey = Deno.env.get('STRIPE_SECRET_KEY')
@@ -68,60 +73,28 @@ serve(async (req) => {
 
     console.log('Stripe customer:', { customerId })
 
-    // Create payment session based on method
-    let sessionData: any = {
+    // Create payment session for credit card
+    const sessionData = {
       customer: customerId,
-      mode: 'payment',
-      success_url: `${req.headers.get('origin')}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.get('origin')}/checkout`,
-      metadata: {
-        orderId: orderId,
-        paymentMethod: paymentMethod
-      }
-    }
-
-    if (paymentMethod === 'pix') {
-      // For PIX, we'll simulate it with a regular payment
-      // In Brazil, you might want to integrate with a local payment processor for real PIX
-      sessionData.line_items = [{
-        price_data: {
-          currency: 'brl',
-          product_data: {
-            name: 'Serviços DesignoAI',
-            description: 'Pagamento via PIX'
-          },
-          unit_amount: Math.round(amount * 100) // Convert to centavos
-        },
-        quantity: 1
-      }]
-    } else if (paymentMethod === 'credit_card') {
-      sessionData.line_items = [{
+      mode: 'payment' as const,
+      payment_method_types: ['card'],
+      line_items: [{
         price_data: {
           currency: 'brl',
           product_data: {
             name: 'Serviços DesignoAI',
             description: 'Pagamento via Cartão de Crédito'
           },
-          unit_amount: Math.round(amount * 100)
+          unit_amount: Math.round(amount * 100) // Convert to centavos
         },
         quantity: 1
-      }]
-      sessionData.payment_method_types = ['card']
-    } else if (paymentMethod === 'boleto') {
-      // Boleto is not directly supported by Stripe
-      // You would need to integrate with a Brazilian payment processor
-      // For now, we'll create a regular payment session
-      sessionData.line_items = [{
-        price_data: {
-          currency: 'brl',
-          product_data: {
-            name: 'Serviços DesignoAI',
-            description: 'Pagamento via Boleto'
-          },
-          unit_amount: Math.round(amount * 100)
-        },
-        quantity: 1
-      }]
+      }],
+      success_url: `${req.headers.get('origin')}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.get('origin')}/checkout`,
+      metadata: {
+        orderId: orderId,
+        paymentMethod: paymentMethod
+      }
     }
 
     // Create checkout session
@@ -138,40 +111,15 @@ serve(async (req) => {
       })
       .eq('id', orderId)
 
-    if (paymentMethod === 'pix') {
-      // For PIX, return the checkout URL but with PIX-specific messaging
-      return new Response(JSON.stringify({
-        success: true,
-        paymentMethod: 'pix',
-        checkoutUrl: session.url,
-        stripeSessionId: session.id,
-        message: 'Redirecionando para pagamento PIX via Stripe'
-      }), {
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      })
-    } else if (paymentMethod === 'credit_card') {
-      return new Response(JSON.stringify({
-        success: true,
-        paymentMethod: 'credit_card',
-        checkoutUrl: session.url,
-        stripeSessionId: session.id
-      }), {
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      })
-    } else if (paymentMethod === 'boleto') {
-      return new Response(JSON.stringify({
-        success: true,
-        paymentMethod: 'boleto',
-        checkoutUrl: session.url,
-        stripeSessionId: session.id,
-        message: 'Processando como pagamento via cartão (Boleto não suportado pelo Stripe)'
-      }), {
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      })
-    }
+    return new Response(JSON.stringify({
+      success: true,
+      paymentMethod: 'credit_card',
+      checkoutUrl: session.url,
+      stripeSessionId: session.id
+    }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    })
 
   } catch (error) {
     console.error('Stripe payment processing error:', error)
