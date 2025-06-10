@@ -3,170 +3,299 @@ import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, Phone } from 'lucide-react';
+import { Handshake, Globe, Users, Award, Mail, Phone, MessageCircle, Target } from 'lucide-react';
 
 const Parcerias = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const partnershipTypes = [
+    {
+      icon: Globe,
+      title: "Parceiros de Tecnologia",
+      description: "Colaboramos com líderes em tecnologia para integrar as melhores ferramentas e plataformas em nossas soluções."
+    },
+    {
+      icon: Users,
+      title: "Parceiros de Canal",
+      description: "Trabalhamos com agências de marketing, consultorias e integradores que expandem nosso alcance."
+    },
+    {
+      icon: Handshake,
+      title: "Parceiros Estratégicos",
+      description: "Estabelecemos alianças estratégicas com empresas complementares para criar soluções integradas."
+    }
+  ];
+
+  const benefits = [
+    "Acesso antecipado a novas funcionalidades",
+    "Treinamento especializado em nossas tecnologias",
+    "Suporte técnico dedicado e prioritário",
+    "Materiais de marketing co-brandados",
+    "Participação em eventos exclusivos",
+    "Programa de certificação oficial",
+    "Comissões atrativas e metas flexíveis",
+    "Portal exclusivo para parceiros"
+  ];
+
+  const certifications = [
+    "Certificação técnica em implementação de IA",
+    "Certificação comercial em vendas consultivas",
+    "Certificação em marketing digital avançado",
+    "Workshops práticos e hands-on",
+    "Avaliações contínuas e atualizações",
+    "Reconhecimento oficial e credenciais digitais"
+  ];
+
+  const requirements = [
+    "Experiência comprovada no mercado de marketing digital ou tecnologia",
+    "Equipe técnica capacitada ou disposição para treinamento",
+    "Compromisso com a qualidade no atendimento ao cliente",
+    "Alinhamento com nossos valores e visão de mercado",
+    "Capacidade de investimento em marketing conjunto",
+    "Estrutura para suporte pós-venda"
+  ];
+
+  const processSteps = [
+    "Preencha o formulário de interesse em parcerias",
+    "Participe de uma reunião de alinhamento",
+    "Avaliação técnica e comercial",
+    "Assinatura do acordo de parceria",
+    "Onboarding e treinamento inicial",
+    "Início das atividades conjuntas"
+  ];
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-designoai-blue-light/20">
       <Navbar />
       
-      <main className="pt-20">
-        <section className="py-16 md:py-24">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-            <h1 className="text-4xl md:text-5xl font-bold text-designoai-blue-dark mb-8 text-center">
+      {/* Hero Section */}
+      <section className="relative pt-20 pb-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-designoai-blue/5 via-transparent to-purple-400/10"></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-designoai-blue/20 to-purple-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-r from-purple-400/20 to-designoai-blue/20 rounded-full blur-3xl"></div>
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
+          <div className="text-center mb-16">
+            <h1 className="text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-designoai-blue-dark via-designoai-blue to-purple-600 bg-clip-text text-transparent leading-tight">
               Parcerias
             </h1>
-            
-            <div className="prose prose-lg mx-auto text-gray-600">
-              <p className="text-xl leading-relaxed mb-6">
-                Na DesignoAI, acreditamos que parcerias estratégicas são fundamentais para oferecer soluções ainda mais completas e inovadoras aos nossos clientes. Construímos relacionamentos duradouros com empresas que compartilham nossa visão de transformação digital.
-              </p>
-              
-              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Tipos de Parcerias</h2>
-              
-              <p className="mb-4">
-                Oferecemos diferentes modalidades de parceria para atender diversas necessidades e objetivos de negócio:
-              </p>
-              
-              <h3 className="text-xl font-semibold text-designoai-blue-dark mt-6 mb-3">Parceiros de Tecnologia</h3>
-              <p className="mb-4">
-                Colaboramos com líderes em tecnologia para integrar as melhores ferramentas e plataformas em nossas soluções. Nossos parceiros tecnológicos incluem provedores de cloud, plataformas de IA, ferramentas de automação e sistemas de CRM.
-              </p>
-              
-              <h3 className="text-xl font-semibold text-designoai-blue-dark mt-6 mb-3">Parceiros de Canal</h3>
-              <p className="mb-4">
-                Trabalhamos com agências de marketing, consultorias e integradores que expandem nosso alcance e oferecem nossas soluções a um público mais amplo. Fornecemos treinamento, suporte técnico e materiais de marketing para garantir o sucesso conjunto.
-              </p>
-              
-              <h3 className="text-xl font-semibold text-designoai-blue-dark mt-6 mb-3">Parceiros Estratégicos</h3>
-              <p className="mb-4">
-                Estabelecemos alianças estratégicas com empresas complementares para criar soluções integradas que atendem necessidades específicas de mercado. Essas parcerias resultam em ofertas conjuntas de maior valor agregado.
-              </p>
-              
-              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Benefícios das Parcerias</h2>
-              
-              <p className="mb-4">
+            <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+              Construindo relacionamentos duradouros para oferecer soluções ainda mais completas e inovadoras.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Partnership Types */}
+      <section className="py-20 relative">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 bg-gradient-to-r from-designoai-blue-dark to-designoai-blue bg-clip-text text-transparent">
+            Tipos de Parcerias
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {partnershipTypes.map((type, index) => (
+              <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg bg-white/70 backdrop-blur-sm hover:scale-105">
+                <CardHeader className="text-center pb-4">
+                  <div className="mx-auto mb-4 p-3 bg-gradient-to-r from-designoai-blue/20 to-purple-400/20 rounded-2xl w-fit group-hover:scale-110 transition-transform duration-300">
+                    <type.icon className="w-8 h-8 text-designoai-blue" />
+                  </div>
+                  <CardTitle className="text-xl text-designoai-blue-dark group-hover:text-designoai-blue transition-colors">
+                    {type.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <p className="text-gray-600 leading-relaxed">{type.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits */}
+      <section className="py-20 bg-gradient-to-r from-designoai-blue/5 via-white to-purple-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 bg-gradient-to-r from-designoai-blue-dark to-designoai-blue bg-clip-text text-transparent">
+            Benefícios das Parcerias
+          </h2>
+          
+          <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
+            <CardContent className="p-8 md:p-12">
+              <p className="text-xl text-gray-700 leading-relaxed text-center mb-8">
                 Nossos parceiros desfrutam de uma série de benefícios exclusivos:
               </p>
               
-              <ul className="list-disc pl-6 mb-6 space-y-2">
-                <li>Acesso antecipado a novas funcionalidades e produtos</li>
-                <li>Treinamento especializado em nossas tecnologias</li>
-                <li>Suporte técnico dedicado e prioritário</li>
-                <li>Materiais de marketing e vendas co-brandados</li>
-                <li>Participação em eventos exclusivos e webinars</li>
-                <li>Programa de certificação oficial</li>
-                <li>Comissões atrativas e metas flexíveis</li>
-                <li>Portal exclusivo para parceiros</li>
-              </ul>
-              
-              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Programa de Certificação</h2>
-              
-              <p className="mb-4">
-                Oferecemos um programa completo de certificação para garantir que nossos parceiros tenham o conhecimento necessário para implementar e vender nossas soluções com excelência:
+              <div className="grid md:grid-cols-2 gap-6">
+                {benefits.map((benefit, index) => (
+                  <div key={index} className="flex items-start p-4 bg-gradient-to-r from-designoai-blue-light/30 to-purple-50 rounded-xl hover:shadow-md transition-shadow">
+                    <div className="bg-gradient-to-r from-designoai-blue to-purple-500 rounded-full p-2 mr-4 flex-shrink-0">
+                      <Award className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="text-gray-700 font-medium">{benefit}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Certification Program */}
+      <section className="py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 bg-gradient-to-r from-designoai-blue-dark to-designoai-blue bg-clip-text text-transparent">
+            Programa de Certificação
+          </h2>
+          
+          <Card className="shadow-2xl border-0 bg-gradient-to-br from-white to-designoai-blue-light/20">
+            <CardContent className="p-8 md:p-12">
+              <p className="text-xl text-gray-700 leading-relaxed text-center mb-8">
+                Oferecemos um programa completo de certificação para garantir que nossos parceiros tenham o conhecimento necessário:
               </p>
               
-              <ul className="list-disc pl-6 mb-6 space-y-2">
-                <li>Certificação técnica em implementação de IA</li>
-                <li>Certificação comercial em vendas consultivas</li>
-                <li>Certificação em marketing digital avançado</li>
-                <li>Workshops práticos e hands-on</li>
-                <li>Avaliações contínuas e atualizações</li>
-                <li>Reconhecimento oficial e credenciais digitais</li>
-              </ul>
-              
-              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Requisitos para Parceria</h2>
-              
-              <p className="mb-4">
-                Para garantir parcerias de sucesso mútuo, estabelecemos alguns critérios básicos:
-              </p>
-              
-              <ul className="list-disc pl-6 mb-6 space-y-2">
-                <li>Experiência comprovada no mercado de marketing digital ou tecnologia</li>
-                <li>Equipe técnica capacitada ou disposição para treinamento</li>
-                <li>Compromisso com a qualidade no atendimento ao cliente</li>
-                <li>Alinhamento com nossos valores e visão de mercado</li>
-                <li>Capacidade de investimento em marketing conjunto</li>
-                <li>Estrutura para suporte pós-venda</li>
-              </ul>
-              
-              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Parcerias Internacionais</h2>
-              
-              <p className="mb-4">
-                Estamos expandindo nossas operações para mercados internacionais e buscamos parceiros locais que possam representar a DesignoAI em diferentes países e regiões. Oferecemos suporte completo para adaptação cultural e regulamentações locais.
-              </p>
-              
-              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Programa de Startups</h2>
-              
-              <p className="mb-4">
-                Temos um programa especial para startups e empresas em crescimento, oferecendo condições diferenciadas e suporte especializado para empresas que estão começando sua jornada digital.
-              </p>
-              
-              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Como se tornar um Parceiro</h2>
-              
-              <p className="mb-4">
-                O processo para se tornar nosso parceiro é simples e direto:
-              </p>
-              
-              <ol className="list-decimal pl-6 mb-6 space-y-2">
-                <li>Preencha o formulário de interesse em parcerias</li>
-                <li>Participe de uma reunião de alinhamento</li>
-                <li>Avaliação técnica e comercial</li>
-                <li>Assinatura do acordo de parceria</li>
-                <li>Onboarding e treinamento inicial</li>
-                <li>Início das atividades conjuntas</li>
-              </ol>
-            </div>
-            
-            <Card className="mt-12 bg-designoai-blue-light">
+              <div className="grid md:grid-cols-2 gap-6">
+                {certifications.map((cert, index) => (
+                  <div key={index} className="flex items-start p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div className="bg-gradient-to-r from-designoai-blue to-purple-500 rounded-full p-2 mr-4 flex-shrink-0">
+                      <Award className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="text-gray-700 font-medium">{cert}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Requirements & Process */}
+      <section className="py-20 bg-gradient-to-r from-purple-50 via-white to-designoai-blue/5">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+          <div className="grid md:grid-cols-2 gap-12">
+            <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
               <CardHeader>
-                <CardTitle className="text-designoai-blue-dark text-center">
-                  Entre em Contato para Parcerias
+                <CardTitle className="text-2xl text-center bg-gradient-to-r from-designoai-blue-dark to-designoai-blue bg-clip-text text-transparent">
+                  Requisitos para Parceria
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="flex items-center space-x-3">
-                    <Mail className="w-6 h-6 text-designoai-blue" />
-                    <div>
-                      <p className="font-semibold text-designoai-blue-dark">E-mail</p>
-                      <a 
-                        href="mailto:contato@designoai.com.br" 
-                        className="text-designoai-blue hover:underline"
-                      >
-                        contato@designoai.com.br
-                      </a>
+                <div className="space-y-4">
+                  {requirements.map((req, index) => (
+                    <div key={index} className="flex items-start">
+                      <div className="bg-gradient-to-r from-designoai-blue to-purple-500 rounded-full p-1 mr-3 mt-1.5 flex-shrink-0">
+                        <Target className="w-3 h-3 text-white" />
+                      </div>
+                      <span className="text-gray-700 leading-relaxed">{req}</span>
                     </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-3">
-                    <Phone className="w-6 h-6 text-designoai-blue" />
-                    <div>
-                      <p className="font-semibold text-designoai-blue-dark">WhatsApp</p>
-                      <a 
-                        href="https://wa.me/5511947968158" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-designoai-blue hover:underline"
-                      >
-                        (11) 94796-8158
-                      </a>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-                
-                <p className="text-center text-gray-600 mt-6">
-                  Entre em contato conosco para iniciar uma conversa sobre como podemos crescer juntos e criar valor para nossos clientes mútuos.
+              </CardContent>
+            </Card>
+            
+            <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="text-2xl text-center bg-gradient-to-r from-designoai-blue-dark to-designoai-blue bg-clip-text text-transparent">
+                  Como se Tornar Parceiro
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {processSteps.map((step, index) => (
+                    <div key={index} className="flex items-start">
+                      <div className="bg-gradient-to-r from-designoai-blue to-purple-500 rounded-full p-2 mr-4 flex-shrink-0">
+                        <span className="text-white text-sm font-bold">{index + 1}</span>
+                      </div>
+                      <span className="text-gray-700 leading-relaxed">{step}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Special Programs */}
+      <section className="py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card className="shadow-xl border-0 bg-gradient-to-br from-white to-designoai-blue-light/20">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-bold text-designoai-blue-dark mb-4">Parcerias Internacionais</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  Estamos expandindo nossas operações para mercados internacionais e buscamos parceiros locais que possam representar a DesignoAI em diferentes países e regiões. Oferecemos suporte completo para adaptação cultural e regulamentações locais.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="shadow-xl border-0 bg-gradient-to-br from-white to-purple-50">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-bold text-designoai-blue-dark mb-4">Programa de Startups</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  Temos um programa especial para startups e empresas em crescimento, oferecendo condições diferenciadas e suporte especializado para empresas que estão começando sua jornada digital.
                 </p>
               </CardContent>
             </Card>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-20 bg-gradient-to-r from-designoai-blue/10 via-white to-purple-100">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="text-3xl text-center bg-gradient-to-r from-designoai-blue-dark to-designoai-blue bg-clip-text text-transparent">
+                Entre em Contato para Parcerias
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-8">
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                <div className="flex items-center space-x-4 p-6 bg-gradient-to-r from-designoai-blue-light/30 to-purple-50 rounded-xl">
+                  <div className="bg-gradient-to-r from-designoai-blue to-purple-500 rounded-full p-3">
+                    <Mail className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-designoai-blue-dark">E-mail</p>
+                    <a 
+                      href="mailto:contato@designoai.com.br" 
+                      className="text-designoai-blue hover:underline text-lg"
+                    >
+                      contato@designoai.com.br
+                    </a>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-4 p-6 bg-gradient-to-r from-purple-50 to-designoai-blue-light/30 rounded-xl">
+                  <div className="bg-gradient-to-r from-purple-500 to-designoai-blue rounded-full p-3">
+                    <MessageCircle className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-designoai-blue-dark">WhatsApp</p>
+                    <a 
+                      href="https://wa.me/5511947968158" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-designoai-blue hover:underline text-lg"
+                    >
+                      (11) 94796-8158
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-r from-designoai-blue/10 to-purple-100 rounded-2xl p-8 text-center">
+                <p className="text-gray-700 text-lg leading-relaxed">
+                  Entre em contato conosco para iniciar uma conversa sobre como podemos crescer juntos e criar valor para nossos clientes mútuos.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
       <Footer />
     </div>
