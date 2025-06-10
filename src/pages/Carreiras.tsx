@@ -3,9 +3,10 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Code, Brain, Palette, TrendingUp, Users, Headphones, Target, Clock, Globe, Heart } from 'lucide-react';
+import { Code, Brain, Palette, TrendingUp, Users, Headphones, Target, Clock, Globe, Heart, Package } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/components/ui/use-toast';
+
 const Carreiras = () => {
   const [selectedJob, setSelectedJob] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -18,26 +19,34 @@ const Carreiras = () => {
     portfolio: '',
     motivation: ''
   });
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const benefits = [{
-    icon: Target,
-    title: "Ambiente Colaborativo",
-    description: "Trabalhe em equipe inspiradora"
-  }, {
-    icon: Brain,
-    title: "Aprendizado Contínuo",
-    description: "Tecnologias de ponta sempre"
-  }, {
-    icon: Clock,
-    title: "Flexibilidade",
-    description: "Horários e trabalho remoto"
-  }, {
-    icon: Globe,
-    title: "Projetos de Impacto",
-    description: "Transforme empresas pelo Brasil"
-  }];
+
+  const benefits = [
+    {
+      icon: Target,
+      title: "Ambiente Colaborativo",
+      description: "Trabalhe em equipe inspiradora"
+    },
+    {
+      icon: Brain,
+      title: "Aprendizado Contínuo",
+      description: "Tecnologias de ponta sempre"
+    },
+    {
+      icon: Clock,
+      title: "Flexibilidade",
+      description: "Horários e trabalho remoto"
+    },
+    {
+      icon: Globe,
+      title: "Projetos de Impacto",
+      description: "Transforme empresas pelo Brasil"
+    }
+  ];
+
   const handleInputChange = e => {
     setFormData({
       ...formData,
@@ -119,50 +128,60 @@ const Carreiras = () => {
       setIsSubmitting(false);
     }
   };
-  const jobs = [{
-    id: 1,
-    title: "Desenvolvedor Full Stack",
-    department: "Tecnologia",
-    icon: Code,
-    description: "Responsável pelo desenvolvimento de funcionalidades front-end e back-end da nossa plataforma de IA.",
-    requirements: ["React.js", "Node.js", "TypeScript", "Python", "Experiência com APIs"]
-  }, {
-    id: 2,
-    title: "Cientista de Dados",
-    department: "Tecnologia",
-    icon: Brain,
-    description: "Desenvolvimento de modelos de machine learning e análise de dados para otimização das campanhas.",
-    requirements: ["Python", "Machine Learning", "TensorFlow", "SQL", "Estatística"]
-  }, {
-    id: 3,
-    title: "Especialista em Marketing Digital",
-    department: "Marketing",
-    icon: TrendingUp,
-    description: "Criação e execução de estratégias de marketing digital para nossos clientes e para a própria empresa.",
-    requirements: ["Google Ads", "Facebook Ads", "SEO/SEM", "Analytics", "Growth Hacking"]
-  }, {
-    id: 4,
-    title: "Designer UX/UI",
-    department: "Design",
-    icon: Palette,
-    description: "Design de interfaces intuitivas e experiências de usuário excepcionais para nossa plataforma.",
-    requirements: ["Figma", "Adobe Creative Suite", "Prototipagem", "Design System", "User Research"]
-  }, {
-    id: 5,
-    title: "Consultor Comercial",
-    department: "Vendas",
-    icon: Users,
-    description: "Prospecção e fechamento de novos clientes, apresentação de soluções e consultoria comercial.",
-    requirements: ["Vendas B2B", "CRM", "Negociação", "Consultiva", "Relacionamento"]
-  }, {
-    id: 6,
-    title: "Customer Success",
-    department: "Atendimento",
-    icon: Headphones,
-    description: "Garantir o sucesso dos nossos clientes, onboarding, suporte e identificação de oportunidades de upsell.",
-    requirements: ["Atendimento ao Cliente", "Análise de Dados", "Comunicação", "Proatividade"]
-  }];
-  return <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-designoai-blue-light/20">
+
+  const jobs = [
+    {
+      id: 1,
+      title: "Desenvolvedor Full Stack",
+      department: "Tecnologia",
+      icon: Code,
+      description: "Responsável pelo desenvolvimento de funcionalidades front-end e back-end da nossa plataforma de IA.",
+      requirements: ["React.js", "Node.js", "TypeScript", "Python", "Experiência com APIs"]
+    },
+    {
+      id: 2,
+      title: "Cientista de Dados",
+      department: "Tecnologia", 
+      icon: Brain,
+      description: "Desenvolvimento de modelos de machine learning e análise de dados para otimização das campanhas.",
+      requirements: ["Python", "Machine Learning", "TensorFlow", "SQL", "Estatística"]
+    },
+    {
+      id: 3,
+      title: "Especialista em Marketing Digital",
+      department: "Marketing",
+      icon: TrendingUp,
+      description: "Criação e execução de estratégias de marketing digital para nossos clientes e para a própria empresa.",
+      requirements: ["Google Ads", "Facebook Ads", "SEO/SEM", "Analytics", "Growth Hacking"]
+    },
+    {
+      id: 4,
+      title: "Designer UX/UI",
+      department: "Design",
+      icon: Palette,
+      description: "Design de interfaces intuitivas e experiências de usuário excepcionais para nossa plataforma.",
+      requirements: ["Figma", "Adobe Creative Suite", "Prototipagem", "Design System", "User Research"]
+    },
+    {
+      id: 5,
+      title: "Consultor Comercial",
+      department: "Vendas",
+      icon: Users,
+      description: "Prospecção e fechamento de novos clientes, apresentação de soluções e consultoria comercial.",
+      requirements: ["Vendas B2B", "CRM", "Negociação", "Consultiva", "Relacionamento"]
+    },
+    {
+      id: 6,
+      title: "Customer Success",
+      department: "Atendimento",
+      icon: Headphones,
+      description: "Garantir o sucesso dos nossos clientes, onboarding, suporte e identificação de oportunidades de upsell.",
+      requirements: ["Atendimento ao Cliente", "Análise de Dados", "Comunicação", "Proatividade"]
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-designoai-blue-light/20">
       <Navbar />
       
       {/* Hero Section */}
@@ -191,7 +210,8 @@ const Carreiras = () => {
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            {benefits.map((benefit, index) => <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg bg-white/70 backdrop-blur-sm hover:scale-105">
+            {benefits.map((benefit, index) => (
+              <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg bg-white/70 backdrop-blur-sm hover:scale-105">
                 <CardHeader className="text-center pb-4">
                   <div className="mx-auto mb-4 p-3 bg-gradient-to-r from-designoai-blue/20 to-purple-400/20 rounded-2xl w-fit group-hover:scale-110 transition-transform duration-300">
                     <benefit.icon className="w-8 h-8 text-designoai-blue" />
@@ -200,10 +220,11 @@ const Carreiras = () => {
                     {benefit.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="text-center">
-                  <p className="text-gray-600 leading-relaxed">{benefit.description}</p>
+                <CardContent className="text-center pt-0">
+                  <p className="text-gray-600 leading-relaxed text-sm">{benefit.description}</p>
                 </CardContent>
-              </Card>)}
+              </Card>
+            ))}
           </div>
 
           <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
@@ -212,26 +233,28 @@ const Carreiras = () => {
                 Benefícios Completos
               </h3>
               
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-3">
-                  
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-4">
                   <div className="flex items-center">
-                    <Target className="w-5 h-5 text-designoai-blue mr-3" />
+                    <Target className="w-5 h-5 text-designoai-blue mr-3 flex-shrink-0" />
                     <span className="text-gray-700">Planos de carreira personalizados</span>
                   </div>
-                  
-                </div>
-                <div className="space-y-3">
                   <div className="flex items-center">
-                    <Clock className="w-5 h-5 text-designoai-blue mr-3" />
+                    <Package className="w-5 h-5 text-designoai-blue mr-3 flex-shrink-0" />
+                    <span className="text-gray-700">Kit comercial</span>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex items-center">
+                    <Clock className="w-5 h-5 text-designoai-blue mr-3 flex-shrink-0" />
                     <span className="text-gray-700">Horário flexível</span>
                   </div>
                   <div className="flex items-center">
-                    <Globe className="w-5 h-5 text-designoai-blue mr-3" />
+                    <Globe className="w-5 h-5 text-designoai-blue mr-3 flex-shrink-0" />
                     <span className="text-gray-700">Trabalho remoto</span>
                   </div>
                   <div className="flex items-center">
-                    <TrendingUp className="w-5 h-5 text-designoai-blue mr-3" />
+                    <TrendingUp className="w-5 h-5 text-designoai-blue mr-3 flex-shrink-0" />
                     <span className="text-gray-700">Participação nos resultados</span>
                   </div>
                 </div>
@@ -249,28 +272,44 @@ const Carreiras = () => {
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            {jobs.map(job => <Card key={job.id} className="cursor-pointer hover:shadow-xl transition-all duration-300 border-0 shadow-lg bg-white/70 backdrop-blur-sm hover:scale-105" onClick={() => setSelectedJob(job)}>
-                <CardHeader className="text-center">
+            {jobs.map((job) => (
+              <Card 
+                key={job.id} 
+                className="cursor-pointer hover:shadow-xl transition-all duration-300 border-0 shadow-lg bg-white/70 backdrop-blur-sm hover:scale-105" 
+                onClick={() => setSelectedJob(job)}
+              >
+                <CardHeader className="text-center pb-4">
                   <div className="mx-auto mb-4 p-3 bg-gradient-to-r from-designoai-blue/20 to-purple-400/20 rounded-2xl w-fit">
                     <job.icon className="w-8 h-8 text-designoai-blue" />
                   </div>
-                  <CardTitle className="text-xl text-designoai-blue-dark">{job.title}</CardTitle>
+                  <CardTitle className="text-xl text-designoai-blue-dark leading-tight">{job.title}</CardTitle>
                   <CardDescription className="text-designoai-blue font-semibold">{job.department}</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 mb-4 leading-relaxed">{job.description}</p>
-                  <div className="space-y-1">
+                <CardContent className="pt-0">
+                  <p className="text-gray-600 mb-4 leading-relaxed text-sm">{job.description}</p>
+                  <div className="space-y-2">
                     <p className="font-semibold text-sm text-gray-700">Principais requisitos:</p>
-                    {job.requirements.slice(0, 3).map((req, index) => <span key={index} className="inline-block bg-gradient-to-r from-designoai-blue-light/50 to-purple-100 text-designoai-blue-dark px-3 py-1 rounded-full text-xs mr-1 mb-1">
-                        {req}
-                      </span>)}
-                    {job.requirements.length > 3 && <span className="text-xs text-gray-500">+{job.requirements.length - 3} mais</span>}
+                    <div className="flex flex-wrap gap-1">
+                      {job.requirements.slice(0, 3).map((req, index) => (
+                        <span 
+                          key={index} 
+                          className="inline-block bg-gradient-to-r from-designoai-blue-light/50 to-purple-100 text-designoai-blue-dark px-3 py-1 rounded-full text-xs"
+                        >
+                          {req}
+                        </span>
+                      ))}
+                      {job.requirements.length > 3 && (
+                        <span className="text-xs text-gray-500 px-2 py-1">+{job.requirements.length - 3} mais</span>
+                      )}
+                    </div>
                   </div>
                 </CardContent>
-              </Card>)}
+              </Card>
+            ))}
           </div>
 
-          {selectedJob && <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm mb-16">
+          {selectedJob && (
+            <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm mb-16">
               <CardContent className="p-8">
                 <div className="flex items-center mb-6">
                   <div className="p-3 bg-gradient-to-r from-designoai-blue/20 to-purple-400/20 rounded-2xl mr-4">
@@ -284,21 +323,28 @@ const Carreiras = () => {
                 
                 <p className="text-gray-600 mb-6 leading-relaxed">{selectedJob.description}</p>
                 
-                <h4 className="font-semibold mb-3 text-designoai-blue-dark">Todos os requisitos:</h4>
+                <h4 className="font-semibold mb-4 text-designoai-blue-dark">Todos os requisitos:</h4>
                 <div className="grid md:grid-cols-2 gap-3 mb-6">
-                  {selectedJob.requirements.map((req, index) => <div key={index} className="flex items-center p-3 bg-gradient-to-r from-designoai-blue-light/30 to-purple-50 rounded-lg">
-                      <div className="bg-designoai-blue rounded-full p-1 mr-3">
+                  {selectedJob.requirements.map((req, index) => (
+                    <div key={index} className="flex items-center p-3 bg-gradient-to-r from-designoai-blue-light/30 to-purple-50 rounded-lg">
+                      <div className="bg-designoai-blue rounded-full p-1 mr-3 flex-shrink-0">
                         <div className="bg-white rounded-full w-2 h-2"></div>
                       </div>
-                      <span className="text-gray-700">{req}</span>
-                    </div>)}
+                      <span className="text-gray-700 text-sm">{req}</span>
+                    </div>
+                  ))}
                 </div>
                 
-                <Button onClick={() => setSelectedJob(null)} variant="outline" className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue hover:text-white">
+                <Button 
+                  onClick={() => setSelectedJob(null)} 
+                  variant="outline" 
+                  className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue hover:text-white"
+                >
                   Fechar Detalhes
                 </Button>
               </CardContent>
-            </Card>}
+            </Card>
+          )}
         </div>
       </section>
 
@@ -306,69 +352,131 @@ const Carreiras = () => {
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
           <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-3xl text-center bg-gradient-to-r from-designoai-blue-dark to-designoai-blue bg-clip-text text-transparent">
+            <CardHeader className="text-center pb-6">
+              <CardTitle className="text-3xl bg-gradient-to-r from-designoai-blue-dark to-designoai-blue bg-clip-text text-transparent">
                 Candidate-se
               </CardTitle>
-              <CardDescription className="text-center text-lg">
+              <CardDescription className="text-center text-lg text-gray-600">
                 Preencha o formulário abaixo e envie sua candidatura
               </CardDescription>
             </CardHeader>
-            <CardContent className="p-8">
+            <CardContent className="p-8 pt-0">
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="space-y-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                     Nome Completo *
                   </label>
-                  <input type="text" id="name" name="name" required value={formData.name} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" />
+                  <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    required 
+                    value={formData.name} 
+                    onChange={handleInputChange} 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" 
+                  />
                 </div>
                   
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="space-y-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                     E-mail *
                   </label>
-                  <input type="email" id="email" name="email" required value={formData.email} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" />
+                  <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required 
+                    value={formData.email} 
+                    onChange={handleInputChange} 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" 
+                  />
                 </div>
                   
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="space-y-2">
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
                     Telefone
                   </label>
-                  <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" />
+                  <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone" 
+                    value={formData.phone} 
+                    onChange={handleInputChange} 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" 
+                  />
                 </div>
                   
-                <div>
-                  <label htmlFor="position" className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="space-y-2">
+                  <label htmlFor="position" className="block text-sm font-medium text-gray-700">
                     Cargo de Interesse *
                   </label>
-                  <select id="position" name="position" required value={formData.position} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors">
+                  <select 
+                    id="position" 
+                    name="position" 
+                    required 
+                    value={formData.position} 
+                    onChange={handleInputChange} 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors"
+                  >
                     <option value="">Selecione um cargo</option>
-                    {jobs.map(job => <option key={job.id} value={job.title}>{job.title}</option>)}
+                    {jobs.map((job) => (
+                      <option key={job.id} value={job.title}>{job.title}</option>
+                    ))}
                   </select>
                 </div>
                   
-                <div>
-                  <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="space-y-2">
+                  <label htmlFor="experience" className="block text-sm font-medium text-gray-700">
                     Experiência Profissional *
                   </label>
-                  <textarea id="experience" name="experience" rows={3} required value={formData.experience} onChange={handleInputChange} placeholder="Descreva sua experiência relevante..." className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" />
+                  <textarea 
+                    id="experience" 
+                    name="experience" 
+                    rows={4} 
+                    required 
+                    value={formData.experience} 
+                    onChange={handleInputChange} 
+                    placeholder="Descreva sua experiência relevante..." 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors resize-vertical" 
+                  />
                 </div>
                   
-                <div>
-                  <label htmlFor="portfolio" className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="space-y-2">
+                  <label htmlFor="portfolio" className="block text-sm font-medium text-gray-700">
                     Portfólio/LinkedIn
                   </label>
-                  <input type="url" id="portfolio" name="portfolio" value={formData.portfolio} onChange={handleInputChange} placeholder="https://..." className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" />
+                  <input 
+                    type="url" 
+                    id="portfolio" 
+                    name="portfolio" 
+                    value={formData.portfolio} 
+                    onChange={handleInputChange} 
+                    placeholder="https://..." 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" 
+                  />
                 </div>
                   
-                <div>
-                  <label htmlFor="motivation" className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="space-y-2">
+                  <label htmlFor="motivation" className="block text-sm font-medium text-gray-700">
                     Por que quer trabalhar na DesignoAI? *
                   </label>
-                  <textarea id="motivation" name="motivation" rows={3} required value={formData.motivation} onChange={handleInputChange} placeholder="Conte-nos sua motivação..." className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" />
+                  <textarea 
+                    id="motivation" 
+                    name="motivation" 
+                    rows={4} 
+                    required 
+                    value={formData.motivation} 
+                    onChange={handleInputChange} 
+                    placeholder="Conte-nos sua motivação..." 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors resize-vertical" 
+                  />
                 </div>
                 
-                <Button type="submit" disabled={isSubmitting} className="w-full bg-designoai-blue hover:bg-designoai-blue-dark text-white py-3 text-lg disabled:opacity-50">
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting} 
+                  className="w-full bg-designoai-blue hover:bg-designoai-blue-dark text-white py-3 text-lg disabled:opacity-50 transition-colors"
+                >
                   {isSubmitting ? "Enviando..." : "Enviar Candidatura"}
                 </Button>
               </form>
@@ -378,6 +486,8 @@ const Carreiras = () => {
       </section>
 
       <Footer />
-    </div>;
+    </div>
+  );
 };
+
 export default Carreiras;
