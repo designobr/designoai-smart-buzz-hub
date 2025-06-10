@@ -2,6 +2,8 @@
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Mail, Phone } from 'lucide-react';
 
 const Parcerias = () => {
   useEffect(() => {
@@ -118,11 +120,50 @@ const Parcerias = () => {
                 <li>Onboarding e treinamento inicial</li>
                 <li>Início das atividades conjuntas</li>
               </ol>
-              
-              <p className="text-lg">
-                Entre em contato conosco através do email parcerias@designoai.com.br para iniciar uma conversa sobre como podemos crescer juntos e criar valor para nossos clientes mútuos.
-              </p>
             </div>
+            
+            <Card className="mt-12 bg-designoai-blue-light">
+              <CardHeader>
+                <CardTitle className="text-designoai-blue-dark text-center">
+                  Entre em Contato para Parcerias
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="flex items-center space-x-3">
+                    <Mail className="w-6 h-6 text-designoai-blue" />
+                    <div>
+                      <p className="font-semibold text-designoai-blue-dark">E-mail</p>
+                      <a 
+                        href="mailto:contato@designoai.com.br" 
+                        className="text-designoai-blue hover:underline"
+                      >
+                        contato@designoai.com.br
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-3">
+                    <Phone className="w-6 h-6 text-designoai-blue" />
+                    <div>
+                      <p className="font-semibold text-designoai-blue-dark">WhatsApp</p>
+                      <a 
+                        href="https://wa.me/5511947968158" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-designoai-blue hover:underline"
+                      >
+                        (11) 94796-8158
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                
+                <p className="text-center text-gray-600 mt-6">
+                  Entre em contato conosco para iniciar uma conversa sobre como podemos crescer juntos e criar valor para nossos clientes mútuos.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </section>
       </main>

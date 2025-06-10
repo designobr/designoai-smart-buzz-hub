@@ -64,7 +64,7 @@ const Blog = () => {
               
               <ul className="list-disc pl-6 mb-6 space-y-2">
                 <li>E-books gratuitos sobre marketing com IA</li>
-                <li>Webinars mensais com especialistas</li>
+                <li>Webinars mensais with especialistas</li>
                 <li>Templates e checklists para download</li>
                 <li>Calculadoras de ROI e ferramentas práticas</li>
                 <li>Relatórios setoriais exclusivos</li>
