@@ -25,16 +25,20 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Use service role key for database operations
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? ""
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
 
     const applicationData: JobApplicationRequest = await req.json();
 
+    console.log("Dados recebidos:", applicationData);
+
     // Validar dados obrigatórios
     if (!applicationData.name || !applicationData.email || !applicationData.position || 
         !applicationData.experience || !applicationData.motivation) {
+      console.log("Validação falhou - campos obrigatórios em falta");
       return new Response(
         JSON.stringify({ error: "Campos obrigatórios não preenchidos" }),
         {
@@ -44,25 +48,31 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
+    console.log("Tentando inserir candidatura no banco de dados...");
+
     // Inserir candidatura no banco de dados
     const { data, error } = await supabaseClient
       .from("job_applications")
       .insert([{
         name: applicationData.name,
         email: applicationData.email,
-        phone: applicationData.phone,
+        phone: applicationData.phone || null,
         position: applicationData.position,
         experience: applicationData.experience,
-        portfolio: applicationData.portfolio,
+        portfolio: applicationData.portfolio || null,
         motivation: applicationData.motivation,
       }])
       .select()
       .single();
 
     if (error) {
-      console.error("Erro ao salvar candidatura:", error);
+      console.error("Erro detalhado ao salvar candidatura:", error);
       return new Response(
-        JSON.stringify({ error: "Erro interno do servidor" }),
+        JSON.stringify({ 
+          error: "Erro ao salvar candidatura",
+          details: error.message,
+          code: error.code 
+        }),
         {
           status: 500,
           headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -87,9 +97,12 @@ const handler = async (req: Request): Promise<Response> => {
       }
     );
   } catch (error: any) {
-    console.error("Erro na função submit-job-application:", error);
+    console.error("Erro geral na função submit-job-application:", error);
     return new Response(
-      JSON.stringify({ error: "Erro interno do servidor" }),
+      JSON.stringify({ 
+        error: "Erro interno do servidor",
+        details: error.message 
+      }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },

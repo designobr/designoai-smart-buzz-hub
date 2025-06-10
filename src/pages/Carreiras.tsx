@@ -47,6 +47,89 @@ const Carreiras = () => {
     }
   ];
 
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Validar campos obrigatórios
+      if (!formData.name || !formData.email || !formData.position || 
+          !formData.experience || !formData.motivation) {
+        toast({
+          title: "Erro",
+          description: "Por favor, preencha todos os campos obrigatórios.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      console.log('Enviando candidatura:', formData);
+
+      // Chamar a edge function
+      const { data, error } = await supabase.functions.invoke('submit-job-application', {
+        body: formData
+      });
+
+      console.log('Resposta da função:', { data, error });
+
+      if (error) {
+        console.error('Erro ao enviar candidatura:', error);
+        toast({
+          title: "Erro",
+          description: `Ocorreu um erro ao enviar sua candidatura: ${error.message || 'Erro desconhecido'}`,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Verificar se a resposta contém erro
+      if (data?.error) {
+        console.error('Erro retornado pela função:', data);
+        toast({
+          title: "Erro",
+          description: `Erro: ${data.error}${data.details ? ` - ${data.details}` : ''}`,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Sucesso
+      toast({
+        title: "Candidatura enviada!",
+        description: "Sua candidatura foi enviada com sucesso. Entraremos em contato em breve.",
+      });
+
+      // Limpar formulário
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        position: '',
+        experience: '',
+        portfolio: '',
+        motivation: ''
+      });
+
+    } catch (error) {
+      console.error('Erro inesperado ao enviar candidatura:', error);
+      toast({
+        title: "Erro",
+        description: `Ocorreu um erro inesperado: ${error.message || 'Erro desconhecido'}`,
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const jobs = [
     {
       id: 1,
@@ -97,74 +180,6 @@ const Carreiras = () => {
       requirements: ["Atendimento ao Cliente", "Análise de Dados", "Comunicação", "Proatividade"]
     }
   ];
-
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      // Validar campos obrigatórios
-      if (!formData.name || !formData.email || !formData.position || 
-          !formData.experience || !formData.motivation) {
-        toast({
-          title: "Erro",
-          description: "Por favor, preencha todos os campos obrigatórios.",
-          variant: "destructive",
-        });
-        setIsSubmitting(false);
-        return;
-      }
-
-      // Chamar a edge function
-      const { data, error } = await supabase.functions.invoke('submit-job-application', {
-        body: formData
-      });
-
-      if (error) {
-        console.error('Erro ao enviar candidatura:', error);
-        toast({
-          title: "Erro",
-          description: "Ocorreu um erro ao enviar sua candidatura. Tente novamente.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      // Sucesso
-      toast({
-        title: "Candidatura enviada!",
-        description: "Sua candidatura foi enviada com sucesso. Entraremos em contato em breve.",
-      });
-
-      // Limpar formulário
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        position: '',
-        experience: '',
-        portfolio: '',
-        motivation: ''
-      });
-
-    } catch (error) {
-      console.error('Erro ao enviar candidatura:', error);
-      toast({
-        title: "Erro",
-        description: "Ocorreu um erro inesperado. Tente novamente.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-designoai-blue-light/20">
