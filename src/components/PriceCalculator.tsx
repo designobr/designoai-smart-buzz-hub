@@ -1,7 +1,8 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Check, Calculator, Plus, ShoppingCart } from 'lucide-react';
+import { Check, Calculator, Plus, ShoppingCart, TestTube } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const PriceCalculator = () => {
@@ -11,6 +12,13 @@ const PriceCalculator = () => {
   const [selectedDuration, setSelectedDuration] = useState<number>(1);
 
   const packages = [
+    {
+      id: 'test',
+      name: 'Teste de Pagamento',
+      price: 1,
+      description: 'Para testar a integração de pagamento',
+      isTest: true
+    },
     {
       id: 'start',
       name: 'Pacote Start',
@@ -198,7 +206,7 @@ const PriceCalculator = () => {
                   Pacotes Base
                 </CardTitle>
                 <CardDescription>
-                  Escolha um dos nossos pacotes principais
+                  Escolha um dos nossos pacotes principais ou teste o pagamento
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -210,7 +218,7 @@ const PriceCalculator = () => {
                         selectedPackage === pkg.id
                           ? 'border-designoai-blue bg-designoai-blue-light'
                           : 'border-gray-200 hover:border-designoai-blue-light'
-                      }`}
+                      } ${pkg.isTest ? 'bg-yellow-50 border-yellow-300' : ''}`}
                       onClick={() => togglePackage(pkg.id)}
                     >
                       <div className="flex items-center justify-between">
@@ -224,14 +232,19 @@ const PriceCalculator = () => {
                               <Check className="w-3 h-3 text-white" />
                             )}
                           </div>
+                          {pkg.isTest && <TestTube className="w-4 h-4 mr-2 text-yellow-600" />}
                           <div>
-                            <h3 className="font-medium text-gray-800">{pkg.name}</h3>
-                            <p className="text-sm text-gray-600">{pkg.description}</p>
+                            <h3 className={`font-medium ${pkg.isTest ? 'text-yellow-800' : 'text-gray-800'}`}>
+                              {pkg.name}
+                            </h3>
+                            <p className={`text-sm ${pkg.isTest ? 'text-yellow-600' : 'text-gray-600'}`}>
+                              {pkg.description}
+                            </p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <span className="text-lg font-bold text-designoai-blue">
-                            R$ {pkg.price.toLocaleString()}/mês
+                          <span className={`text-lg font-bold ${pkg.isTest ? 'text-yellow-600' : 'text-designoai-blue'}`}>
+                            R$ {pkg.price.toLocaleString()}{pkg.isTest ? '' : '/mês'}
                           </span>
                         </div>
                       </div>
@@ -241,108 +254,112 @@ const PriceCalculator = () => {
               </CardContent>
             </Card>
 
-            {/* Duração */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-2xl text-designoai-blue-dark">
-                  Duração do Contrato
-                </CardTitle>
-                <CardDescription>
-                  Escolha a duração e economize com contratos mais longos
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {durationOptions.map(option => (
-                    <div
-                      key={option.months}
-                      className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                        selectedDuration === option.months
-                          ? 'border-designoai-blue bg-designoai-blue-light'
-                          : 'border-gray-200 hover:border-designoai-blue-light'
-                      }`}
-                      onClick={() => setSelectedDuration(option.months)}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
-                            selectedDuration === option.months
-                              ? 'border-designoai-blue bg-designoai-blue'
-                              : 'border-gray-300'
-                          }`}>
-                            {selectedDuration === option.months && (
-                              <div className="w-2 h-2 bg-white rounded-full" />
-                            )}
+            {/* Duração - Só mostrar se não for teste */}
+            {selectedPackage && !getSelectedPackage()?.isTest && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-2xl text-designoai-blue-dark">
+                    Duração do Contrato
+                  </CardTitle>
+                  <CardDescription>
+                    Escolha a duração e economize com contratos mais longos
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {durationOptions.map(option => (
+                      <div
+                        key={option.months}
+                        className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                          selectedDuration === option.months
+                            ? 'border-designoai-blue bg-designoai-blue-light'
+                            : 'border-gray-200 hover:border-designoai-blue-light'
+                        }`}
+                        onClick={() => setSelectedDuration(option.months)}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
+                              selectedDuration === option.months
+                                ? 'border-designoai-blue bg-designoai-blue'
+                                : 'border-gray-300'
+                            }`}>
+                              {selectedDuration === option.months && (
+                                <div className="w-2 h-2 bg-white rounded-full" />
+                              )}
+                            </div>
+                            <div>
+                              <h3 className="font-medium text-gray-800">{option.label}</h3>
+                              {option.discount > 0 && (
+                                <p className="text-sm text-green-600 font-medium">
+                                  {option.discount}% de desconto
+                                </p>
+                              )}
+                            </div>
                           </div>
-                          <div>
-                            <h3 className="font-medium text-gray-800">{option.label}</h3>
-                            {option.discount > 0 && (
-                              <p className="text-sm text-green-600 font-medium">
-                                {option.discount}% de desconto
-                              </p>
-                            )}
-                          </div>
+                          {option.discount > 0 && (
+                            <div className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-semibold">
+                              -{option.discount}%
+                            </div>
+                          )}
                         </div>
-                        {option.discount > 0 && (
-                          <div className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-semibold">
-                            -{option.discount}%
-                          </div>
-                        )}
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
-            {/* Serviços Adicionais */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-2xl text-designoai-blue-dark">
-                  Serviços Adicionais
-                </CardTitle>
-                <CardDescription>
-                  Selecione os serviços extras que deseja incluir
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {addons.map(addon => (
-                    <div
-                      key={addon.id}
-                      className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                        selectedAddons.includes(addon.id)
-                          ? 'border-designoai-blue bg-designoai-blue-light'
-                          : 'border-gray-200 hover:border-designoai-blue-light'
-                      }`}
-                      onClick={() => toggleAddon(addon.id)}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <div className={`w-5 h-5 rounded border-2 mr-3 flex items-center justify-center ${
-                            selectedAddons.includes(addon.id)
-                              ? 'border-designoai-blue bg-designoai-blue'
-                              : 'border-gray-300'
-                          }`}>
-                            {selectedAddons.includes(addon.id) && (
-                              <Check className="w-3 h-3 text-white" />
-                            )}
+            {/* Serviços Adicionais - Só mostrar se não for teste */}
+            {selectedPackage && !getSelectedPackage()?.isTest && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-2xl text-designoai-blue-dark">
+                    Serviços Adicionais
+                  </CardTitle>
+                  <CardDescription>
+                    Selecione os serviços extras que deseja incluir
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {addons.map(addon => (
+                      <div
+                        key={addon.id}
+                        className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                          selectedAddons.includes(addon.id)
+                            ? 'border-designoai-blue bg-designoai-blue-light'
+                            : 'border-gray-200 hover:border-designoai-blue-light'
+                        }`}
+                        onClick={() => toggleAddon(addon.id)}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <div className={`w-5 h-5 rounded border-2 mr-3 flex items-center justify-center ${
+                              selectedAddons.includes(addon.id)
+                                ? 'border-designoai-blue bg-designoai-blue'
+                                : 'border-gray-300'
+                            }`}>
+                              {selectedAddons.includes(addon.id) && (
+                                <Check className="w-3 h-3 text-white" />
+                              )}
+                            </div>
+                            <div>
+                              <h3 className="font-medium text-gray-800">{addon.name}</h3>
+                            </div>
                           </div>
-                          <div>
-                            <h3 className="font-medium text-gray-800">{addon.name}</h3>
+                          <div className="text-right">
+                            <span className="text-lg font-bold text-designoai-blue">
+                              +R$ {addon.price}/mês
+                            </span>
                           </div>
-                        </div>
-                        <div className="text-right">
-                          <span className="text-lg font-bold text-designoai-blue">
-                            +R$ {addon.price}/mês
-                          </span>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
 
           {/* Resumo do Pedido */}
@@ -358,18 +375,23 @@ const PriceCalculator = () => {
                   {getSelectedPackage() ? (
                     <>
                       <div className="flex justify-between items-center pb-4 border-b">
-                        <span className="font-medium text-gray-800">{getSelectedPackage()?.name}</span>
-                        <span className="text-xl font-bold text-designoai-blue">
-                          R$ {getSelectedPackage()?.price.toLocaleString()}/mês
+                        <div className="flex items-center">
+                          {getSelectedPackage()?.isTest && <TestTube className="w-4 h-4 mr-2 text-yellow-600" />}
+                          <span className="font-medium text-gray-800">{getSelectedPackage()?.name}</span>
+                        </div>
+                        <span className={`text-xl font-bold ${getSelectedPackage()?.isTest ? 'text-yellow-600' : 'text-designoai-blue'}`}>
+                          R$ {getSelectedPackage()?.price.toLocaleString()}{getSelectedPackage()?.isTest ? '' : '/mês'}
                         </span>
                       </div>
                       
-                      <div className="flex justify-between items-center pb-4 border-b">
-                        <span className="font-medium text-gray-800">Duração</span>
-                        <span className="text-lg text-gray-600">
-                          {selectedDuration} {selectedDuration === 1 ? 'mês' : 'meses'}
-                        </span>
-                      </div>
+                      {!getSelectedPackage()?.isTest && (
+                        <div className="flex justify-between items-center pb-4 border-b">
+                          <span className="font-medium text-gray-800">Duração</span>
+                          <span className="text-lg text-gray-600">
+                            {selectedDuration} {selectedDuration === 1 ? 'mês' : 'meses'}
+                          </span>
+                        </div>
+                      )}
                     </>
                   ) : (
                     <div className="text-center py-8 text-gray-500">
@@ -377,7 +399,7 @@ const PriceCalculator = () => {
                     </div>
                   )}
                   
-                  {getSelectedAddons().length > 0 && (
+                  {!getSelectedPackage()?.isTest && getSelectedAddons().length > 0 && (
                     <div>
                       <h4 className="font-medium text-gray-800 mb-3">Serviços Adicionais:</h4>
                       <div className="space-y-2">
@@ -393,33 +415,45 @@ const PriceCalculator = () => {
                   
                   {(getSelectedPackage() || getSelectedAddons().length > 0) && (
                     <div className="pt-4 border-t space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="text-lg font-medium text-gray-800">Subtotal ({selectedDuration} {selectedDuration === 1 ? 'mês' : 'meses'}):</span>
-                        <span className="text-xl font-bold text-gray-800">
-                          R$ {calculateSubtotal().toLocaleString()}
-                        </span>
-                      </div>
-                      
-                      {getDiscount() > 0 && (
-                        <div className="flex justify-between items-center">
-                          <span className="text-lg font-medium text-green-600">Desconto ({getDiscount()}%):</span>
-                          <span className="text-xl font-bold text-green-600">
-                            -R$ {calculateDiscountAmount().toLocaleString()}
-                          </span>
-                        </div>
+                      {!getSelectedPackage()?.isTest && (
+                        <>
+                          <div className="flex justify-between items-center">
+                            <span className="text-lg font-medium text-gray-800">Subtotal ({selectedDuration} {selectedDuration === 1 ? 'mês' : 'meses'}):</span>
+                            <span className="text-xl font-bold text-gray-800">
+                              R$ {calculateSubtotal().toLocaleString()}
+                            </span>
+                          </div>
+                          
+                          {getDiscount() > 0 && (
+                            <div className="flex justify-between items-center">
+                              <span className="text-lg font-medium text-green-600">Desconto ({getDiscount()}%):</span>
+                              <span className="text-xl font-bold text-green-600">
+                                -R$ {calculateDiscountAmount().toLocaleString()}
+                              </span>
+                            </div>
+                          )}
+                        </>
                       )}
                       
                       <div className="flex justify-between items-center pt-2 border-t">
                         <span className="text-xl font-bold text-gray-800">Total Final:</span>
-                        <span className="text-3xl font-bold text-designoai-blue">
+                        <span className={`text-3xl font-bold ${getSelectedPackage()?.isTest ? 'text-yellow-600' : 'text-designoai-blue'}`}>
                           R$ {calculateTotal().toLocaleString()}
                         </span>
                       </div>
                       
-                      {getDiscount() > 0 && (
+                      {!getSelectedPackage()?.isTest && getDiscount() > 0 && (
                         <div className="bg-green-50 p-3 rounded-lg">
                           <p className="text-sm text-green-700 font-medium">
                             💰 Você está economizando R$ {calculateDiscountAmount().toLocaleString()} com este plano!
+                          </p>
+                        </div>
+                      )}
+
+                      {getSelectedPackage()?.isTest && (
+                        <div className="bg-yellow-50 p-3 rounded-lg">
+                          <p className="text-sm text-yellow-700 font-medium">
+                            🧪 Esta é uma compra de teste para validar a integração de pagamento
                           </p>
                         </div>
                       )}
@@ -431,72 +465,87 @@ const PriceCalculator = () => {
 
             {calculateTotal() > 0 && (
               <>
-                <Card className="bg-designoai-blue text-white">
+                <Card className={getSelectedPackage()?.isTest ? "bg-yellow-100 text-yellow-800" : "bg-designoai-blue text-white"}>
                   <CardContent className="pt-6">
                     <div className="text-center">
-                      <h3 className="text-xl font-bold mb-2">Finalizar Compra</h3>
+                      <h3 className="text-xl font-bold mb-2">
+                        {getSelectedPackage()?.isTest ? 'Teste de Pagamento' : 'Finalizar Compra'}
+                      </h3>
                       <p className="mb-4">
-                        Pagamento seguro via PagBank com PIX, cartão ou boleto
+                        {getSelectedPackage()?.isTest 
+                          ? 'Teste a integração com valor simbólico' 
+                          : 'Pagamento seguro via PagBank com PIX, cartão ou boleto'
+                        }
                       </p>
                       <div className="space-y-3">
                         <Button 
-                          className="w-full bg-white text-designoai-blue hover:bg-gray-100"
+                          className={getSelectedPackage()?.isTest 
+                            ? "w-full bg-yellow-600 text-white hover:bg-yellow-700" 
+                            : "w-full bg-white text-designoai-blue hover:bg-gray-100"
+                          }
                           onClick={handleCheckout}
                         >
                           <ShoppingCart className="w-4 h-4 mr-2" />
-                          Pagar Agora - R$ {calculateTotal().toLocaleString()}
+                          {getSelectedPackage()?.isTest 
+                            ? `Testar Pagamento - R$ ${calculateTotal().toLocaleString()}`
+                            : `Pagar Agora - R$ ${calculateTotal().toLocaleString()}`
+                          }
                         </Button>
-                        <Button 
-                          variant="outline" 
-                          className="w-full border-white text-slate-50 font-normal bg-slate-700 hover:bg-slate-600"
-                          onClick={handleSolicitarProposta}
-                        >
-                          Solicitar Proposta via WhatsApp
-                        </Button>
+                        {!getSelectedPackage()?.isTest && (
+                          <Button 
+                            variant="outline" 
+                            className="w-full border-white text-slate-50 font-normal bg-slate-700 hover:bg-slate-600"
+                            onClick={handleSolicitarProposta}
+                          >
+                            Solicitar Proposta via WhatsApp
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card className="bg-designoai-blue-light">
-                  <CardContent className="pt-6">
-                    <div className="flex items-start">
-                      <Plus className="w-5 h-5 text-designoai-blue mr-3 mt-1" />
-                      <div>
-                        <h3 className="font-semibold text-designoai-blue-dark mb-2">
-                          {getSelectedPackage()?.id === 'fusion' ? 'Incluso no Pacote Fusion:' : 'Incluso no Pacote:'}
-                        </h3>
-                        <ul className="text-sm text-gray-600 space-y-1">
-                          {getSelectedPackage()?.id === 'fusion' ? (
-                            <>
-                              <li>• 12 posts mensais + stories diários</li>
-                              <li>• Site responsivo + identidade visual</li>
-                              <li>• Tráfego pago + relatórios IA</li>
-                              <li>• Sessão de fotos + vídeo institucional</li>
-                              <li>• Assistente WhatsApp com IA</li>
-                            </>
-                          ) : getSelectedPackage()?.id === 'plus' ? (
-                            <>
-                              <li>• 18 artes premium personalizadas</li>
-                              <li>• Suporte de IA no processo criativo</li>
-                              <li>• Sugestão de temas com base em tendências</li>
-                              <li>• Até 2 rodadas de revisão por arte</li>
-                              <li>• Atendimento via WhatsApp</li>
-                            </>
-                          ) : getSelectedPackage()?.id === 'start' ? (
-                            <>
-                              <li>• 12 artes premium personalizadas</li>
-                              <li>• Suporte de IA na criação visual</li>
-                              <li>• Sugestão de temas com base em tendências</li>
-                              <li>• Até 2 rodadas de revisão por arte</li>
-                              <li>• Atendimento via WhatsApp</li>
-                            </>
-                          ) : null}
-                        </ul>
+                {!getSelectedPackage()?.isTest && (
+                  <Card className="bg-designoai-blue-light">
+                    <CardContent className="pt-6">
+                      <div className="flex items-start">
+                        <Plus className="w-5 h-5 text-designoai-blue mr-3 mt-1" />
+                        <div>
+                          <h3 className="font-semibold text-designoai-blue-dark mb-2">
+                            {getSelectedPackage()?.id === 'fusion' ? 'Incluso no Pacote Fusion:' : 'Incluso no Pacote:'}
+                          </h3>
+                          <ul className="text-sm text-gray-600 space-y-1">
+                            {getSelectedPackage()?.id === 'fusion' ? (
+                              <>
+                                <li>• 12 posts mensais + stories diários</li>
+                                <li>• Site responsivo + identidade visual</li>
+                                <li>• Tráfego pago + relatórios IA</li>
+                                <li>• Sessão de fotos + vídeo institucional</li>
+                                <li>• Assistente WhatsApp com IA</li>
+                              </>
+                            ) : getSelectedPackage()?.id === 'plus' ? (
+                              <>
+                                <li>• 18 artes premium personalizadas</li>
+                                <li>• Suporte de IA no processo criativo</li>
+                                <li>• Sugestão de temas com base em tendências</li>
+                                <li>• Até 2 rodadas de revisão por arte</li>
+                                <li>• Atendimento via WhatsApp</li>
+                              </>
+                            ) : getSelectedPackage()?.id === 'start' ? (
+                              <>
+                                <li>• 12 artes premium personalizadas</li>
+                                <li>• Suporte de IA na criação visual</li>
+                                <li>• Sugestão de temas com base em tendências</li>
+                                <li>• Até 2 rodadas de revisão por arte</li>
+                                <li>• Atendimento via WhatsApp</li>
+                              </>
+                            ) : null}
+                          </ul>
+                        </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                )}
               </>
             )}
           </div>
