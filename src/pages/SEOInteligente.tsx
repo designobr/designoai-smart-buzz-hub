@@ -2,9 +2,6 @@
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Star, Zap, Search, TrendingUp, Globe } from 'lucide-react';
 
 const SEOInteligente = () => {
   useEffect(() => {
@@ -15,67 +12,84 @@ const SEOInteligente = () => {
     <div className="min-h-screen">
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-to-br from-yellow-50 via-white to-orange-50 relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-full text-yellow-600 font-medium mb-8 shadow-lg border border-yellow-200">
-              <Star className="w-4 h-4 mr-2 animate-pulse" />
-              🚀 SEO Inteligente
-            </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold mb-8 leading-tight">
-              <span className="bg-gradient-to-r from-yellow-600 via-orange-600 to-yellow-800 bg-clip-text text-transparent">
-                SEO Inteligente
-              </span>
-              <br />
-              <span className="text-slate-800">Automatizado</span>
+      <main className="pt-20">
+        <section className="py-16 md:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+            <h1 className="text-4xl md:text-5xl font-bold text-designoai-blue-dark mb-8 text-center">
+              SEO Inteligente
             </h1>
             
-            <p className="text-xl text-slate-600 mb-10 leading-relaxed">
-              Otimização automática para melhorar seu posicionamento nos mecanismos de busca
-            </p>
-            
-            <Link to="/#contact">
-              <Button size="lg" className="bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-orange-600 hover:to-yellow-600 text-white shadow-xl hover:shadow-2xl transition-all duration-500">
-                Começar Agora
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </Link>
+            <div className="prose prose-lg mx-auto text-gray-600">
+              <p className="text-xl leading-relaxed mb-6">
+                Nossa solução de SEO Inteligente utiliza algoritmos avançados de inteligência artificial para otimizar automaticamente seu site nos mecanismos de busca, garantindo melhor posicionamento e maior visibilidade online.
+              </p>
+              
+              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Como Funciona</h2>
+              
+              <p className="mb-4">
+                Nosso sistema de SEO Inteligente analisa continuamente seu site e o mercado para implementar otimizações automatizadas:
+              </p>
+              
+              <ul className="list-disc pl-6 mb-6 space-y-2">
+                <li>Análise automática de palavras-chave relevantes</li>
+                <li>Otimização de meta tags e descrições</li>
+                <li>Melhoria da estrutura de URLs</li>
+                <li>Otimização de velocidade de carregamento</li>
+                <li>Criação de conteúdo otimizado para SEO</li>
+                <li>Monitoramento de posicionamento em tempo real</li>
+              </ul>
+              
+              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Recursos Avançados</h2>
+              
+              <p className="mb-4">
+                Nossa plataforma oferece recursos completos para dominar os resultados de busca:
+              </p>
+              
+              <ul className="list-disc pl-6 mb-6 space-y-2">
+                <li>Pesquisa inteligente de palavras-chave com baixa concorrência</li>
+                <li>Análise da concorrência e identificação de oportunidades</li>
+                <li>Otimização técnica automatizada</li>
+                <li>Link building estratégico</li>
+                <li>SEO local para empresas regionais</li>
+                <li>Relatórios detalhados de performance</li>
+              </ul>
+              
+              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Resultados Mensuráveis</h2>
+              
+              <p className="mb-4">
+                Nossos clientes experimentam melhorias significativas em suas métricas de SEO:
+              </p>
+              
+              <ul className="list-disc pl-6 mb-6 space-y-2">
+                <li>Aumento médio de 200% no tráfego orgânico</li>
+                <li>Melhoria do posicionamento para palavras-chave estratégicas</li>
+                <li>Redução da taxa de rejeição</li>
+                <li>Aumento do tempo de permanência no site</li>
+                <li>Maior taxa de conversão orgânica</li>
+              </ul>
+              
+              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">SEO Técnico</h2>
+              
+              <p className="mb-4">
+                Cuidamos de todos os aspectos técnicos que influenciam o posicionamento do seu site:
+              </p>
+              
+              <ul className="list-disc pl-6 mb-6 space-y-2">
+                <li>Otimização da velocidade de carregamento</li>
+                <li>Implementação de dados estruturados</li>
+                <li>Melhoria da experiência mobile</li>
+                <li>Correção de erros de crawling</li>
+                <li>Otimização da arquitetura do site</li>
+                <li>Implementação de HTTPS e segurança</li>
+              </ul>
+              
+              <p className="text-lg">
+                Com nosso SEO Inteligente, sua empresa alcança as primeiras posições nos resultados de busca, aumentando significativamente a visibilidade online e atraindo mais clientes qualificados de forma orgânica e sustentável.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-8 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-3xl">
-              <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Search className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Palavras-chave Estratégicas</h3>
-              <p className="text-slate-600">Identificação e otimização das melhores palavras-chave</p>
-            </div>
-            
-            <div className="text-center p-8 bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <TrendingUp className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Ranking Otimizado</h3>
-              <p className="text-slate-600">Melhoria contínua do posicionamento no Google</p>
-            </div>
-            
-            <div className="text-center p-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Globe className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Presença Global</h3>
-              <p className="text-slate-600">Expansão da visibilidade online em todos os canais</p>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

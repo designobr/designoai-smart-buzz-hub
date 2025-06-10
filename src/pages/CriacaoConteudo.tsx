@@ -2,9 +2,6 @@
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Star, Sparkles, PenTool, Image, Video, FileText } from 'lucide-react';
 
 const CriacaoConteudo = () => {
   useEffect(() => {
@@ -15,67 +12,73 @@ const CriacaoConteudo = () => {
     <div className="min-h-screen">
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-to-br from-blue-50 via-white to-cyan-50 relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-full text-blue-600 font-medium mb-8 shadow-lg border border-blue-200">
-              <Star className="w-4 h-4 mr-2 animate-pulse" />
-              ✨ Criação de Conteúdo
-            </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold mb-8 leading-tight">
-              <span className="bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-800 bg-clip-text text-transparent">
-                Criação de Conteúdo
-              </span>
-              <br />
-              <span className="text-slate-800">Profissional com IA</span>
+      <main className="pt-20">
+        <section className="py-16 md:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+            <h1 className="text-4xl md:text-5xl font-bold text-designoai-blue-dark mb-8 text-center">
+              Criação de Conteúdo
             </h1>
             
-            <p className="text-xl text-slate-600 mb-10 leading-relaxed">
-              Textos, imagens e gráficos gerados por IA para suas campanhas de marketing digital
-            </p>
-            
-            <Link to="/#contact">
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-cyan-600 hover:to-blue-600 text-white shadow-xl hover:shadow-2xl transition-all duration-500">
-                Começar Agora
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </Link>
+            <div className="prose prose-lg mx-auto text-gray-600">
+              <p className="text-xl leading-relaxed mb-6">
+                Nossa solução de Criação de Conteúdo utiliza inteligência artificial para gerar textos, imagens e gráficos de alta qualidade para suas campanhas de marketing digital.
+              </p>
+              
+              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Recursos Principais</h2>
+              
+              <p className="mb-4">
+                Nossa plataforma de criação de conteúdo oferece ferramentas avançadas para produzir materiais profissionais:
+              </p>
+              
+              <ul className="list-disc pl-6 mb-6 space-y-2">
+                <li>Geração automática de textos otimizados para SEO</li>
+                <li>Criação de imagens e gráficos personalizados</li>
+                <li>Templates responsivos para diferentes formatos</li>
+                <li>Adaptação de conteúdo para múltiplas plataformas</li>
+                <li>Análise de performance e otimização contínua</li>
+                <li>Biblioteca de recursos visuais exclusivos</li>
+              </ul>
+              
+              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Tipos de Conteúdo</h2>
+              
+              <p className="mb-4">
+                Criamos diferentes tipos de conteúdo para atender todas as suas necessidades de marketing:
+              </p>
+              
+              <ul className="list-disc pl-6 mb-6 space-y-2">
+                <li>Posts para redes sociais</li>
+                <li>Artigos para blog</li>
+                <li>E-mails marketing</li>
+                <li>Landing pages</li>
+                <li>Banners e anúncios</li>
+                <li>Vídeos promocionais</li>
+                <li>Infográficos informativos</li>
+              </ul>
+              
+              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Personalização Inteligente</h2>
+              
+              <p className="mb-4">
+                Nossa IA aprende com o perfil da sua marca e audiência para criar conteúdo cada vez mais personalizado e eficaz. O sistema analisa o engajamento e ajusta automaticamente o tom, estilo e formato para maximizar os resultados.
+              </p>
+              
+              <h2 className="text-2xl font-semibold text-designoai-blue-dark mt-8 mb-4">Benefícios</h2>
+              
+              <ul className="list-disc pl-6 mb-6 space-y-2">
+                <li>Economia de tempo na produção de conteúdo</li>
+                <li>Consistência na comunicação da marca</li>
+                <li>Aumento do engajamento e conversões</li>
+                <li>Escalabilidade para grandes volumes</li>
+                <li>Redução de custos com produção</li>
+                <li>Otimização automática baseada em performance</li>
+              </ul>
+              
+              <p className="text-lg">
+                Com nossa solução de Criação de Conteúdo, sua empresa mantém uma comunicação profissional e envolvente em todos os canais digitais, aumentando a visibilidade da marca e gerando mais oportunidades de negócio.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-8 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-3xl">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <FileText className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Textos Otimizados</h3>
-              <p className="text-slate-600">Criação automática de textos persuasivos e otimizados para SEO</p>
-            </div>
-            
-            <div className="text-center p-8 bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Image className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Imagens Profissionais</h3>
-              <p className="text-slate-600">Geração de imagens e gráficos de alta qualidade para suas campanhas</p>
-            </div>
-            
-            <div className="text-center p-8 bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Video className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Conteúdo Multimídia</h3>
-              <p className="text-slate-600">Criação de vídeos, áudios e apresentações interativas</p>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>
