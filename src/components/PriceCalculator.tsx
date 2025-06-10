@@ -1,11 +1,15 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Check, Calculator, Plus } from 'lucide-react';
+import { Check, Calculator, Plus, ShoppingCart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const PriceCalculator = () => {
+  const navigate = useNavigate();
   const [selectedPackage, setSelectedPackage] = useState<string>('');
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
+  const [selectedDuration, setSelectedDuration] = useState<number>(1);
 
   const packages = [
     {
@@ -66,6 +70,12 @@ const PriceCalculator = () => {
     }
   ];
 
+  const durationOptions = [
+    { months: 1, label: '1 mês', discount: 0 },
+    { months: 6, label: '6 meses', discount: 10 },
+    { months: 12, label: '12 meses', discount: 20 }
+  ];
+
   const togglePackage = (packageId: string) => {
     setSelectedPackage(packageId === selectedPackage ? '' : packageId);
   };
@@ -78,13 +88,28 @@ const PriceCalculator = () => {
     );
   };
 
-  const calculateTotal = () => {
+  const calculateSubtotal = () => {
     const packagePrice = packages.find(p => p.id === selectedPackage)?.price || 0;
     const addonsTotal = selectedAddons.reduce((total, addonId) => {
       const addon = addons.find(a => a.id === addonId);
       return total + (addon?.price || 0);
     }, 0);
-    return packagePrice + addonsTotal;
+    return (packagePrice + addonsTotal) * selectedDuration;
+  };
+
+  const getDiscount = () => {
+    const duration = durationOptions.find(d => d.months === selectedDuration);
+    return duration?.discount || 0;
+  };
+
+  const calculateDiscountAmount = () => {
+    const subtotal = calculateSubtotal();
+    const discountPercentage = getDiscount();
+    return (subtotal * discountPercentage) / 100;
+  };
+
+  const calculateTotal = () => {
+    return calculateSubtotal() - calculateDiscountAmount();
   };
 
   const getSelectedPackage = () => {
@@ -93,6 +118,22 @@ const PriceCalculator = () => {
 
   const getSelectedAddons = () => {
     return addons.filter(addon => selectedAddons.includes(addon.id));
+  };
+
+  const handleCheckout = () => {
+    if (!selectedPackage) return;
+    
+    const orderData = {
+      package: getSelectedPackage(),
+      addons: getSelectedAddons(),
+      duration: selectedDuration,
+      subtotal: calculateSubtotal(),
+      discount: getDiscount(),
+      discountAmount: calculateDiscountAmount(),
+      total: calculateTotal()
+    };
+    
+    navigate('/checkout', { state: orderData });
   };
 
   const handleSolicitarProposta = () => {
@@ -104,6 +145,10 @@ const PriceCalculator = () => {
     
     if (selectedPkg) {
       message += `📦 Pacote selecionado: ${selectedPkg.name} - R$ ${selectedPkg.price.toLocaleString()}\n`;
+    }
+    
+    if (selectedDuration > 1) {
+      message += `⏰ Duração: ${selectedDuration} meses\n`;
     }
     
     if (selectedAddonsList.length > 0) {
@@ -140,7 +185,7 @@ const PriceCalculator = () => {
             </h2>
           </div>
           <p className="text-xl text-gray-600">
-            Selecione um pacote base e adicione serviços extras conforme sua necessidade
+            Selecione um pacote base, duração e adicione serviços extras conforme sua necessidade
           </p>
         </div>
 
@@ -187,9 +232,63 @@ const PriceCalculator = () => {
                         </div>
                         <div className="text-right">
                           <span className="text-lg font-bold text-designoai-blue">
-                            R$ {pkg.price.toLocaleString()}
+                            R$ {pkg.price.toLocaleString()}/mês
                           </span>
                         </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Duração */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-2xl text-designoai-blue-dark">
+                  Duração do Contrato
+                </CardTitle>
+                <CardDescription>
+                  Escolha a duração e economize com contratos mais longos
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {durationOptions.map(option => (
+                    <div
+                      key={option.months}
+                      className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                        selectedDuration === option.months
+                          ? 'border-designoai-blue bg-designoai-blue-light'
+                          : 'border-gray-200 hover:border-designoai-blue-light'
+                      }`}
+                      onClick={() => setSelectedDuration(option.months)}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
+                            selectedDuration === option.months
+                              ? 'border-designoai-blue bg-designoai-blue'
+                              : 'border-gray-300'
+                          }`}>
+                            {selectedDuration === option.months && (
+                              <div className="w-2 h-2 bg-white rounded-full" />
+                            )}
+                          </div>
+                          <div>
+                            <h3 className="font-medium text-gray-800">{option.label}</h3>
+                            {option.discount > 0 && (
+                              <p className="text-sm text-green-600 font-medium">
+                                {option.discount}% de desconto
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        {option.discount > 0 && (
+                          <div className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-semibold">
+                            -{option.discount}%
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -236,7 +335,7 @@ const PriceCalculator = () => {
                         </div>
                         <div className="text-right">
                           <span className="text-lg font-bold text-designoai-blue">
-                            +R$ {addon.price}
+                            +R$ {addon.price}/mês
                           </span>
                         </div>
                       </div>
@@ -252,18 +351,27 @@ const PriceCalculator = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="text-2xl text-designoai-blue-dark">
-                  Resumo do Pacote
+                  Resumo do Pedido
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {getSelectedPackage() ? (
-                    <div className="flex justify-between items-center pb-4 border-b">
-                      <span className="font-medium text-gray-800">{getSelectedPackage()?.name}</span>
-                      <span className="text-xl font-bold text-designoai-blue">
-                        R$ {getSelectedPackage()?.price.toLocaleString()}
-                      </span>
-                    </div>
+                    <>
+                      <div className="flex justify-between items-center pb-4 border-b">
+                        <span className="font-medium text-gray-800">{getSelectedPackage()?.name}</span>
+                        <span className="text-xl font-bold text-designoai-blue">
+                          R$ {getSelectedPackage()?.price.toLocaleString()}/mês
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between items-center pb-4 border-b">
+                        <span className="font-medium text-gray-800">Duração</span>
+                        <span className="text-lg text-gray-600">
+                          {selectedDuration} {selectedDuration === 1 ? 'mês' : 'meses'}
+                        </span>
+                      </div>
+                    </>
                   ) : (
                     <div className="text-center py-8 text-gray-500">
                       <p>Selecione um pacote base para começar</p>
@@ -277,7 +385,7 @@ const PriceCalculator = () => {
                         {getSelectedAddons().map(addon => (
                           <div key={addon.id} className="flex justify-between items-center text-sm">
                             <span className="text-gray-600">{addon.name}</span>
-                            <span className="font-medium text-designoai-blue">+R$ {addon.price}</span>
+                            <span className="font-medium text-designoai-blue">+R$ {addon.price}/mês</span>
                           </div>
                         ))}
                       </div>
@@ -285,13 +393,37 @@ const PriceCalculator = () => {
                   )}
                   
                   {(getSelectedPackage() || getSelectedAddons().length > 0) && (
-                    <div className="pt-4 border-t">
+                    <div className="pt-4 border-t space-y-2">
                       <div className="flex justify-between items-center">
-                        <span className="text-xl font-bold text-gray-800">Total Mensal:</span>
+                        <span className="text-lg font-medium text-gray-800">Subtotal ({selectedDuration} {selectedDuration === 1 ? 'mês' : 'meses'}):</span>
+                        <span className="text-xl font-bold text-gray-800">
+                          R$ {calculateSubtotal().toLocaleString()}
+                        </span>
+                      </div>
+                      
+                      {getDiscount() > 0 && (
+                        <div className="flex justify-between items-center">
+                          <span className="text-lg font-medium text-green-600">Desconto ({getDiscount()}%):</span>
+                          <span className="text-xl font-bold text-green-600">
+                            -R$ {calculateDiscountAmount().toLocaleString()}
+                          </span>
+                        </div>
+                      )}
+                      
+                      <div className="flex justify-between items-center pt-2 border-t">
+                        <span className="text-xl font-bold text-gray-800">Total Final:</span>
                         <span className="text-3xl font-bold text-designoai-blue">
                           R$ {calculateTotal().toLocaleString()}
                         </span>
                       </div>
+                      
+                      {getDiscount() > 0 && (
+                        <div className="bg-green-50 p-3 rounded-lg">
+                          <p className="text-sm text-green-700 font-medium">
+                            💰 Você está economizando R$ {calculateDiscountAmount().toLocaleString()} com este plano!
+                          </p>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -303,23 +435,24 @@ const PriceCalculator = () => {
                 <Card className="bg-designoai-blue text-white">
                   <CardContent className="pt-6">
                     <div className="text-center">
-                      <h3 className="text-xl font-bold mb-2">Economia Anual</h3>
+                      <h3 className="text-xl font-bold mb-2">Finalizar Compra</h3>
                       <p className="mb-4">
-                        Contratando anualmente, você economiza até R$ 2.400
+                        Pagamento seguro via PagBank com PIX, cartão ou boleto
                       </p>
                       <div className="space-y-3">
                         <Button 
                           className="w-full bg-white text-designoai-blue hover:bg-gray-100"
-                          onClick={handleSolicitarProposta}
+                          onClick={handleCheckout}
                         >
-                          Solicitar Proposta Personalizada
+                          <ShoppingCart className="w-4 h-4 mr-2" />
+                          Pagar Agora - R$ {calculateTotal().toLocaleString()}
                         </Button>
                         <Button 
                           variant="outline" 
                           className="w-full border-white text-slate-50 font-normal bg-slate-700 hover:bg-slate-600"
-                          onClick={handleFalarConsultor}
+                          onClick={handleSolicitarProposta}
                         >
-                          Falar com Consultor
+                          Solicitar Proposta via WhatsApp
                         </Button>
                       </div>
                     </div>

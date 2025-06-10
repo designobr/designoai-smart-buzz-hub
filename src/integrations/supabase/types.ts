@@ -42,6 +42,78 @@ export type Database = {
         }
         Relationships: []
       }
+      orders: {
+        Row: {
+          addons_total: number | null
+          created_at: string
+          customer_company: string | null
+          customer_email: string
+          customer_name: string
+          customer_phone: string | null
+          discount_amount: number | null
+          discount_percentage: number | null
+          duration_months: number
+          id: string
+          package_id: string
+          package_name: string
+          package_price: number
+          pagbank_order_id: string | null
+          pagbank_payment_id: string | null
+          payment_method: string | null
+          payment_status: string | null
+          selected_addons: Json | null
+          subtotal: number
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          addons_total?: number | null
+          created_at?: string
+          customer_company?: string | null
+          customer_email: string
+          customer_name: string
+          customer_phone?: string | null
+          discount_amount?: number | null
+          discount_percentage?: number | null
+          duration_months?: number
+          id?: string
+          package_id: string
+          package_name: string
+          package_price: number
+          pagbank_order_id?: string | null
+          pagbank_payment_id?: string | null
+          payment_method?: string | null
+          payment_status?: string | null
+          selected_addons?: Json | null
+          subtotal: number
+          total_amount: number
+          updated_at?: string
+        }
+        Update: {
+          addons_total?: number | null
+          created_at?: string
+          customer_company?: string | null
+          customer_email?: string
+          customer_name?: string
+          customer_phone?: string | null
+          discount_amount?: number | null
+          discount_percentage?: number | null
+          duration_months?: number
+          id?: string
+          package_id?: string
+          package_name?: string
+          package_price?: number
+          pagbank_order_id?: string | null
+          pagbank_payment_id?: string | null
+          payment_method?: string | null
+          payment_status?: string | null
+          selected_addons?: Json | null
+          subtotal?: number
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
