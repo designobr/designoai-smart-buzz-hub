@@ -1,131 +1,80 @@
 
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, Download, MessageCircle, Home } from 'lucide-react';
+import { Check, Home, Mail } from 'lucide-react';
 
 const PaymentSuccess = () => {
-  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const orderData = location.state;
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!orderData) {
-      navigate('/');
+    const session_id = searchParams.get('session_id');
+    if (session_id) {
+      setSessionId(session_id);
+      console.log('Payment completed with session ID:', session_id);
     }
-  }, [orderData, navigate]);
-
-  if (!orderData) {
-    return null;
-  }
-
-  const handleWhatsAppContact = () => {
-    const message = `Olá! Acabei de realizar uma compra no site da DesignoAI. 
-    
-Dados do pedido:
-- ID: ${orderData.orderId}
-- Valor: R$ ${orderData.total.toLocaleString()}
-- Forma de pagamento: ${orderData.paymentMethod === 'pix' ? 'PIX' : orderData.paymentMethod === 'credit_card' ? 'Cartão de Crédito' : 'Boleto'}
-
-Gostaria de confirmar os próximos passos para iniciar os serviços.`;
-    
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/5511947968158?text=${encodedMessage}`, '_blank');
-  };
+  }, [searchParams]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 py-8 flex items-center justify-center">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
-        <div className="text-center mb-8">
-          <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-            <CheckCircle className="w-10 h-10 text-green-600" />
-          </div>
-          <h1 className="text-3xl font-bold text-green-600 mb-2">
-            Compra Realizada com Sucesso!
-          </h1>
-          <p className="text-gray-600">
-            Seu pedido foi processado e em breve você receberá as informações por e-mail
-          </p>
-        </div>
-
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>Detalhes do Pedido</CardTitle>
-            <CardDescription>
-              ID do Pedido: {orderData.orderId}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="font-medium text-gray-800">Valor Total:</span>
-                <span className="text-2xl font-bold text-designoai-blue">
-                  R$ {orderData.total.toLocaleString()}
-                </span>
-              </div>
-              
-              <div className="flex justify-between items-center">
-                <span className="font-medium text-gray-800">Forma de Pagamento:</span>
-                <span className="text-gray-600">
-                  {orderData.paymentMethod === 'pix' ? 'PIX' : 
-                   orderData.paymentMethod === 'credit_card' ? 'Cartão de Crédito' : 
-                   'Boleto Bancário'}
-                </span>
-              </div>
-              
-              <div className="flex justify-between items-center">
-                <span className="font-medium text-gray-800">Status:</span>
-                <span className="text-green-600 font-medium">Processando</span>
+        <Card className="bg-green-50 border-green-200">
+          <CardHeader className="text-center">
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">
+                <Check className="w-8 h-8 text-white" />
               </div>
             </div>
-          </CardContent>
-        </Card>
+            <CardTitle className="text-2xl text-green-800">
+              Pagamento Realizado com Sucesso!
+            </CardTitle>
+            <CardDescription className="text-green-700">
+              Seu pedido foi processado e você receberá uma confirmação por email
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-center space-y-6">
+            {sessionId && (
+              <div className="bg-white p-4 rounded-lg border">
+                <p className="text-sm text-gray-600 mb-2">ID da Sessão de Pagamento:</p>
+                <code className="text-xs bg-gray-100 px-2 py-1 rounded font-mono">
+                  {sessionId}
+                </code>
+              </div>
+            )}
+            
+            <div className="space-y-4">
+              <div className="flex items-center justify-center text-green-800">
+                <Mail className="w-5 h-5 mr-2" />
+                <span>Confirmação enviada por email</span>
+              </div>
+              
+              <p className="text-green-700">
+                Nossa equipe entrará em contato em até 24 horas para dar início aos seus serviços de IA.
+              </p>
+            </div>
 
-        <Card className="bg-designoai-blue-light mb-8">
-          <CardContent className="pt-6">
-            <h3 className="font-semibold text-designoai-blue-dark mb-4">
-              Próximos Passos:
-            </h3>
-            <ol className="list-decimal list-inside space-y-2 text-sm text-gray-700">
-              <li>Você receberá um e-mail de confirmação com os detalhes do pedido</li>
-              <li>Nossa equipe entrará em contato em até 24 horas</li>
-              <li>Agendaremos uma reunião para conhecer melhor seu negócio</li>
-              <li>Começaremos a produzir seu conteúdo personalizado</li>
-            </ol>
-          </CardContent>
-        </Card>
-
-        <div className="space-y-4">
-          <Button 
-            size="lg" 
-            className="w-full" 
-            onClick={handleWhatsAppContact}
-          >
-            <MessageCircle className="w-4 h-4 mr-2" />
-            Falar com Nossa Equipe no WhatsApp
-          </Button>
-          
-          <Button 
-            variant="outline" 
-            size="lg" 
-            className="w-full"
-            onClick={() => navigate('/')}
-          >
-            <Home className="w-4 h-4 mr-2" />
-            Voltar ao Site
-          </Button>
-        </div>
-
-        <Card className="mt-8 bg-yellow-50 border-yellow-200">
-          <CardContent className="pt-6">
-            <div className="text-center">
-              <h3 className="font-semibold text-yellow-800 mb-2">
-                Importante!
-              </h3>
-              <p className="text-sm text-yellow-700">
-                Se você escolheu PIX ou boleto, aguarde a confirmação do pagamento. 
-                Para cartão de crédito, a confirmação é automática.
+            <div className="space-y-3">
+              <Button 
+                onClick={() => navigate('/')}
+                className="w-full"
+              >
+                <Home className="w-4 h-4 mr-2" />
+                Voltar ao Início
+              </Button>
+              
+              <p className="text-sm text-gray-600">
+                Precisa de ajuda? Entre em contato conosco pelo WhatsApp: 
+                <a 
+                  href="https://wa.me/5511947968158" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-designoai-blue hover:underline ml-1"
+                >
+                  (11) 94796-8158
+                </a>
               </p>
             </div>
           </CardContent>

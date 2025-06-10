@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -6,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { ArrowLeft, CreditCard, QrCode, FileText, Shield, Check, Copy, ExternalLink } from 'lucide-react';
+import { ArrowLeft, CreditCard, QrCode, FileText, Shield } from 'lucide-react';
 
 const Checkout = () => {
   const location = useLocation();
@@ -20,9 +21,8 @@ const Checkout = () => {
     phone: '',
     company: ''
   });
-  const [paymentMethod, setPaymentMethod] = useState('pix');
+  const [paymentMethod, setPaymentMethod] = useState('credit_card');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [paymentResult, setPaymentResult] = useState<any>(null);
 
   useEffect(() => {
     if (!orderData) {
@@ -37,14 +37,6 @@ const Checkout = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast({
-      title: "Copiado!",
-      description: "Código PIX copiado para a área de transferência.",
-    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -92,7 +84,7 @@ const Checkout = () => {
 
       console.log('Order created:', order);
 
-      // Now process payment with PagBank
+      // Now process payment with Stripe
       const { data: paymentResponse, error: paymentError } = await supabase.functions.invoke('process-payment', {
         body: {
           orderId: order.id,
@@ -110,25 +102,11 @@ const Checkout = () => {
         throw paymentError;
       }
 
-      console.log('Payment response:', paymentResponse);
+      console.log('Stripe payment response:', paymentResponse);
 
-      if (paymentResponse.success) {
-        setPaymentResult(paymentResponse);
-        
-        if (paymentMethod === 'credit_card' && paymentResponse.checkoutUrl) {
-          // Redirect to PagBank checkout for credit card
-          window.location.href = paymentResponse.checkoutUrl;
-          return;
-        }
-
-        toast({
-          title: "Pagamento iniciado!",
-          description: paymentMethod === 'pix' 
-            ? "Use o QR Code ou código PIX para finalizar o pagamento."
-            : paymentMethod === 'boleto'
-            ? "Boleto gerado! Clique no link para visualizar e pagar."
-            : "Redirecionando para o pagamento...",
-        });
+      if (paymentResponse.success && paymentResponse.checkoutUrl) {
+        // Redirect to Stripe checkout
+        window.location.href = paymentResponse.checkoutUrl;
       } else {
         throw new Error(paymentResponse.error || 'Erro no processamento do pagamento');
       }
@@ -147,190 +125,28 @@ const Checkout = () => {
 
   const paymentMethods = [
     {
-      id: 'pix',
-      name: 'PIX',
-      description: 'Pagamento instantâneo',
-      icon: QrCode,
-      discount: '5% de desconto adicional'
-    },
-    {
       id: 'credit_card',
       name: 'Cartão de Crédito',
-      description: 'Parcelamento disponível',
+      description: 'Pagamento seguro via Stripe',
       icon: CreditCard,
       discount: null
     },
     {
+      id: 'pix',
+      name: 'PIX',
+      description: 'Processado via Stripe',
+      icon: QrCode,
+      discount: '5% de desconto adicional'
+    },
+    {
       id: 'boleto',
       name: 'Boleto Bancário',
-      description: 'Vencimento em 3 dias úteis',
+      description: 'Convertido para cartão via Stripe',
       icon: FileText,
       discount: null
     }
   ];
 
-  // If payment result exists, show payment details
-  if (paymentResult) {
-    return (
-      <div className="min-h-screen bg-gray-50 py-8">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
-          <div className="text-center mb-6">
-            <h1 className="text-3xl font-bold text-designoai-blue-dark mb-2">
-              {paymentMethod === 'pix' ? 'Pagamento via PIX' : 
-               paymentMethod === 'boleto' ? 'Boleto Bancário Gerado' : 
-               'Processando Pagamento'}
-            </h1>
-          </div>
-
-          {paymentMethod === 'pix' && paymentResult.qrCode && (
-            <Card className="mb-6">
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <QrCode className="w-5 h-5 mr-2" />
-                  PIX - Pagamento Instantâneo
-                </CardTitle>
-                <CardDescription>
-                  Escaneie o QR Code ou copie o código PIX
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="text-center space-y-4">
-                {paymentResult.qrCodeImage && (
-                  <div className="flex justify-center">
-                    <img 
-                      src={paymentResult.qrCodeImage} 
-                      alt="QR Code PIX" 
-                      className="w-64 h-64 border rounded-lg"
-                    />
-                  </div>
-                )}
-                
-                <div className="space-y-3">
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <Label className="text-sm font-medium text-gray-700 mb-2 block">
-                      Código PIX:
-                    </Label>
-                    <div className="flex items-center gap-2">
-                      <code className="flex-1 text-sm bg-white p-2 rounded border font-mono break-all">
-                        {paymentResult.qrCode}
-                      </code>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => copyToClipboard(paymentResult.qrCode)}
-                      >
-                        <Copy className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                  
-                  <div className="text-sm text-gray-600">
-                    <p>💰 Valor: <strong>R$ {orderData.total.toLocaleString()}</strong></p>
-                    {paymentResult.expiresAt && (
-                      <p>⏰ Expira em: <strong>{new Date(paymentResult.expiresAt).toLocaleString()}</strong></p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="bg-blue-50 p-4 rounded-lg text-left">
-                  <h3 className="font-semibold text-blue-800 mb-2">Como pagar:</h3>
-                  <ol className="text-sm text-blue-700 space-y-1">
-                    <li>1. Abra o app do seu banco</li>
-                    <li>2. Escaneie o QR Code ou copie o código PIX</li>
-                    <li>3. Confirme o pagamento</li>
-                    <li>4. Aguarde a confirmação automática</li>
-                  </ol>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {paymentMethod === 'boleto' && paymentResult.boletoUrl && (
-            <Card className="mb-6">
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <FileText className="w-5 h-5 mr-2" />
-                  Boleto Bancário
-                </CardTitle>
-                <CardDescription>
-                  Seu boleto foi gerado com sucesso
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="text-center">
-                  <Button
-                    className="w-full"
-                    onClick={() => window.open(paymentResult.boletoUrl, '_blank')}
-                  >
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    Visualizar e Imprimir Boleto
-                  </Button>
-                </div>
-                
-                {paymentResult.boletoBarcode && (
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <Label className="text-sm font-medium text-gray-700 mb-2 block">
-                      Código de Barras:
-                    </Label>
-                    <div className="flex items-center gap-2">
-                      <code className="flex-1 text-sm bg-white p-2 rounded border font-mono">
-                        {paymentResult.boletoBarcode}
-                      </code>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => copyToClipboard(paymentResult.boletoBarcode)}
-                      >
-                        <Copy className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                )}
-                
-                <div className="text-sm text-gray-600">
-                  <p>💰 Valor: <strong>R$ {orderData.total.toLocaleString()}</strong></p>
-                  {paymentResult.dueDate && (
-                    <p>📅 Vencimento: <strong>{new Date(paymentResult.dueDate).toLocaleDateString()}</strong></p>
-                  )}
-                </div>
-
-                <div className="bg-orange-50 p-4 rounded-lg text-left">
-                  <h3 className="font-semibold text-orange-800 mb-2">Importante:</h3>
-                  <ul className="text-sm text-orange-700 space-y-1">
-                    <li>• O boleto tem vencimento em 3 dias úteis</li>
-                    <li>• Pode ser pago em qualquer banco ou lotérica</li>
-                    <li>• Também pode ser pago pelo internet banking</li>
-                    <li>• Após o pagamento, a confirmação é automática em até 2 dias úteis</li>
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          <Card className="bg-green-50 border-green-200">
-            <CardContent className="pt-6 text-center">
-              <div className="space-y-3">
-                <div className="flex items-center justify-center text-green-800">
-                  <Check className="w-6 h-6 mr-2" />
-                  <span className="font-medium">Pedido criado com sucesso!</span>
-                </div>
-                <p className="text-green-700">
-                  Você receberá uma confirmação por email assim que o pagamento for processado.
-                </p>
-                <Button 
-                  onClick={() => navigate('/')}
-                  className="mt-4"
-                >
-                  Voltar ao Início
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    );
-  }
-
-  // Original checkout form
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
@@ -364,7 +180,7 @@ const Checkout = () => {
                   Dados do Cliente
                 </CardTitle>
                 <CardDescription>
-                  Seus dados estão protegidos e não serão compartilhados
+                  Seus dados estão protegidos pelo Stripe
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -427,7 +243,7 @@ const Checkout = () => {
               <CardHeader>
                 <CardTitle>Forma de Pagamento</CardTitle>
                 <CardDescription>
-                  Escolha como deseja pagar seu pedido
+                  Processamento seguro via Stripe
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -537,24 +353,13 @@ const Checkout = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-green-50 border-green-200">
-              <CardContent className="pt-6">
-                <div className="space-y-3">
-                  <div className="flex items-center text-green-800">
-                    <Check className="w-5 h-5 mr-2" />
-                    <span className="font-medium">Pagamento 100% seguro</span>
-                  </div>
-                  <div className="flex items-center text-green-800">
-                    <Check className="w-5 h-5 mr-2" />
-                    <span className="font-medium">Satisfação garantida</span>
-                  </div>
-                  <div className="flex items-center text-green-800">
-                    <Check className="w-5 h-5 mr-2" />
-                    <span className="font-medium">Suporte premium incluído</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <h3 className="font-semibold text-blue-800 mb-2">Powered by Stripe</h3>
+              <p className="text-sm text-blue-700">
+                Seus dados de pagamento são processados de forma segura pelo Stripe, 
+                líder mundial em processamento de pagamentos online.
+              </p>
+            </div>
 
             <Button 
               size="lg" 
@@ -565,7 +370,7 @@ const Checkout = () => {
               {isProcessing ? (
                 "Processando..."
               ) : (
-                `Finalizar Compra - R$ ${orderData.total.toLocaleString()}`
+                `Pagar com Stripe - R$ ${orderData.total.toLocaleString()}`
               )}
             </Button>
           </div>

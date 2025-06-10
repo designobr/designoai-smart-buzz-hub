@@ -1,6 +1,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.10'
+import Stripe from 'https://esm.sh/stripe@14.21.0'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -33,190 +34,139 @@ serve(async (req) => {
 
     const { orderId, paymentMethod, amount, customerData }: PaymentRequest = await req.json()
     
-    console.log('Processing payment:', { orderId, paymentMethod, amount })
+    console.log('Processing payment with Stripe:', { orderId, paymentMethod, amount })
 
-    // Get PagBank token
-    const pagbankToken = Deno.env.get('PAGBANK_TOKEN')
-    if (!pagbankToken) {
-      throw new Error('PagBank token not configured')
+    // Get Stripe secret key
+    const stripeKey = Deno.env.get('STRIPE_SECRET_KEY')
+    if (!stripeKey) {
+      throw new Error('Stripe secret key not configured')
     }
 
-    // Create payment payload based on method
-    let paymentPayload: any = {
-      reference_id: orderId,
-      customer: {
-        name: customerData.name,
+    // Initialize Stripe
+    const stripe = new Stripe(stripeKey, {
+      apiVersion: '2023-10-16',
+    })
+
+    // Check if customer exists
+    const customers = await stripe.customers.list({
+      email: customerData.email,
+      limit: 1
+    })
+
+    let customerId
+    if (customers.data.length > 0) {
+      customerId = customers.data[0].id
+    } else {
+      // Create new customer
+      const customer = await stripe.customers.create({
         email: customerData.email,
-        phone: customerData.phone.replace(/\D/g, '')
-      },
-      items: [{
-        reference_id: `order_${orderId}`,
-        name: "Serviços DesignoAI",
-        quantity: 1,
-        unit_amount: Math.round(amount * 100) // Convert to cents
-      }],
-      notification_urls: [
-        `${Deno.env.get('SUPABASE_URL')}/functions/v1/payment-webhook`
-      ]
+        name: customerData.name,
+        phone: customerData.phone,
+      })
+      customerId = customer.id
     }
 
-    let paymentResponse: any
+    console.log('Stripe customer:', { customerId })
+
+    // Create payment session based on method
+    let sessionData: any = {
+      customer: customerId,
+      mode: 'payment',
+      success_url: `${req.headers.get('origin')}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.get('origin')}/checkout`,
+      metadata: {
+        orderId: orderId,
+        paymentMethod: paymentMethod
+      }
+    }
 
     if (paymentMethod === 'pix') {
-      paymentPayload.charges = [{
-        reference_id: orderId,
-        description: "Pagamento DesignoAI via PIX",
-        amount: {
-          value: Math.round(amount * 100),
-          currency: "BRL"
+      // For PIX, we'll simulate it with a regular payment
+      // In Brazil, you might want to integrate with a local payment processor for real PIX
+      sessionData.line_items = [{
+        price_data: {
+          currency: 'brl',
+          product_data: {
+            name: 'Serviços DesignoAI',
+            description: 'Pagamento via PIX'
+          },
+          unit_amount: Math.round(amount * 100) // Convert to centavos
         },
-        payment_method: {
-          type: "PIX",
-          pix: {
-            expires_in: 3600 // 1 hour
-          }
-        }
+        quantity: 1
       }]
-
-      // Create PIX payment
-      const response = await fetch('https://api.pagseguro.com/orders', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${pagbankToken}`,
-          'Content-Type': 'application/json'
+    } else if (paymentMethod === 'credit_card') {
+      sessionData.line_items = [{
+        price_data: {
+          currency: 'brl',
+          product_data: {
+            name: 'Serviços DesignoAI',
+            description: 'Pagamento via Cartão de Crédito'
+          },
+          unit_amount: Math.round(amount * 100)
         },
-        body: JSON.stringify(paymentPayload)
+        quantity: 1
+      }]
+      sessionData.payment_method_types = ['card']
+    } else if (paymentMethod === 'boleto') {
+      // Boleto is not directly supported by Stripe
+      // You would need to integrate with a Brazilian payment processor
+      // For now, we'll create a regular payment session
+      sessionData.line_items = [{
+        price_data: {
+          currency: 'brl',
+          product_data: {
+            name: 'Serviços DesignoAI',
+            description: 'Pagamento via Boleto'
+          },
+          unit_amount: Math.round(amount * 100)
+        },
+        quantity: 1
+      }]
+    }
+
+    // Create checkout session
+    const session = await stripe.checkout.sessions.create(sessionData)
+    
+    console.log('Stripe session created:', { sessionId: session.id, url: session.url })
+
+    // Update order with Stripe session ID
+    await supabase
+      .from('orders')
+      .update({
+        stripe_session_id: session.id,
+        payment_status: 'pending'
       })
+      .eq('id', orderId)
 
-      paymentResponse = await response.json()
-      console.log('PagBank PIX response:', paymentResponse)
-
-      if (!response.ok) {
-        throw new Error(`PagBank API error: ${JSON.stringify(paymentResponse)}`)
-      }
-
-      // Update order with PagBank IDs
-      await supabase
-        .from('orders')
-        .update({
-          pagbank_order_id: paymentResponse.id,
-          payment_status: 'pending'
-        })
-        .eq('id', orderId)
-
+    if (paymentMethod === 'pix') {
+      // For PIX, return the checkout URL but with PIX-specific messaging
       return new Response(JSON.stringify({
         success: true,
         paymentMethod: 'pix',
-        pagbankOrderId: paymentResponse.id,
-        qrCode: paymentResponse.qr_codes?.[0]?.text,
-        qrCodeImage: paymentResponse.qr_codes?.[0]?.links?.[0]?.href,
-        expiresAt: paymentResponse.charges?.[0]?.payment_method?.pix?.expires_at
+        checkoutUrl: session.url,
+        stripeSessionId: session.id,
+        message: 'Redirecionando para pagamento PIX via Stripe'
       }), {
         status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       })
-
     } else if (paymentMethod === 'credit_card') {
-      // For credit card, we'll create a checkout session
-      paymentPayload.charges = [{
-        reference_id: orderId,
-        description: "Pagamento DesignoAI via Cartão",
-        amount: {
-          value: Math.round(amount * 100),
-          currency: "BRL"
-        },
-        payment_method: {
-          type: "CREDIT_CARD"
-        }
-      }]
-
-      const response = await fetch('https://api.pagseguro.com/checkouts', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${pagbankToken}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          ...paymentPayload,
-          redirect_url: `${Deno.env.get('SUPABASE_URL')}/functions/v1/payment-webhook`,
-          return_url: `https://kunkpdhaajvytllufwyq.supabase.co/payment-success`
-        })
-      })
-
-      paymentResponse = await response.json()
-      console.log('PagBank Credit Card response:', paymentResponse)
-
-      if (!response.ok) {
-        throw new Error(`PagBank API error: ${JSON.stringify(paymentResponse)}`)
-      }
-
-      // Update order with PagBank IDs
-      await supabase
-        .from('orders')
-        .update({
-          pagbank_order_id: paymentResponse.id,
-          payment_status: 'pending'
-        })
-        .eq('id', orderId)
-
       return new Response(JSON.stringify({
         success: true,
         paymentMethod: 'credit_card',
-        checkoutUrl: paymentResponse.links?.find((link: any) => link.rel === 'REDIRECT')?.href,
-        pagbankOrderId: paymentResponse.id
+        checkoutUrl: session.url,
+        stripeSessionId: session.id
       }), {
         status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       })
-
     } else if (paymentMethod === 'boleto') {
-      paymentPayload.charges = [{
-        reference_id: orderId,
-        description: "Pagamento DesignoAI via Boleto",
-        amount: {
-          value: Math.round(amount * 100),
-          currency: "BRL"
-        },
-        payment_method: {
-          type: "BOLETO",
-          boleto: {
-            due_date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] // 3 days
-          }
-        }
-      }]
-
-      const response = await fetch('https://api.pagseguro.com/orders', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${pagbankToken}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(paymentPayload)
-      })
-
-      paymentResponse = await response.json()
-      console.log('PagBank Boleto response:', paymentResponse)
-
-      if (!response.ok) {
-        throw new Error(`PagBank API error: ${JSON.stringify(paymentResponse)}`)
-      }
-
-      // Update order with PagBank IDs
-      await supabase
-        .from('orders')
-        .update({
-          pagbank_order_id: paymentResponse.id,
-          payment_status: 'pending'
-        })
-        .eq('id', orderId)
-
       return new Response(JSON.stringify({
         success: true,
         paymentMethod: 'boleto',
-        boletoUrl: paymentResponse.charges?.[0]?.links?.find((link: any) => link.rel === 'BOLETO')?.href,
-        boletoBarcode: paymentResponse.charges?.[0]?.payment_method?.boleto?.barcode,
-        dueDate: paymentResponse.charges?.[0]?.payment_method?.boleto?.due_date,
-        pagbankOrderId: paymentResponse.id
+        checkoutUrl: session.url,
+        stripeSessionId: session.id,
+        message: 'Processando como pagamento via cartão (Boleto não suportado pelo Stripe)'
       }), {
         status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -224,7 +174,7 @@ serve(async (req) => {
     }
 
   } catch (error) {
-    console.error('Payment processing error:', error)
+    console.error('Stripe payment processing error:', error)
     return new Response(JSON.stringify({
       success: false,
       error: error.message
