@@ -214,10 +214,7 @@ const Carreiras = () => {
               
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-3">
-                  <div className="flex items-center">
-                    <Heart className="w-5 h-5 text-designoai-blue mr-3" />
-                    <span className="text-gray-700">Plano de saúde e odontológico</span>
-                  </div>
+                  
                   <div className="flex items-center">
                     <Target className="w-5 h-5 text-designoai-blue mr-3" />
                     <span className="text-gray-700">Planos de carreira personalizados</span>
