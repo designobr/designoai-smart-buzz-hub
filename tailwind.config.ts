@@ -64,11 +64,11 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				designoai: {
-					blue: '#3b82f6',
-					'blue-light': '#dbeafe',
-					'blue-dark': '#1e40af',
-					gray: '#f8fafc',
-					'gray-dark': '#1e293b'
+					blue: '#1EAEDB',
+					'blue-light': '#E6F7FF',
+					'blue-dark': '#0A2540',
+					gray: '#F5F5F7',
+					'gray-dark': '#333333'
 				}
 			},
 			fontFamily: {
@@ -114,31 +114,13 @@ export default {
 					'50%': {
 						opacity: '0.8'
 					}
-				},
-				'float': {
-					'0%, 100%': {
-						transform: 'translateY(0px)'
-					},
-					'50%': {
-						transform: 'translateY(-20px)'
-					}
-				},
-				'glow': {
-					'0%, 100%': {
-						boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)'
-					},
-					'50%': {
-						boxShadow: '0 0 30px rgba(59, 130, 246, 0.6), 0 0 40px rgba(139, 92, 246, 0.3)'
-					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.5s ease-out',
-				'pulse-slow': 'pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-				'float': 'float 6s ease-in-out infinite',
-				'glow': 'glow 3s ease-in-out infinite'
+				'pulse-slow': 'pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite'
 			}
 		}
 	},
