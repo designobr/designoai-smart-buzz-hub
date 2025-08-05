@@ -8,6 +8,55 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+// Input validation helpers
+function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function validatePhone(phone: string): boolean {
+  const phoneRegex = /^\+?[\d\s\-\(\)]{10,}$/;
+  return phoneRegex.test(phone);
+}
+
+function sanitizeInput(input: string): string {
+  return input.trim().replace(/[<>]/g, '');
+}
+
+function validateAmount(amount: number): boolean {
+  return amount > 0 && amount <= 1000000; // Max 1M for safety
+}
+
+function validatePaymentRequest(data: any): { isValid: boolean; errors: string[] } {
+  const errors: string[] = [];
+  
+  if (!data.orderId || typeof data.orderId !== 'string') {
+    errors.push('Order ID is required');
+  }
+  
+  if (!data.amount || !validateAmount(data.amount)) {
+    errors.push('Invalid amount');
+  }
+  
+  if (!data.customerData) {
+    errors.push('Customer data is required');
+  } else {
+    if (!data.customerData.name || data.customerData.name.length < 2) {
+      errors.push('Valid name is required');
+    }
+    
+    if (!data.customerData.email || !validateEmail(data.customerData.email)) {
+      errors.push('Valid email is required');
+    }
+    
+    if (!data.customerData.phone || !validatePhone(data.customerData.phone)) {
+      errors.push('Valid phone is required');
+    }
+  }
+  
+  return { isValid: errors.length === 0, errors };
+}
+
 interface PaymentRequest {
   orderId: string
   paymentMethod: 'credit_card'
@@ -32,13 +81,41 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
 
-    const { orderId, paymentMethod, amount, customerData }: PaymentRequest = await req.json()
+    const requestData = await req.json()
     
-    console.log('Processing payment with Stripe:', { orderId, paymentMethod, amount })
+    // Validate input data
+    const validation = validatePaymentRequest(requestData)
+    if (!validation.isValid) {
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Dados inválidos',
+        details: validation.errors
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      })
+    }
+
+    const { orderId, paymentMethod, amount, customerData }: PaymentRequest = requestData
+    
+    // Sanitize customer data
+    const sanitizedCustomerData = {
+      name: sanitizeInput(customerData.name),
+      email: sanitizeInput(customerData.email).toLowerCase(),
+      phone: sanitizeInput(customerData.phone)
+    }
+    
+    console.log('Processing payment with Stripe:', { orderId, paymentMethod, amount: '***' })
 
     // Validate payment method
     if (paymentMethod !== 'credit_card') {
-      throw new Error('Apenas cartão de crédito é suportado via Stripe')
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Método de pagamento não suportado'
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      })
     }
 
     // Get Stripe secret key
@@ -52,9 +129,9 @@ serve(async (req) => {
       apiVersion: '2023-10-16',
     })
 
-    // Check if customer exists
+    // Check if customer exists (use sanitized data)
     const customers = await stripe.customers.list({
-      email: customerData.email,
+      email: sanitizedCustomerData.email,
       limit: 1
     })
 
@@ -62,11 +139,11 @@ serve(async (req) => {
     if (customers.data.length > 0) {
       customerId = customers.data[0].id
     } else {
-      // Create new customer
+      // Create new customer (use sanitized data)
       const customer = await stripe.customers.create({
-        email: customerData.email,
-        name: customerData.name,
-        phone: customerData.phone,
+        email: sanitizedCustomerData.email,
+        name: sanitizedCustomerData.name,
+        phone: sanitizedCustomerData.phone,
       })
       customerId = customer.id
     }
@@ -123,11 +200,20 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('Stripe payment processing error:', error)
+    
+    // Don't expose internal error details to client
+    let errorMessage = 'Erro interno do servidor';
+    if (error.message?.includes('Stripe')) {
+      errorMessage = 'Erro no processamento do pagamento';
+    } else if (error.message?.includes('network')) {
+      errorMessage = 'Erro de conexão';
+    }
+    
     return new Response(JSON.stringify({
       success: false,
-      error: error.message
+      error: errorMessage
     }), {
-      status: 400,
+      status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     })
   }

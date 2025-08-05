@@ -21,7 +21,14 @@ serve(async (req) => {
 
     // Get webhook data from PagBank
     const webhookData = await req.json()
-    console.log('Received webhook from PagBank:', webhookData)
+    
+    // Validate webhook data structure
+    if (!webhookData || typeof webhookData !== 'object') {
+      console.log('Invalid webhook data structure')
+      return new Response('Invalid data', { status: 400, headers: corsHeaders })
+    }
+    
+    console.log('Received webhook from PagBank:', { eventType: webhookData.eventType || 'unknown' })
 
     // Extract relevant information
     const { charges, reference_id } = webhookData
@@ -96,9 +103,10 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('Webhook processing error:', error)
+    
+    // Don't expose internal error details
     return new Response(JSON.stringify({
-      error: 'Webhook processing failed',
-      details: error.message
+      error: 'Webhook processing failed'
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }

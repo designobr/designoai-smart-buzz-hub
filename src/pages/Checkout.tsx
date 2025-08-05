@@ -32,18 +32,50 @@ const Checkout = () => {
     return null;
   }
 
+  // Input validation helpers
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone: string): boolean => {
+    const phoneRegex = /^\+?[\d\s\-\(\)]{10,}$/;
+    return phoneRegex.test(phone);
+  };
+
+  const sanitizeInput = (input: string): string => {
+    return input.trim().replace(/[<>]/g, '');
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    // Sanitize input as user types
+    const sanitizedValue = sanitizeInput(value);
+    setFormData(prev => ({ ...prev, [name]: sanitizedValue }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.name || !formData.email || !formData.phone) {
+    // Enhanced validation
+    const errors: string[] = [];
+    
+    if (!formData.name || formData.name.length < 2) {
+      errors.push("Nome deve ter pelo menos 2 caracteres");
+    }
+    
+    if (!formData.email || !validateEmail(formData.email)) {
+      errors.push("E-mail inválido");
+    }
+    
+    if (!formData.phone || !validatePhone(formData.phone)) {
+      errors.push("Telefone inválido");
+    }
+    
+    if (errors.length > 0) {
       toast({
-        title: "Campos obrigatórios",
-        description: "Por favor, preencha todos os campos obrigatórios.",
+        title: "Dados inválidos",
+        description: errors.join(". "),
         variant: "destructive"
       });
       return;
@@ -111,9 +143,15 @@ const Checkout = () => {
 
     } catch (error) {
       console.error('Error processing payment:', error);
+      
+      // Don't expose sensitive error details to user
+      const userFriendlyMessage = error.message?.includes('network') 
+        ? "Erro de conexão. Verifique sua internet e tente novamente."
+        : "Ocorreu um erro ao processar seu pedido. Tente novamente.";
+      
       toast({
         title: "Erro ao processar pagamento",
-        description: error.message || "Ocorreu um erro ao processar seu pedido. Tente novamente.",
+        description: userFriendlyMessage,
         variant: "destructive"
       });
     } finally {
