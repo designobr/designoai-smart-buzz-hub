@@ -26,6 +26,7 @@ import Parcerias from "./pages/Parcerias";
 import TermosUso from "./pages/TermosUso";
 import PoliticaPrivacidade from "./pages/PoliticaPrivacidade";
 import Cookies from "./pages/Cookies";
+import OtimizacaoImagens from "./pages/OtimizacaoImagens";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ const App = () => (
           <Route path="/seo-inteligente" element={<SEOInteligente />} />
           <Route path="/social-media" element={<SocialMedia />} />
           <Route path="/email-marketing" element={<EmailMarketing />} />
+          <Route path="/otimizacao-imagens" element={<OtimizacaoImagens />} />
           <Route path="/sobre-nos" element={<SobreNos />} />
           <Route path="/carreiras" element={<Carreiras />} />
           <Route path="/blog" element={<Blog />} />
