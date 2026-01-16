@@ -27,7 +27,7 @@ import TermosUso from "./pages/TermosUso";
 import PoliticaPrivacidade from "./pages/PoliticaPrivacidade";
 import Cookies from "./pages/Cookies";
 import OtimizacaoImagens from "./pages/OtimizacaoImagens";
-
+import Studio from "./pages/Studio";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -60,6 +60,7 @@ const App = () => (
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/studio" element={<Studio />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
