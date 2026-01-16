@@ -84,46 +84,21 @@ const Checkout = () => {
     setIsProcessing(true);
 
     try {
-      // First, create the order in database
-      const { data: order, error } = await supabase
-        .from('orders')
-        .insert({
-          customer_name: formData.name,
-          customer_email: formData.email,
-          customer_phone: formData.phone,
-          customer_company: formData.company,
-          package_id: orderData.package.id,
-          package_name: orderData.package.name,
-          package_price: orderData.package.price,
-          selected_addons: orderData.addons,
-          addons_total: orderData.addons.reduce((sum: number, addon: any) => sum + addon.price, 0),
-          duration_months: orderData.duration,
-          discount_percentage: orderData.discount,
-          subtotal: orderData.subtotal,
-          discount_amount: orderData.discountAmount,
-          total_amount: orderData.total,
-          payment_method: 'credit_card',
-          payment_status: 'pending'
-        })
-        .select()
-        .single();
-
-      if (error) {
-        throw error;
-      }
-
-      console.log('Order created:', order);
-
-      // Now process payment with Stripe
+      // Process payment with Stripe
       const { data: paymentResponse, error: paymentError } = await supabase.functions.invoke('process-payment', {
         body: {
-          orderId: order.id,
           paymentMethod: 'credit_card',
           amount: orderData.total,
           customerData: {
             name: formData.name,
             email: formData.email,
             phone: formData.phone
+          },
+          packageData: {
+            name: orderData.package.name,
+            price: orderData.package.price,
+            duration: orderData.duration,
+            addons: orderData.addons
           }
         }
       });
@@ -141,11 +116,12 @@ const Checkout = () => {
         throw new Error(paymentResponse.error || 'Erro no processamento do pagamento');
       }
 
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Error processing payment:', error);
       
       // Don't expose sensitive error details to user
-      const userFriendlyMessage = error.message?.includes('network') 
+      const errorMessage = error instanceof Error ? error.message : '';
+      const userFriendlyMessage = errorMessage.includes('network') 
         ? "Erro de conexão. Verifique sua internet e tente novamente."
         : "Ocorreu um erro ao processar seu pedido. Tente novamente.";
       
