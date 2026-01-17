@@ -1,128 +1,400 @@
 import { motion } from 'framer-motion';
-import studioLogo from '@/assets/studio-logo.png';
+import { useState } from 'react';
+import { Phone, Mail, Instagram, Linkedin } from 'lucide-react';
 
 const Studio = () => {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const fadeInUp = {
+    initial: { opacity: 0, y: 30 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.8 }
+  };
+
+  const handleWhatsAppClick = () => {
+    window.open('https://wa.me/5511965262002', '_blank');
+  };
+
+  const targetAudience = [
+    { icon: '💼', title: 'Empreendedores & Coaches', description: 'Transmita autoridade e profissionalismo em seus canais digitais' },
+    { icon: '⚖️', title: 'Profissionais Liberais', description: 'Advogados, corretores, consultores e mentores que fortalecem sua marca pessoal' },
+    { icon: '📱', title: 'Criadores de Conteúdo', description: 'Eleve a qualidade visual do seu feed e perfil profissional' },
+    { icon: '🎯', title: 'Executivos & Lideranças', description: 'Imagens profissionais para LinkedIn, site corporativo e materiais institucionais' },
+  ];
+
+  const benefits = [
+    { icon: '🎨', title: 'Alta Qualidade', description: 'IA treinada em fotografia profissional, direção de arte e personal branding. Preservação natural da sua identidade única.' },
+    { icon: '⚡', title: 'Entrega em 24h', description: 'Receba suas fotos profissionais em até 24 horas. Sem deslocamento, sem estúdio, 100% online.' },
+    { icon: '🔒', title: 'Privacidade Total', description: 'Seus dados protegidos com criptografia. Processamento seguro e confidencial.' },
+    { icon: '✅', title: 'Garantia Absoluta', description: 'Satisfação garantida ou seu dinheiro de volta. Sem perguntas, sem burocracia.' },
+  ];
+
+  const traditionalList = [
+    'Investimento a partir de R$ 800',
+    'Entrega em 15 a 30 dias',
+    'Deslocamento necessário',
+    'Custos adicionais com produção',
+    'Refações pagas separadamente',
+  ];
+
+  const designoaiList = [
+    'Valor acessível e previsível',
+    'Entrega em até 24 horas',
+    '100% online, zero deslocamento',
+    'Tudo incluído no pacote',
+    'Garantia de satisfação total',
+  ];
+
+  const steps = [
+    { icon: '1️⃣', title: 'Contratação', description: 'Escolha o pacote ideal e finalize sua compra de forma segura.' },
+    { icon: '2️⃣', title: 'Envio das Selfies', description: 'Envie 5 a 10 selfies simples tiradas com seu celular. Sem produção prévia necessária.' },
+    { icon: '3️⃣', title: 'Processamento IA', description: 'Nossa IA recria você em cenários profissionais de alto padrão.' },
+    { icon: '4️⃣', title: 'Entrega', description: 'Receba seu pack completo em até 24h, pronto para usar.' },
+  ];
+
+  const faqs = [
+    { question: 'As fotos parecem artificiais?', answer: 'Não. Nossa tecnologia é focada em realismo e preservação da sua identidade natural. As fotos têm qualidade profissional mantendo sua essência e características únicas.' },
+    { question: 'Preciso de equipamento profissional para as selfies?', answer: 'Não. Basta usar a câmera do seu celular em um ambiente bem iluminado. Enviamos um guia simples de como tirar as selfies ideais.' },
+    { question: 'Posso escolher os cenários e estilos?', answer: 'Sim. Você pode indicar suas preferências: corporativo, criativo, casual-profissional ou outros estilos alinhados ao seu posicionamento.' },
+    { question: 'E se eu não gostar do resultado?', answer: 'Oferecemos garantia de satisfação total. Se não ficar satisfeito, devolvemos 100% do seu investimento.' },
+    { question: 'Os dados das minhas fotos ficam seguros?', answer: 'Absolutamente. Trabalhamos com protocolos rigorosos de privacidade e segurança. Suas fotos são processadas de forma criptografada e nunca compartilhadas.' },
+  ];
+
+  const contacts = [
+    { icon: <Phone className="w-8 h-8" />, title: 'WhatsApp', info: '(11) 96526-2002', subtitle: 'Atendimento direto', link: 'https://wa.me/5511965262002' },
+    { icon: <Mail className="w-8 h-8" />, title: 'E-mail', info: 'contato@designoai.com.br', subtitle: 'Suporte ao cliente', link: 'mailto:contato@designoai.com.br' },
+    { icon: <Instagram className="w-8 h-8" />, title: 'Instagram', info: '@designoai.br', subtitle: 'Conteúdos e novidades', link: 'https://instagram.com/designoai.br' },
+    { icon: <Linkedin className="w-8 h-8" />, title: 'LinkedIn', info: 'Kauê Webster', subtitle: 'Perfil do fundador', link: 'https://linkedin.com/in/kauêwebster' },
+  ];
+
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center relative overflow-hidden">
-      {/* Background gradient effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-900/20 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/3 left-1/3 w-[400px] h-[400px] bg-indigo-900/10 rounded-full blur-3xl"></div>
-      </div>
+    <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden">
+      {/* Hero Section */}
+      <section className="min-h-screen relative overflow-hidden flex items-center justify-center text-center px-4 py-16">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#667eea] via-[#764ba2] to-[#667eea] bg-[length:400%_400%] animate-[gradient_15s_ease_infinite]" />
+        
+        {/* Floating radial gradient */}
+        <motion.div 
+          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_50%)]"
+          animate={{ y: [0, -20, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        {/* Animated Logo */}
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-          className="mb-12"
-        >
-          <motion.img
-            src={studioLogo}
-            alt="Studio Logo"
-            className="w-32 h-32 md:w-40 md:h-40 mx-auto"
-            animate={{ 
-              rotate: 360,
-            }}
-            transition={{ 
-              duration: 20, 
-              repeat: Infinity, 
-              ease: "linear" 
-            }}
-          />
-        </motion.div>
-
-        {/* Loading bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="flex items-center justify-center gap-1 mb-16"
-        >
-          <div className="h-[2px] w-12 bg-gradient-to-r from-transparent to-purple-500/50"></div>
-          <div className="w-1.5 h-1.5 rounded-full bg-purple-500/80"></div>
-          <div className="h-[2px] w-12 bg-gradient-to-l from-transparent to-purple-500/50"></div>
-        </motion.div>
-
-        {/* Quote */}
-        <motion.blockquote
+        <motion.div 
+          className="relative z-10 max-w-4xl mx-auto"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 1 }}
-          className="mb-12"
+          transition={{ duration: 1 }}
         >
-          <p className="text-2xl md:text-4xl lg:text-5xl font-serif italic text-white/90 leading-relaxed tracking-wide">
-            "Seus clientes compram a sua confiança."
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 drop-shadow-2xl">
+            DesignoAI Studio
+          </h1>
+          <p className="text-xl md:text-2xl lg:text-3xl text-white/95 mb-4">
+            Fotos profissionais de alta qualidade criadas com inteligência artificial
           </p>
-        </motion.blockquote>
-
-        {/* Divider */}
-        <motion.div
-          initial={{ opacity: 0, scaleX: 0 }}
-          animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="flex items-center justify-center gap-3 mb-8"
-        >
-          <div className="h-[1px] w-16 bg-gradient-to-r from-transparent to-purple-500/30"></div>
-          <div className="w-1 h-1 rounded-full bg-purple-400/60"></div>
-          <div className="h-[1px] w-16 bg-gradient-to-l from-transparent to-purple-500/30"></div>
+          <div className="inline-block bg-white/20 backdrop-blur-md px-6 py-3 rounded-full text-white border border-white/30 my-8">
+            ✨ Mais de 500 profissionais já transformaram sua presença digital
+          </div>
+          <div>
+            <button 
+              onClick={handleWhatsAppClick}
+              className="inline-block bg-white text-[#667eea] px-8 py-4 text-lg md:text-xl font-bold rounded-full shadow-2xl hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(0,0,0,0.4)] transition-all duration-300 mt-4"
+            >
+              Começar Minha Transformação
+            </button>
+          </div>
         </motion.div>
+      </section>
 
-        {/* Author */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
-          className="space-y-2"
-        >
-          <h3 className="text-sm md:text-base font-medium tracking-[0.3em] text-purple-400 uppercase">
-            Eduardo Krausz
-          </h3>
-          <p className="text-xs md:text-sm text-gray-500 tracking-widest uppercase">
-            Criador desse projeto.
-          </p>
-        </motion.div>
-
-        {/* Bottom subtle animation */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="mt-20"
-        >
-          <motion.div
-            animate={{ 
-              opacity: [0.3, 0.6, 0.3],
-            }}
-            transition={{ 
-              duration: 2, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
-            }}
-            className="w-6 h-10 mx-auto border border-purple-500/30 rounded-full flex items-start justify-center p-2"
-          >
-            <motion.div
-              animate={{ 
-                y: [0, 12, 0],
-              }}
-              transition={{ 
-                duration: 1.5, 
-                repeat: Infinity, 
-                ease: "easeInOut" 
-              }}
-              className="w-1 h-2 bg-purple-400/60 rounded-full"
-            />
+      {/* Para Quem Section */}
+      <section className="py-20 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto">
+          <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
+              Para Quem é o DesignoAI Studio
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
           </motion.div>
-        </motion.div>
-      </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {targetAudience.map((item, index) => (
+              <motion.div
+                key={index}
+                className="group bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:-translate-y-2 hover:border-[#667eea]/50 hover:shadow-[0_20px_40px_rgba(102,126,234,0.2)] transition-all duration-400 relative overflow-hidden"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:left-[100%] transition-all duration-500" />
+                <span className="text-4xl mb-4 block">{item.icon}</span>
+                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                <p className="text-white/80 leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* Corner decorations */}
-      <div className="absolute top-8 left-8 w-20 h-20 border-l border-t border-purple-500/20"></div>
-      <div className="absolute top-8 right-8 w-20 h-20 border-r border-t border-purple-500/20"></div>
-      <div className="absolute bottom-8 left-8 w-20 h-20 border-l border-b border-purple-500/20"></div>
-      <div className="absolute bottom-8 right-8 w-20 h-20 border-r border-b border-purple-500/20"></div>
+      {/* Por Que Escolher Section */}
+      <section className="py-20 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto">
+          <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
+              Por Que Escolher a DesignoAI
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {benefits.map((item, index) => (
+              <motion.div
+                key={index}
+                className="group bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:-translate-y-2 hover:border-[#667eea]/50 hover:shadow-[0_20px_40px_rgba(102,126,234,0.2)] transition-all duration-400 relative overflow-hidden"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:left-[100%] transition-all duration-500" />
+                <span className="text-4xl mb-4 block">{item.icon}</span>
+                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                <p className="text-white/80 leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Comparison Section */}
+      <section className="py-20 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto">
+          <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
+              DesignoAI vs Sessão Tradicional
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
+          </motion.div>
+
+          <motion.div 
+            className="bg-gradient-to-br from-[#1a1a2e] to-[#16213e] rounded-3xl p-6 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 relative overflow-hidden"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+          >
+            <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl md:text-8xl font-black text-white/5 z-0">VS</span>
+            
+            <div className="relative z-10">
+              <h3 className="text-2xl font-bold mb-6">Sessão Fotográfica Tradicional</h3>
+              <ul className="space-y-3">
+                {traditionalList.map((item, index) => (
+                  <li key={index} className="flex items-start gap-3 text-white/85">
+                    <span className="text-[#667eea] font-bold">✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="relative z-10">
+              <h3 className="text-2xl font-bold mb-6">DesignoAI Studio ✨</h3>
+              <ul className="space-y-3">
+                {designoaiList.map((item, index) => (
+                  <li key={index} className="flex items-start gap-3 text-white/85">
+                    <span className="text-[#667eea] font-bold">✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Como Funciona Section */}
+      <section className="py-20 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto">
+          <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
+              Como Funciona
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {steps.map((item, index) => (
+              <motion.div
+                key={index}
+                className="group bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:-translate-y-2 hover:border-[#667eea]/50 hover:shadow-[0_20px_40px_rgba(102,126,234,0.2)] transition-all duration-400 relative overflow-hidden"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:left-[100%] transition-all duration-500" />
+                <span className="text-4xl mb-4 block">{item.icon}</span>
+                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                <p className="text-white/80 leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Guarantee Section */}
+      <section className="py-20 px-4 md:px-8">
+        <div className="max-w-4xl mx-auto">
+          <motion.div 
+            className="bg-gradient-to-br from-[#667eea] to-[#764ba2] rounded-3xl p-8 md:p-12 text-center relative overflow-hidden"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <motion.div 
+              className="absolute -top-1/2 -right-1/2 w-[200%] h-[200%] bg-[radial-gradient(circle,rgba(255,255,255,0.1)_0%,transparent_70%)]"
+              animate={{ y: [0, -20, 0] }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <div className="relative z-10">
+              <span className="text-5xl mb-4 block">🛡️</span>
+              <h2 className="text-2xl md:text-3xl font-bold mb-2">Garantia DesignoAI</h2>
+              <h3 className="text-3xl md:text-4xl font-extrabold mb-4">100% Satisfação Garantida</h3>
+              <p className="text-lg md:text-xl text-white/95 max-w-2xl mx-auto">
+                Se você não ficar completamente satisfeito com suas fotos profissionais, devolvemos seu investimento integral. Sem perguntas. Sem burocracia.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 px-4 md:px-8">
+        <div className="max-w-4xl mx-auto">
+          <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
+              Perguntas Frequentes
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
+          </motion.div>
+
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <motion.div
+                key={index}
+                className="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden hover:border-[#667eea]/50 transition-all"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full p-6 text-left font-bold text-white flex justify-between items-center hover:bg-white/5 transition-all"
+                >
+                  <span>{faq.question}</span>
+                  <span className={`text-2xl transition-transform ${openFaq === index ? 'rotate-45' : ''}`}>+</span>
+                </button>
+                {openFaq === index && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    className="px-6 pb-6 text-white/80 leading-relaxed"
+                  >
+                    {faq.answer}
+                  </motion.div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-20 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto">
+          <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
+              Entre em Contato
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {contacts.map((contact, index) => (
+              <motion.a
+                key={index}
+                href={contact.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 text-center hover:-translate-y-1 hover:border-[#667eea]/50 transition-all block"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <div className="text-[#667eea] flex justify-center mb-3">{contact.icon}</div>
+                <h3 className="font-bold mb-1">{contact.title}</h3>
+                <p className="text-[#667eea] font-semibold">{contact.info}</p>
+                <p className="text-white/60 text-sm">{contact.subtitle}</p>
+              </motion.a>
+            ))}
+          </div>
+
+          <p className="text-center text-white/60 text-lg">
+            🌎 Atendimento 100% Online - Todo o Brasil
+          </p>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-20 px-4 md:px-8 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#667eea] via-[#764ba2] to-[#667eea] bg-[length:400%_400%] animate-[gradient_15s_ease_infinite]" />
+        <motion.div 
+          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_50%)]"
+          animate={{ y: [0, -20, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
+
+        <motion.div 
+          className="max-w-4xl mx-auto text-center relative z-10"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4">
+            Transforme Sua Imagem Profissional Agora
+          </h2>
+          <p className="text-xl md:text-2xl text-white/95 mb-8">
+            Não deixe que fotos amadoras prejudiquem sua credibilidade e oportunidades.
+          </p>
+          <button 
+            onClick={handleWhatsAppClick}
+            className="inline-block bg-white text-[#667eea] px-8 py-4 text-lg md:text-xl font-bold rounded-full shadow-2xl hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
+          >
+            Começar Minha Transformação
+          </button>
+          <p className="mt-6 text-white/80">
+            ⚡ Vagas limitadas por mês para garantir o mais alto padrão de qualidade
+          </p>
+        </motion.div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 px-4 bg-[#0a0a0a] border-t border-white/10 text-center">
+        <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-clip-text text-transparent">
+          DesignoAI
+        </h3>
+        <p className="text-white/60 mb-4">
+          Soluções criativas com inteligência artificial aplicadas à imagem profissional
+        </p>
+        <p className="text-white/40 text-sm">
+          © 2026 DesignoAI. Todos os direitos reservados.
+        </p>
+        <p className="text-white/40 text-sm mt-2">
+          Atendimento via WhatsApp e e-mail. Serviço 100% online.
+        </p>
+      </footer>
     </div>
   );
 };
