@@ -9,6 +9,12 @@ import portrait2 from '@/assets/studio/portrait-2.png';
 import portrait3 from '@/assets/studio/portrait-3.png';
 import portrait4 from '@/assets/studio/portrait-4.png';
 
+// Testimonial images
+import testimonialFernanda from '@/assets/studio/testimonial-fernanda.png';
+import testimonialLucas from '@/assets/studio/testimonial-lucas.png';
+import testimonialAmanda from '@/assets/studio/testimonial-amanda.png';
+import testimonialGabriel from '@/assets/studio/testimonial-gabriel.png';
+
 const Studio = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -80,28 +86,28 @@ const Studio = () => {
     {
       name: 'Fernanda Oliveira',
       role: 'Consultora de Imagem',
-      image: portrait1,
+      image: testimonialFernanda,
       rating: 5,
       text: 'Simplesmente incrível! As fotos ficaram tão profissionais que todos perguntam qual fotógrafo eu contratei. Recomendo demais!'
     },
     {
       name: 'Lucas Andrade',
       role: 'Empreendedor Digital',
-      image: portrait2,
+      image: testimonialLucas,
       rating: 5,
       text: 'Nunca imaginei que fotos geradas por IA pudessem ser tão realistas. A entrega foi super rápida e o resultado superou minhas expectativas.'
     },
     {
       name: 'Amanda Ribeiro',
       role: 'Advogada',
-      image: portrait3,
+      image: testimonialAmanda,
       rating: 5,
       text: 'Precisava de fotos profissionais para meu escritório e a DesignoAI entregou exatamente o que eu precisava. Qualidade excepcional!'
     },
     {
       name: 'Gabriel Santos',
       role: 'CEO & Consultor',
-      image: portrait4,
+      image: testimonialGabriel,
       rating: 5,
       text: 'Como executivo, transmitir credibilidade é essencial. As fotos da DesignoAI me ajudaram a elevar minha presença no LinkedIn.'
     },
