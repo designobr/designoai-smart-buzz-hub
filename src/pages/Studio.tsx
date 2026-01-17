@@ -54,7 +54,7 @@ const Studio = () => {
           className="mb-12"
         >
           <p className="text-2xl md:text-4xl lg:text-5xl font-serif italic text-white/90 leading-relaxed tracking-wide">
-            "Transformamos ideias em experiências digitais extraordinárias."
+            "Seus clientes compram a sua confiança."
           </p>
         </motion.blockquote>
 
@@ -78,10 +78,10 @@ const Studio = () => {
           className="space-y-2"
         >
           <h3 className="text-sm md:text-base font-medium tracking-[0.3em] text-purple-400 uppercase">
-            DesignoAI Studio
+            Eduardo Krausz
           </h3>
           <p className="text-xs md:text-sm text-gray-500 tracking-widest uppercase">
-            Criadores de marcas inovadoras.
+            Criador desse projeto.
           </p>
         </motion.div>
 
