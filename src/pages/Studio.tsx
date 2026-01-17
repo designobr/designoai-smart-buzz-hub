@@ -78,28 +78,28 @@ const Studio = () => {
 
   const testimonials = [
     {
-      name: 'Marina Costa',
-      role: 'Coach de Carreira',
-      image: portrait2,
+      name: 'Fernanda Oliveira',
+      role: 'Consultora de Imagem',
+      image: portrait1,
       rating: 5,
       text: 'Simplesmente incrível! As fotos ficaram tão profissionais que todos perguntam qual fotógrafo eu contratei. Recomendo demais!'
     },
     {
-      name: 'Ricardo Almeida',
+      name: 'Lucas Andrade',
       role: 'Empreendedor Digital',
-      image: portrait1,
+      image: portrait2,
       rating: 5,
       text: 'Nunca imaginei que fotos geradas por IA pudessem ser tão realistas. A entrega foi super rápida e o resultado superou minhas expectativas.'
     },
     {
-      name: 'Juliana Santos',
+      name: 'Amanda Ribeiro',
       role: 'Advogada',
       image: portrait3,
       rating: 5,
       text: 'Precisava de fotos profissionais para meu escritório e a DesignoAI entregou exatamente o que eu precisava. Qualidade excepcional!'
     },
     {
-      name: 'Carlos Mendes',
+      name: 'Gabriel Santos',
       role: 'CEO & Consultor',
       image: portrait4,
       rating: 5,
