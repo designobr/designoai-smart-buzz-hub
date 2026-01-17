@@ -2,6 +2,12 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Phone, Mail, Instagram, Linkedin } from 'lucide-react';
 
+// Gallery images
+import example1 from '@/assets/studio/example-1.png';
+import example2 from '@/assets/studio/example-2.png';
+import example3 from '@/assets/studio/example-3.png';
+import example4 from '@/assets/studio/example-4.png';
+
 const Studio = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -164,6 +170,54 @@ const Studio = () => {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Gallery Section */}
+      <section className="py-20 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto">
+          <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
+              Exemplos de Resultados
+            </h2>
+            <p className="text-center text-white/80 mb-4 max-w-2xl mx-auto">
+              Veja a qualidade profissional que a DesignoAI entrega aos seus clientes
+            </p>
+            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {[example1, example2, example3, example4].map((image, index) => (
+              <motion.div
+                key={index}
+                className="group relative overflow-hidden rounded-2xl aspect-[3/4] border border-white/10 hover:border-[#667eea]/50 transition-all duration-500"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15, duration: 0.6 }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <img 
+                  src={image} 
+                  alt={`Exemplo de foto profissional ${index + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+                  <span className="text-white text-sm font-semibold">✨ Criado com IA</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.p 
+            className="text-center text-white/60 text-sm mt-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            * Todas as imagens foram geradas com inteligência artificial a partir de selfies simples
+          </motion.p>
         </div>
       </section>
 
