@@ -214,7 +214,7 @@ const Recursos = () => {
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" onClick={() => window.open('https://wa.me/5511947968158?text=Olá! Gostaria de saber mais sobre os recursos do DesignoAI.', '_blank')} className="relative overflow-hidden border-2 border-white/30 text-lg font-semibold px-8 py-4 rounded-2xl backdrop-blur-sm transition-all duration-500 group transform hover:-translate-y-1 text-slate-50 bg-sky-500 hover:bg-sky-400">
+              <Button size="lg" variant="outline" onClick={() => window.open('https://wa.me/5511965262002?text=Olá! Gostaria de saber mais sobre os recursos do DesignoAI.', '_blank')} className="relative overflow-hidden border-2 border-white/30 text-lg font-semibold px-8 py-4 rounded-2xl backdrop-blur-sm transition-all duration-500 group transform hover:-translate-y-1 text-slate-50 bg-sky-500 hover:bg-sky-400">
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
                 Falar com Consultor
               </Button>

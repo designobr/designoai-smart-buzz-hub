@@ -224,8 +224,8 @@ const ContactForm = () => {
                     <Phone className="w-5 h-5 text-designoai-blue mr-3" />
                     <div>
                       <p className="font-medium text-slate-800">WhatsApp</p>
-                      <a href="https://wa.me/5511947968158" className="text-designoai-blue hover:text-indigo-600 transition-colors duration-300">
-                        +55 11 94796-8158
+                      <a href="https://wa.me/5511965262002" className="text-designoai-blue hover:text-indigo-600 transition-colors duration-300">
+                        +55 11 96526-2002
                       </a>
                     </div>
                   </div>

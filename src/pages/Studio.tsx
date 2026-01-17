@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Phone, Mail, Instagram, Linkedin, Star } from 'lucide-react';
+import Navbar from '@/components/Navbar';
 
 // Gallery images
 import example1 from '@/assets/studio/example-1.png';
@@ -112,8 +113,10 @@ const Studio = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden">
+      <Navbar variant="dark" />
+      
       {/* Hero Section */}
-      <section className="min-h-screen relative overflow-hidden flex items-center justify-center text-center px-4 py-16">
+      <section className="min-h-screen relative overflow-hidden flex items-center justify-center text-center px-4 pt-20 pb-16">
         {/* Animated gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#667eea] via-[#764ba2] to-[#667eea] bg-[length:400%_400%] animate-[gradient_15s_ease_infinite]" />
         
