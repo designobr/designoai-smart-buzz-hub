@@ -4,14 +4,10 @@ import { Phone, Mail, Instagram, Linkedin, Star } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 
 // Gallery images
-import example1 from '@/assets/studio/example-1.png';
-import example2 from '@/assets/studio/example-2.png';
-import example3 from '@/assets/studio/example-3.png';
-import example4 from '@/assets/studio/example-4.png';
-import example5 from '@/assets/studio/example-5.png';
-import example6 from '@/assets/studio/example-6.png';
-import example7 from '@/assets/studio/example-7.png';
-import example8 from '@/assets/studio/example-8.png';
+import portrait1 from '@/assets/studio/portrait-1.png';
+import portrait2 from '@/assets/studio/portrait-2.png';
+import portrait3 from '@/assets/studio/portrait-3.png';
+import portrait4 from '@/assets/studio/portrait-4.png';
 
 const Studio = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -78,34 +74,34 @@ const Studio = () => {
     { icon: <Linkedin className="w-8 h-8" />, title: 'LinkedIn', info: 'Kauê Webster', subtitle: 'Perfil do fundador', link: 'https://www.linkedin.com/in/kauewebster' },
   ];
 
-  const galleryImages = [example1, example2, example3, example4, example5, example6, example7, example8];
+  const galleryImages = [portrait1, portrait2, portrait3, portrait4];
 
   const testimonials = [
     {
       name: 'Marina Costa',
       role: 'Coach de Carreira',
-      image: example5,
+      image: portrait2,
       rating: 5,
       text: 'Simplesmente incrível! As fotos ficaram tão profissionais que todos perguntam qual fotógrafo eu contratei. Recomendo demais!'
     },
     {
       name: 'Ricardo Almeida',
       role: 'Empreendedor Digital',
-      image: example6,
+      image: portrait1,
       rating: 5,
       text: 'Nunca imaginei que fotos geradas por IA pudessem ser tão realistas. A entrega foi super rápida e o resultado superou minhas expectativas.'
     },
     {
       name: 'Juliana Santos',
       role: 'Advogada',
-      image: example7,
+      image: portrait3,
       rating: 5,
       text: 'Precisava de fotos profissionais para meu escritório e a DesignoAI entregou exatamente o que eu precisava. Qualidade excepcional!'
     },
     {
       name: 'Carlos Mendes',
       role: 'CEO & Consultor',
-      image: example8,
+      image: portrait4,
       rating: 5,
       text: 'Como executivo, transmitir credibilidade é essencial. As fotos da DesignoAI me ajudaram a elevar minha presença no LinkedIn.'
     },
