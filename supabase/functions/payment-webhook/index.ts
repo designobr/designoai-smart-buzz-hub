@@ -1,6 +1,6 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.10'
+import Stripe from 'https://esm.sh/stripe@14.21.0'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -14,86 +14,119 @@ serve(async (req) => {
   }
 
   try {
+    // Get Stripe secret key and webhook secret
+    const stripeKey = Deno.env.get('STRIPE_SECRET_KEY')
+    const webhookSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET')
+    
+    if (!stripeKey) {
+      console.error('Stripe secret key not configured')
+      return new Response('Server configuration error', { status: 500, headers: corsHeaders })
+    }
+
+    if (!webhookSecret) {
+      console.error('Stripe webhook secret not configured')
+      return new Response('Server configuration error', { status: 500, headers: corsHeaders })
+    }
+
+    // Get the raw body for signature verification
+    const body = await req.text()
+    const signature = req.headers.get('stripe-signature')
+
+    if (!signature) {
+      console.error('No Stripe signature found in request')
+      return new Response('Missing signature', { status: 401, headers: corsHeaders })
+    }
+
+    // Initialize Stripe
+    const stripe = new Stripe(stripeKey, {
+      apiVersion: '2023-10-16',
+    })
+
+    // Verify the webhook signature
+    let event: Stripe.Event
+    try {
+      event = await stripe.webhooks.constructEventAsync(
+        body,
+        signature,
+        webhookSecret
+      )
+    } catch (err) {
+      console.error('Webhook signature verification failed:', err.message)
+      return new Response('Invalid signature', { status: 401, headers: corsHeaders })
+    }
+
+    console.log('Received verified Stripe webhook:', { type: event.type, id: event.id })
+
+    // Initialize Supabase client
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
 
-    // Get webhook data from PagBank
-    const webhookData = await req.json()
-    
-    // Validate webhook data structure
-    if (!webhookData || typeof webhookData !== 'object') {
-      console.log('Invalid webhook data structure')
-      return new Response('Invalid data', { status: 400, headers: corsHeaders })
-    }
-    
-    console.log('Received webhook from PagBank:', { eventType: webhookData.eventType || 'unknown' })
+    // Handle the event
+    switch (event.type) {
+      case 'checkout.session.completed': {
+        const session = event.data.object as Stripe.Checkout.Session
+        const orderId = session.metadata?.orderId
+        
+        if (!orderId) {
+          console.log('No orderId in session metadata')
+          return new Response('OK', { status: 200, headers: corsHeaders })
+        }
 
-    // Extract relevant information
-    const { charges, reference_id } = webhookData
-    
-    if (!charges || charges.length === 0) {
-      console.log('No charges found in webhook data')
-      return new Response('OK', { status: 200, headers: corsHeaders })
-    }
+        console.log('Processing completed checkout session:', {
+          sessionId: session.id,
+          orderId,
+          paymentStatus: session.payment_status
+        })
 
-    const charge = charges[0]
-    const paymentStatus = charge.status
-    const pagbankPaymentId = charge.id
+        // Update order status to completed
+        const { error } = await supabase
+          .from('orders')
+          .update({
+            payment_status: session.payment_status === 'paid' ? 'completed' : 'pending',
+            stripe_payment_intent_id: session.payment_intent as string,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', orderId)
 
-    console.log('Processing payment status update:', {
-      reference_id,
-      paymentStatus,
-      pagbankPaymentId
-    })
-
-    // Map PagBank status to our internal status
-    let internalStatus = 'pending'
-    switch (paymentStatus) {
-      case 'PAID':
-        internalStatus = 'completed'
+        if (error) {
+          console.error('Error updating order:', error)
+          // Still return 200 to acknowledge receipt, but log the error
+        } else {
+          console.log('Order updated successfully:', orderId)
+        }
         break
-      case 'DECLINED':
-      case 'CANCELED':
-        internalStatus = 'failed'
+      }
+
+      case 'payment_intent.succeeded': {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent
+        console.log('Payment intent succeeded:', paymentIntent.id)
+        // Additional handling if needed
         break
-      case 'WAITING':
-      case 'IN_ANALYSIS':
-        internalStatus = 'pending'
+      }
+
+      case 'payment_intent.payment_failed': {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent
+        console.log('Payment failed:', paymentIntent.id)
+        
+        // Try to find and update order by payment intent
+        const { error } = await supabase
+          .from('orders')
+          .update({
+            payment_status: 'failed',
+            updated_at: new Date().toISOString()
+          })
+          .eq('stripe_payment_intent_id', paymentIntent.id)
+
+        if (error) {
+          console.error('Error updating failed order:', error)
+        }
         break
+      }
+
       default:
-        internalStatus = 'pending'
-    }
-
-    // Update order status in database
-    const { data: order, error } = await supabase
-      .from('orders')
-      .update({
-        payment_status: internalStatus,
-        pagbank_payment_id: pagbankPaymentId,
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', reference_id)
-      .select()
-      .single()
-
-    if (error) {
-      console.error('Error updating order:', error)
-      return new Response(JSON.stringify({ error: 'Database update failed' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      })
-    }
-
-    console.log('Order updated successfully:', order)
-
-    // If payment is completed, you could trigger additional actions here
-    // like sending confirmation emails, updating inventory, etc.
-    if (internalStatus === 'completed') {
-      console.log(`Payment completed for order ${reference_id}`)
-      // TODO: Send confirmation email
-      // TODO: Trigger order fulfillment process
+        console.log(`Unhandled event type: ${event.type}`)
     }
 
     return new Response('OK', {
@@ -105,11 +138,9 @@ serve(async (req) => {
     console.error('Webhook processing error:', error)
     
     // Don't expose internal error details
-    return new Response(JSON.stringify({
-      error: 'Webhook processing failed'
-    }), {
+    return new Response('Webhook processing failed', {
       status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      headers: corsHeaders
     })
   }
 })
