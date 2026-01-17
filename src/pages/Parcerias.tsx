@@ -276,12 +276,12 @@ const Parcerias = () => {
                   <div>
                     <p className="font-semibold text-designoai-blue-dark">WhatsApp</p>
                     <a 
-                      href="https://wa.me/5511947968158" 
+                      href="https://wa.me/5511965262002" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-designoai-blue hover:underline text-lg"
                     >
-                      (11) 94796-8158
+                      (11) 96526-2002
                     </a>
                   </div>
                 </div>

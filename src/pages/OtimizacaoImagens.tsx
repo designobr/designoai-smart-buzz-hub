@@ -11,14 +11,14 @@ const OtimizacaoImagens = () => {
   }, []);
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = "5511999999999";
+    const phoneNumber = "5511965262002";
     const message = "Olá! Tenho interesse no serviço de otimização de imagens. Gostaria de saber mais!";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
   const handleConsultorClick = () => {
-    const phoneNumber = "5511999999999";
+    const phoneNumber = "5511965262002";
     const message = "Olá! Gostaria de falar com um consultor sobre otimização de imagens para o meu negócio.";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
