@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.10'
 import Stripe from 'https://esm.sh/stripe@14.21.0'
@@ -24,15 +23,11 @@ function sanitizeInput(input: string): string {
 }
 
 function validateAmount(amount: number): boolean {
-  return amount > 0 && amount <= 1000000; // Max 1M for safety
+  return typeof amount === 'number' && amount > 0 && amount <= 1000000; // Max 1M for safety
 }
 
 function validatePaymentRequest(data: any): { isValid: boolean; errors: string[] } {
   const errors: string[] = [];
-  
-  if (!data.orderId || typeof data.orderId !== 'string') {
-    errors.push('Order ID is required');
-  }
   
   if (!data.amount || !validateAmount(data.amount)) {
     errors.push('Invalid amount');
@@ -41,7 +36,7 @@ function validatePaymentRequest(data: any): { isValid: boolean; errors: string[]
   if (!data.customerData) {
     errors.push('Customer data is required');
   } else {
-    if (!data.customerData.name || data.customerData.name.length < 2) {
+    if (!data.customerData.name || typeof data.customerData.name !== 'string' || data.customerData.name.length < 2) {
       errors.push('Valid name is required');
     }
     
@@ -53,19 +48,28 @@ function validatePaymentRequest(data: any): { isValid: boolean; errors: string[]
       errors.push('Valid phone is required');
     }
   }
+
+  if (!data.packageData || !data.packageData.name) {
+    errors.push('Package data is required');
+  }
   
   return { isValid: errors.length === 0, errors };
 }
 
 interface PaymentRequest {
-  orderId: string
   paymentMethod: 'credit_card'
   amount: number
   customerData: {
     name: string
     email: string
     phone: string
-    document?: string
+    company?: string
+  }
+  packageData: {
+    name: string
+    price: number
+    duration: number
+    addons: Array<{ id: string; name: string; price: number }>
   }
 }
 
@@ -86,26 +90,27 @@ serve(async (req) => {
     // Validate input data
     const validation = validatePaymentRequest(requestData)
     if (!validation.isValid) {
+      console.log('Validation errors:', validation.errors)
       return new Response(JSON.stringify({
         success: false,
-        error: 'Dados inválidos',
-        details: validation.errors
+        error: 'Dados inválidos'
       }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       })
     }
 
-    const { orderId, paymentMethod, amount, customerData }: PaymentRequest = requestData
+    const { paymentMethod, amount, customerData, packageData }: PaymentRequest = requestData
     
     // Sanitize customer data
     const sanitizedCustomerData = {
       name: sanitizeInput(customerData.name),
       email: sanitizeInput(customerData.email).toLowerCase(),
-      phone: sanitizeInput(customerData.phone)
+      phone: sanitizeInput(customerData.phone),
+      company: customerData.company ? sanitizeInput(customerData.company) : null
     }
     
-    console.log('Processing payment with Stripe:', { orderId, paymentMethod, amount: '***' })
+    console.log('Processing payment with Stripe:', { paymentMethod })
 
     // Validate payment method
     if (paymentMethod !== 'credit_card') {
@@ -121,7 +126,14 @@ serve(async (req) => {
     // Get Stripe secret key
     const stripeKey = Deno.env.get('STRIPE_SECRET_KEY')
     if (!stripeKey) {
-      throw new Error('Stripe secret key not configured')
+      console.error('Stripe secret key not configured')
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Erro de configuração do servidor'
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      })
     }
 
     // Initialize Stripe
@@ -129,7 +141,40 @@ serve(async (req) => {
       apiVersion: '2023-10-16',
     })
 
-    // Check if customer exists (use sanitized data)
+    // Create order in database first
+    const { data: order, error: orderError } = await supabase
+      .from('orders')
+      .insert({
+        customer_name: sanitizedCustomerData.name,
+        customer_email: sanitizedCustomerData.email,
+        customer_phone: sanitizedCustomerData.phone,
+        customer_company: sanitizedCustomerData.company,
+        package_name: packageData.name,
+        package_price: packageData.price,
+        duration_months: packageData.duration,
+        selected_addons: JSON.stringify(packageData.addons),
+        addons_total: packageData.addons?.reduce((sum, addon) => sum + addon.price, 0) || 0,
+        total_amount: amount,
+        payment_method: paymentMethod,
+        payment_status: 'pending'
+      })
+      .select()
+      .single()
+
+    if (orderError) {
+      console.error('Error creating order:', orderError)
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Erro ao criar pedido'
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      })
+    }
+
+    console.log('Order created:', { orderId: order.id })
+
+    // Check if customer exists
     const customers = await stripe.customers.list({
       email: sanitizedCustomerData.email,
       limit: 1
@@ -139,7 +184,7 @@ serve(async (req) => {
     if (customers.data.length > 0) {
       customerId = customers.data[0].id
     } else {
-      // Create new customer (use sanitized data)
+      // Create new customer
       const customer = await stripe.customers.create({
         email: sanitizedCustomerData.email,
         name: sanitizedCustomerData.name,
@@ -151,16 +196,16 @@ serve(async (req) => {
     console.log('Stripe customer:', { customerId })
 
     // Create payment session for credit card
-    const sessionData = {
+    const session = await stripe.checkout.sessions.create({
       customer: customerId,
-      mode: 'payment' as const,
+      mode: 'payment',
       payment_method_types: ['card'],
       line_items: [{
         price_data: {
           currency: 'brl',
           product_data: {
-            name: 'Serviços DesignoAI',
-            description: 'Pagamento via Cartão de Crédito'
+            name: `${packageData.name} - Serviços DesignoAI`,
+            description: `Duração: ${packageData.duration} ${packageData.duration === 1 ? 'mês' : 'meses'}`
           },
           unit_amount: Math.round(amount * 100) // Convert to centavos
         },
@@ -169,30 +214,31 @@ serve(async (req) => {
       success_url: `${req.headers.get('origin')}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get('origin')}/checkout`,
       metadata: {
-        orderId: orderId,
+        orderId: order.id,
         paymentMethod: paymentMethod
       }
-    }
-
-    // Create checkout session
-    const session = await stripe.checkout.sessions.create(sessionData)
+    })
     
-    console.log('Stripe session created:', { sessionId: session.id, url: session.url })
+    console.log('Stripe session created:', { sessionId: session.id })
 
     // Update order with Stripe session ID
-    await supabase
+    const { error: updateError } = await supabase
       .from('orders')
       .update({
-        stripe_session_id: session.id,
-        payment_status: 'pending'
+        stripe_session_id: session.id
       })
-      .eq('id', orderId)
+      .eq('id', order.id)
+
+    if (updateError) {
+      console.error('Error updating order with session ID:', updateError)
+      // Continue anyway - the order exists and payment can still proceed
+    }
 
     return new Response(JSON.stringify({
       success: true,
       paymentMethod: 'credit_card',
       checkoutUrl: session.url,
-      stripeSessionId: session.id
+      orderId: order.id
     }), {
       status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -202,16 +248,9 @@ serve(async (req) => {
     console.error('Stripe payment processing error:', error)
     
     // Don't expose internal error details to client
-    let errorMessage = 'Erro interno do servidor';
-    if (error.message?.includes('Stripe')) {
-      errorMessage = 'Erro no processamento do pagamento';
-    } else if (error.message?.includes('network')) {
-      errorMessage = 'Erro de conexão';
-    }
-    
     return new Response(JSON.stringify({
       success: false,
-      error: errorMessage
+      error: 'Erro ao processar pagamento'
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
