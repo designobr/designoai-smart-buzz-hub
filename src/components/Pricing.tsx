@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Check, Star, ArrowRight, AlertTriangle } from 'lucide-react';
+import { Check, Star, ArrowRight, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Pricing = () => {
@@ -10,13 +10,10 @@ const Pricing = () => {
   const physicalFeatures = ["Cartão de Visita Digital com QR Code", "1 Sessão de Fotos Presencial", "1 Vídeo Institucional", "Material físico sob demanda"];
   const aiFeatures = ["Relatórios mensais de desempenho", "Assistente por WhatsApp com IA", "Diagnóstico de marketing automático"];
 
-  const handleContractClick = () => {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({
-        behavior: 'smooth'
-      });
-    }
+  const handleWhatsAppClick = (planName: string) => {
+    const message = `Olá! Tenho interesse no ${planName} do DesignoAI. Gostaria de solicitar um orçamento.`;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/5511965262002?text=${encodedMessage}`, '_blank');
   };
 
   const handleCalculatorClick = () => {
@@ -37,6 +34,9 @@ const Pricing = () => {
           <p className="text-xl text-gray-600">
             Escolha o plano ideal para sua empresa
           </p>
+          <p className="text-sm text-gray-500 mt-2">
+            Orçamento sob consulta • Entre em contato via WhatsApp
+          </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
@@ -45,8 +45,7 @@ const Pricing = () => {
             <CardHeader className="text-center pb-6 pt-6">
               <CardTitle className="text-2xl font-bold text-designoai-blue-dark">Start</CardTitle>
               <div className="flex items-center justify-center mb-4">
-                <span className="text-3xl font-bold text-designoai-blue">R$ 1.200</span>
-                <span className="text-gray-600 ml-2">/mês</span>
+                <span className="text-lg font-medium text-designoai-blue">Orçamento sob consulta</span>
               </div>
               <CardDescription className="text-base">
                 Ideal para pequenos negócios que querem presença visual nas redes com inteligência artificial
@@ -61,26 +60,28 @@ const Pricing = () => {
                   </li>)}
               </ul>
               
-              <Button className="w-full bg-designoai-blue hover:bg-designoai-blue-dark" onClick={handleContractClick}>
-                Contratar Start
+              <Button 
+                className="w-full bg-designoai-blue hover:bg-designoai-blue-dark" 
+                onClick={() => handleWhatsAppClick('Pacote Start')}
+              >
+                <MessageCircle className="w-4 h-4 mr-2" />
+                Solicitar Orçamento
               </Button>
             </CardContent>
           </Card>
 
-          {/* Plano Plus (Isca) */}
+          {/* Plano Plus */}
           <Card className="relative overflow-hidden shadow-lg border-2 border-yellow-400 hover:shadow-xl transition-shadow">
             <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-yellow-400 to-orange-400"></div>
             
             <CardHeader className="text-center pb-6 pt-6">
               <div className="flex items-center justify-center mb-2">
-                
                 <CardTitle className="text-2xl font-bold text-designoai-blue-dark">
                   Plus
                 </CardTitle>
               </div>
               <div className="flex items-center justify-center mb-4">
-                <span className="text-3xl font-bold text-designoai-blue">R$ 2.600</span>
-                <span className="text-gray-600 ml-2">/mês</span>
+                <span className="text-lg font-medium text-designoai-blue">Orçamento sob consulta</span>
               </div>
               <CardDescription className="text-base">Plano intermediário com mais artes</CardDescription>
             </CardHeader>
@@ -93,8 +94,13 @@ const Pricing = () => {
                   </li>)}
               </ul>
               
-              <Button variant="outline" className="w-full border-yellow-400 text-yellow-600 hover:bg-yellow-50" onClick={handleContractClick}>
-                Contratar Plus
+              <Button 
+                variant="outline" 
+                className="w-full border-yellow-400 text-yellow-600 hover:bg-yellow-50" 
+                onClick={() => handleWhatsAppClick('Pacote Plus')}
+              >
+                <MessageCircle className="w-4 h-4 mr-2" />
+                Solicitar Orçamento
               </Button>
             </CardContent>
           </Card>
@@ -103,7 +109,7 @@ const Pricing = () => {
           <Card className="relative overflow-hidden shadow-xl border-2 border-designoai-blue transform scale-105">
             <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-designoai-blue to-designoai-blue-dark"></div>
             <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-designoai-blue to-designoai-blue-dark text-white px-4 py-1 rounded-full text-xs font-medium">
-              MELHOR CUSTO-BENEFÍCIO
+              MAIS COMPLETO
             </div>
             
             <CardHeader className="text-center pb-6 pt-8 py-[43px]">
@@ -114,8 +120,7 @@ const Pricing = () => {
                 </CardTitle>
               </div>
               <div className="flex items-center justify-center mb-4">
-                <span className="text-4xl font-bold text-designoai-blue">R$ 4.000</span>
-                <span className="text-gray-600 ml-2">/mês</span>
+                <span className="text-lg font-medium text-designoai-blue">Orçamento sob consulta</span>
               </div>
               <CardDescription className="text-lg">
                 Marketing físico + digital + IA em uma solução única
@@ -169,8 +174,12 @@ const Pricing = () => {
                   🔗 Solução Completa: Atendimento humanizado + IA
                 </p>
                 <div className="flex space-x-3">
-                  <Button className="bg-designoai-blue hover:bg-designoai-blue-dark" onClick={handleContractClick}>
-                    Contratar Fusion
+                  <Button 
+                    className="bg-designoai-blue hover:bg-designoai-blue-dark" 
+                    onClick={() => handleWhatsAppClick('Pacote Fusion')}
+                  >
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    Solicitar Orçamento
                   </Button>
                   <Link to="/services">
                     <Button variant="outline" className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue-light">
@@ -186,10 +195,10 @@ const Pricing = () => {
 
         <div className="text-center mt-12">
           <p className="text-gray-600 mb-4">
-            Quer personalizar seu pacote? Temos adicionais disponíveis!
+            Quer personalizar seu pacote? Veja todos os serviços disponíveis!
           </p>
           <Button variant="ghost" className="text-designoai-blue hover:text-designoai-blue-dark" onClick={handleCalculatorClick}>
-            Ver Calculadora de Preços →
+            Ver Seletor de Serviços →
           </Button>
         </div>
       </div>
