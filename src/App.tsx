@@ -13,8 +13,6 @@ import DesignAutomatizado from "./pages/DesignAutomatizado";
 import EstrategiasPersonalizadas from "./pages/EstrategiasPersonalizadas";
 import SEOInteligente from "./pages/SEOInteligente";
 import NotFound from "./pages/NotFound";
-import Checkout from "./pages/Checkout";
-import PaymentSuccess from "./pages/PaymentSuccess";
 import SocialMedia from "./pages/SocialMedia";
 import EmailMarketing from "./pages/EmailMarketing";
 import AnalyseDados from "./pages/AnalyseDados";
@@ -58,8 +56,6 @@ const App = () => (
           <Route path="/termos-uso" element={<TermosUso />} />
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/cookies" element={<Cookies />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/studio" element={<Studio />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
