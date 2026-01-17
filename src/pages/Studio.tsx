@@ -64,7 +64,7 @@ const Studio = () => {
     { icon: <Phone className="w-8 h-8" />, title: 'WhatsApp', info: '(11) 96526-2002', subtitle: 'Atendimento direto', link: 'https://wa.me/5511965262002' },
     { icon: <Mail className="w-8 h-8" />, title: 'E-mail', info: 'contato@designoai.com.br', subtitle: 'Suporte ao cliente', link: 'mailto:contato@designoai.com.br' },
     { icon: <Instagram className="w-8 h-8" />, title: 'Instagram', info: '@designoai.br', subtitle: 'Conteúdos e novidades', link: 'https://instagram.com/designoai.br' },
-    { icon: <Linkedin className="w-8 h-8" />, title: 'LinkedIn', info: 'Kauê Webster', subtitle: 'Perfil do fundador', link: 'https://linkedin.com/in/kauêwebster' },
+    { icon: <Linkedin className="w-8 h-8" />, title: 'LinkedIn', info: 'Kauê Webster', subtitle: 'Perfil do fundador', link: 'https://www.linkedin.com/in/kauewebster' },
   ];
 
   return (
