@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Phone, Mail, Instagram, Linkedin, Star } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 
-// Gallery images
+// Gallery portrait images
 import portrait1 from '@/assets/studio/portrait-1.png';
 import portrait2 from '@/assets/studio/portrait-2.png';
 import portrait3 from '@/assets/studio/portrait-3.png';
