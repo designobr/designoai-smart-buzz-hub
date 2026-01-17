@@ -1,12 +1,16 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Phone, Mail, Instagram, Linkedin } from 'lucide-react';
+import { Phone, Mail, Instagram, Linkedin, Star } from 'lucide-react';
 
 // Gallery images
 import example1 from '@/assets/studio/example-1.png';
 import example2 from '@/assets/studio/example-2.png';
 import example3 from '@/assets/studio/example-3.png';
 import example4 from '@/assets/studio/example-4.png';
+import example5 from '@/assets/studio/example-5.png';
+import example6 from '@/assets/studio/example-6.png';
+import example7 from '@/assets/studio/example-7.png';
+import example8 from '@/assets/studio/example-8.png';
 
 const Studio = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -71,6 +75,39 @@ const Studio = () => {
     { icon: <Mail className="w-8 h-8" />, title: 'E-mail', info: 'contato@designoai.com.br', subtitle: 'Suporte ao cliente', link: 'mailto:contato@designoai.com.br' },
     { icon: <Instagram className="w-8 h-8" />, title: 'Instagram', info: '@designoai.br', subtitle: 'Conteúdos e novidades', link: 'https://instagram.com/designoai.br' },
     { icon: <Linkedin className="w-8 h-8" />, title: 'LinkedIn', info: 'Kauê Webster', subtitle: 'Perfil do fundador', link: 'https://www.linkedin.com/in/kauewebster' },
+  ];
+
+  const galleryImages = [example1, example2, example3, example4, example5, example6, example7, example8];
+
+  const testimonials = [
+    {
+      name: 'Marina Costa',
+      role: 'Coach de Carreira',
+      image: example5,
+      rating: 5,
+      text: 'Simplesmente incrível! As fotos ficaram tão profissionais que todos perguntam qual fotógrafo eu contratei. Recomendo demais!'
+    },
+    {
+      name: 'Ricardo Almeida',
+      role: 'Empreendedor Digital',
+      image: example6,
+      rating: 5,
+      text: 'Nunca imaginei que fotos geradas por IA pudessem ser tão realistas. A entrega foi super rápida e o resultado superou minhas expectativas.'
+    },
+    {
+      name: 'Juliana Santos',
+      role: 'Advogada',
+      image: example7,
+      rating: 5,
+      text: 'Precisava de fotos profissionais para meu escritório e a DesignoAI entregou exatamente o que eu precisava. Qualidade excepcional!'
+    },
+    {
+      name: 'Carlos Mendes',
+      role: 'CEO & Consultor',
+      image: example8,
+      rating: 5,
+      text: 'Como executivo, transmitir credibilidade é essencial. As fotos da DesignoAI me ajudaram a elevar minha presença no LinkedIn.'
+    },
   ];
 
   return (
@@ -187,14 +224,14 @@ const Studio = () => {
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {[example1, example2, example3, example4].map((image, index) => (
+            {galleryImages.map((image, index) => (
               <motion.div
                 key={index}
                 className="group relative overflow-hidden rounded-2xl aspect-[3/4] border border-white/10 hover:border-[#667eea]/50 transition-all duration-500"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.15, duration: 0.6 }}
+                transition={{ delay: index * 0.1, duration: 0.6 }}
                 whileHover={{ scale: 1.02 }}
               >
                 <img 
@@ -218,6 +255,59 @@ const Studio = () => {
           >
             * Todas as imagens foram geradas com inteligência artificial a partir de selfies simples
           </motion.p>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto">
+          <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
+              O Que Nossos Clientes Dizem
+            </h2>
+            <p className="text-center text-white/80 mb-4 max-w-2xl mx-auto">
+              Veja os depoimentos de quem já transformou sua imagem profissional
+            </p>
+            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={index}
+                className="group bg-white/5 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/10 hover:border-[#667eea]/50 hover:shadow-[0_20px_40px_rgba(102,126,234,0.2)] transition-all duration-400 relative overflow-hidden"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15 }}
+              >
+                <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:left-[100%] transition-all duration-500" />
+                
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#667eea]/50">
+                    <img 
+                      src={testimonial.image} 
+                      alt={testimonial.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg">{testimonial.name}</h4>
+                    <p className="text-white/60 text-sm">{testimonial.role}</p>
+                    <div className="flex gap-1 mt-1">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                
+                <p className="text-white/85 leading-relaxed italic">
+                  "{testimonial.text}"
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
