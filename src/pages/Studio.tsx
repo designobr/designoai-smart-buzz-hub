@@ -8,6 +8,10 @@ import portrait1 from '@/assets/studio/portrait-1.png';
 import portrait2 from '@/assets/studio/portrait-2.png';
 import portrait3 from '@/assets/studio/portrait-3.png';
 import portrait4 from '@/assets/studio/portrait-4.png';
+import example5 from '@/assets/studio/example-5.png';
+import example6 from '@/assets/studio/example-6.png';
+import example7 from '@/assets/studio/example-7.png';
+import example8 from '@/assets/studio/example-8.png';
 
 // Testimonial images
 import testimonialFernanda from '@/assets/studio/testimonial-fernanda.png';
@@ -80,7 +84,7 @@ const Studio = () => {
     { icon: <Linkedin className="w-8 h-8" />, title: 'LinkedIn', info: 'Kauê Webster', subtitle: 'Perfil do fundador', link: 'https://www.linkedin.com/in/kauewebster' },
   ];
 
-  const galleryImages = [portrait1, portrait2, portrait3, portrait4];
+  const galleryImages = [portrait1, portrait2, portrait3, portrait4, example5, example6, example7, example8];
 
   const testimonials = [
     {
