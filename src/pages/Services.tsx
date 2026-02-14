@@ -333,14 +333,14 @@ const Services = () => {
                   <div className="group p-6 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                     <h3 className="text-xl font-semibold mb-4 text-slate-800 group-hover:text-purple-600 transition-colors">Relatórios Inteligentes</h3>
                     <ul className="space-y-3">
-                      <li className="flex items-center"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />Relatórios mensais de desempenho automáticos</li>
-                      <li className="flex items-center"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />Análise de métricas e insights</li>
-                      <li className="flex items-center"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />Sugestões de otimização baseadas em dados</li>
+                      <li className="flex items-center text-muted-foreground"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />Relatórios mensais de desempenho automáticos</li>
+                      <li className="flex items-center text-muted-foreground"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />Análise de métricas e insights</li>
+                      <li className="flex items-center text-muted-foreground"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />Sugestões de otimização baseadas em dados</li>
                     </ul>
                   </div>
                   <div className="group p-6 bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                     <h3 className="text-xl font-semibold mb-4 text-slate-800 group-hover:text-pink-600 transition-colors">Assistente Virtual</h3>
-                    <ul className="space-y-3">
+                    <ul className="space-y-3 text-muted-foreground">
                       <li className="flex items-center"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />Assistente por WhatsApp com IA</li>
                       <li className="flex items-center"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />Suporte humano quando necessário</li>
                       <li className="flex items-center"><Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />Diagnóstico de marketing automático</li>
