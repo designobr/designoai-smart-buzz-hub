@@ -173,12 +173,13 @@ const Studio = () => {
             {targetAudience.map((item, index) => (
               <motion.div
                 key={index}
-                className="group card-shine bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:-translate-y-2 hover:border-[#667eea]/50 hover:shadow-[0_20px_40px_rgba(102,126,234,0.2)] transition-all duration-400"
+                className="group bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:-translate-y-2 hover:border-[#667eea]/50 hover:shadow-[0_20px_40px_rgba(102,126,234,0.2)] transition-all duration-400 relative overflow-hidden"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
+                <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:left-[100%] transition-all duration-500" />
                 <span className="text-4xl mb-4 block">{item.icon}</span>
                 <h3 className="text-xl font-bold mb-3">{item.title}</h3>
                 <p className="text-white/80 leading-relaxed">{item.description}</p>
@@ -202,12 +203,13 @@ const Studio = () => {
             {benefits.map((item, index) => (
               <motion.div
                 key={index}
-                className="group card-shine bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:-translate-y-2 hover:border-[#667eea]/50 hover:shadow-[0_20px_40px_rgba(102,126,234,0.2)] transition-all duration-400"
+                className="group bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:-translate-y-2 hover:border-[#667eea]/50 hover:shadow-[0_20px_40px_rgba(102,126,234,0.2)] transition-all duration-400 relative overflow-hidden"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
+                <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:left-[100%] transition-all duration-500" />
                 <span className="text-4xl mb-4 block">{item.icon}</span>
                 <h3 className="text-xl font-bold mb-3">{item.title}</h3>
                 <p className="text-white/80 leading-relaxed">{item.description}</p>
@@ -282,12 +284,13 @@ const Studio = () => {
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
-                className="group card-shine bg-white/5 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/10 hover:border-[#667eea]/50 hover:shadow-[0_20px_40px_rgba(102,126,234,0.2)] transition-all duration-400"
+                className="group bg-white/5 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/10 hover:border-[#667eea]/50 hover:shadow-[0_20px_40px_rgba(102,126,234,0.2)] transition-all duration-400 relative overflow-hidden"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.15 }}
               >
+                <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:left-[100%] transition-all duration-500" />
                 
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#667eea]/50">
