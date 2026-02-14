@@ -55,7 +55,7 @@ const CTA = () => {
               <Button
                 size="lg"
                 variant="outline"
-                className="text-foreground hover:bg-secondary text-base px-8 py-6 rounded-xl border-primary-foreground"
+                className="hover:bg-secondary text-base px-8 py-6 rounded-xl border-primary-foreground text-destructive-foreground"
                 onClick={handleSpecialistClick}>
 
                 Fale com Especialista
