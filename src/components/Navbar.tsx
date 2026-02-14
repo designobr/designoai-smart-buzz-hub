@@ -74,7 +74,7 @@ const Navbar = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="text-muted-foreground hover:text-foreground"
+              className="text-destructive-foreground"
               onClick={handleConsultorClick}>
 
               Falar com Consultor
