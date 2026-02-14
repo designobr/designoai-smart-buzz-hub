@@ -12,65 +12,65 @@ const Services = () => {
   }, []);
 
   const digitalServices = [
-    {
-      title: "Gestão de Redes Sociais",
-      description: "12 posts mensais personalizados com design premium e copywriting otimizado para engajamento.",
-      features: ["12 posts/mês", "Stories diários programados", "Design profissional", "Copywriting otimizado"]
-    },
-    {
-      title: "Tráfego Pago",
-      description: "Campanhas estratégicas no Instagram e Facebook para aumentar sua visibilidade e conversões.",
-      features: ["Campanhas Instagram/Facebook", "Otimização de conversões", "Relatórios de performance", "Segmentação avançada"]
-    },
-    {
-      title: "Site One Page",
-      description: "Site responsivo e profissional para estabelecer sua presença digital com design moderno.",
-      features: ["Design responsivo", "Otimizado para SEO", "Formulário de contato", "Integração redes sociais"]
-    },
-    {
-      title: "Design Gráfico Completo",
-      description: "Identidade visual consistente em todos os materiais digitais da sua empresa.",
-      features: ["Logotipo profissional", "Paleta de cores", "Tipografia personalizada", "Manual de marca"]
-    }
-  ];
+  {
+    title: "Gestão de Redes Sociais",
+    description: "12 posts mensais personalizados com design premium e copywriting otimizado para engajamento.",
+    features: ["12 posts/mês", "Stories diários programados", "Design profissional", "Copywriting otimizado"]
+  },
+  {
+    title: "Tráfego Pago",
+    description: "Campanhas estratégicas no Instagram e Facebook para aumentar sua visibilidade e conversões.",
+    features: ["Campanhas Instagram/Facebook", "Otimização de conversões", "Relatórios de performance", "Segmentação avançada"]
+  },
+  {
+    title: "Site One Page",
+    description: "Site responsivo e profissional para estabelecer sua presença digital com design moderno.",
+    features: ["Design responsivo", "Otimizado para SEO", "Formulário de contato", "Integração redes sociais"]
+  },
+  {
+    title: "Design Gráfico Completo",
+    description: "Identidade visual consistente em todos os materiais digitais da sua empresa.",
+    features: ["Logotipo profissional", "Paleta de cores", "Tipografia personalizada", "Manual de marca"]
+  }];
+
 
   const additionalServices = [
-    {
-      name: "Impressão de 100 cartões de visita",
-      price: "R$ 80 a R$ 120",
-      icon: "🎴"
-    },
-    {
-      name: "Catálogo digital interativo", 
-      price: "R$ 300",
-      icon: "📱"
-    },
-    {
-      name: "Vídeos Reels (extra)",
-      price: "R$ 80 a R$ 150 cada",
-      icon: "🎬"
-    },
-    {
-      name: "Landing Page para campanha específica",
-      price: "R$ 400", 
-      icon: "🌐"
-    },
-    {
-      name: "Consultoria estratégica mensal",
-      price: "R$ 250",
-      icon: "💡"
-    },
-    {
-      name: "Criação de e-mail profissional",
-      price: "R$ 100 (setup)",
-      icon: "📧"
-    },
-    {
-      name: "Google Meu Negócio otimizado",
-      price: "R$ 200",
-      icon: "🗺️"
-    }
-  ];
+  {
+    name: "Impressão de 100 cartões de visita",
+    price: "R$ 80 a R$ 120",
+    icon: "🎴"
+  },
+  {
+    name: "Catálogo digital interativo",
+    price: "R$ 300",
+    icon: "📱"
+  },
+  {
+    name: "Vídeos Reels (extra)",
+    price: "R$ 80 a R$ 150 cada",
+    icon: "🎬"
+  },
+  {
+    name: "Landing Page para campanha específica",
+    price: "R$ 400",
+    icon: "🌐"
+  },
+  {
+    name: "Consultoria estratégica mensal",
+    price: "R$ 250",
+    icon: "💡"
+  },
+  {
+    name: "Criação de e-mail profissional",
+    price: "R$ 100 (setup)",
+    icon: "📧"
+  },
+  {
+    name: "Google Meu Negócio otimizado",
+    price: "R$ 200",
+    icon: "🗺️"
+  }];
+
 
   const handleConsultationClick = () => {
     window.open('https://wa.me/5511965262002?text=Olá! Gostaria de agendar uma consultoria gratuita sobre o Plano Fusion.', '_blank');
@@ -125,14 +125,14 @@ const Services = () => {
             <div className="flex items-center justify-center mb-10">
               <div className="relative">
                 <div className="absolute -inset-4 bg-gradient-to-r from-designoai-blue/20 via-purple-500/10 to-indigo-500/20 rounded-full blur-xl"></div>
-                <div className="relative bg-white rounded-full px-8 py-4 shadow-xl border border-slate-200">
-                  <div className="flex items-center">
-                    <Star className="w-8 h-8 text-designoai-blue mr-3" />
-                    <span className="text-4xl font-bold bg-gradient-to-r from-designoai-blue to-indigo-600 bg-clip-text text-transparent">
-                      R$ 4.000/mês
-                    </span>
-                  </div>
-                </div>
+                
+
+
+
+
+
+
+
               </div>
             </div>
             
@@ -175,20 +175,20 @@ const Services = () => {
                   </div>
                 </CardHeader>
                 <CardContent className="grid md:grid-cols-2 gap-8 p-8">
-                  {digitalServices.map((service, index) => (
-                    <div key={index} className="group p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                  {digitalServices.map((service, index) =>
+                  <div key={index} className="group p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                       <h3 className="text-xl font-semibold mb-4 text-slate-800 group-hover:text-designoai-blue transition-colors">{service.title}</h3>
                       <p className="text-slate-600 mb-4 leading-relaxed">{service.description}</p>
                       <ul className="space-y-2">
-                        {service.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-center">
+                        {service.features.map((feature, featureIndex) =>
+                      <li key={featureIndex} className="flex items-center">
                             <Check className="w-4 h-4 text-green-500 mr-3 flex-shrink-0" />
                             <span className="text-sm text-slate-600">{feature}</span>
                           </li>
-                        ))}
+                      )}
                       </ul>
                     </div>
-                  ))}
+                  )}
                 </CardContent>
               </Card>
 
@@ -389,14 +389,14 @@ const Services = () => {
           </div>
           <div className="absolute top-20 right-20">
             <Sparkles className="w-12 h-12 text-white animate-bounce" style={{
-            animationDelay: '1s',
-            animationDuration: '3s'
-          }} />
+              animationDelay: '1s',
+              animationDuration: '3s'
+            }} />
           </div>
           <div className="absolute bottom-10 left-20">
             <div className="w-8 h-8 bg-white rounded-full animate-pulse-slow" style={{
-            animationDelay: '2s'
-          }}></div>
+              animationDelay: '2s'
+            }}></div>
           </div>
         </div>
 
@@ -421,8 +421,8 @@ const Services = () => {
       </section>
 
       <Footer />
-    </div>
-  );
+    </div>);
+
 };
 
 export default Services;
