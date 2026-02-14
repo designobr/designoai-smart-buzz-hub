@@ -62,7 +62,7 @@ const Navbar = () => {
             <a
               key={item.label}
               href={item.href}
-              className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-md hover:bg-secondary">
+              className="px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-md hover:bg-secondary text-destructive-foreground">
 
                   {item.label}
                 </a>
