@@ -167,11 +167,11 @@ const Services = () => {
                 <CardHeader className="bg-gradient-to-r from-designoai-blue to-indigo-600 text-white relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5"></div>
                   <div className="relative z-10">
-                    <CardTitle className="text-3xl font-bold flex items-center">
+                    <CardTitle className="text-3xl font-bold flex items-center text-primary-foreground">
                       <Smartphone className="w-8 h-8 mr-3" />
                       Serviços Digitais
                     </CardTitle>
-                    <CardDescription className="text-blue-100 text-lg">Transforme sua presença digital com soluções completas</CardDescription>
+                    <CardDescription className="text-lg text-[#5ec9ed]">Transforme sua presença digital com soluções completas</CardDescription>
                   </div>
                 </CardHeader>
                 <CardContent className="grid md:grid-cols-2 gap-8 p-8">
@@ -370,7 +370,7 @@ const Services = () => {
                           <span className="text-2xl mr-4">{service.icon}</span>
                           <span className="font-medium text-slate-700 group-hover:text-slate-800">{service.name}</span>
                         </div>
-                        <span className="text-designoai-blue font-semibold group-hover:text-orange-600 transition-colors">{service.price}</span>
+                        <span className="text-designoai-blue font-semibold transition-colors text-warning">{service.price}</span>
                       </div>)}
                   </div>
                 </CardContent>
