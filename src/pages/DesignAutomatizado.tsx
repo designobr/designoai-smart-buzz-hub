@@ -1,84 +1,48 @@
 
 import { useEffect } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import SubpageLayout from '@/components/SubpageLayout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Star, PenTool, Palette, Layers, Zap } from 'lucide-react';
+import { ArrowRight, PenTool, Palette, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const DesignAutomatizado = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  const features = [
+    { icon: PenTool, title: "Templates Inteligentes", description: "Biblioteca com milhares de templates personalizáveis" },
+    { icon: Palette, title: "Identidade Visual", description: "Criação automática de identidade visual consistente" },
+    { icon: Zap, title: "Criação Instantânea", description: "Designs profissionais criados em segundos" },
+  ];
 
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-to-br from-green-50 via-white to-emerald-50 relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full text-green-600 font-medium mb-8 shadow-lg border border-green-200">
-              <Star className="w-4 h-4 mr-2 animate-pulse" />
-              🎨 Design Automatizado
-            </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold mb-8 leading-tight">
-              <span className="bg-gradient-to-r from-green-600 via-emerald-600 to-green-800 bg-clip-text text-transparent">
-                Design Automatizado
-              </span>
-              <br />
-              <span className="text-slate-800">Profissional</span>
-            </h1>
-            
-            <p className="text-xl text-slate-600 mb-10 leading-relaxed">
-              Criação de designs profissionais para suas publicações em redes sociais
-            </p>
-            
+    <SubpageLayout title="Design Automatizado" subtitle="Criação de designs profissionais para suas publicações em redes sociais" badge="🎨 Design">
+      <section className="py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+          <div className="grid md:grid-cols-3 gap-6">
+            {features.map((f, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                className="glass rounded-2xl p-6 text-center group hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                  <f.icon className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-heading font-semibold text-foreground mb-2">{f.title}</h3>
+                <p className="text-sm text-muted-foreground">{f.description}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
             <Link to="/#contact">
-              <Button size="lg" className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-emerald-600 hover:to-green-600 text-white shadow-xl hover:shadow-2xl transition-all duration-500">
-                Começar Agora
-                <ArrowRight className="w-5 h-5 ml-2" />
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 glow-sm group">
+                Começar Agora <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
           </div>
         </div>
       </section>
-
-      {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-8 bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <PenTool className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Templates Inteligentes</h3>
-              <p className="text-slate-600">Biblioteca com milhares de templates personalizáveis</p>
-            </div>
-            
-            <div className="text-center p-8 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-3xl">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Palette className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Identidade Visual</h3>
-              <p className="text-slate-600">Criação automática de identidade visual consistente</p>
-            </div>
-            
-            <div className="text-center p-8 bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Zap className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Criação Instantânea</h3>
-              <p className="text-slate-600">Designs profissionais criados em segundos</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+    </SubpageLayout>
   );
 };
 

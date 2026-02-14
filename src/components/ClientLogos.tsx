@@ -1,67 +1,47 @@
-import { motion } from 'framer-motion';
-const ClientLogos = () => {
-  const clients = [{
-    name: "TechFlow Solutions",
-    logo: "💼"
-  }, {
-    name: "GlobalVentures",
-    logo: "🌐"
-  }, {
-    name: "InnovaCorp",
-    logo: "⚡"
-  }, {
-    name: "DigitalPrime",
-    logo: "💎"
-  }, {
-    name: "NextGen Industries",
-    logo: "🚀"
-  }, {
-    name: "ProBusiness Group",
-    logo: "📊"
-  }, {
-    name: "SmartLogistics",
-    logo: "📦"
-  }, {
-    name: "EliteConsulting",
-    logo: "🎯"
-  }];
-  return <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 bg-designoai-blue-light rounded-full text-designoai-blue font-medium mb-4">
-            ✨ Empresas que confiam em nós
-          </div>
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-designoai-blue-dark to-designoai-blue bg-clip-text text-transparent mb-4">
-            Mais de 500 empresas já transformaram seu marketing digital
-          </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Junte-se às empresas que já estão revolucionando seus resultados com nossa plataforma de IA
-          </p>
-        </div>
-        
-        {/* Logo grid com animação */}
-        
 
-        {/* Trust indicators */}
-        <div className="mt-16 flex flex-wrap justify-center items-center gap-8 text-sm text-gray-500">
-          <div className="flex items-center">
-            <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-            99.9% Uptime
-          </div>
-          <div className="flex items-center">
-            <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
-            ISO 27001 Certified
-          </div>
-          <div className="flex items-center">
-            <div className="w-2 h-2 bg-purple-500 rounded-full mr-2"></div>
-            GDPR Compliant
-          </div>
-          <div className="flex items-center">
-            <div className="w-2 h-2 bg-orange-500 rounded-full mr-2"></div>
-            24/7 Support
-          </div>
-        </div>
+import { motion } from 'framer-motion';
+
+const ClientLogos = () => {
+  return (
+    <section className="py-20 relative">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <p className="text-sm text-muted-foreground uppercase tracking-wider mb-4">
+            Empresas que confiam em nós
+          </p>
+          <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground mb-4">
+            Mais de <span className="text-gradient">500 empresas</span> já transformaram seu marketing
+          </h2>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="flex flex-wrap justify-center items-center gap-6 text-xs text-muted-foreground"
+        >
+          {[
+            { dot: 'bg-success', label: '99.9% Uptime' },
+            { dot: 'bg-primary', label: 'ISO 27001' },
+            { dot: 'bg-[hsl(270,70%,60%)]', label: 'GDPR Compliant' },
+            { dot: 'bg-warning', label: '24/7 Support' },
+          ].map((item, i) => (
+            <div key={i} className="flex items-center">
+              <div className={`w-1.5 h-1.5 ${item.dot} rounded-full mr-2`} />
+              {item.label}
+            </div>
+          ))}
+        </motion.div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default ClientLogos;

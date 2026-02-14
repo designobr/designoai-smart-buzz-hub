@@ -1,208 +1,183 @@
+
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check, Star, ArrowRight, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const Pricing = () => {
-  const startFeatures = ["12 artes premium personalizadas", "Suporte de Inteligência Artificial na criação visual", "Sugestão de temas com base em tendências e perfil do cliente", "Processo de aprovação com até 2 rodadas de revisão por arte", "Canal de atendimento via WhatsApp (horário comercial)"];
-  const plusFeatures = ["18 artes premium personalizadas", "Suporte de Inteligência Artificial no processo criativo", "Sugestão de temas com base em tendências", "Processo de aprovação com até 2 rodadas de revisão por arte", "Canal de atendimento via WhatsApp (horário comercial)"];
-  const digitalFeatures = ["Gestão de Redes Sociais (12 posts/mês)", "Stories diários programados", "Design Gráfico completo", "Copywriting otimizado", "Tráfego Pago (Instagram/Facebook)", "Site One Page Responsivo"];
-  const physicalFeatures = ["Cartão de Visita Digital com QR Code", "1 Sessão de Fotos Presencial", "1 Vídeo Institucional", "Material físico sob demanda"];
-  const aiFeatures = ["Relatórios mensais de desempenho", "Assistente por WhatsApp com IA", "Diagnóstico de marketing automático"];
+  const startFeatures = ["12 artes premium personalizadas", "Suporte de IA na criação visual", "Sugestão de temas com base em tendências", "Processo de aprovação com revisão", "Atendimento via WhatsApp"];
+  const plusFeatures = ["18 artes premium personalizadas", "Suporte de IA no processo criativo", "Sugestão de temas com base em tendências", "Processo de aprovação com revisão", "Atendimento via WhatsApp"];
+  const fusionDigital = ["Gestão de Redes Sociais (12 posts/mês)", "Stories diários programados", "Design Gráfico + Copywriting", "Tráfego Pago + Site Responsivo"];
+  const fusionPhysical = ["Cartão de Visita Digital", "Sessão de Fotos + Vídeo"];
+  const fusionAI = ["Relatórios de desempenho", "Assistente WhatsApp com IA"];
 
   const handleWhatsAppClick = (planName: string) => {
     const message = `Olá! Tenho interesse no ${planName} do DesignoAI. Gostaria de solicitar um orçamento.`;
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/5511965262002?text=${encodedMessage}`, '_blank');
+    window.open(`https://wa.me/5511965262002?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   const handleCalculatorClick = () => {
-    const calculatorSection = document.getElementById('calculator');
-    if (calculatorSection) {
-      calculatorSection.scrollIntoView({
-        behavior: 'smooth'
-      });
-    }
+    const el = document.getElementById('calculator');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return <section id="pricing" className="py-16 md:py-24 bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-designoai-blue-dark mb-4">
-            Nossos Planos
+  return (
+    <section id="pricing" className="py-24 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/3 rounded-full blur-[150px]" />
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
+          <div className="inline-flex items-center px-4 py-2 glass rounded-full text-sm font-medium text-primary mb-6">
+            Planos
+          </div>
+          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4 text-foreground">
+            Nossos <span className="text-gradient">Planos</span>
           </h2>
-          <p className="text-xl text-gray-600">
-            Escolha o plano ideal para sua empresa
-          </p>
-          <p className="text-sm text-gray-500 mt-2">
-            Orçamento sob consulta • Entre em contato via WhatsApp
-          </p>
-        </div>
+          <p className="text-muted-foreground text-lg">Escolha o plano ideal para sua empresa</p>
+          <p className="text-sm text-muted-foreground mt-2">Orçamento sob consulta • Entre em contato via WhatsApp</p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {/* Pacote Start */}
-          <Card className="relative overflow-hidden shadow-lg border border-gray-200 hover:shadow-xl transition-shadow">
-            <CardHeader className="text-center pb-6 pt-6">
-              <CardTitle className="text-2xl font-bold text-designoai-blue-dark">Start</CardTitle>
-              <div className="flex items-center justify-center mb-4">
-                <span className="text-lg font-medium text-designoai-blue">Orçamento sob consulta</span>
-              </div>
-              <CardDescription className="text-base">
-                Ideal para pequenos negócios que querem presença visual nas redes com inteligência artificial
-              </CardDescription>
-            </CardHeader>
-            
-            <CardContent className="pb-6">
-              <ul className="space-y-3 mb-6">
-                {startFeatures.map((feature, index) => <li key={index} className="flex items-start">
-                    <Check className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-700">{feature}</span>
-                  </li>)}
-              </ul>
-              
-              <Button 
-                className="w-full bg-designoai-blue hover:bg-designoai-blue-dark" 
-                onClick={() => handleWhatsAppClick('Pacote Start')}
-              >
-                <MessageCircle className="w-4 h-4 mr-2" />
-                Solicitar Orçamento
-              </Button>
-            </CardContent>
-          </Card>
+        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {/* Start */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="glass rounded-2xl p-6 flex flex-col hover:border-primary/20 transition-all duration-300"
+          >
+            <div className="mb-6">
+              <h3 className="text-xl font-heading font-bold text-foreground mb-1">Start</h3>
+              <p className="text-sm text-primary font-medium mb-2">Orçamento sob consulta</p>
+              <p className="text-xs text-muted-foreground">Ideal para pequenos negócios com presença visual</p>
+            </div>
+            <ul className="space-y-3 mb-6 flex-1">
+              {startFeatures.map((f, i) => (
+                <li key={i} className="flex items-start text-sm">
+                  <Check className="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                  <span className="text-muted-foreground">{f}</span>
+                </li>
+              ))}
+            </ul>
+            <Button className="w-full bg-secondary text-foreground hover:bg-secondary/80" onClick={() => handleWhatsAppClick('Pacote Start')}>
+              <MessageCircle className="w-4 h-4 mr-2" />
+              Solicitar Orçamento
+            </Button>
+          </motion.div>
 
-          {/* Plano Plus */}
-          <Card className="relative overflow-hidden shadow-lg border-2 border-yellow-400 hover:shadow-xl transition-shadow">
-            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-yellow-400 to-orange-400"></div>
-            
-            <CardHeader className="text-center pb-6 pt-6">
-              <div className="flex items-center justify-center mb-2">
-                <CardTitle className="text-2xl font-bold text-designoai-blue-dark">
-                  Plus
-                </CardTitle>
-              </div>
-              <div className="flex items-center justify-center mb-4">
-                <span className="text-lg font-medium text-designoai-blue">Orçamento sob consulta</span>
-              </div>
-              <CardDescription className="text-base">Plano intermediário com mais artes</CardDescription>
-            </CardHeader>
-            
-            <CardContent className="pb-6">
-              <ul className="space-y-3 mb-6">
-                {plusFeatures.map((feature, index) => <li key={index} className="flex items-start">
-                    <Check className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-700">{feature}</span>
-                  </li>)}
-              </ul>
-              
-              <Button 
-                variant="outline" 
-                className="w-full border-yellow-400 text-yellow-600 hover:bg-yellow-50" 
-                onClick={() => handleWhatsAppClick('Pacote Plus')}
-              >
-                <MessageCircle className="w-4 h-4 mr-2" />
-                Solicitar Orçamento
-              </Button>
-            </CardContent>
-          </Card>
+          {/* Plus */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="glass rounded-2xl p-6 flex flex-col hover:border-primary/20 transition-all duration-300"
+          >
+            <div className="mb-6">
+              <h3 className="text-xl font-heading font-bold text-foreground mb-1">Plus</h3>
+              <p className="text-sm text-primary font-medium mb-2">Orçamento sob consulta</p>
+              <p className="text-xs text-muted-foreground">Plano intermediário com mais artes</p>
+            </div>
+            <ul className="space-y-3 mb-6 flex-1">
+              {plusFeatures.map((f, i) => (
+                <li key={i} className="flex items-start text-sm">
+                  <Check className="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                  <span className="text-muted-foreground">{f}</span>
+                </li>
+              ))}
+            </ul>
+            <Button className="w-full bg-secondary text-foreground hover:bg-secondary/80" onClick={() => handleWhatsAppClick('Pacote Plus')}>
+              <MessageCircle className="w-4 h-4 mr-2" />
+              Solicitar Orçamento
+            </Button>
+          </motion.div>
 
-          {/* Plano Fusion */}
-          <Card className="relative overflow-hidden shadow-xl border-2 border-designoai-blue transform scale-105">
-            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-designoai-blue to-designoai-blue-dark"></div>
-            <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-designoai-blue to-designoai-blue-dark text-white px-4 py-1 rounded-full text-xs font-medium">
+          {/* Fusion */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="relative glass rounded-2xl p-6 flex flex-col border-primary/30 glow-sm"
+          >
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-xs font-semibold">
               MAIS COMPLETO
             </div>
-            
-            <CardHeader className="text-center pb-6 pt-8 py-[43px]">
-              <div className="flex items-center justify-center mb-4">
-                <Star className="w-8 h-8 text-designoai-blue mr-2" />
-                <CardTitle className="text-3xl font-bold text-designoai-blue-dark">
-                  Fusion
-                </CardTitle>
+            <div className="mb-6 pt-2">
+              <div className="flex items-center gap-2 mb-1">
+                <Star className="w-5 h-5 text-primary" />
+                <h3 className="text-xl font-heading font-bold text-foreground">Fusion</h3>
               </div>
-              <div className="flex items-center justify-center mb-4">
-                <span className="text-lg font-medium text-designoai-blue">Orçamento sob consulta</span>
-              </div>
-              <CardDescription className="text-lg">
-                Marketing físico + digital + IA em uma solução única
-              </CardDescription>
-            </CardHeader>
+              <p className="text-sm text-primary font-medium mb-2">Orçamento sob consulta</p>
+              <p className="text-xs text-muted-foreground">Marketing físico + digital + IA</p>
+            </div>
 
-            <CardContent className="grid gap-6 pb-6">
+            <div className="space-y-4 mb-6 flex-1">
               <div>
-                <h3 className="text-lg font-semibold text-designoai-blue-dark mb-3 flex items-center">
-                  📱 Digital
-                </h3>
-                <ul className="space-y-2">
-                  {digitalFeatures.slice(0, 3).map((feature, index) => <li key={index} className="flex items-start">
-                      <Check className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-gray-700">{feature}</span>
-                    </li>)}
-                  <li className="text-xs text-gray-500">+ 3 recursos adicionais</li>
+                <p className="text-xs font-medium text-foreground mb-2 uppercase tracking-wider">📱 Digital</p>
+                <ul className="space-y-1.5">
+                  {fusionDigital.map((f, i) => (
+                    <li key={i} className="flex items-start text-xs">
+                      <Check className="w-3 h-3 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                      <span className="text-muted-foreground">{f}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
-
               <div>
-                <h3 className="text-lg font-semibold text-designoai-blue-dark mb-3 flex items-center">
-                  🧾 Físico
-                </h3>
-                <ul className="space-y-2">
-                  {physicalFeatures.slice(0, 2).map((feature, index) => <li key={index} className="flex items-start">
-                      <Check className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-gray-700">{feature}</span>
-                    </li>)}
-                  <li className="text-xs text-gray-500">+ 2 recursos adicionais</li>
+                <p className="text-xs font-medium text-foreground mb-2 uppercase tracking-wider">🧾 Físico</p>
+                <ul className="space-y-1.5">
+                  {fusionPhysical.map((f, i) => (
+                    <li key={i} className="flex items-start text-xs">
+                      <Check className="w-3 h-3 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                      <span className="text-muted-foreground">{f}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
-
               <div>
-                <h3 className="text-lg font-semibold text-designoai-blue-dark mb-3 flex items-center">
-                  🤖 IA
-                </h3>
-                <ul className="space-y-2">
-                  {aiFeatures.slice(0, 2).map((feature, index) => <li key={index} className="flex items-start">
-                      <Check className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-gray-700">{feature}</span>
-                    </li>)}
-                  <li className="text-xs text-gray-500">+ 1 recurso adicional</li>
+                <p className="text-xs font-medium text-foreground mb-2 uppercase tracking-wider">🤖 IA</p>
+                <ul className="space-y-1.5">
+                  {fusionAI.map((f, i) => (
+                    <li key={i} className="flex items-start text-xs">
+                      <Check className="w-3 h-3 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                      <span className="text-muted-foreground">{f}</span>
+                    </li>
+                  ))}
                 </ul>
-              </div>
-            </CardContent>
-
-            <div className="bg-designoai-blue-light p-4">
-              <div className="flex flex-col items-center justify-center text-center">
-                <p className="text-designoai-blue-dark font-semibold mb-3">
-                  🔗 Solução Completa: Atendimento humanizado + IA
-                </p>
-                <div className="flex space-x-3">
-                  <Button 
-                    className="bg-designoai-blue hover:bg-designoai-blue-dark" 
-                    onClick={() => handleWhatsAppClick('Pacote Fusion')}
-                  >
-                    <MessageCircle className="w-4 h-4 mr-2" />
-                    Solicitar Orçamento
-                  </Button>
-                  <Link to="/services">
-                    <Button variant="outline" className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue-light">
-                      Ver Detalhes
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </Button>
-                  </Link>
-                </div>
               </div>
             </div>
-          </Card>
+
+            <div className="space-y-2">
+              <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-sm" onClick={() => handleWhatsAppClick('Pacote Fusion')}>
+                <MessageCircle className="w-4 h-4 mr-2" />
+                Solicitar Orçamento
+              </Button>
+              <Link to="/services" className="block">
+                <Button variant="ghost" className="w-full text-muted-foreground hover:text-foreground">
+                  Ver Detalhes <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
         </div>
 
-        <div className="text-center mt-12">
-          <p className="text-gray-600 mb-4">
-            Quer personalizar seu pacote? Veja todos os serviços disponíveis!
-          </p>
-          <Button variant="ghost" className="text-designoai-blue hover:text-designoai-blue-dark" onClick={handleCalculatorClick}>
+        <div className="text-center mt-10">
+          <Button variant="ghost" className="text-primary hover:text-primary/80" onClick={handleCalculatorClick}>
             Ver Seletor de Serviços →
           </Button>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
 
 export default Pricing;

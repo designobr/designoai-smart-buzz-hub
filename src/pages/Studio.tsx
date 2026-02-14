@@ -119,7 +119,7 @@ const Studio = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden">
-      <Navbar variant="dark" />
+      <Navbar />
       
       {/* Hero Section */}
       <section className="min-h-screen relative overflow-hidden flex items-center justify-center text-center px-4 pt-20 pb-16">
