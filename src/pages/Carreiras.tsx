@@ -1,14 +1,15 @@
+
 import { useEffect, useState } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import { motion } from 'framer-motion';
+import SubpageLayout from '@/components/SubpageLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Code, Brain, Palette, TrendingUp, Users, Headphones, Target, Clock, Globe, Heart, Package } from 'lucide-react';
+import { Code, Brain, Palette, TrendingUp, Users, Headphones, Target, Clock, Globe, Package, CheckCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/components/ui/use-toast';
 
 const Carreiras = () => {
-  const [selectedJob, setSelectedJob] = useState(null);
+  const [selectedJob, setSelectedJob] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -25,468 +26,253 @@ const Carreiras = () => {
   }, []);
 
   const benefits = [
-    {
-      icon: Target,
-      title: "Ambiente Colaborativo",
-      description: "Trabalhe em equipe inspiradora"
-    },
-    {
-      icon: Brain,
-      title: "Aprendizado Contínuo",
-      description: "Tecnologias de ponta sempre"
-    },
-    {
-      icon: Clock,
-      title: "Flexibilidade",
-      description: "Horários e trabalho remoto"
-    },
-    {
-      icon: Globe,
-      title: "Projetos de Impacto",
-      description: "Transforme empresas pelo Brasil"
-    }
+    { icon: Target, title: "Ambiente Colaborativo", description: "Trabalhe em equipe inspiradora" },
+    { icon: Brain, title: "Aprendizado Contínuo", description: "Tecnologias de ponta sempre" },
+    { icon: Clock, title: "Flexibilidade", description: "Horários e trabalho remoto" },
+    { icon: Globe, title: "Projetos de Impacto", description: "Transforme empresas pelo Brasil" },
   ];
 
-  const handleInputChange = e => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleSubmit = async e => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      // Validar campos obrigatórios
       if (!formData.name || !formData.email || !formData.position || !formData.experience || !formData.motivation) {
-        toast({
-          title: "Erro",
-          description: "Por favor, preencha todos os campos obrigatórios.",
-          variant: "destructive"
-        });
+        toast({ title: "Erro", description: "Por favor, preencha todos os campos obrigatórios.", variant: "destructive" });
         setIsSubmitting(false);
         return;
       }
-      console.log('Enviando candidatura:', formData);
-
-      // Chamar a edge function
-      const {
-        data,
-        error
-      } = await supabase.functions.invoke('submit-job-application', {
-        body: formData
-      });
-      console.log('Resposta da função:', {
-        data,
-        error
-      });
+      const { data, error } = await supabase.functions.invoke('submit-job-application', { body: formData });
       if (error) {
-        console.error('Erro ao enviar candidatura:', error);
-        toast({
-          title: "Erro",
-          description: `Ocorreu um erro ao enviar sua candidatura: ${error.message || 'Erro desconhecido'}`,
-          variant: "destructive"
-        });
+        toast({ title: "Erro", description: `Ocorreu um erro ao enviar sua candidatura: ${error.message || 'Erro desconhecido'}`, variant: "destructive" });
         return;
       }
-
-      // Verificar se a resposta contém erro
       if (data?.error) {
-        console.error('Erro retornado pela função:', data);
-        toast({
-          title: "Erro",
-          description: `Erro: ${data.error}${data.details ? ` - ${data.details}` : ''}`,
-          variant: "destructive"
-        });
+        toast({ title: "Erro", description: `Erro: ${data.error}${data.details ? ` - ${data.details}` : ''}`, variant: "destructive" });
         return;
       }
-
-      // Sucesso
-      toast({
-        title: "Candidatura enviada!",
-        description: "Sua candidatura foi enviada com sucesso. Entraremos em contato em breve."
-      });
-
-      // Limpar formulário
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        position: '',
-        experience: '',
-        portfolio: '',
-        motivation: ''
-      });
-    } catch (error) {
-      console.error('Erro inesperado ao enviar candidatura:', error);
-      toast({
-        title: "Erro",
-        description: `Ocorreu um erro inesperado: ${error.message || 'Erro desconhecido'}`,
-        variant: "destructive"
-      });
+      toast({ title: "Candidatura enviada!", description: "Sua candidatura foi enviada com sucesso. Entraremos em contato em breve." });
+      setFormData({ name: '', email: '', phone: '', position: '', experience: '', portfolio: '', motivation: '' });
+    } catch (error: any) {
+      toast({ title: "Erro", description: `Ocorreu um erro inesperado: ${error.message || 'Erro desconhecido'}`, variant: "destructive" });
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const jobs = [
-    {
-      id: 1,
-      title: "Desenvolvedor Full Stack",
-      department: "Tecnologia",
-      icon: Code,
-      description: "Responsável pelo desenvolvimento de funcionalidades front-end e back-end da nossa plataforma de IA.",
-      requirements: ["React.js", "Node.js", "TypeScript", "Python", "Experiência com APIs"]
-    },
-    {
-      id: 2,
-      title: "Cientista de Dados",
-      department: "Tecnologia", 
-      icon: Brain,
-      description: "Desenvolvimento de modelos de machine learning e análise de dados para otimização das campanhas.",
-      requirements: ["Python", "Machine Learning", "TensorFlow", "SQL", "Estatística"]
-    },
-    {
-      id: 3,
-      title: "Especialista em Marketing Digital",
-      department: "Marketing",
-      icon: TrendingUp,
-      description: "Criação e execução de estratégias de marketing digital para nossos clientes e para a própria empresa.",
-      requirements: ["Google Ads", "Facebook Ads", "SEO/SEM", "Analytics", "Growth Hacking"]
-    },
-    {
-      id: 4,
-      title: "Designer UX/UI",
-      department: "Design",
-      icon: Palette,
-      description: "Design de interfaces intuitivas e experiências de usuário excepcionais para nossa plataforma.",
-      requirements: ["Figma", "Adobe Creative Suite", "Prototipagem", "Design System", "User Research"]
-    },
-    {
-      id: 5,
-      title: "Consultor Comercial",
-      department: "Vendas",
-      icon: Users,
-      description: "Prospecção e fechamento de novos clientes, apresentação de soluções e consultoria comercial.",
-      requirements: ["Vendas B2B", "CRM", "Negociação", "Consultiva", "Relacionamento"]
-    },
-    {
-      id: 6,
-      title: "Customer Success",
-      department: "Atendimento",
-      icon: Headphones,
-      description: "Garantir o sucesso dos nossos clientes, onboarding, suporte e identificação de oportunidades de upsell.",
-      requirements: ["Atendimento ao Cliente", "Análise de Dados", "Comunicação", "Proatividade"]
-    }
+    { id: 1, title: "Desenvolvedor Full Stack", department: "Tecnologia", icon: Code, description: "Responsável pelo desenvolvimento de funcionalidades front-end e back-end da nossa plataforma de IA.", requirements: ["React.js", "Node.js", "TypeScript", "Python", "Experiência com APIs"] },
+    { id: 2, title: "Cientista de Dados", department: "Tecnologia", icon: Brain, description: "Desenvolvimento de modelos de machine learning e análise de dados para otimização das campanhas.", requirements: ["Python", "Machine Learning", "TensorFlow", "SQL", "Estatística"] },
+    { id: 3, title: "Especialista em Marketing Digital", department: "Marketing", icon: TrendingUp, description: "Criação e execução de estratégias de marketing digital para nossos clientes e para a própria empresa.", requirements: ["Google Ads", "Facebook Ads", "SEO/SEM", "Analytics", "Growth Hacking"] },
+    { id: 4, title: "Designer UX/UI", department: "Design", icon: Palette, description: "Design de interfaces intuitivas e experiências de usuário excepcionais para nossa plataforma.", requirements: ["Figma", "Adobe Creative Suite", "Prototipagem", "Design System", "User Research"] },
+    { id: 5, title: "Consultor Comercial", department: "Vendas", icon: Users, description: "Prospecção e fechamento de novos clientes, apresentação de soluções e consultoria comercial.", requirements: ["Vendas B2B", "CRM", "Negociação", "Consultiva", "Relacionamento"] },
+    { id: 6, title: "Customer Success", department: "Atendimento", icon: Headphones, description: "Garantir o sucesso dos nossos clientes, onboarding, suporte e identificação de oportunidades de upsell.", requirements: ["Atendimento ao Cliente", "Análise de Dados", "Comunicação", "Proatividade"] },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+  };
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-designoai-blue-light/20">
-      <Navbar />
-      
-      {/* Hero Section */}
-      <section className="relative pt-20 pb-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-designoai-blue/5 via-transparent to-purple-400/10"></div>
-        <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-r from-purple-400/20 to-designoai-blue/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-gradient-to-r from-designoai-blue/20 to-purple-400/20 rounded-full blur-3xl"></div>
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
-          <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-designoai-blue-dark via-designoai-blue to-purple-600 bg-clip-text text-transparent leading-tight">
-              Carreiras
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Junte-se à DesignoAI e faça parte de uma equipe inovadora que está revolucionando o marketing digital através da inteligência artificial.
-            </p>
-          </div>
-        </div>
-      </section>
-
+    <SubpageLayout
+      title="Carreiras"
+      subtitle="Junte-se à DesignoAI e faça parte de uma equipe inovadora que está revolucionando o marketing digital através da inteligência artificial."
+      badge="💼 Venha fazer parte"
+    >
       {/* Benefits */}
-      <section className="py-20 relative">
+      <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 bg-gradient-to-r from-designoai-blue-dark to-designoai-blue bg-clip-text text-transparent">
-            Por que trabalhar na DesignoAI?
-          </h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            {benefits.map((benefit, index) => (
-              <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg bg-white/70 backdrop-blur-sm hover:scale-105">
-                <CardHeader className="text-center pb-4">
-                  <div className="mx-auto mb-4 p-3 bg-gradient-to-r from-designoai-blue/20 to-purple-400/20 rounded-2xl w-fit group-hover:scale-110 transition-transform duration-300">
-                    <benefit.icon className="w-8 h-8 text-designoai-blue" />
-                  </div>
-                  <CardTitle className="text-lg text-designoai-blue-dark group-hover:text-designoai-blue transition-colors">
-                    {benefit.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="text-center pt-0">
-                  <p className="text-gray-600 leading-relaxed text-sm">{benefit.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
-            <CardContent className="p-8 md:p-12">
-              <h3 className="text-2xl font-bold text-center mb-8 bg-gradient-to-r from-designoai-blue-dark to-designoai-blue bg-clip-text text-transparent">
-                Benefícios Completos
-              </h3>
-              
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-4">
-                  <div className="flex items-center">
-                    <Target className="w-5 h-5 text-designoai-blue mr-3 flex-shrink-0" />
-                    <span className="text-gray-700">Planos de carreira personalizados</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Package className="w-5 h-5 text-designoai-blue mr-3 flex-shrink-0" />
-                    <span className="text-gray-700">Kit comercial</span>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex items-center">
-                    <Clock className="w-5 h-5 text-designoai-blue mr-3 flex-shrink-0" />
-                    <span className="text-gray-700">Horário flexível</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Globe className="w-5 h-5 text-designoai-blue mr-3 flex-shrink-0" />
-                    <span className="text-gray-700">Trabalho remoto</span>
-                  </div>
-                  <div className="flex items-center">
-                    <TrendingUp className="w-5 h-5 text-designoai-blue mr-3 flex-shrink-0" />
-                    <span className="text-gray-700">Participação nos resultados</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Jobs Grid */}
-      <section className="py-20 bg-gradient-to-r from-designoai-blue/5 via-white to-purple-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 bg-gradient-to-r from-designoai-blue-dark to-designoai-blue bg-clip-text text-transparent">
-            Vagas Disponíveis
-          </h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            {jobs.map((job) => (
-              <Card 
-                key={job.id} 
-                className="cursor-pointer hover:shadow-xl transition-all duration-300 border-0 shadow-lg bg-white/70 backdrop-blur-sm hover:scale-105" 
-                onClick={() => setSelectedJob(job)}
-              >
-                <CardHeader className="text-center pb-4">
-                  <div className="mx-auto mb-4 p-3 bg-gradient-to-r from-designoai-blue/20 to-purple-400/20 rounded-2xl w-fit">
-                    <job.icon className="w-8 h-8 text-designoai-blue" />
-                  </div>
-                  <CardTitle className="text-xl text-designoai-blue-dark leading-tight">{job.title}</CardTitle>
-                  <CardDescription className="text-designoai-blue font-semibold">{job.department}</CardDescription>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <p className="text-gray-600 mb-4 leading-relaxed text-sm">{job.description}</p>
-                  <div className="space-y-2">
-                    <p className="font-semibold text-sm text-gray-700">Principais requisitos:</p>
-                    <div className="flex flex-wrap gap-1">
-                      {job.requirements.slice(0, 3).map((req, index) => (
-                        <span 
-                          key={index} 
-                          className="inline-block bg-gradient-to-r from-designoai-blue-light/50 to-purple-100 text-designoai-blue-dark px-3 py-1 rounded-full text-xs"
-                        >
-                          {req}
-                        </span>
-                      ))}
-                      {job.requirements.length > 3 && (
-                        <span className="text-xs text-gray-500 px-2 py-1">+{job.requirements.length - 3} mais</span>
-                      )}
+          <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-3xl md:text-4xl font-heading font-bold text-center mb-12">
+            <span className="text-gradient">Por que trabalhar na DesignoAI?</span>
+          </motion.h2>
+          <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {benefits.map((b, i) => (
+              <motion.div key={i} variants={itemVariants}>
+                <Card className="glass border-border/50 hover:border-primary/30 transition-all duration-300 group h-full">
+                  <CardHeader className="text-center pb-3">
+                    <div className="mx-auto mb-3 p-3 rounded-xl bg-primary/10 w-fit group-hover:bg-primary/20 transition-colors">
+                      <b.icon className="w-7 h-7 text-primary" />
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                    <CardTitle className="text-lg text-foreground">{b.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-center pt-0">
+                    <p className="text-muted-foreground text-sm">{b.description}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          {selectedJob && (
-            <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm mb-16">
-              <CardContent className="p-8">
-                <div className="flex items-center mb-6">
-                  <div className="p-3 bg-gradient-to-r from-designoai-blue/20 to-purple-400/20 rounded-2xl mr-4">
-                    <selectedJob.icon className="w-8 h-8 text-designoai-blue" />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-designoai-blue-dark">{selectedJob.title}</h3>
-                    <p className="text-designoai-blue font-semibold">{selectedJob.department}</p>
-                  </div>
-                </div>
-                
-                <p className="text-gray-600 mb-6 leading-relaxed">{selectedJob.description}</p>
-                
-                <h4 className="font-semibold mb-4 text-designoai-blue-dark">Todos os requisitos:</h4>
-                <div className="grid md:grid-cols-2 gap-3 mb-6">
-                  {selectedJob.requirements.map((req, index) => (
-                    <div key={index} className="flex items-center p-3 bg-gradient-to-r from-designoai-blue-light/30 to-purple-50 rounded-lg">
-                      <div className="bg-designoai-blue rounded-full p-1 mr-3 flex-shrink-0">
-                        <div className="bg-white rounded-full w-2 h-2"></div>
-                      </div>
-                      <span className="text-gray-700 text-sm">{req}</span>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <Card className="glass border-border/50">
+              <CardContent className="p-8 md:p-12">
+                <h3 className="text-2xl font-heading font-bold text-center mb-8 text-gradient">Benefícios Completos</h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {[
+                    { icon: Target, text: "Planos de carreira personalizados" },
+                    { icon: Package, text: "Kit comercial" },
+                    { icon: Clock, text: "Horário flexível" },
+                    { icon: Globe, text: "Trabalho remoto" },
+                    { icon: TrendingUp, text: "Participação nos resultados" },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <item.icon className="w-5 h-5 text-primary flex-shrink-0" />
+                      <span className="text-muted-foreground">{item.text}</span>
                     </div>
                   ))}
                 </div>
-                
-                <Button 
-                  onClick={() => setSelectedJob(null)} 
-                  variant="outline" 
-                  className="border-designoai-blue text-designoai-blue hover:bg-designoai-blue hover:text-white"
-                >
-                  Fechar Detalhes
-                </Button>
               </CardContent>
             </Card>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Jobs */}
+      <section className="py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+          <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-3xl md:text-4xl font-heading font-bold text-center mb-12">
+            <span className="text-gradient">Vagas Disponíveis</span>
+          </motion.h2>
+          <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {jobs.map((job) => (
+              <motion.div key={job.id} variants={itemVariants}>
+                <Card className="glass border-border/50 hover:border-primary/30 cursor-pointer transition-all duration-300 group h-full" onClick={() => setSelectedJob(job)}>
+                  <CardHeader className="text-center pb-3">
+                    <div className="mx-auto mb-3 p-3 rounded-xl bg-primary/10 w-fit group-hover:bg-primary/20 transition-colors">
+                      <job.icon className="w-7 h-7 text-primary" />
+                    </div>
+                    <CardTitle className="text-lg text-foreground">{job.title}</CardTitle>
+                    <CardDescription className="text-primary font-semibold">{job.department}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <p className="text-muted-foreground text-sm mb-4">{job.description}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {job.requirements.slice(0, 3).map((req, i) => (
+                        <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">{req}</span>
+                      ))}
+                      {job.requirements.length > 3 && <span className="text-xs text-muted-foreground px-2 py-1">+{job.requirements.length - 3}</span>}
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {selectedJob && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+              <Card className="glass border-primary/20 mb-12">
+                <CardContent className="p-8">
+                  <div className="flex items-center mb-6 gap-4">
+                    <div className="p-3 rounded-xl bg-primary/10">
+                      <selectedJob.icon className="w-7 h-7 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-heading font-bold text-foreground">{selectedJob.title}</h3>
+                      <p className="text-primary font-semibold">{selectedJob.department}</p>
+                    </div>
+                  </div>
+                  <p className="text-muted-foreground mb-6">{selectedJob.description}</p>
+                  <h4 className="font-semibold mb-4 text-foreground">Todos os requisitos:</h4>
+                  <div className="grid md:grid-cols-2 gap-3 mb-6">
+                    {selectedJob.requirements.map((req: string, i: number) => (
+                      <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-primary/5 border border-primary/10">
+                        <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                        <span className="text-muted-foreground text-sm">{req}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <Button variant="outline" onClick={() => setSelectedJob(null)}>Fechar Detalhes</Button>
+                </CardContent>
+              </Card>
+            </motion.div>
           )}
         </div>
       </section>
 
-      {/* Application Form */}
+      {/* Form */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
-          <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-            <CardHeader className="text-center pb-6">
-              <CardTitle className="text-3xl bg-gradient-to-r from-designoai-blue-dark to-designoai-blue bg-clip-text text-transparent">
-                Candidate-se
-              </CardTitle>
-              <CardDescription className="text-center text-lg text-gray-600">
-                Preencha o formulário abaixo e envie sua candidatura
-              </CardDescription>
+          <Card className="glass border-border/50">
+            <CardHeader className="text-center pb-4">
+              <CardTitle className="text-3xl text-gradient">Candidate-se</CardTitle>
+              <CardDescription className="text-muted-foreground text-lg">Preencha o formulário abaixo e envie sua candidatura</CardDescription>
             </CardHeader>
             <CardContent className="p-8 pt-0">
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                {[
+                  { id: 'name', label: 'Nome Completo *', type: 'text', required: true },
+                  { id: 'email', label: 'E-mail *', type: 'email', required: true },
+                  { id: 'phone', label: 'Telefone', type: 'tel', required: false },
+                  { id: 'portfolio', label: 'Portfolio / LinkedIn', type: 'url', required: false },
+                ].map((field) => (
+                  <div key={field.id} className="space-y-2">
+                    <label htmlFor={field.id} className="block text-sm font-medium text-foreground">{field.label}</label>
+                    <input
+                      type={field.type}
+                      id={field.id}
+                      name={field.id}
+                      required={field.required}
+                      value={(formData as any)[field.id]}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
+                    />
+                  </div>
+                ))}
                 <div className="space-y-2">
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                    Nome Completo *
-                  </label>
-                  <input 
-                    type="text" 
-                    id="name" 
-                    name="name" 
-                    required 
-                    value={formData.name} 
-                    onChange={handleInputChange} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" 
-                  />
-                </div>
-                  
-                <div className="space-y-2">
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    E-mail *
-                  </label>
-                  <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    required 
-                    value={formData.email} 
-                    onChange={handleInputChange} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" 
-                  />
-                </div>
-                  
-                <div className="space-y-2">
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                    Telefone
-                  </label>
-                  <input 
-                    type="tel" 
-                    id="phone" 
-                    name="phone" 
-                    value={formData.phone} 
-                    onChange={handleInputChange} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" 
-                  />
-                </div>
-                  
-                <div className="space-y-2">
-                  <label htmlFor="position" className="block text-sm font-medium text-gray-700">
-                    Cargo de Interesse *
-                  </label>
-                  <select 
-                    id="position" 
-                    name="position" 
-                    required 
-                    value={formData.position} 
-                    onChange={handleInputChange} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors"
+                  <label htmlFor="position" className="block text-sm font-medium text-foreground">Cargo de Interesse *</label>
+                  <select
+                    id="position"
+                    name="position"
+                    required
+                    value={formData.position}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
                   >
-                    <option value="">Selecione um cargo</option>
-                    {jobs.map((job) => (
-                      <option key={job.id} value={job.title}>{job.title}</option>
-                    ))}
+                    <option value="">Selecione uma vaga</option>
+                    {jobs.map((j) => <option key={j.id} value={j.title}>{j.title}</option>)}
                   </select>
                 </div>
-                  
                 <div className="space-y-2">
-                  <label htmlFor="experience" className="block text-sm font-medium text-gray-700">
-                    Experiência Profissional *
-                  </label>
-                  <textarea 
-                    id="experience" 
-                    name="experience" 
-                    rows={4} 
-                    required 
-                    value={formData.experience} 
-                    onChange={handleInputChange} 
-                    placeholder="Descreva sua experiência relevante..." 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors resize-vertical" 
+                  <label htmlFor="experience" className="block text-sm font-medium text-foreground">Experiência Relevante *</label>
+                  <textarea
+                    id="experience"
+                    name="experience"
+                    required
+                    value={formData.experience}
+                    onChange={handleInputChange}
+                    rows={3}
+                    className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors resize-none"
                   />
                 </div>
-                  
                 <div className="space-y-2">
-                  <label htmlFor="portfolio" className="block text-sm font-medium text-gray-700">
-                    Portfólio/LinkedIn
-                  </label>
-                  <input 
-                    type="url" 
-                    id="portfolio" 
-                    name="portfolio" 
-                    value={formData.portfolio} 
-                    onChange={handleInputChange} 
-                    placeholder="https://..." 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors" 
+                  <label htmlFor="motivation" className="block text-sm font-medium text-foreground">Por que quer trabalhar na DesignoAI? *</label>
+                  <textarea
+                    id="motivation"
+                    name="motivation"
+                    required
+                    value={formData.motivation}
+                    onChange={handleInputChange}
+                    rows={3}
+                    className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors resize-none"
                   />
                 </div>
-                  
-                <div className="space-y-2">
-                  <label htmlFor="motivation" className="block text-sm font-medium text-gray-700">
-                    Por que quer trabalhar na DesignoAI? *
-                  </label>
-                  <textarea 
-                    id="motivation" 
-                    name="motivation" 
-                    rows={4} 
-                    required 
-                    value={formData.motivation} 
-                    onChange={handleInputChange} 
-                    placeholder="Conte-nos sua motivação..." 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-designoai-blue focus:border-transparent transition-colors resize-vertical" 
-                  />
-                </div>
-                
-                <Button 
-                  type="submit" 
-                  disabled={isSubmitting} 
-                  className="w-full bg-designoai-blue hover:bg-designoai-blue-dark text-white py-3 text-lg disabled:opacity-50 transition-colors"
-                >
-                  {isSubmitting ? "Enviando..." : "Enviar Candidatura"}
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                  {isSubmitting ? 'Enviando...' : 'Enviar Candidatura'}
                 </Button>
               </form>
             </CardContent>
           </Card>
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </SubpageLayout>
   );
 };
 
