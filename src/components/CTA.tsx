@@ -21,8 +21,8 @@ const CTA = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="relative glass rounded-3xl p-8 md:p-16 overflow-hidden"
-        >
+          className="relative glass rounded-3xl p-8 md:p-16 overflow-hidden">
+
           {/* Ambient glow */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/10 rounded-full blur-[100px]" />
           <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-[hsl(270,70%,60%)]/10 rounded-full blur-[80px]" />
@@ -47,34 +47,34 @@ const CTA = () => {
               <Button
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90 glow-md text-base px-8 py-6 rounded-xl group"
-                onClick={handleStartClick}
-              >
+                onClick={handleStartClick}>
+
                 Começe Agora
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="border-border text-foreground hover:bg-secondary text-base px-8 py-6 rounded-xl"
-                onClick={handleSpecialistClick}
-              >
+                className="text-foreground hover:bg-secondary text-base px-8 py-6 rounded-xl border-primary-foreground"
+                onClick={handleSpecialistClick}>
+
                 Fale com Especialista
               </Button>
             </div>
 
             <div className="flex flex-wrap justify-center gap-6 text-xs text-muted-foreground">
-              {['Sem cartão de crédito', 'Cancele quando quiser', 'Suporte premium'].map((text, i) => (
-                <div key={i} className="flex items-center">
+              {['Sem cartão de crédito', 'Cancele quando quiser', 'Suporte premium'].map((text, i) =>
+              <div key={i} className="flex items-center">
                   <div className="w-1.5 h-1.5 bg-primary/60 rounded-full mr-2" />
                   {text}
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default CTA;
