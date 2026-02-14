@@ -1,108 +1,149 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useSparkEffect } from '@/hooks/useSparkEffect';
 
-interface NavbarProps {
-  variant?: 'light' | 'dark';
-}
-
-const Navbar = ({ variant = 'light' }: NavbarProps) => {
+const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
-  const isDark = variant === 'dark';
-  
+  const spark = useSparkEffect({ count: 6, spread: 40 });
+
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
+
   const handleConsultorClick = () => {
     window.open('https://wa.me/5511965262002?text=Olá! Gostaria de falar com um consultor sobre o DesignoAI.', '_blank');
   };
   const handleWhatsAppClick = () => {
     window.open('https://wa.me/5511965262002?text=Olá! Gostaria de saber mais sobre o DesignoAI.', '_blank');
   };
-  
-  const textColor = isDark ? 'text-white' : 'text-designoai-blue-dark';
-  const hoverColor = isDark ? 'hover:text-white/80' : 'hover:text-designoai-blue';
-  const bgScrolled = isDark ? 'bg-black/80 backdrop-blur-md shadow-sm' : 'bg-white/90 backdrop-blur-md shadow-sm';
-  const mobileMenuBg = isDark ? 'bg-black/95' : 'bg-white';
-  const mobileMenuHover = isDark ? 'hover:bg-white/10' : 'hover:bg-designoai-blue-light';
-  
-  return <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? bgScrolled : 'bg-transparent'}`}>
+
+  return (
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      isScrolled ? 'bg-background/80 backdrop-blur-xl border-b border-border shadow-lg shadow-black/10' : 'bg-transparent'
+    }`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
-              <img alt="DesignoAI Logo" src="/lovable-uploads/09cb8eca-27b9-431a-97cf-fd9a75f478f8.png" className="w-8 h-8 object-contain" />
-              
-            </Link>
-          </div>
+          <Link to="/" className="flex items-center space-x-2 group">
+            <img
+              alt="DesignoAI Logo"
+              src="/lovable-uploads/09cb8eca-27b9-431a-97cf-fd9a75f478f8.png"
+              className="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-110"
+              onClick={(e) => spark(e, 'logo')}
+            />
+            <span className="text-lg font-heading font-bold text-foreground">
+              Designo<span className="text-primary">AI</span>
+            </span>
+          </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/studio" className={`text-sm font-medium ${textColor} ${hoverColor} transition`}>Studio</Link>
-            <Link to="/services" className={`text-sm font-medium ${textColor} ${hoverColor} transition`}>Serviços</Link>
-            <Link to="/recursos" className={`text-sm font-medium ${textColor} ${hoverColor} transition`}>Recursos</Link>
-            <a href="#how-it-works" className={`text-sm font-medium ${textColor} ${hoverColor} transition`}>Como Funciona</a>
-            <a href="#pricing" className={`text-sm font-medium ${textColor} ${hoverColor} transition`}>Preços</a>
-            <a href="#calculator" className={`text-sm font-medium ${textColor} ${hoverColor} transition`}>Calculadora</a>
-            <a href="#contact" className={`text-sm font-medium ${textColor} ${hoverColor} transition`}>Contato</a>
+          <nav className="hidden md:flex items-center space-x-1">
+            {[
+              { to: '/studio', label: 'Studio' },
+              { to: '/services', label: 'Serviços' },
+              { to: '/recursos', label: 'Recursos' },
+              { href: '#how-it-works', label: 'Como Funciona' },
+              { href: '#pricing', label: 'Preços' },
+              { href: '#contact', label: 'Contato' },
+            ].map((item) =>
+              'to' in item ? (
+                <Link
+                  key={item.label}
+                  to={item.to!}
+                  className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-md hover:bg-secondary"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-md hover:bg-secondary"
+                >
+                  {item.label}
+                </a>
+              )
+            )}
           </nav>
 
-          {/* Call to Action */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" className={`${textColor} ${hoverColor} transition`} onClick={handleConsultorClick}>
+          <div className="hidden md:flex items-center space-x-3">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-muted-foreground hover:text-foreground"
+              onClick={handleConsultorClick}
+            >
               Falar com Consultor
             </Button>
-            <Button variant="default" className="bg-green-500 hover:bg-green-600 text-white" onClick={handleWhatsAppClick}>
+            <Button
+              size="sm"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 glow-sm"
+              onClick={handleWhatsAppClick}
+            >
               <MessageCircle className="w-4 h-4 mr-2" />
               WhatsApp
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button type="button" className={`p-2 ${textColor}`} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
+          <button
+            type="button"
+            className="md:hidden p-2 text-foreground"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {mobileMenuOpen && <div className={`md:hidden ${mobileMenuBg} border-t ${isDark ? 'border-white/10' : ''}`}>
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link to="/studio" className={`block px-3 py-2 ${textColor} ${mobileMenuHover} rounded-md`}>Studio</Link>
-            <Link to="/services" className={`block px-3 py-2 ${textColor} ${mobileMenuHover} rounded-md`}>Serviços</Link>
-            <Link to="/recursos" className={`block px-3 py-2 ${textColor} ${mobileMenuHover} rounded-md`}>Recursos</Link>
-            <a href="#how-it-works" className={`block px-3 py-2 ${textColor} ${mobileMenuHover} rounded-md`}>Como Funciona</a>
-            <a href="#pricing" className={`block px-3 py-2 ${textColor} ${mobileMenuHover} rounded-md`}>Preços</a>
-            <a href="#calculator" className={`block px-3 py-2 ${textColor} ${mobileMenuHover} rounded-md`}>Calculadora</a>
-            <a href="#contact" className={`block px-3 py-2 ${textColor} ${mobileMenuHover} rounded-md`}>Contato</a>
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-background/95 backdrop-blur-xl border-t border-border animate-fade-in">
+          <div className="px-4 pt-2 pb-3 space-y-1">
+            {[
+              { to: '/studio', label: 'Studio' },
+              { to: '/services', label: 'Serviços' },
+              { to: '/recursos', label: 'Recursos' },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                to={item.to}
+                className="block px-3 py-3 text-foreground hover:bg-secondary rounded-lg transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+            {[
+              { href: '#how-it-works', label: 'Como Funciona' },
+              { href: '#pricing', label: 'Preços' },
+              { href: '#contact', label: 'Contato' },
+            ].map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="block px-3 py-3 text-foreground hover:bg-secondary rounded-lg transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
           </div>
-          <div className={`px-5 py-4 border-t ${isDark ? 'border-white/10' : 'border-gray-200'}`}>
-            <Button variant="ghost" className={`w-full ${textColor} mb-2`} onClick={handleConsultorClick}>
+          <div className="px-4 py-4 border-t border-border space-y-2">
+            <Button variant="ghost" className="w-full justify-center" onClick={handleConsultorClick}>
               Falar com Consultor
             </Button>
-            <Button variant="default" className="w-full bg-green-500 hover:bg-green-600 text-white" onClick={handleWhatsAppClick}>
+            <Button className="w-full bg-primary text-primary-foreground" onClick={handleWhatsAppClick}>
               <MessageCircle className="w-4 h-4 mr-2" />
               WhatsApp
             </Button>
           </div>
-        </div>}
-    </header>;
+        </div>
+      )}
+    </header>
+  );
 };
+
 export default Navbar;
