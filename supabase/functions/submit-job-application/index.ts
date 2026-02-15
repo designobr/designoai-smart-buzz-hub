@@ -1,11 +1,10 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
+    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 interface JobApplicationRequest {
@@ -18,95 +17,113 @@ interface JobApplicationRequest {
   motivation: string;
 }
 
+// Simple in-memory rate limiter
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(identifier: string, maxRequests = 3, windowMs = 3600000): boolean {
+  const now = Date.now();
+  const record = rateLimitMap.get(identifier);
+
+  if (!record || now > record.resetAt) {
+    rateLimitMap.set(identifier, { count: 1, resetAt: now + windowMs });
+    return true;
+  }
+
+  if (record.count >= maxRequests) {
+    return false;
+  }
+
+  record.count++;
+  return true;
+}
+
 const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    // Use service role key for database operations
+    const applicationData: JobApplicationRequest = await req.json();
+
+    // Rate limit by email or IP
+    const clientIp = req.headers.get("x-forwarded-for") || "unknown";
+    const identifier = applicationData.email || clientIp;
+
+    if (!checkRateLimit(identifier, 3, 3600000)) {
+      return new Response(
+        JSON.stringify({ error: "Muitas tentativas. Tente novamente mais tarde." }),
+        { status: 429, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    // Validate required fields
+    if (
+      !applicationData.name || typeof applicationData.name !== "string" || applicationData.name.trim().length === 0 || applicationData.name.length > 200 ||
+      !applicationData.email || typeof applicationData.email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(applicationData.email) ||
+      !applicationData.position || typeof applicationData.position !== "string" || applicationData.position.length > 200 ||
+      !applicationData.experience || typeof applicationData.experience !== "string" || applicationData.experience.length > 100 ||
+      !applicationData.motivation || typeof applicationData.motivation !== "string" || applicationData.motivation.length > 5000
+    ) {
+      return new Response(
+        JSON.stringify({ error: "Campos obrigatórios não preenchidos ou inválidos" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    // Validate optional fields
+    if (applicationData.phone && (typeof applicationData.phone !== "string" || applicationData.phone.length > 30)) {
+      return new Response(
+        JSON.stringify({ error: "Telefone inválido" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+    if (applicationData.portfolio && (typeof applicationData.portfolio !== "string" || applicationData.portfolio.length > 500)) {
+      return new Response(
+        JSON.stringify({ error: "Portfolio inválido" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
 
-    const applicationData: JobApplicationRequest = await req.json();
-
-    console.log("Dados recebidos:", applicationData);
-
-    // Validar dados obrigatórios
-    if (!applicationData.name || !applicationData.email || !applicationData.position || 
-        !applicationData.experience || !applicationData.motivation) {
-      console.log("Validação falhou - campos obrigatórios em falta");
-      return new Response(
-        JSON.stringify({ error: "Campos obrigatórios não preenchidos" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
-      );
-    }
-
-    console.log("Tentando inserir candidatura no banco de dados...");
-
-    // Inserir candidatura no banco de dados
     const { data, error } = await supabaseClient
       .from("job_applications")
       .insert([{
-        name: applicationData.name,
-        email: applicationData.email,
-        phone: applicationData.phone || null,
-        position: applicationData.position,
-        experience: applicationData.experience,
-        portfolio: applicationData.portfolio || null,
-        motivation: applicationData.motivation,
+        name: applicationData.name.trim(),
+        email: applicationData.email.trim(),
+        phone: applicationData.phone?.trim() || null,
+        position: applicationData.position.trim(),
+        experience: applicationData.experience.trim(),
+        portfolio: applicationData.portfolio?.trim() || null,
+        motivation: applicationData.motivation.trim(),
       }])
       .select()
       .single();
 
     if (error) {
-      console.error("Erro detalhado ao salvar candidatura:", error);
+      console.error("Erro ao salvar candidatura:", error.code);
       return new Response(
-        JSON.stringify({ 
-          error: "Erro ao salvar candidatura",
-          details: error.message,
-          code: error.code 
-        }),
-        {
-          status: 500,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        JSON.stringify({ error: "Erro ao salvar candidatura" }),
+        { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
 
-    console.log("Candidatura salva com sucesso:", data);
-
     return new Response(
-      JSON.stringify({ 
-        success: true, 
+      JSON.stringify({
+        success: true,
         message: "Candidatura enviada com sucesso!",
-        id: data.id 
+        id: data.id,
       }),
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-          ...corsHeaders,
-        },
-      }
+      { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   } catch (error: any) {
-    console.error("Erro geral na função submit-job-application:", error);
+    console.error("Erro na função submit-job-application:", error.message);
     return new Response(
-      JSON.stringify({ 
-        error: "Erro interno do servidor",
-        details: error.message 
-      }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
+      JSON.stringify({ error: "Erro interno do servidor" }),
+      { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }
 };

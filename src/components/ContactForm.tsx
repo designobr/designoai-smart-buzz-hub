@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,11 +17,16 @@ const ContactForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      console.log('Form data submitted:', formData);
+      const { data, error } = await supabase.functions.invoke('submit-contact-form', {
+        body: formData
+      });
+
+      if (error) throw error;
+
       toast({ title: "Solicitação enviada!", description: "Entraremos em contato em até 24 horas." });
       setFormData({ name: '', email: '', phone: '', company: '', budget: '', message: '' });
     } catch (error) {
-      console.error('Erro:', error);
+      console.error('Erro ao enviar formulário');
       toast({ title: "Erro ao enviar", description: "Tente novamente ou entre em contato pelo WhatsApp.", variant: "destructive" });
     } finally {
       setIsSubmitting(false);
