@@ -109,8 +109,8 @@ const Hero = () => {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-[1.1] mb-6">
 
-            <span className="text-foreground">Sua marca no </span>
-            <span className="shimmer-text">futuro, agora!</span>
+            <span className="text-foreground">Sua marca no futuro, </span>
+            <span className="shimmer-text">agora!</span>
           </motion.h1>
 
           <motion.p
