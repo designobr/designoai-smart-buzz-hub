@@ -44,6 +44,7 @@ const Navbar = () => {
           <nav className="hidden md:flex items-center space-x-1">
             {[
             { to: '/studio', label: 'Studio' },
+            { to: '/sites-ia', label: 'Sites IA' },
             { to: '/services', label: 'Serviços' },
             { to: '/recursos', label: 'Recursos' },
             { href: '#how-it-works', label: 'Como Funciona' },
@@ -104,6 +105,7 @@ const Navbar = () => {
           <div className="px-4 pt-2 pb-3 space-y-1">
             {[
           { to: '/studio', label: 'Studio' },
+          { to: '/sites-ia', label: 'Sites IA' },
           { to: '/services', label: 'Serviços' },
           { to: '/recursos', label: 'Recursos' }].
           map((item) =>
