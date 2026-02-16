@@ -26,6 +26,7 @@ import PoliticaPrivacidade from "./pages/PoliticaPrivacidade";
 import Cookies from "./pages/Cookies";
 import OtimizacaoImagens from "./pages/OtimizacaoImagens";
 import Studio from "./pages/Studio";
+import SitesIA from "./pages/SitesIA";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -57,6 +58,7 @@ const App = () => (
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/studio" element={<Studio />} />
+          <Route path="/sites-ia" element={<SitesIA />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
