@@ -33,11 +33,18 @@ const AnimatedCounter = ({ target, suffix = '' }: { target: number; suffix?: str
 
 const FloatingParticle = ({ delay, x, y, size }: { delay: number; x: string; y: string; size: number }) => (
   <motion.div
-    className="absolute rounded-full bg-primary/10"
-    style={{ left: x, top: y, width: size, height: size }}
+    className="absolute rounded-full bg-primary"
+    style={{
+      left: x,
+      top: y,
+      width: size,
+      height: size,
+      boxShadow: `0 0 ${size * 3}px ${size}px hsl(195 100% 50% / 0.4)`,
+    }}
     animate={{
-      y: [0, -20, 0],
-      opacity: [0.3, 0.6, 0.3],
+      y: [0, -30, 0],
+      opacity: [0.4, 0.9, 0.4],
+      scale: [1, 1.3, 1],
     }}
     transition={{ duration: 4 + delay, repeat: Infinity, ease: 'easeInOut', delay }}
   />
