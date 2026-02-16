@@ -151,11 +151,89 @@
     z-index: 1;
   }
 
+  /* Animated gradient border */
+  .animated-border {
+    position: relative;
+    background: hsl(var(--card));
+    border-radius: 1rem;
+  }
+  .animated-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from var(--border-angle, 0deg),
+      hsl(var(--primary)) 0%,
+      hsl(270 70% 60%) 33%,
+      hsl(var(--primary)) 66%,
+      hsl(270 70% 60%) 100%
+    );
+    z-index: -1;
+    animation: border-rotate 4s linear infinite;
+  }
+  .animated-border::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: inherit;
+    background: hsl(var(--card));
+    z-index: -1;
+  }
+
+  @property --border-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  @keyframes border-rotate {
+    to { --border-angle: 360deg; }
+  }
+
+  /* Shimmer text */
+  .shimmer-text {
+    background: linear-gradient(
+      110deg,
+      hsl(var(--foreground)) 35%,
+      hsl(var(--primary)) 50%,
+      hsl(var(--foreground)) 65%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer-sweep 3s ease-in-out infinite;
+  }
+
+  @keyframes shimmer-sweep {
+    0%, 100% { background-position: 200% center; }
+    50% { background-position: 0% center; }
+  }
+
+  /* Marquee */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 30s linear infinite;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .spark-effect,
     .animate-float,
-    .animate-glow-pulse {
+    .animate-glow-pulse,
+    .shimmer-text,
+    .marquee-track,
+    .animated-border::before {
       animation: none !important;
     }
   }
