@@ -9,37 +9,43 @@ const servicesData = [
     icon: Star,
     title: "Criação de Conteúdo",
     description: "Textos, imagens e gráficos gerados por IA para suas campanhas de marketing digital.",
-    link: "/criacao-conteudo"
+    link: "/criacao-conteudo",
+    metric: "+180% engajamento",
   },
   {
     icon: BarChart3,
     title: "Análise de Dados",
     description: "Insights precisos e em tempo real sobre o desempenho de suas estratégias de marketing.",
-    link: "/analise-dados"
+    link: "/analise-dados",
+    metric: "3x mais insights",
   },
   {
     icon: PenTool,
     title: "Design Automatizado",
     description: "Criação de designs profissionais para suas publicações em redes sociais.",
-    link: "/design-automatizado"
+    link: "/design-automatizado",
+    metric: "85% mais rápido",
   },
   {
     icon: Share2,
     title: "Gestão de Redes Sociais",
     description: "Automação inteligente para postagens, engajamento e monitoramento de suas redes.",
-    link: "/gestao-redes-sociais"
+    link: "/gestao-redes-sociais",
+    metric: "+230% alcance",
   },
   {
     icon: Zap,
     title: "SEO Inteligente",
     description: "Otimização automática para melhorar seu posicionamento nos mecanismos de busca.",
-    link: "/seo-inteligente"
+    link: "/seo-inteligente",
+    metric: "Top 3 Google",
   },
   {
     icon: Brain,
     title: "Estratégias Personalizadas",
     description: "Recomendações baseadas em IA para maximizar seus resultados de marketing.",
-    link: "/estrategias-personalizadas"
+    link: "/estrategias-personalizadas",
+    metric: "98% precisão",
   }
 ];
 
@@ -76,6 +82,7 @@ const Services = () => {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {servicesData.map((service, index) => {
             const Icon = service.icon;
+            const isFirst = index === 0;
             return (
               <motion.div
                 key={index}
@@ -83,10 +90,16 @@ const Services = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
+                className={isFirst ? 'md:col-span-2 lg:col-span-2' : ''}
               >
-                <Link to={service.link} className="block group">
-                  <div className="glass rounded-2xl p-6 h-full transition-all duration-300 hover:bg-white/[0.06] hover:border-primary/20 hover:-translate-y-1 hover:glow-sm">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors duration-300">
+                <Link to={service.link} className="block group h-full">
+                  <div className="glass rounded-2xl p-6 h-full transition-all duration-300 hover:bg-white/[0.06] hover:border-primary/20 hover:-translate-y-1 hover:glow-sm relative overflow-hidden">
+                    {/* Order number */}
+                    <span className="absolute top-4 right-4 text-5xl font-heading font-bold text-primary/5 group-hover:text-primary/10 transition-colors duration-300">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-[hsl(270,70%,60%)]/20 flex items-center justify-center mb-5 group-hover:from-primary/30 group-hover:to-[hsl(270,70%,60%)]/30 transition-all duration-300">
                       <Icon
                         className="w-6 h-6 text-primary"
                         onClick={(e) => { e.preventDefault(); spark(e as any, `svc-${index}`); }}
@@ -95,9 +108,14 @@ const Services = () => {
                     <h3 className="text-lg font-heading font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
                       {service.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-4">
                       {service.description}
                     </p>
+
+                    {/* Hover metric */}
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-xs font-semibold text-primary bg-primary/5 rounded-full px-3 py-1 inline-block">
+                      {service.metric}
+                    </div>
                   </div>
                 </Link>
               </motion.div>

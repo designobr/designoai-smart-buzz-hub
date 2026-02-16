@@ -1,12 +1,36 @@
 
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { CheckCircle, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Cpu, Users, TrendingUp, LayoutDashboard, FileText, RefreshCw, ArrowRight } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
+
+const ProgressBar = ({ label, value }: { label: string; value: number }) => (
+  <div className="mb-3">
+    <div className="flex justify-between text-xs mb-1">
+      <span className="text-muted-foreground">{label}</span>
+      <span className="text-primary font-semibold">{value}%</span>
+    </div>
+    <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
+      <motion.div
+        className="h-full bg-gradient-to-r from-primary to-[hsl(270,70%,60%)] rounded-full"
+        initial={{ width: 0 }}
+        whileInView={{ width: `${value}%` }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
+      />
+    </div>
+  </div>
+);
 
 const Features = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
+  const img1Y = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  const img2Y = useTransform(scrollYProgress, [0, 1], [-20, 20]);
+
   return (
-    <section id="features" className="py-24 md:py-32 relative overflow-hidden">
+    <section id="features" className="py-24 md:py-32 relative overflow-hidden" ref={sectionRef}>
       <div className="absolute inset-0">
         <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-[hsl(270,70%,60%)]/3 rounded-full blur-[120px]" />
       </div>
@@ -41,13 +65,15 @@ const Features = () => {
           >
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-[hsl(270,70%,60%)]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <div className="relative glass rounded-2xl p-6 overflow-hidden">
+              <motion.div className="relative glass rounded-2xl p-6 overflow-hidden" style={{ y: img1Y }}>
                 <img
                   src="/lovable-uploads/d829b16b-0e24-4f64-beac-e8a25b579587.png"
                   alt="DesignoAI Coffee Cup"
-                  className="w-full h-auto rounded-xl"
+                  className="w-full h-auto rounded-xl transition-transform duration-500 group-hover:scale-[1.03]"
                 />
-              </div>
+                {/* Reflection */}
+                <div className="absolute bottom-0 left-6 right-6 h-16 bg-gradient-to-t from-card/80 to-transparent rounded-b-xl" />
+              </motion.div>
             </div>
           </motion.div>
 
@@ -64,15 +90,15 @@ const Features = () => {
               <span className="text-foreground">em suas campanhas</span>
             </h3>
 
-            <div className="space-y-5 mb-8">
+            <div className="space-y-5 mb-6">
               {[
-                { title: "Automação Inteligente", description: "Reduza horas de trabalho com automação de tarefas de marketing" },
-                { title: "Personalização em Escala", description: "Crie conteúdo personalizado para diferentes segmentos" },
-                { title: "Análise Preditiva", description: "Antecipe tendências e comportamentos do seu público-alvo" },
+                { icon: Cpu, title: "Automação Inteligente", description: "Reduza horas de trabalho com automação de tarefas de marketing" },
+                { icon: Users, title: "Personalização em Escala", description: "Crie conteúdo personalizado para diferentes segmentos" },
+                { icon: TrendingUp, title: "Análise Preditiva", description: "Antecipe tendências e comportamentos do seu público-alvo" },
               ].map((item, index) => (
                 <div key={index} className="flex items-start group">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center mr-4 mt-0.5 group-hover:bg-primary/20 transition-colors">
-                    <CheckCircle className="w-4 h-4 text-primary" />
+                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-primary/10 to-[hsl(270,70%,60%)]/10 flex items-center justify-center mr-4 mt-0.5 group-hover:from-primary/20 group-hover:to-[hsl(270,70%,60%)]/20 transition-all">
+                    <item.icon className="w-4 h-4 text-primary" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground mb-1 group-hover:text-primary transition-colors duration-200">{item.title}</h4>
@@ -82,7 +108,11 @@ const Features = () => {
               ))}
             </div>
 
-            <Link to="/recursos">
+            <ProgressBar label="Economia de Tempo" value={85} />
+            <ProgressBar label="Aumento de Engajamento" value={92} />
+            <ProgressBar label="Satisfação dos Clientes" value={98} />
+
+            <Link to="/recursos" className="mt-4 inline-block">
               <Button className="bg-primary text-primary-foreground hover:bg-primary/90 group">
                 Conheça todos os recursos
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
@@ -106,13 +136,13 @@ const Features = () => {
 
             <div className="space-y-5">
               {[
-                { title: "Dashboard Intuitivo", description: "Acompanhe todos os seus KPIs em um único lugar" },
-                { title: "Relatórios Automatizados", description: "Receba insights semanais sobre o desempenho" },
-                { title: "Otimização Contínua", description: "Nossa IA aprende e melhora suas estratégias automaticamente" },
+                { icon: LayoutDashboard, title: "Dashboard Intuitivo", description: "Acompanhe todos os seus KPIs em um único lugar" },
+                { icon: FileText, title: "Relatórios Automatizados", description: "Receba insights semanais sobre o desempenho" },
+                { icon: RefreshCw, title: "Otimização Contínua", description: "Nossa IA aprende e melhora suas estratégias automaticamente" },
               ].map((item, index) => (
                 <div key={index} className="flex items-start group">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center mr-4 mt-0.5 group-hover:bg-primary/20 transition-colors">
-                    <CheckCircle className="w-4 h-4 text-primary" />
+                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-primary/10 to-[hsl(270,70%,60%)]/10 flex items-center justify-center mr-4 mt-0.5 group-hover:from-primary/20 group-hover:to-[hsl(270,70%,60%)]/20 transition-all">
+                    <item.icon className="w-4 h-4 text-primary" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground mb-1 group-hover:text-primary transition-colors duration-200">{item.title}</h4>
@@ -131,13 +161,14 @@ const Features = () => {
           >
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-[hsl(270,70%,60%)]/20 to-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <div className="relative glass rounded-2xl p-6 overflow-hidden">
+              <motion.div className="relative glass rounded-2xl p-6 overflow-hidden" style={{ y: img2Y }}>
                 <img
                   src="/lovable-uploads/f8692a56-e528-4392-9a28-98a1e875ec76.png"
                   alt="DesignoAI Mug"
-                  className="w-full h-auto rounded-xl"
+                  className="w-full h-auto rounded-xl transition-transform duration-500 group-hover:scale-[1.03]"
                 />
-              </div>
+                <div className="absolute bottom-0 left-6 right-6 h-16 bg-gradient-to-t from-card/80 to-transparent rounded-b-xl" />
+              </motion.div>
             </div>
           </motion.div>
         </div>

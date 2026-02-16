@@ -45,7 +45,7 @@ const Pricing = () => {
           <p className="text-sm text-muted-foreground mt-2">Orçamento sob consulta • Entre em contato via WhatsApp</p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto items-start">
           {/* Start */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -100,72 +100,80 @@ const Pricing = () => {
             </Button>
           </motion.div>
 
-          {/* Fusion */}
+          {/* Fusion - Highlighted */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="relative glass rounded-2xl p-6 flex flex-col border-primary/30 glow-sm"
+            className="relative md:scale-105 md:-mt-4"
           >
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-xs font-semibold">
-              MAIS COMPLETO
-            </div>
-            <div className="mb-6 pt-2">
-              <div className="flex items-center gap-2 mb-1">
-                <Star className="w-5 h-5 text-primary" />
-                <h3 className="text-xl font-heading font-bold text-foreground">Fusion</h3>
+            <div className="animated-border rounded-2xl p-6 flex flex-col glow-md">
+              {/* Shimmer badge */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-[hsl(270,70%,60%)] text-primary-foreground px-4 py-1 rounded-full text-xs font-semibold overflow-hidden">
+                <span className="relative z-10">MAIS COMPLETO</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
               </div>
-              <p className="text-sm text-primary font-medium mb-2">Orçamento sob consulta</p>
-              <p className="text-xs text-muted-foreground">Marketing físico + digital + IA</p>
-            </div>
 
-            <div className="space-y-4 mb-6 flex-1">
-              <div>
-                <p className="text-xs font-medium text-foreground mb-2 uppercase tracking-wider">📱 Digital</p>
-                <ul className="space-y-1.5">
-                  {fusionDigital.map((f, i) => (
-                    <li key={i} className="flex items-start text-xs">
-                      <Check className="w-3 h-3 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-muted-foreground">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <p className="text-xs font-medium text-foreground mb-2 uppercase tracking-wider">🧾 Físico</p>
-                <ul className="space-y-1.5">
-                  {fusionPhysical.map((f, i) => (
-                    <li key={i} className="flex items-start text-xs">
-                      <Check className="w-3 h-3 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-muted-foreground">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <p className="text-xs font-medium text-foreground mb-2 uppercase tracking-wider">🤖 IA</p>
-                <ul className="space-y-1.5">
-                  {fusionAI.map((f, i) => (
-                    <li key={i} className="flex items-start text-xs">
-                      <Check className="w-3 h-3 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-muted-foreground">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+              {/* Radial glow background */}
+              <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_50%_0%,hsl(195,100%,50%,0.05),transparent_70%)]" />
 
-            <div className="space-y-2">
-              <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-sm" onClick={() => handleWhatsAppClick('Pacote Fusion')}>
-                <MessageCircle className="w-4 h-4 mr-2" />
-                Solicitar Orçamento
-              </Button>
-              <Link to="/services" className="block">
-                <Button variant="ghost" className="w-full text-muted-foreground hover:text-foreground">
-                  Ver Detalhes <ArrowRight className="w-4 h-4 ml-2" />
+              <div className="mb-6 pt-2 relative z-10">
+                <div className="flex items-center gap-2 mb-1">
+                  <Star className="w-5 h-5 text-primary" />
+                  <h3 className="text-xl font-heading font-bold text-foreground">Fusion</h3>
+                </div>
+                <p className="text-sm text-primary font-medium mb-2">Orçamento sob consulta</p>
+                <p className="text-xs text-muted-foreground">Marketing físico + digital + IA</p>
+              </div>
+
+              <div className="space-y-4 mb-6 flex-1 relative z-10">
+                <div>
+                  <p className="text-xs font-medium text-foreground mb-2 uppercase tracking-wider">📱 Digital</p>
+                  <ul className="space-y-1.5">
+                    {fusionDigital.map((f, i) => (
+                      <li key={i} className="flex items-start text-xs">
+                        <Check className="w-3 h-3 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                        <span className="text-muted-foreground">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-foreground mb-2 uppercase tracking-wider">🧾 Físico</p>
+                  <ul className="space-y-1.5">
+                    {fusionPhysical.map((f, i) => (
+                      <li key={i} className="flex items-start text-xs">
+                        <Check className="w-3 h-3 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                        <span className="text-muted-foreground">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-foreground mb-2 uppercase tracking-wider">🤖 IA</p>
+                  <ul className="space-y-1.5">
+                    {fusionAI.map((f, i) => (
+                      <li key={i} className="flex items-start text-xs">
+                        <Check className="w-3 h-3 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                        <span className="text-muted-foreground">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="space-y-2 relative z-10">
+                <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-sm" onClick={() => handleWhatsAppClick('Pacote Fusion')}>
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  Solicitar Orçamento
                 </Button>
-              </Link>
+                <Link to="/services" className="block">
+                  <Button variant="ghost" className="w-full text-muted-foreground hover:text-foreground">
+                    Ver Detalhes <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
+              </div>
             </div>
           </motion.div>
         </div>
