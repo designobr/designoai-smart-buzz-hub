@@ -78,7 +78,7 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-5xl mx-auto text-center">
+        <div className="max-w-5xl mx-auto text-center py-[37px]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -146,15 +146,15 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="grid grid-cols-3 gap-8 max-w-lg mx-0 my-0 px-0 py-[34px]">
+            className="grid grid-cols-3 gap-8 max-w-lg mx-0 my-0 py-0 px-[13px] mb-[28px] pr-[15px] pb-0">
 
             {[
             { value: 500, suffix: '+', label: 'Empresas' },
             { value: 230, suffix: '%', label: 'Aumento Médio' },
             { value: 24, suffix: '/7', label: 'Suporte' }].
             map((stat, i) =>
-            <div key={i} className="text-center group">
-                <div className="text-2xl md:text-3xl font-heading font-bold text-gradient mb-1 group-hover:scale-105 transition-transform duration-300">
+            <div key={i} className="text-center group py-[4px] my-0 mx-0">
+                <div className="text-2xl md:text-3xl font-heading font-bold text-gradient mb-1 group-hover:scale-105 transition-transform duration-300 py-0 pb-0 my-[10px]">
                   <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                 </div>
                 <div className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</div>
@@ -166,10 +166,10 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-wrap justify-center gap-6 mt-12 text-xs text-muted-foreground">
+            className="flex flex-wrap justify-center gap-6 mt-12 text-xs text-muted-foreground my-0">
 
             {['Sem cartão de crédito', 'Cancele quando quiser', 'Suporte premium'].map((text, i) =>
-            <div key={i} className="flex items-center">
+            <div key={i} className="flex items-center py-[5px]">
                 <div className="w-1.5 h-1.5 bg-primary/60 rounded-full mr-2" />
                 {text}
               </div>
