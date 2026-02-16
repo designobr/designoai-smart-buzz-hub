@@ -40,11 +40,11 @@ const PriceCalculator = () => {
       addonList.forEach((a) => { message += `• ${a.name}\n`; });
     }
     message += '\nAguardo o orçamento personalizado!';
-    window.open(`https://wa.me/5511965262002?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(`https://wa.me/5511947968158?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   const handleFalarConsultor = () => {
-    window.open(`https://wa.me/5511965262002?text=${encodeURIComponent('Olá! Gostaria de falar com um consultor sobre os serviços do DesignoAI.')}`, '_blank');
+    window.open(`https://wa.me/5511947968158?text=${encodeURIComponent('Olá! Gostaria de falar com um consultor sobre os serviços do DesignoAI.')}`, '_blank');
   };
 
   const SelectableItem = ({ selected, onClick, title, subtitle }: { selected: boolean; onClick: () => void; title: string; subtitle?: string }) => (

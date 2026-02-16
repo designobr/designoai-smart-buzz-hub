@@ -184,7 +184,7 @@ const ContactForm = () => {
                     <Phone className="w-4 h-4 text-primary mr-3" />
                     <div>
                       <p className="text-xs text-muted-foreground">WhatsApp</p>
-                      <a href="https://wa.me/5511965262002" className="text-sm text-foreground hover:text-primary transition-colors">+55 11 96526-2002</a>
+                      <a href="https://wa.me/5511947968158" className="text-sm text-foreground hover:text-primary transition-colors">+55 11 94796-8158</a>
                     </div>
                   </div>
                   <div className="flex items-center p-3 rounded-xl bg-secondary/50 hover:bg-secondary transition-colors">

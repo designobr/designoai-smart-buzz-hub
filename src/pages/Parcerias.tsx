@@ -99,7 +99,7 @@ const Parcerias = () => {
                   <div className="p-3 rounded-full bg-primary/20"><MessageCircle className="w-6 h-6 text-primary" /></div>
                   <div>
                     <p className="font-semibold text-foreground">WhatsApp</p>
-                    <a href="https://wa.me/5511965262002" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">(11) 96526-2002</a>
+                    <a href="https://wa.me/5511947968158" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">(11) 94796-8158</a>
                   </div>
                 </div>
               </div>

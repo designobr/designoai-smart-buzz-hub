@@ -13,7 +13,7 @@ const Pricing = () => {
 
   const handleWhatsAppClick = (planName: string) => {
     const message = `Olá! Tenho interesse no ${planName} do DesignoAI. Gostaria de solicitar um orçamento.`;
-    window.open(`https://wa.me/5511965262002?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(`https://wa.me/5511947968158?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   const handleCalculatorClick = () => {

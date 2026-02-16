@@ -78,7 +78,7 @@ const Services = () => {
 
 
   const handleConsultationClick = () => {
-    window.open('https://wa.me/5511965262002?text=Olá! Gostaria de agendar uma consultoria gratuita sobre o Plano Fusion.', '_blank');
+    window.open('https://wa.me/5511947968158?text=Olá! Gostaria de agendar uma consultoria gratuita sobre o Plano Fusion.', '_blank');
   };
 
   const handleStartClick = () => {
@@ -86,7 +86,7 @@ const Services = () => {
   };
 
   const handleSpecialistClick = () => {
-    window.open('https://wa.me/5511965262002?text=Olá! Gostaria de falar com um especialista sobre o Plano Fusion.', '_blank');
+    window.open('https://wa.me/5511947968158?text=Olá! Gostaria de falar com um especialista sobre o Plano Fusion.', '_blank');
   };
 
   const ServiceCard = ({ icon, title, description, features, index }: {icon?: React.ReactNode;title: string;description?: string;features: string[];index: number;}) =>
