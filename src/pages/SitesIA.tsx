@@ -59,7 +59,7 @@ const deliverables = [
 ];
 
 const handleWhatsApp = () => {
-  window.open('https://wa.me/5511965262002?text=Olá! Gostaria de saber mais sobre criação de sites com IA.', '_blank');
+  window.open('https://wa.me/5511947968158?text=Olá! Gostaria de saber mais sobre criação de sites com IA.', '_blank');
 };
 
 const SitesIA = () => {

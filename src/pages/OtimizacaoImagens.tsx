@@ -10,11 +10,11 @@ const OtimizacaoImagens = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   const handleWhatsAppClick = () => {
-    window.open(`https://wa.me/5511965262002?text=${encodeURIComponent("Olá! Tenho interesse no serviço de otimização de imagens. Gostaria de saber mais!")}`, '_blank');
+    window.open(`https://wa.me/5511947968158?text=${encodeURIComponent("Olá! Tenho interesse no serviço de otimização de imagens. Gostaria de saber mais!")}`, '_blank');
   };
 
   const handleConsultorClick = () => {
-    window.open(`https://wa.me/5511965262002?text=${encodeURIComponent("Olá! Gostaria de falar com um consultor sobre otimização de imagens para o meu negócio.")}`, '_blank');
+    window.open(`https://wa.me/5511947968158?text=${encodeURIComponent("Olá! Gostaria de falar com um consultor sobre otimização de imagens para o meu negócio.")}`, '_blank');
   };
 
   const problems = [

@@ -23,10 +23,10 @@ const Navbar = () => {
   }, []);
 
   const handleConsultorClick = () => {
-    window.open('https://wa.me/5511965262002?text=Olá! Gostaria de falar com um consultor sobre o DesignoAI.', '_blank');
+    window.open('https://wa.me/5511947968158?text=Olá! Gostaria de falar com um consultor sobre o DesignoAI.', '_blank');
   };
   const handleWhatsAppClick = () => {
-    window.open('https://wa.me/5511965262002?text=Olá! Gostaria de saber mais sobre o DesignoAI.', '_blank');
+    window.open('https://wa.me/5511947968158?text=Olá! Gostaria de saber mais sobre o DesignoAI.', '_blank');
   };
 
   const navLinks = [
