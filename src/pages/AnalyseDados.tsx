@@ -24,7 +24,7 @@ const AnalyseDados = () => {
   ];
 
   return (
-    <SubpageLayout title="Análise de Dados" subtitle="Transforme dados em insights acionáveis com inteligência artificial que revela oportunidades ocultas." badge="📊 Data Analytics">
+    <SubpageLayout title="Análise de Dados" subtitle="Transforme dados em insights acionáveis com inteligência artificial que revela oportunidades ocultas." badge="📊 Data Analytics" seoPath="/analise-dados" seoDescription="Análise de dados com IA: dashboards em tempo real, insights acionáveis e previsões inteligentes para otimizar suas campanhas de marketing digital.">
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <h2 className="text-3xl font-heading font-bold text-center mb-12 text-gradient">Capacidades Analíticas</h2>

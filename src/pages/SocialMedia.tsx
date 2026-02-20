@@ -26,7 +26,7 @@ const SocialMedia = () => {
   ];
 
   return (
-    <SubpageLayout title="Social Media" subtitle="Transforme sua presença digital com inteligência artificial que cria conteúdo envolvente e gerencia suas redes sociais." badge="📱 Social Media">
+    <SubpageLayout title="Social Media" subtitle="Transforme sua presença digital com inteligência artificial que cria conteúdo envolvente e gerencia suas redes sociais." badge="📱 Social Media" seoPath="/social-media" seoDescription="Social Media com IA: gestão completa de redes sociais, criação de conteúdo e análise de métricas. Transforme sua presença digital com a DesignoAI.">
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <h2 className="text-3xl font-heading font-bold text-center mb-12 text-gradient">Recursos Principais</h2>

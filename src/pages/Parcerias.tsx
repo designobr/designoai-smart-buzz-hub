@@ -28,7 +28,7 @@ const Parcerias = () => {
   ];
 
   return (
-    <SubpageLayout title="Parcerias" subtitle="Construindo relacionamentos duradouros para oferecer soluções ainda mais completas e inovadoras." badge="🤝 Cresça conosco">
+    <SubpageLayout title="Parcerias" subtitle="Construindo relacionamentos duradouros para oferecer soluções ainda mais completas e inovadoras." badge="🤝 Cresça conosco" seoPath="/parcerias" seoDescription="Parcerias DesignoAI: junte-se a nós e ofereça soluções de marketing digital com IA para seus clientes. Programa de parceiros com comissões atrativas.">
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <h2 className="text-3xl font-heading font-bold text-center mb-12 text-gradient">Tipos de Parcerias</h2>

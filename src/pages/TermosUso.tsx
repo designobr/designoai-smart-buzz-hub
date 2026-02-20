@@ -16,7 +16,7 @@ const TermosUso = () => {
   ];
 
   return (
-    <SubpageLayout title="Termos de Uso" subtitle="Conheça os termos e condições que regem o uso da plataforma DesignoAI." badge="📋 Termos">
+    <SubpageLayout title="Termos de Uso" subtitle="Conheça os termos e condições que regem o uso da plataforma DesignoAI." badge="📋 Termos" seoPath="/termos-uso">
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl space-y-6">
           <p className="text-center text-muted-foreground text-sm mb-8">Última atualização: 10 de junho de 2025</p>

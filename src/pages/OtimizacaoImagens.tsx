@@ -37,7 +37,7 @@ const OtimizacaoImagens = () => {
   ];
 
   return (
-    <SubpageLayout title="Otimização de Imagens" subtitle="Transforme fotos comuns em poderosas ferramentas de venda com IA." badge="📸 Imagens com IA">
+    <SubpageLayout title="Otimização de Imagens" subtitle="Transforme fotos comuns em poderosas ferramentas de venda com IA." badge="📸 Imagens com IA" seoPath="/otimizacao-imagens" seoDescription="Otimização de imagens com IA: melhore a qualidade, comprima sem perda e gere imagens profissionais para suas campanhas de marketing digital.">
       {/* Problems */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">

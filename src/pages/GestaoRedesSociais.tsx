@@ -15,7 +15,7 @@ const GestaoRedesSociais = () => {
   ];
 
   return (
-    <SubpageLayout title="Gestão de Redes Sociais" subtitle="Automação inteligente para postagens, engajamento e monitoramento de suas redes sociais." badge="📱 Redes Sociais">
+    <SubpageLayout title="Gestão de Redes Sociais" subtitle="Automação inteligente para postagens, engajamento e monitoramento de suas redes sociais." badge="📱 Redes Sociais" seoPath="/gestao-redes-sociais" seoDescription="Gestão completa de redes sociais com IA: posts automatizados, stories, engajamento e monitoramento. Aumente sua presença digital com a DesignoAI.">
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <div className="grid md:grid-cols-3 gap-6">
