@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Check, ArrowRight, Smartphone, Camera, Brain, Star, MessageCircle, Zap, BarChart3, Globe, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SEOHead from '@/components/SEOHead';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -132,6 +133,11 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Plano Fusion - Serviços Completos"
+        description="Plano Fusion: gestão de redes sociais, tráfego pago, design gráfico, produção audiovisual e IA. Solução completa para empresas que querem crescer no digital e no físico."
+        path="/servicos"
+      />
       <Navbar />
 
       {/* Hero */}

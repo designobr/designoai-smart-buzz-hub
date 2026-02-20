@@ -3,17 +3,25 @@ import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import SEOHead from '@/components/SEOHead';
 
 interface SubpageLayoutProps {
   children: ReactNode;
   title: string;
   subtitle?: string;
   badge?: string;
+  seoDescription?: string;
+  seoPath?: string;
 }
 
-const SubpageLayout = ({ children, title, subtitle, badge }: SubpageLayoutProps) => {
+const SubpageLayout = ({ children, title, subtitle, badge, seoDescription, seoPath }: SubpageLayoutProps) => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title={title}
+        description={seoDescription || subtitle || `${title} - Soluções de marketing digital com IA da DesignoAI.`}
+        path={seoPath}
+      />
       <Navbar />
 
       {/* Hero */}

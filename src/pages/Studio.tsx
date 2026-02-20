@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Phone, Mail, Instagram, Linkedin, Star } from 'lucide-react';
 import Navbar from '@/components/Navbar';
+import SEOHead from '@/components/SEOHead';
 
 // Gallery portrait images
 import portrait1 from '@/assets/studio/portrait-1.png';
@@ -119,6 +120,11 @@ const Studio = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden">
+      <SEOHead
+        title="Studio - Fotografia e Produção Audiovisual"
+        description="Studio DesignoAI: sessões fotográficas profissionais, vídeos institucionais e produção audiovisual completa para sua marca. Transforme sua imagem com qualidade premium."
+        path="/studio"
+      />
       <Navbar />
       
       {/* Hero Section */}

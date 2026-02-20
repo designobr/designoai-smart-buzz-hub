@@ -21,7 +21,7 @@ const Recursos = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (
-    <SubpageLayout title="Recursos Poderosos" subtitle="Descubra todas as funcionalidades que fazem do DesignoAI a ferramenta mais completa para seu marketing digital" badge="🚀 Recursos">
+    <SubpageLayout title="Recursos Poderosos" subtitle="Descubra todas as funcionalidades que fazem do DesignoAI a ferramenta mais completa para seu marketing digital" badge="🚀 Recursos" seoPath="/recursos" seoDescription="Recursos completos da DesignoAI: automação de marketing, design com IA, SEO inteligente, gestão de redes sociais e muito mais para impulsionar seu negócio.">
       <section className="py-20 relative">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

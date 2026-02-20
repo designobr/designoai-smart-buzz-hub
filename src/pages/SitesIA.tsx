@@ -67,6 +67,8 @@ const SitesIA = () => {
     <SubpageLayout
       title="Sites Profissionais com IA"
       subtitle="Cansado de orçamentos altos e prazos intermináveis? Desbloqueie o potencial da sua empresa com uma presença digital profissional, ágil e focada em resultados."
+      seoPath="/sites-ia"
+      seoDescription="Criação de sites profissionais com inteligência artificial: design moderno, SEO otimizado, responsivo e focado em conversões. Sites prontos em dias, não meses."
       badge="O Futuro Chegou"
     >
       {/* Why you need a site */}

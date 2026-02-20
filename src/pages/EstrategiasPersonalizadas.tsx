@@ -15,7 +15,7 @@ const EstrategiasPersonalizadas = () => {
   ];
 
   return (
-    <SubpageLayout title="Estratégias Personalizadas" subtitle="Recomendações baseadas em IA para maximizar seus resultados de marketing." badge="🎯 Estratégias com IA">
+    <SubpageLayout title="Estratégias Personalizadas" subtitle="Recomendações baseadas em IA para maximizar seus resultados de marketing." badge="🎯 Estratégias com IA" seoPath="/estrategias-personalizadas" seoDescription="Estratégias de marketing personalizadas com IA: análise do seu negócio, recomendações inteligentes e planos de ação para maximizar seus resultados.">
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <div className="grid md:grid-cols-3 gap-6">
