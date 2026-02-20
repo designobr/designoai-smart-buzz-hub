@@ -146,7 +146,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="grid grid-cols-3 gap-8 max-w-lg mx-0 my-0 py-0 px-[13px] mb-[28px] pr-[15px] pb-0">
+            className="grid grid-cols-3 gap-8 max-w-lg mx-auto my-0 py-0 px-[13px] mb-[28px] pb-0">
 
             {[
             { value: 500, suffix: '+', label: 'Empresas' },
