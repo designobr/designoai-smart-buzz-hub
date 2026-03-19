@@ -62,6 +62,7 @@ const App = () => (
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/studio" element={<Studio />} />
           <Route path="/sites-ia" element={<SitesIA />} />
+          <Route path="/ai-sdr" element={<AiSdr />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
