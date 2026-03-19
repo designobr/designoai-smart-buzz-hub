@@ -28,6 +28,7 @@ import Cookies from "./pages/Cookies";
 import OtimizacaoImagens from "./pages/OtimizacaoImagens";
 import Studio from "./pages/Studio";
 import SitesIA from "./pages/SitesIA";
+import AiSdr from "./pages/AiSdr";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -61,6 +62,7 @@ const App = () => (
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/studio" element={<Studio />} />
           <Route path="/sites-ia" element={<SitesIA />} />
+          <Route path="/ai-sdr" element={<AiSdr />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
