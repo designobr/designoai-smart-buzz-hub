@@ -28,6 +28,7 @@ import Cookies from "./pages/Cookies";
 import OtimizacaoImagens from "./pages/OtimizacaoImagens";
 import Studio from "./pages/Studio";
 import SitesIA from "./pages/SitesIA";
+import AiSdr from "./pages/AiSdr";
 const queryClient = new QueryClient();
 
 const App = () => (
