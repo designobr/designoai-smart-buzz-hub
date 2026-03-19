@@ -135,6 +135,7 @@ const Navbar = () => {
               {[
                 { to: '/studio', label: 'Studio' },
                 { to: '/sites-ia', label: 'Sites IA' },
+                { to: '/ai-sdr', label: 'AI SDR' },
                 { to: '/services', label: 'Serviços' },
                 { to: '/recursos', label: 'Recursos' },
               ].map((item, i) => (
