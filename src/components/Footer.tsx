@@ -60,6 +60,7 @@ const Footer = () => {
             <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-6">Soluções</h3>
             <ul className="space-y-3">
               {[
+                { to: '/ai-sdr', label: 'AI SDR' },
                 { to: '/social-media', label: 'Social Media' },
                 { to: '/criacao-conteudo', label: 'Criação de Conteúdo' },
                 { to: '/seo-inteligente', label: 'SEO Inteligente' },
