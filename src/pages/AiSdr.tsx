@@ -344,7 +344,7 @@ const AiSdr = () => {
             </p>
             <Button
               size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 glow-lg text-base px-10 py-7 rounded-xl group transition-all duration-300 hover:-translate-y-0.5"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 glow-lg text-base py-7 rounded-xl group transition-all duration-300 hover:-translate-y-0.5 px-[13px] mx-0"
               onClick={openWhatsApp}
             >
               Falar com um Especialista no WhatsApp
