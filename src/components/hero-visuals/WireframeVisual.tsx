@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 /** SitesIA — floating high-fidelity "FinancePro" phone mockup with neon frame */
 const WireframeVisual = () => (
-  <div className="relative w-72 h-72 md:w-80 md:h-80 mx-auto">
+  <div className="relative w-48 h-64 sm:w-56 sm:h-72 md:w-72 md:h-80 lg:w-80 lg:h-80 mx-auto">
     {/* Radial glow behind phone */}
     <div className="absolute inset-0 bg-primary/15 rounded-full blur-[80px]" />
 
@@ -13,7 +13,7 @@ const WireframeVisual = () => (
       style={{ perspective: 600 }}
     >
       <motion.div
-        className="w-52 h-[320px] rounded-[24px] border border-primary/30 bg-background/95 backdrop-blur-xl overflow-hidden"
+        className="w-36 h-[230px] sm:w-44 sm:h-[270px] md:w-52 md:h-[320px] rounded-[20px] md:rounded-[24px] border border-primary/30 bg-background/95 backdrop-blur-xl overflow-hidden"
         style={{ rotateY: -8, rotateX: 5, boxShadow: '0 0 15px hsl(var(--primary) / 0.4), 0 0 40px hsl(var(--primary) / 0.15), 0 25px 50px -12px rgba(0,0,0,0.5)' }}
       >
         {/* Status bar */}
@@ -32,7 +32,7 @@ const WireframeVisual = () => (
           </div>
         </div>
 
-        <div className="px-3 pb-3 space-y-2">
+        <div className="px-2 pb-2 space-y-1.5 sm:px-3 sm:pb-3 sm:space-y-2">
           {/* 1. Header */}
           <motion.div
             className="flex items-center justify-between"
