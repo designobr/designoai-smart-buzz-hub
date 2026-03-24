@@ -1,45 +1,17 @@
 
 
-# WireframeVisual — Mockup "FinancePro" com moldura de celular neon
+# Fix: Burger menu lines clipped inside FinancePro mockup on mobile
 
-## Resumo
-Transformar o visual atual (browser wireframe) em um celular holográfico flutuante com conteúdo "FinancePro" de alta fidelidade, moldura neon cyan nas bordas, fundo transparente — conforme o celular da esquerda na imagem de referência.
+## Problem
+On mobile (390px viewport), the three burger menu lines inside the FinancePro phone mockup's header are being clipped or pushed outside the visible area. The phone frame is only `w-36` (144px) on mobile with `overflow-hidden`, and the 3D rotation (`rotateY: -8`) shifts the right edge inward, cutting off the burger icon.
 
-## Alteração única: `src/components/hero-visuals/WireframeVisual.tsx`
+## Solution in `src/components/hero-visuals/WireframeVisual.tsx`
 
-### Moldura — de browser para celular
-- Remover browser chrome (3 dots + URL bar)
-- Moldura celular: `rounded-[24px]` com `shadow-[0_0_15px_hsl(var(--primary)/0.4),0_0_40px_hsl(var(--primary)/0.15)]` para glow neon cyan
-- Status bar no topo: hora, wifi e bateria em texto minúsculo `text-[3.5px]`
-- Notch centralizado `w-12 h-1.5 rounded-full bg-black/60`
-- Aumentar altura para `h-[320px]` para caber mais conteúdo
-- Manter perspectiva 3D e floating animation existentes
+1. **Reduce header horizontal padding** on mobile: change `px-3` in the status bar and `px-2` in the content area to ensure the header content has enough room
+2. **Shrink the burger lines width** on mobile from `w-2.5` (10px) to `w-2` (8px) so they fit comfortably
+3. **Add `shrink-0`** to the burger menu container to prevent it from being compressed by flex layout
+4. **Reduce the "FINANCEPRO" text** with `truncate` or slightly smaller font to prevent it from pushing the burger off-screen
+5. **Ensure the status bar `px-3`** is reduced to `px-2` on smallest sizes to keep all elements within bounds
 
-### Conteúdo interno (4 seções com stagger)
-
-**1. Header (delay 0.5s)**
-- `FINANCEPRO` em `text-[5px] font-bold text-foreground tracking-wider` com mini ícone diamond SVG
-- Burger menu à direita
-
-**2. Hero (delay 0.8s)**
-- Título gradient em 2 linhas: "Sua Liberdade" / "Financeira Começa Aqui" — `text-[7px] font-bold`
-- 3 linhas de lorem ipsum `text-[3.5px] text-muted-foreground/70`
-- Botão CTA sólido `bg-primary rounded-full` com texto "Agendar Consultoria Gratuita" e glow
-
-**3. Cards 2x2 (delay 1.2s, stagger 0.15s)**
-- Cards com `bg-card/70 border border-border/40 rounded-lg`
-- Títulos reais: "Investimentos", "Planejamento Tributário", "Aposentadoria", "Patrimônio"
-- SVG icons (Zap, Gear, Rocket, BarChart) + 2 linhas descritivas `text-[3px]`
-
-**4. Footer (delay 2.0s)**
-- Divisor `h-px bg-border/20`
-- "DesignoAI" centralizado + 3 social icons SVG (Facebook, X, Instagram)
-- `© 2024 DesignoAI` em `text-[3px]`
-
-### Detalhes técnicos
-- Fundo do celular: `bg-background/95` (transparente, sem azul sólido)
-- Borda externa: `border border-primary/30` para efeito neon
-- Container wrapper mantido igual (glow radial `bg-primary/15 blur-[80px]`)
-- Padding interno `p-3`, `space-y-2`
-- Todos SVGs inline, sem dependências externas
+These are minor spacing tweaks — no structural changes needed.
 
