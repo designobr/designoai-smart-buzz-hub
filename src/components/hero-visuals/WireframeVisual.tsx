@@ -17,7 +17,7 @@ const WireframeVisual = () => (
         style={{ rotateY: -8, rotateX: 5, boxShadow: '0 0 15px hsl(var(--primary) / 0.4), 0 0 40px hsl(var(--primary) / 0.15), 0 25px 50px -12px rgba(0,0,0,0.5)' }}
       >
         {/* Status bar */}
-        <div className="h-5 flex items-center justify-between px-3 pt-1">
+        <div className="h-5 flex items-center justify-between px-2 pt-1">
           <span className="text-[3.5px] text-muted-foreground/60 font-medium">9:41</span>
           <div className="w-12 h-1.5 rounded-full bg-foreground/10" />
           <div className="flex items-center gap-1">
@@ -32,7 +32,7 @@ const WireframeVisual = () => (
           </div>
         </div>
 
-        <div className="px-2 pb-2 space-y-1.5 sm:px-3 sm:pb-3 sm:space-y-2">
+        <div className="px-1.5 pb-2 space-y-1.5 sm:px-3 sm:pb-3 sm:space-y-2">
           {/* 1. Header */}
           <motion.div
             className="flex items-center justify-between"
@@ -45,12 +45,12 @@ const WireframeVisual = () => (
               <svg width="5" height="5" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M6 3h12l4 6-10 13L2 9z" />
               </svg>
-              <span className="text-[5px] font-bold text-foreground tracking-wider">FINANCEPRO</span>
+              <span className="text-[4.5px] sm:text-[5px] font-bold text-foreground tracking-wider truncate">FINANCEPRO</span>
             </div>
-            <div className="flex flex-col gap-[1.5px]">
-              <div className="w-2.5 h-px bg-muted-foreground/30" />
-              <div className="w-2.5 h-px bg-muted-foreground/30" />
-              <div className="w-2.5 h-px bg-muted-foreground/30" />
+            <div className="flex flex-col gap-[1.5px] shrink-0">
+              <div className="w-2 sm:w-2.5 h-px bg-muted-foreground/30" />
+              <div className="w-2 sm:w-2.5 h-px bg-muted-foreground/30" />
+              <div className="w-2 sm:w-2.5 h-px bg-muted-foreground/30" />
             </div>
           </motion.div>
 
