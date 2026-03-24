@@ -1,35 +1,45 @@
 
 
-# Refinar WireframeVisual — De Wireframe para "Página Real" de Alta Fidelidade
+# WireframeVisual — Mockup "FinancePro" com moldura de celular neon
 
 ## Resumo
-Substituir o conteúdo interno do `WireframeVisual.tsx` mantendo o frame externo (perspectiva, flutuação, glow) mas trocando os blocos cinzas genéricos por elementos de UI ricos e detalhados que simulam uma página finalizada.
+Transformar o visual atual (browser wireframe) em um celular holográfico flutuante com conteúdo "FinancePro" de alta fidelidade, moldura neon cyan nas bordas, fundo transparente — conforme o celular da esquerda na imagem de referência.
 
-## Alteração: `src/components/hero-visuals/WireframeVisual.tsx`
+## Alteração única: `src/components/hero-visuals/WireframeVisual.tsx`
 
-Reescrever o conteúdo interno do painel (mantendo wrapper, glow, floating animation e perspective) com 4 seções sequenciais animadas via stagger:
+### Moldura — de browser para celular
+- Remover browser chrome (3 dots + URL bar)
+- Moldura celular: `rounded-[24px]` com `shadow-[0_0_15px_hsl(var(--primary)/0.4),0_0_40px_hsl(var(--primary)/0.15)]` para glow neon cyan
+- Status bar no topo: hora, wifi e bateria em texto minúsculo `text-[3.5px]`
+- Notch centralizado `w-12 h-1.5 rounded-full bg-black/60`
+- Aumentar altura para `h-[320px]` para caber mais conteúdo
+- Manter perspectiva 3D e floating animation existentes
 
-### 1. Header (delay 0.5s)
-- Mini texto "DesignoAI" em `text-primary` como logo (font-bold, ~text-[5px])
-- 3 linhas horizontais empilhadas no lado direito simulando menu burger (w-2.5, h-px, bg-foreground/30)
+### Conteúdo interno (4 seções com stagger)
 
-### 2. Hero Section (delay 0.8s)
-- Título "Seu Site Inteligente" em `text-[6px] font-bold` com `bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent`
-- 2 linhas finas de subtítulo (h-1 rounded bg-muted/40) com larguras diferentes
-- 2 mini botões lado a lado: um com `bg-primary/30 border-primary/20` (glow sutil via box-shadow) e outro `bg-muted/20 border-border/20`, ambos com texto simulado (h-1 w-6)
+**1. Header (delay 0.5s)**
+- `FINANCEPRO` em `text-[5px] font-bold text-foreground tracking-wider` com mini ícone diamond SVG
+- Burger menu à direita
 
-### 3. Features Grid — 2x2 (delay 1.2s, stagger 0.15s por card)
-- 4 cards glass (`bg-muted/10 border border-border/20 rounded-md p-1.5`)
-- Cada card com um SVG path inline minimalista no topo (~8x8px, stroke primary): raio (Zap), engrenagem (Settings), foguete (Rocket), gráfico (BarChart)
-- Abaixo do ícone: 2 linhas finas simulando legenda (h-0.5 w-full e h-0.5 w-3/4)
+**2. Hero (delay 0.8s)**
+- Título gradient em 2 linhas: "Sua Liberdade" / "Financeira Começa Aqui" — `text-[7px] font-bold`
+- 3 linhas de lorem ipsum `text-[3.5px] text-muted-foreground/70`
+- Botão CTA sólido `bg-primary rounded-full` com texto "Agendar Consultoria Gratuita" e glow
 
-### 4. Form Section (delay 2.0s)
-- 2 inputs simulados: retângulos arredondados `bg-background/30 border border-border/30 rounded h-3 w-full` com texto placeholder em `text-[4px] text-muted-foreground/50` ("Nome", "Email")
-- Botão de envio: `bg-primary/30 rounded h-3.5 w-full` com texto "Enviar" em `text-[4px] text-primary-foreground/70 font-semibold`
+**3. Cards 2x2 (delay 1.2s, stagger 0.15s)**
+- Cards com `bg-card/70 border border-border/40 rounded-lg`
+- Títulos reais: "Investimentos", "Planejamento Tributário", "Aposentadoria", "Patrimônio"
+- SVG icons (Zap, Gear, Rocket, BarChart) + 2 linhas descritivas `text-[3px]`
 
-### Técnico
-- Todos os ícones são SVG `<path>` inline (sem importar lucide dentro do visual para manter leveza)
-- Grid muda de 3 colunas para 2x2 para caber melhor no espaço vertical
-- Container interno troca `space-y-3` para `space-y-2` para acomodar mais conteúdo
-- Padding interno reduzido para `p-3`
+**4. Footer (delay 2.0s)**
+- Divisor `h-px bg-border/20`
+- "DesignoAI" centralizado + 3 social icons SVG (Facebook, X, Instagram)
+- `© 2024 DesignoAI` em `text-[3px]`
+
+### Detalhes técnicos
+- Fundo do celular: `bg-background/95` (transparente, sem azul sólido)
+- Borda externa: `border border-primary/30` para efeito neon
+- Container wrapper mantido igual (glow radial `bg-primary/15 blur-[80px]`)
+- Padding interno `p-3`, `space-y-2`
+- Todos SVGs inline, sem dependências externas
 
