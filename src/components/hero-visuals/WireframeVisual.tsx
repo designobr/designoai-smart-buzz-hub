@@ -32,7 +32,7 @@ const WireframeVisual = () => (
           </div>
         </div>
 
-        <div className="px-3 pb-3 space-y-2">
+        <div className="px-2 pb-2 space-y-1.5 sm:px-3 sm:pb-3 sm:space-y-2">
           {/* 1. Header */}
           <motion.div
             className="flex items-center justify-between"
