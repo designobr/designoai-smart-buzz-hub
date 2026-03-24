@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Phone, Mail, Instagram, Linkedin, Star } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import SEOHead from '@/components/SEOHead';
+import LensVisualInline from '@/components/hero-visuals/LensVisual';
 
 // Gallery portrait images
 import portrait1 from '@/assets/studio/portrait-1.png';

@@ -71,6 +71,7 @@ const SitesIA = () => {
       seoPath="/sites-ia"
       seoDescription="Criação de sites profissionais com inteligência artificial: design moderno, SEO otimizado, responsivo e focado em conversões. Sites prontos em dias, não meses."
       badge="O Futuro Chegou"
+      visualElement={<WireframeVisual />}
     >
       {/* Why you need a site */}
       <section className="py-20 md:py-28 relative">
