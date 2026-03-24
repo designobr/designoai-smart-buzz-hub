@@ -1,45 +1,35 @@
 
 
-# Plano: Landing Page "AI SDR" — `/ai-sdr`
+# Seção "Teste Agora" — Layout 2 Colunas com Mockup de Smartphone
 
 ## Resumo
-Criar uma landing page standalone em `/ai-sdr` focada em conversão para o produto AI SDR da DesignoAI. A página seguirá o design system existente (Dark Premium 2026) mas com identidade visual própria e mais agressiva, usando destaques neon/cyan mais fortes.
+Adicionar uma nova seção entre Benefícios e CTA Final com layout de 2 colunas no desktop (empilhado no mobile). Coluna esquerda com texto e botão WhatsApp gigante verde. Coluna direita com um mockup de smartphone estilizado em CSS/SVG mostrando uma interface de chat simulada, com animação de flutuação e glow neon.
 
-## Estrutura da Página
+## Alteração
 
-A página será um componente único `src/pages/AiSdr.tsx` com 6 seções conforme especificado, sem usar o `SubpageLayout` (para ter controle total do layout de conversão).
+**`src/pages/AiSdr.tsx`** — Inserir seção entre linhas 247 e 249:
 
-### Seções
+### Coluna Esquerda (texto + CTA)
+- Titulo gradient: "Veja a IA em Ação"
+- Subtitulo: "Clique no botão abaixo e receba uma mensagem automática no seu WhatsApp agora mesmo."
+- Botão gigante verde (#25D366) com ícone SVG do WhatsApp inline, texto "Testar Robô no WhatsApp", glow verde, hover scale+translate
+- Link: `https://wa.me/5511978594803?text=Quero%20testar%20a%20IA%20da%20DesignoAI`
+- Alinhamento: `text-left` no desktop, `text-center` no mobile
 
-1. **Hero** — Tagline em badge animado, headline com shimmer na palavra "Automática", sub-headline, botão CTA grande com glow que redireciona para WhatsApp
-2. **Problema vs. Solução** — Layout em 2 colunas: esquerda vermelha/negativa ("O Jeito Antigo") vs. direita cyan/positiva ("O Jeito DesignoAI"), com ícones e texto exato fornecido
-3. **Como a IA Trabalha por Você** — 3 colunas com cards glass, ícones, números de passo e textos exatos
-4. **Autoridade (Efeito Inception)** — Seção de destaque com fundo diferenciado, título e texto exatos
-5. **Benefícios** — 3 cards com ícones: Sem Custos Trabalhistas, Segurança Total, Tráfego Qualificado
-6. **Fechamento/CTA Final** — Título, texto e botão WhatsApp
+### Coluna Direita (mockup visual)
+- Componente `PhoneMockup` renderizado inline: um frame de smartphone em CSS puro (bordas arredondadas, notch, borda glass) contendo uma mini interface de chat simulada com 3-4 bolhas de mensagem estáticas (estilo WhatsApp) mostrando uma conversa de prospecção IA
+- Bolhas animadas com `framer-motion` aparecendo em sequência (stagger) para simular mensagens chegando
+- Animação de flutuação contínua no smartphone inteiro: `y: [0, -15, 0]` com duration ~6s
+- Glow radial atrás do phone: div com `bg-primary/20 blur-[80px]` centralizado
 
-### Componentes Visuais
-- Navbar e Footer reutilizados do site principal
-- Partículas flutuantes no Hero (mesmo padrão da homepage)
-- Animated counters onde aplicável
-- Framer Motion para scroll animations em todas as seções
-- Botões CTA com glow-md e hover effects
+### Layout
+- `grid md:grid-cols-2 gap-12 items-center` no container
+- Background: gradiente radial sutil `from-[#25D366]/5 via-transparent to-primary/5`
+- Divider line no topo consistente com outras seções
 
-### Imagens
-- Não serão geradas imagens com IA neste momento (o modelo de imagem não consegue gerar fotos realistas com poros visíveis de forma confiável). Usaremos placeholders estilizados ou ícones premium. O usuário pode fornecer fotos reais depois.
-
-## Alterações Técnicas
-
-| Arquivo | Ação |
-|---------|------|
-| `src/pages/AiSdr.tsx` | **Criar** — Landing page completa (~300 linhas) |
-| `src/App.tsx` | **Editar** — Adicionar rota `/ai-sdr` |
-
-### Detalhes de Implementação
-- SEOHead com meta tags OG específicas para o AI SDR
-- Todos os textos exatamente como fornecidos pelo usuário
-- Botões CTA redirecionam para WhatsApp (`wa.me/5511947968158`) com mensagem contextual
-- Layout responsivo mobile-first
-- Seção Problema vs. Solução usa grid 1col mobile / 2col desktop com bordas coloridas (vermelho vs. cyan)
-- Seção Inception com background gradiente diferenciado para destaque
+### Detalhes técnicos
+- Nenhum arquivo novo: tudo inline no AiSdr.tsx
+- WhatsApp icon como SVG path inline (não depende de biblioteca externa)
+- Mockup do phone inteiramente em Tailwind + framer-motion (sem imagens externas)
+- Mensagens do chat simulado em português, ex: "Olá! Encontramos sua empresa...", "Temos uma solução de IA...", "Posso agendar uma demonstração?"
 
