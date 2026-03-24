@@ -68,7 +68,7 @@ const AiSdr = () => {
             <motion.div {...fadeUp(0.3)}>
               <Button
                 size="lg"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 glow-md text-base px-8 py-6 rounded-xl group transition-all duration-300 hover:-translate-y-0.5"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 glow-md text-sm sm:text-base px-5 sm:px-8 py-5 sm:py-6 rounded-xl group transition-all duration-300 hover:-translate-y-0.5 w-full sm:w-auto max-w-xs sm:max-w-none mx-auto"
                 onClick={openWhatsApp}
               >
                 Quero automatizar minhas vendas com IA
