@@ -50,7 +50,7 @@ const AiSdr = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div {...fadeUp()}>
-              <div className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium text-primary mb-8 animated-border bg-card">
+              <div className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium text-primary mb-8 animated-border bg-card my-[8px]">
                 <Sparkles className="w-4 h-4 mr-2" />
                 O futuro da prospecção B2B chegou. Conheça o seu novo AI SDR.
               </div>
