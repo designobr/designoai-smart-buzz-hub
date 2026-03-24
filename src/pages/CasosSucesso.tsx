@@ -3,7 +3,8 @@ import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SubpageLayout from '@/components/SubpageLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TrendingUp, ShoppingBag, Stethoscope, Utensils, Briefcase, Dumbbell, Target } from 'lucide-react';
+import { TrendingUp, ShoppingBag, Stethoscope, Utensils, Briefcase, Dumbbell } from 'lucide-react';
+import GrowthChartVisual from '@/components/hero-visuals/GrowthChartVisual';
 
 const CasosSucesso = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -27,7 +28,14 @@ const CasosSucesso = () => {
   ];
 
   return (
-    <SubpageLayout title="Casos de Sucesso" subtitle="Descubra como empresas de diferentes setores transformaram seus resultados com as soluções da DesignoAI." badge="🏆 Resultados reais" seoPath="/casos-sucesso" seoDescription="Casos de sucesso da DesignoAI: veja como empresas aumentaram vendas, engajamento e visibilidade com nossas soluções de marketing digital com IA.">
+    <SubpageLayout
+      title="Casos de Sucesso"
+      subtitle="Descubra como empresas de diferentes setores transformaram seus resultados com as soluções da DesignoAI."
+      badge="🏆 Resultados reais"
+      seoPath="/casos-sucesso"
+      seoDescription="Casos de sucesso da DesignoAI: veja como empresas aumentaram vendas, engajamento e visibilidade com nossas soluções de marketing digital com IA."
+      visualElement={<GrowthChartVisual />}
+    >
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl space-y-12">
           {cases.map((c, i) => (

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Code, Brain, Palette, TrendingUp, Users, Headphones, Target, Clock, Globe, Package, CheckCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/components/ui/use-toast';
+import TeamVisual from '@/components/hero-visuals/TeamVisual';
 
 const Carreiras = () => {
   const [selectedJob, setSelectedJob] = useState<any>(null);
@@ -88,6 +89,7 @@ const Carreiras = () => {
       seoPath="/carreiras"
       seoDescription="Trabalhe na DesignoAI: vagas em marketing digital, design, desenvolvimento e IA. Faça parte da revolução do marketing com inteligência artificial."
       badge="💼 Venha fazer parte"
+      visualElement={<TeamVisual />}
     >
       {/* Benefits */}
       <section className="py-20">

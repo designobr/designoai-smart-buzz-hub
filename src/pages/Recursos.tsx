@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles, Star, BarChart3, Zap, PenTool, Share2, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import FloatingCardsVisual from '@/components/hero-visuals/FloatingCardsVisual';
 
 const features = [
   { title: "Geração de Conteúdo com IA", description: "Crie posts, artigos, legendas e materiais visuais automaticamente.", icon: Sparkles, link: "/criacao-conteudo" },
@@ -21,7 +22,14 @@ const Recursos = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (
-    <SubpageLayout title="Recursos Poderosos" subtitle="Descubra todas as funcionalidades que fazem do DesignoAI a ferramenta mais completa para seu marketing digital" badge="🚀 Recursos" seoPath="/recursos" seoDescription="Recursos completos da DesignoAI: automação de marketing, design com IA, SEO inteligente, gestão de redes sociais e muito mais para impulsionar seu negócio.">
+    <SubpageLayout
+      title="Recursos Poderosos"
+      subtitle="Descubra todas as funcionalidades que fazem do DesignoAI a ferramenta mais completa para seu marketing digital"
+      badge="🚀 Recursos"
+      seoPath="/recursos"
+      seoDescription="Recursos completos da DesignoAI: automação de marketing, design com IA, SEO inteligente, gestão de redes sociais e muito mais para impulsionar seu negócio."
+      visualElement={<FloatingCardsVisual />}
+    >
       <section className="py-20 relative">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

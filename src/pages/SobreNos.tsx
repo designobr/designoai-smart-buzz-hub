@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import SubpageLayout from '@/components/SubpageLayout';
 import { Target, Eye, Heart, Users, Lightbulb, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
+import NetworkVisual from '@/components/hero-visuals/NetworkVisual';
 
 const SobreNos = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -24,7 +25,13 @@ const SobreNos = () => {
   ];
 
   return (
-    <SubpageLayout title="Sobre Nós" subtitle="Democratizando o poder da inteligência artificial para empresas de todos os tamanhos." seoPath="/sobre-nos" seoDescription="Conheça a DesignoAI: agência de marketing digital com inteligência artificial. Nossa missão é democratizar a IA para empresas de todos os tamanhos.">
+    <SubpageLayout
+      title="Sobre Nós"
+      subtitle="Democratizando o poder da inteligência artificial para empresas de todos os tamanhos."
+      seoPath="/sobre-nos"
+      seoDescription="Conheça a DesignoAI: agência de marketing digital com inteligência artificial. Nossa missão é democratizar a IA para empresas de todos os tamanhos."
+      visualElement={<NetworkVisual />}
+    >
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           <div className="glass rounded-2xl p-8 md:p-12">
