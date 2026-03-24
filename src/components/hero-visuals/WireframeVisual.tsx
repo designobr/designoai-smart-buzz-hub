@@ -17,7 +17,7 @@ const WireframeVisual = () => (
         style={{ rotateY: -8, rotateX: 5, boxShadow: '0 0 15px hsl(var(--primary) / 0.4), 0 0 40px hsl(var(--primary) / 0.15), 0 25px 50px -12px rgba(0,0,0,0.5)' }}
       >
         {/* Status bar */}
-        <div className="h-5 flex items-center justify-between px-3 pt-1">
+        <div className="h-5 flex items-center justify-between px-2 pt-1">
           <span className="text-[3.5px] text-muted-foreground/60 font-medium">9:41</span>
           <div className="w-12 h-1.5 rounded-full bg-foreground/10" />
           <div className="flex items-center gap-1">
