@@ -45,12 +45,12 @@ const WireframeVisual = () => (
               <svg width="5" height="5" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M6 3h12l4 6-10 13L2 9z" />
               </svg>
-              <span className="text-[5px] font-bold text-foreground tracking-wider">FINANCEPRO</span>
+              <span className="text-[4.5px] sm:text-[5px] font-bold text-foreground tracking-wider truncate">FINANCEPRO</span>
             </div>
-            <div className="flex flex-col gap-[1.5px]">
-              <div className="w-2.5 h-px bg-muted-foreground/30" />
-              <div className="w-2.5 h-px bg-muted-foreground/30" />
-              <div className="w-2.5 h-px bg-muted-foreground/30" />
+            <div className="flex flex-col gap-[1.5px] shrink-0">
+              <div className="w-2 sm:w-2.5 h-px bg-muted-foreground/30" />
+              <div className="w-2 sm:w-2.5 h-px bg-muted-foreground/30" />
+              <div className="w-2 sm:w-2.5 h-px bg-muted-foreground/30" />
             </div>
           </motion.div>
 
