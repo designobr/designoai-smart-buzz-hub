@@ -263,7 +263,7 @@ const AiSdr = () => {
                 <span className="text-gradient">em Ação</span>
               </h2>
               <p className="text-lg text-muted-foreground mb-10 leading-relaxed max-w-lg mx-auto md:mx-0">
-                Clique no botão abaixo e receba uma mensagem automática no seu WhatsApp agora mesmo. Sem cadastro, sem espera.
+                Faça o teste real agora: clique no botão para abrir o WhatsApp, mande a mensagem pré-pronta e sinta a velocidade da nossa automação na prática!
               </p>
               <a
                 href="https://wa.me/5511978594803?text=Quero%20testar%20a%20IA%20da%20DesignoAI"
