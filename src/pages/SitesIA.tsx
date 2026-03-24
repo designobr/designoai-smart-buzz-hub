@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Zap, Gem, Target, Palette, Rocket, Settings, Check, MessageCircle, ArrowRight, Search, Shield, Globe, Mail, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SubpageLayout from '@/components/SubpageLayout';
+import WireframeVisual from '@/components/hero-visuals/WireframeVisual';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },

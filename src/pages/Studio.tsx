@@ -128,41 +128,47 @@ const Studio = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="min-h-screen relative overflow-hidden flex items-center justify-center text-center px-4 pt-20 pb-16">
-        {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#667eea] via-[#764ba2] to-[#667eea] bg-[length:400%_400%] animate-[gradient_15s_ease_infinite]" />
-        
-        {/* Floating radial gradient */}
-        <motion.div 
-          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_50%)]"
-          animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        />
+      <section className="relative pt-32 pb-20 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/6 w-[500px] h-[500px] bg-[hsl(240,70%,60%)]/10 rounded-full blur-[120px]" />
+          <div className="absolute bottom-1/4 right-1/6 w-[400px] h-[400px] bg-[hsl(270,70%,60%)]/10 rounded-full blur-[120px]" />
+        </div>
 
-        <motion.div 
-          className="relative z-10 max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 drop-shadow-2xl">
-            DesignoAI Studio
-          </h1>
-          <p className="text-xl md:text-2xl lg:text-3xl text-white/95 mb-4">
-            Fotos profissionais de alta qualidade criadas com inteligência artificial
-          </p>
-          <div className="inline-block bg-white/20 backdrop-blur-md px-6 py-3 rounded-full text-white border border-white/30 my-8">
-            ✨ Mais de 500 profissionais já transformaram sua presença digital
-          </div>
-          <div>
-            <button 
-              onClick={handleWhatsAppClick}
-              className="inline-block bg-white text-[#667eea] px-8 py-4 text-lg md:text-xl font-bold rounded-full shadow-2xl hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(0,0,0,0.4)] transition-all duration-300 mt-4"
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="text-center md:text-left"
             >
-              Começar Minha Transformação
-            </button>
+              <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white/90 mb-6 border border-white/20">
+                ✨ Fotografia com IA
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-[1.1] mb-6 text-white">
+                DesignoAI <span className="bg-gradient-to-r from-[hsl(240,70%,70%)] to-[hsl(270,70%,70%)] bg-clip-text text-transparent">Studio</span>
+              </h1>
+              <p className="text-lg md:text-xl text-white/80 max-w-xl mx-auto md:mx-0 leading-relaxed mb-8">
+                Fotos profissionais de alta qualidade criadas com inteligência artificial. Mais de 500 profissionais já transformaram sua presença digital.
+              </p>
+              <button
+                onClick={handleWhatsAppClick}
+                className="inline-flex items-center gap-2 bg-white text-[#0a0a0a] px-8 py-4 text-lg font-bold rounded-xl shadow-2xl hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(255,255,255,0.15)] transition-all duration-300"
+              >
+                Começar Minha Transformação
+              </button>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="flex justify-center"
+            >
+              <LensVisualInline />
+            </motion.div>
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Para Quem Section */}
