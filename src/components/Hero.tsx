@@ -4,6 +4,7 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { useSparkEffect } from '@/hooks/useSparkEffect';
 import { useEffect, useRef } from 'react';
+import DashboardVisual from '@/components/hero-visuals/DashboardVisual';
 
 const AnimatedCounter = ({ target, suffix = '' }: {target: number;suffix?: string;}) => {
   const count = useMotionValue(0);
@@ -28,7 +29,6 @@ const AnimatedCounter = ({ target, suffix = '' }: {target: number;suffix?: strin
     <span ref={ref}>
       <motion.span>{rounded}</motion.span>{suffix}
     </span>);
-
 };
 
 const FloatingParticle = ({ delay, x, y, size }: {delay: number;x: string;y: string;size: number;}) =>
@@ -47,8 +47,6 @@ const FloatingParticle = ({ delay, x, y, size }: {delay: number;x: string;y: str
     scale: [1, 1.3, 1]
   }}
   transition={{ duration: 4 + delay, repeat: Infinity, ease: 'easeInOut', delay }} />;
-
-
 
 const Hero = () => {
   const spark = useSparkEffect({ count: 10, spread: 80 });
@@ -78,102 +76,106 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-5xl mx-auto text-center py-[37px]">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}>
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* Left column — Text */}
+          <div className="text-center md:text-left">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}>
+              <div className="inline-flex items-center px-4 rounded-full text-sm font-medium text-primary mb-8 animated-border bg-card my-[10px] py-[3px]">
+                <Sparkles className="w-4 h-4 mr-2" onClick={(e) => spark(e as any, 'badge')} />
+                Marketing Digital com Inteligência Artificial
+              </div>
+            </motion.div>
 
-            <div className="inline-flex items-center px-4 rounded-full text-sm font-medium text-primary mb-8 animated-border bg-card my-[10px] py-[3px]">
-              <Sparkles className="w-4 h-4 mr-2" onClick={(e) => spark(e as any, 'badge')} />
-              Marketing Digital com Inteligência Artificial
-            </div>
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="mb-8">
+              <img
+                src="/lovable-uploads/643dfebb-85f6-4868-920c-35c1901aaf13.png"
+                alt="DesignoAI Logo"
+                className="w-[280px] md:w-[350px] lg:w-[420px] h-auto object-contain mx-auto md:mx-0 drop-shadow-[0_0_40px_hsl(195,100%,50%,0.15)]" />
+            </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="mb-8">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-[1.1] mb-6">
+              <span className="text-foreground">Sua marca no futuro, </span>
+              <span className="shimmer-text">agora!</span>
+            </motion.h1>
 
-            <img
-              src="/lovable-uploads/643dfebb-85f6-4868-920c-35c1901aaf13.png"
-              alt="DesignoAI Logo"
-              className="w-[320px] md:w-[420px] lg:w-[500px] h-auto object-contain mx-auto drop-shadow-[0_0_40px_hsl(195,100%,50%,0.15)]" />
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto md:mx-0 mb-10 leading-relaxed">
+              Revolucione suas estratégias de marketing com soluções que{' '}
+              <span className="text-foreground font-medium">analisam, criam e otimizam</span>{' '}
+              seu conteúdo automaticamente.
+            </motion.p>
 
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 mb-10">
+              <Button
+                size="lg"
+                className="relative bg-primary text-primary-foreground hover:bg-primary/90 glow-md text-base px-8 py-6 rounded-xl group transition-all duration-300 hover:-translate-y-0.5 overflow-hidden"
+                onClick={handleCallClick}>
+                <span className="relative z-10 flex items-center">
+                  Agende uma Conversa
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                </span>
+              </Button>
+            </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-[1.1] mb-6">
-
-            <span className="text-foreground">Sua marca no futuro, </span>
-            <span className="shimmer-text">agora!</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-
-            Revolucione suas estratégias de marketing com soluções que{' '}
-            <span className="text-foreground font-medium">analisam, criam e otimizam</span>{' '}
-            seu conteúdo automaticamente.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-
-            <Button
-              size="lg"
-              className="relative bg-primary text-primary-foreground hover:bg-primary/90 glow-md text-base px-8 py-6 rounded-xl group transition-all duration-300 hover:-translate-y-0.5 overflow-hidden"
-              onClick={handleCallClick}>
-
-              <span className="relative z-10 flex items-center">
-                Agende uma Conversa
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-              </span>
-            </Button>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="grid grid-cols-3 gap-8 max-w-lg mx-auto my-0 py-0 px-[13px] mb-[28px] pb-0">
-
-            {[
-            { value: 500, suffix: '+', label: 'Empresas' },
-            { value: 230, suffix: '%', label: 'Aumento Médio' },
-            { value: 24, suffix: '/7', label: 'Suporte' }].
-            map((stat, i) =>
-            <div key={i} className="text-center group py-[4px] my-0 mx-0">
-                <div className="text-2xl md:text-3xl font-heading font-bold text-gradient mb-1 group-hover:scale-105 transition-transform duration-300 py-0 pb-0 my-[10px]">
-                  <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="grid grid-cols-3 gap-6 max-w-sm mx-auto md:mx-0">
+              {[
+              { value: 500, suffix: '+', label: 'Empresas' },
+              { value: 230, suffix: '%', label: 'Aumento Médio' },
+              { value: 24, suffix: '/7', label: 'Suporte' }].
+              map((stat, i) =>
+              <div key={i} className="text-center md:text-left group">
+                  <div className="text-2xl md:text-3xl font-heading font-bold text-gradient mb-1 group-hover:scale-105 transition-transform duration-300">
+                    <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+                  </div>
+                  <div className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</div>
                 </div>
-                <div className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</div>
-              </div>
-            )}
-          </motion.div>
+              )}
+            </motion.div>
 
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="flex flex-wrap justify-center md:justify-start gap-6 mt-8 text-xs text-muted-foreground">
+              {['Sem cartão de crédito', 'Cancele quando quiser', 'Suporte premium'].map((text, i) =>
+              <div key={i} className="flex items-center">
+                  <div className="w-1.5 h-1.5 bg-primary/60 rounded-full mr-2" />
+                  {text}
+                </div>
+              )}
+            </motion.div>
+          </div>
+
+          {/* Right column — Dashboard Visual */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-wrap justify-center gap-6 mt-12 text-xs text-muted-foreground my-0">
-
-            {['Sem cartão de crédito', 'Cancele quando quiser', 'Suporte premium'].map((text, i) =>
-            <div key={i} className="flex items-center py-[5px]">
-                <div className="w-1.5 h-1.5 bg-primary/60 rounded-full mr-2" />
-                {text}
-              </div>
-            )}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="hidden md:flex justify-center"
+          >
+            <DashboardVisual />
           </motion.div>
         </div>
       </div>
@@ -184,7 +186,6 @@ const Hero = () => {
         <div className="h-32 bg-gradient-to-t from-background to-transparent" />
       </div>
     </section>);
-
 };
 
 export default Hero;

@@ -7,6 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Check, ArrowRight, Smartphone, Camera, Brain, Star, MessageCircle, Zap, BarChart3, Globe, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import SEOHead from '@/components/SEOHead';
+import PremiumHero from '@/components/PremiumHero';
+import OrbitVisual from '@/components/hero-visuals/OrbitVisual';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -45,7 +47,6 @@ const Services = () => {
     features: ["Logotipo profissional", "Paleta de cores", "Tipografia personalizada", "Manual de marca"]
   }];
 
-
   const physicalServices = [
   {
     title: "Cartões de Visita",
@@ -55,7 +56,6 @@ const Services = () => {
     title: "Produção Audiovisual",
     features: ["1 Sessão de Fotos Presencial (mês)", "1 Gravação de Vídeo Institucional (mês)", "Material profissional para redes sociais"]
   }];
-
 
   const aiServices = [
   {
@@ -67,7 +67,6 @@ const Services = () => {
     features: ["Assistente por WhatsApp com IA", "Suporte humano quando necessário", "Diagnóstico de marketing automático"]
   }];
 
-
   const additionalServices = [
   { name: "Impressão de 100 cartões de visita", price: "R$ 80 – R$ 120", icon: "🎴" },
   { name: "Catálogo digital interativo", price: "R$ 300", icon: "📱" },
@@ -76,7 +75,6 @@ const Services = () => {
   { name: "Consultoria estratégica mensal", price: "R$ 250", icon: "💡" },
   { name: "Criação de e-mail profissional", price: "R$ 100 (setup)", icon: "📧" },
   { name: "Google Meu Negócio otimizado", price: "R$ 200", icon: "🗺️" }];
-
 
   const handleConsultationClick = () => {
     window.open('https://wa.me/5511947968158?text=Olá! Gostaria de agendar uma consultoria gratuita sobre o Plano Fusion.', '_blank');
@@ -98,7 +96,6 @@ const Services = () => {
     whileInView="visible"
     viewport={{ once: true }}
     className="glass rounded-2xl p-6 hover:border-primary/20 transition-all duration-300 group">
-
       <div className="flex items-center gap-3 mb-4">
         {icon &&
       <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
@@ -118,7 +115,6 @@ const Services = () => {
       </ul>
     </motion.div>;
 
-
   const TabHeader = ({ icon, title, subtitle }: {icon: React.ReactNode;title: string;subtitle: string;}) =>
   <div className="flex items-center gap-4 mb-8">
       <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
@@ -130,7 +126,6 @@ const Services = () => {
       </div>
     </div>;
 
-
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
@@ -140,43 +135,15 @@ const Services = () => {
       />
       <Navbar />
 
-      {/* Hero */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[hsl(270,70%,60%)]/5 rounded-full blur-[120px]" />
-        </div>
-
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-4xl mx-auto">
-
-            <div className="inline-flex items-center px-4 py-2 glass rounded-full text-sm font-medium text-primary mb-6">
-              <Zap className="w-4 h-4 mr-2" />
-              Plano Fusion
-            </div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-6">
-              <span className="text-gradient">Plano Fusion</span>
-              <br />
-              <span className="text-foreground">Completo</span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-10">
-              Atendemos empresas pequenas, médias e grandes, que querem atuar tanto no físico como também no digital
-            </p>
-            <Button
-              size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 glow-sm group"
-              onClick={handleConsultationClick}>
-
-              Agende sua Consultoria Gratuita
-              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </motion.div>
-        </div>
-      </section>
+      <PremiumHero
+        badge="Plano Fusion"
+        title="Plano Fusion"
+        titleGradient="Completo"
+        subtitle="Atendemos empresas pequenas, médias e grandes, que querem atuar tanto no físico como também no digital"
+        ctaLabel="Agende sua Consultoria Gratuita"
+        ctaHref="https://wa.me/5511947968158?text=Olá! Gostaria de agendar uma consultoria gratuita sobre o Plano Fusion."
+        visualElement={<OrbitVisual />}
+      />
 
       {/* Tabs Content */}
       <section className="py-20 md:py-28 relative">
@@ -201,7 +168,6 @@ const Services = () => {
               </TabsTrigger>
             </TabsList>
 
-            {/* Digital */}
             <TabsContent value="digital">
               <TabHeader icon={<Smartphone className="w-6 h-6" />} title="Serviços Digitais" subtitle="Transforme sua presença digital com soluções completas" />
               <div className="grid md:grid-cols-2 gap-5 mb-16">
@@ -210,13 +176,11 @@ const Services = () => {
                 )}
               </div>
 
-              {/* CTA */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 className="glass-strong rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
-
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-[hsl(270,70%,60%)]/5" />
                 <div className="relative z-10">
                   <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
@@ -253,7 +217,6 @@ const Services = () => {
               </motion.div>
             </TabsContent>
 
-            {/* Físico */}
             <TabsContent value="physical">
               <TabHeader icon={<Camera className="w-6 h-6" />} title="Materiais Físicos" subtitle="Integração perfeita entre físico e digital" />
               <div className="grid md:grid-cols-2 gap-5">
@@ -263,7 +226,6 @@ const Services = () => {
               </div>
             </TabsContent>
 
-            {/* IA */}
             <TabsContent value="ai">
               <TabHeader icon={<Brain className="w-6 h-6" />} title="Inteligência Artificial" subtitle="Tecnologia avançada para otimizar seus resultados" />
               <div className="grid md:grid-cols-2 gap-5">
@@ -273,7 +235,6 @@ const Services = () => {
               </div>
             </TabsContent>
 
-            {/* Extras */}
             <TabsContent value="extras">
               <TabHeader icon={<Star className="w-6 h-6" />} title="Serviços Adicionais" subtitle="Expanda seu pacote com serviços personalizados" />
               <div className="grid sm:grid-cols-2 gap-4">
@@ -286,7 +247,6 @@ const Services = () => {
                   whileInView="visible"
                   viewport={{ once: true }}
                   className="glass rounded-xl p-5 flex items-center justify-between hover:border-primary/20 transition-all duration-300">
-
                     <div className="flex items-center gap-3">
                       <span className="text-xl">{s.icon}</span>
                       <span className="text-sm font-medium text-foreground">{s.name}</span>
@@ -309,7 +269,6 @@ const Services = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="max-w-3xl mx-auto text-center">
-
             <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6">
               <span className="text-foreground">Pronto para transformar </span>
               <span className="text-gradient">seu negócio?</span>
@@ -328,7 +287,6 @@ const Services = () => {
 
       <Footer />
     </div>);
-
 };
 
 export default Services;

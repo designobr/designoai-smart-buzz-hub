@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import SubpageLayout from '@/components/SubpageLayout';
 import { BookOpen, TrendingUp, Users, Video, Download, Podcast } from 'lucide-react';
 import { motion } from 'framer-motion';
+import DocumentVisual from '@/components/hero-visuals/DocumentVisual';
 
 const Blog = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -29,7 +30,14 @@ const Blog = () => {
   ];
 
   return (
-    <SubpageLayout title="Blog" subtitle="Seu portal de conhecimento sobre IA aplicada ao marketing digital." badge="📝 Conteúdo" seoPath="/blog" seoDescription="Blog DesignoAI: dicas, tutoriais e insights sobre marketing digital com IA, gestão de redes sociais, SEO e design automatizado.">
+    <SubpageLayout
+      title="Blog"
+      subtitle="Seu portal de conhecimento sobre IA aplicada ao marketing digital."
+      badge="📝 Conteúdo"
+      seoPath="/blog"
+      seoDescription="Blog DesignoAI: dicas, tutoriais e insights sobre marketing digital com IA, gestão de redes sociais, SEO e design automatizado."
+      visualElement={<DocumentVisual />}
+    >
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <h2 className="text-2xl font-heading font-bold text-center text-foreground mb-10">Categorias</h2>
