@@ -158,10 +158,9 @@ const Studio = () => {
                 Começar Minha Transformação
               </button>
             </motion.div>
-
-
-
+          </div>
         </div>
+
       </section>
 
       {/* Para Quem Section */}
