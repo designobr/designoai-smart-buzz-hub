@@ -1,157 +1,162 @@
-
-import { Instagram, Phone, Mail, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useSparkEffect } from '@/hooks/useSparkEffect';
-import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Instagram, Mail, Phone, ArrowRight } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+
+const solutions = [
+  { to: '/ai-sdr', label: 'AI SDR' },
+  { to: '/social-media', label: 'Social Media' },
+  { to: '/criacao-conteudo', label: 'Criação de Conteúdo' },
+  { to: '/seo-inteligente', label: 'SEO Inteligente' },
+  { to: '/email-marketing', label: 'Email Marketing' },
+  { to: '/analise-dados', label: 'Análise de Dados' },
+];
+
+const company = [
+  { to: '/sobre-nos', label: 'Sobre Nós' },
+  { to: '/carreiras', label: 'Carreiras' },
+  { to: '/blog', label: 'Blog' },
+  { to: '/casos-sucesso', label: 'Casos de Sucesso' },
+  { to: '/parcerias', label: 'Parcerias' },
+];
+
+const legal = [
+  { to: '/termos-uso', label: 'Termos de Uso' },
+  { to: '/politica-privacidade', label: 'Privacidade' },
+  { to: '/cookies', label: 'Cookies' },
+];
 
 const Footer = () => {
-  const spark = useSparkEffect({ count: 6, spread: 40 });
   const { toast } = useToast();
   const [email, setEmail] = useState('');
 
-  const handleNewsletter = () => {
+  const submit = () => {
     if (!email) return;
-    toast({ title: "Inscrito com sucesso!", description: "Você receberá nossas novidades por e-mail." });
+    toast({ title: 'Inscrição confirmada', description: 'Você receberá nossas novidades por e-mail.' });
     setEmail('');
   };
 
   return (
-    <footer className="bg-background pt-16 pb-8 relative">
-      {/* Gradient separator */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-          <div>
-            <div className="flex items-center space-x-2 mb-6 group">
-              <img
-                src="/lovable-uploads/09cb8eca-27b9-431a-97cf-fd9a75f478f8.png"
-                alt="DesignoAI Logo"
-                className="w-8 h-8 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(195,100%,50%,0.5)]"
-              />
-              <span className="text-lg font-heading font-bold text-foreground">
-                Designo<span className="text-primary">AI</span>
-              </span>
-            </div>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              Transformando o marketing digital através da inteligência artificial para empresas de todos os tamanhos.
+    <footer className="border-t border-border">
+      <div className="container-editorial py-20 md:py-24">
+        <div className="grid gap-14 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <p className="text-[17px] font-bold tracking-[-0.03em] text-foreground">
+              Designo<span className="text-muted-foreground">AI</span>
             </p>
-            <div className="flex space-x-3">
-              <a
-                href="https://www.instagram.com/designoai.br"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-secondary text-muted-foreground hover:text-primary hover:bg-secondary/80 transition-all duration-200"
-                onClick={(e) => spark(e, 'ig')}
-              >
-                <Instagram size={18} />
-              </a>
-            </div>
+            <p className="mt-5 max-w-sm text-sm text-muted-foreground">
+              Estúdio de marketing e design que combina método editorial e tecnologia para construir
+              marcas duradouras.
+            </p>
 
-            {/* Made with AI badge */}
-            <div className="mt-4 inline-flex items-center px-3 py-1.5 glass rounded-full text-[10px] text-muted-foreground">
-              <Sparkles className="w-3 h-3 mr-1.5 text-primary" />
-              Feito com IA
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-6">Soluções</h3>
-            <ul className="space-y-3">
-              {[
-                { to: '/ai-sdr', label: 'AI SDR' },
-                { to: '/social-media', label: 'Social Media' },
-                { to: '/criacao-conteudo', label: 'Criação de Conteúdo' },
-                { to: '/seo-inteligente', label: 'SEO Inteligente' },
-                { to: '/email-marketing', label: 'Email Marketing' },
-                { to: '/analise-dados', label: 'Análise de Dados' },
-              ].map((link) => (
-                <li key={link.to}>
-                  <Link to={link.to} className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 relative group inline-block">
-                    {link.label}
-                    <span className="absolute bottom-0 left-0 w-full h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-6">Empresa</h3>
-            <ul className="space-y-3">
-              {[
-                { to: '/sobre-nos', label: 'Sobre Nós' },
-                { to: '/carreiras', label: 'Carreiras' },
-                { to: '/blog', label: 'Blog' },
-                { to: '/casos-sucesso', label: 'Casos de Sucesso' },
-                { to: '/parcerias', label: 'Parcerias' },
-              ].map((link) => (
-                <li key={link.to}>
-                  <Link to={link.to} className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 relative group inline-block">
-                    {link.label}
-                    <span className="absolute bottom-0 left-0 w-full h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-6">Contato</h3>
-            <ul className="space-y-3">
-              <li className="flex items-center">
-                <Mail size={16} className="mr-2 text-primary" />
-                <a href="mailto:contato@designoai.com.br" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  contato@designoai.com.br
-                </a>
-              </li>
-              <li className="flex items-center">
-                <Phone size={16} className="mr-2 text-primary" />
-                <a href="https://wa.me/5511947968158" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  +55 11 94796-8158
-                </a>
-              </li>
-            </ul>
-            <div className="mt-6">
-              <h4 className="text-xs font-medium text-foreground mb-3 uppercase tracking-wider">Newsletter</h4>
-              <div className="flex">
+            <div className="mt-10 max-w-sm">
+              <label htmlFor="newsletter" className="eyebrow">
+                Newsletter
+              </label>
+              <div className="mt-4 flex items-center gap-3">
                 <input
+                  id="newsletter"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Seu e-mail"
-                  className="flex-1 bg-secondary text-foreground placeholder:text-muted-foreground px-3 py-2 rounded-l-lg text-sm border border-border focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-200"
-                  onKeyDown={(e) => e.key === 'Enter' && handleNewsletter()}
+                  onKeyDown={(e) => e.key === 'Enter' && submit()}
+                  placeholder="seu@email.com"
+                  className="field h-12 rounded-pill"
                 />
                 <button
-                  onClick={handleNewsletter}
-                  className="bg-primary text-primary-foreground px-4 rounded-r-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+                  type="button"
+                  onClick={submit}
+                  aria-label="Inscrever-se na newsletter"
+                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-pill bg-primary text-primary-foreground transition-transform duration-[220ms] hover:-translate-y-0.5"
                 >
-                  →
+                  <ArrowRight className="h-[18px] w-[18px]" strokeWidth={2} />
                 </button>
               </div>
             </div>
           </div>
+
+          <div className="grid gap-12 sm:grid-cols-3 lg:col-span-8">
+            <div>
+              <p className="eyebrow">Soluções</p>
+              <ul className="mt-6 space-y-4">
+                {solutions.map((l) => (
+                  <li key={l.to}>
+                    <Link
+                      to={l.to}
+                      className="text-sm text-muted-foreground transition-colors duration-[220ms] hover:text-foreground"
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="eyebrow">Empresa</p>
+              <ul className="mt-6 space-y-4">
+                {company.map((l) => (
+                  <li key={l.to}>
+                    <Link
+                      to={l.to}
+                      className="text-sm text-muted-foreground transition-colors duration-[220ms] hover:text-foreground"
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="eyebrow">Contato</p>
+              <ul className="mt-6 space-y-4">
+                <li>
+                  <a
+                    href="mailto:contato@designoai.com.br"
+                    className="flex items-center gap-2 text-sm text-muted-foreground transition-colors duration-[220ms] hover:text-foreground"
+                  >
+                    <Mail className="h-4 w-4" strokeWidth={2} />
+                    contato@designoai.com.br
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://wa.me/5511947968158"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-muted-foreground transition-colors duration-[220ms] hover:text-foreground"
+                  >
+                    <Phone className="h-4 w-4" strokeWidth={2} />
+                    +55 11 94796-8158
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.instagram.com/designoai.br"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-muted-foreground transition-colors duration-[220ms] hover:text-foreground"
+                  >
+                    <Instagram className="h-4 w-4" strokeWidth={2} />
+                    @designoai.br
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
 
-        <div className="border-t border-border pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-muted-foreground text-xs">
-              © 2026 DesignoAI. Todos os direitos reservados.
-            </p>
-            <div className="flex space-x-6">
-              {[
-                { to: '/termos-uso', label: 'Termos de Uso' },
-                { to: '/politica-privacidade', label: 'Privacidade' },
-                { to: '/cookies', label: 'Cookies' },
-              ].map((link) => (
-                <Link key={link.to} to={link.to} className="text-muted-foreground hover:text-foreground text-xs transition-colors relative group">
-                  {link.label}
-                  <span className="absolute bottom-0 left-0 w-full h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                </Link>
-              ))}
-            </div>
+        <div className="mt-20 flex flex-col items-start justify-between gap-6 border-t border-border pt-8 md:flex-row md:items-center">
+          <p className="text-xs text-muted-foreground">© 2026 DesignoAI. Todos os direitos reservados.</p>
+          <div className="flex flex-wrap gap-6">
+            {legal.map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                className="text-xs text-muted-foreground transition-colors duration-[220ms] hover:text-foreground"
+              >
+                {l.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
