@@ -224,7 +224,7 @@ const Carreiras = () => {
                       required={field.required}
                       value={(formData as any)[field.id]}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
+ className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
                     />
                   </div>
                 ))}
@@ -236,7 +236,7 @@ const Carreiras = () => {
                     required
                     value={formData.position}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
+ className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
                   >
                     <option value="">Selecione uma vaga</option>
                     {jobs.map((j) => <option key={j.id} value={j.title}>{j.title}</option>)}
@@ -251,7 +251,7 @@ const Carreiras = () => {
                     value={formData.experience}
                     onChange={handleInputChange}
                     rows={3}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors resize-none"
+ className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors resize-none"
                   />
                 </div>
                 <div className="space-y-2">
@@ -263,7 +263,7 @@ const Carreiras = () => {
                     value={formData.motivation}
                     onChange={handleInputChange}
                     rows={3}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors resize-none"
+ className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors resize-none"
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={isSubmitting}>

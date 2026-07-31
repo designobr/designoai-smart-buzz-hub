@@ -119,7 +119,7 @@ const Studio = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEOHead
         title="Studio - Fotografia e Produção Audiovisual"
         description="Studio DesignoAI: sessões fotográficas profissionais, vídeos institucionais e produção audiovisual completa para sua marca. Transforme sua imagem com qualidade premium."
@@ -130,8 +130,8 @@ const Studio = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/6 w-[500px] h-[500px] bg-[hsl(240,70%,60%)]/10 rounded-full " />
-          <div className="absolute bottom-1/4 right-1/6 w-[400px] h-[400px] bg-[hsl(270,70%,60%)]/10 rounded-full " />
+          <div className="absolute top-1/4 left-1/6 w-[500px] h-[500px] bg-[hsl(240,70%,60%)]/10 rounded-full" />
+          <div className="absolute bottom-1/4 right-1/6 w-[400px] h-[400px] bg-[hsl(270,70%,60%)]/10 rounded-full" />
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -140,20 +140,20 @@ const Studio = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="text-center md:text-left"
+ className="text-center md:text-left"
             >
-              <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-sm font-medium text-white/90 mb-6 border border-white/20">
+              <div className="inline-flex items-center px-4 py-2 bg-secondary rounded-full text-sm font-medium text-muted-foreground mb-6 border border-border">
                 ✨ Fotografia com IA
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-[1.1] mb-6 text-white">
-                DesignoAI <span className="bg-gradient-to-r from-[hsl(240,70%,70%)] to-[hsl(270,70%,70%)] bg-clip-text text-transparent">Studio</span>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-[1.1] mb-6 text-foreground">
+                DesignoAI <span className="text-muted-foreground">Studio</span>
               </h1>
-              <p className="text-lg md:text-xl text-white/80 max-w-xl mx-auto md:mx-0 leading-relaxed mb-8">
+              <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto md:mx-0 leading-relaxed mb-8">
                 Fotos profissionais de alta qualidade criadas com inteligência artificial. Mais de 500 profissionais já transformaram sua presença digital.
               </p>
               <button
                 onClick={handleWhatsAppClick}
-                className="inline-flex items-center gap-2 bg-white text-[#0a0a0a] px-8 py-4 text-lg font-bold rounded-xl shadow-2xl hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(255,255,255,0.15)] transition-all duration-300"
+ className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 text-lg font-bold rounded-xl shadow-card hover:-translate-y-1 hover:shadow-card-hover transition-all duration-300"
               >
                 Começar Minha Transformação
               </button>
@@ -170,23 +170,23 @@ const Studio = () => {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
               Para Quem é o DesignoAI Studio
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
+            <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {targetAudience.map((item, index) => (
               <motion.div
                 key={index}
-                className="group bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:-translate-y-2 hover:border-[#667eea]/50 hover:shadow-[0_20px_40px_rgba(102,126,234,0.2)] transition-all duration-400 relative overflow-hidden"
+ className="group bg-secondary p-8 rounded-2xl border border-border hover:-translate-y-2 hover:border-foreground/20 hover:shadow-card-hover transition-all duration-400 relative overflow-hidden"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:left-[100%] transition-all duration-500" />
+                <div className="absolute top-0 left-[-100%] w-full h-full bg-transparent group-hover:left-[100%] transition-all duration-500" />
                 <span className="text-4xl mb-4 block">{item.icon}</span>
                 <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-white/80 leading-relaxed">{item.description}</p>
+                <p className="text-muted-foreground leading-relaxed">{item.description}</p>
               </motion.div>
             ))}
           </div>
@@ -200,23 +200,23 @@ const Studio = () => {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
               Por Que Escolher a DesignoAI
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
+            <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {benefits.map((item, index) => (
               <motion.div
                 key={index}
-                className="group bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:-translate-y-2 hover:border-[#667eea]/50 hover:shadow-[0_20px_40px_rgba(102,126,234,0.2)] transition-all duration-400 relative overflow-hidden"
+ className="group bg-secondary p-8 rounded-2xl border border-border hover:-translate-y-2 hover:border-foreground/20 hover:shadow-card-hover transition-all duration-400 relative overflow-hidden"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:left-[100%] transition-all duration-500" />
+                <div className="absolute top-0 left-[-100%] w-full h-full bg-transparent group-hover:left-[100%] transition-all duration-500" />
                 <span className="text-4xl mb-4 block">{item.icon}</span>
                 <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-white/80 leading-relaxed">{item.description}</p>
+                <p className="text-muted-foreground leading-relaxed">{item.description}</p>
               </motion.div>
             ))}
           </div>
@@ -230,17 +230,17 @@ const Studio = () => {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
               Exemplos de Resultados
             </h2>
-            <p className="text-center text-white/80 mb-4 max-w-2xl mx-auto">
+            <p className="text-center text-muted-foreground mb-4 max-w-2xl mx-auto">
               Veja a qualidade profissional que a DesignoAI entrega aos seus clientes
             </p>
-            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
+            <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {galleryImages.map((image, index) => (
               <motion.div
                 key={index}
-                className="group relative overflow-hidden rounded-2xl aspect-[3/4] border border-white/10 hover:border-[#667eea]/50 transition-all duration-500"
+ className="group relative overflow-hidden rounded-2xl aspect-[3/4] border border-border hover:border-foreground/20 transition-all duration-500"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -250,18 +250,18 @@ const Studio = () => {
                 <img 
                   src={image} 
                   alt={`Exemplo de foto profissional ${index + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+ className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-foreground/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                  <span className="text-white text-sm font-semibold">✨ Criado com IA</span>
+                  <span className="text-foreground text-sm font-semibold">✨ Criado com IA</span>
                 </div>
               </motion.div>
             ))}
           </div>
 
           <motion.p 
-            className="text-center text-white/60 text-sm mt-8"
+ className="text-center text-muted-foreground text-sm mt-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -278,35 +278,35 @@ const Studio = () => {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
               O Que Nossos Clientes Dizem
             </h2>
-            <p className="text-center text-white/80 mb-4 max-w-2xl mx-auto">
+            <p className="text-center text-muted-foreground mb-4 max-w-2xl mx-auto">
               Veja os depoimentos de quem já transformou sua imagem profissional
             </p>
-            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
+            <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
-                className="group bg-white/5 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/10 hover:border-[#667eea]/50 hover:shadow-[0_20px_40px_rgba(102,126,234,0.2)] transition-all duration-400 relative overflow-hidden"
+ className="group bg-secondary p-6 md:p-8 rounded-2xl border border-border hover:border-foreground/20 hover:shadow-card-hover transition-all duration-400 relative overflow-hidden"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.15 }}
               >
-                <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:left-[100%] transition-all duration-500" />
+                <div className="absolute top-0 left-[-100%] w-full h-full bg-transparent group-hover:left-[100%] transition-all duration-500" />
                 
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#667eea]/50">
+                  <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-border">
                     <img 
                       src={testimonial.image} 
                       alt={testimonial.name}
-                      className="w-full h-full object-cover"
+ className="w-full h-full object-cover"
                     />
                   </div>
                   <div>
                     <h4 className="font-bold text-lg">{testimonial.name}</h4>
-                    <p className="text-white/60 text-sm">{testimonial.role}</p>
+                    <p className="text-muted-foreground text-sm">{testimonial.role}</p>
                     <div className="flex gap-1 mt-1">
                       {[...Array(testimonial.rating)].map((_, i) => (
                         <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
@@ -315,7 +315,7 @@ const Studio = () => {
                   </div>
                 </div>
                 
-                <p className="text-white/85 leading-relaxed italic">
+                <p className="text-muted-foreground leading-relaxed italic">
                   "{testimonial.text}"
                 </p>
               </motion.div>
@@ -331,23 +331,23 @@ const Studio = () => {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
               DesignoAI vs Sessão Tradicional
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
+            <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
 
           <motion.div 
-            className="bg-gradient-to-br from-[#1a1a2e] to-[#16213e] rounded-3xl p-6 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 relative overflow-hidden"
+ className="bg-secondary rounded-3xl p-6 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 relative overflow-hidden"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
           >
-            <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl md:text-8xl font-black text-white/5 z-0">VS</span>
+            <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl md:text-8xl font-black text-muted-foreground z-0">VS</span>
             
             <div className="relative z-10">
               <h3 className="text-2xl font-bold mb-6">Sessão Fotográfica Tradicional</h3>
               <ul className="space-y-3">
                 {traditionalList.map((item, index) => (
-                  <li key={index} className="flex items-start gap-3 text-white/85">
-                    <span className="text-[#667eea] font-bold">✓</span>
+                  <li key={index} className="flex items-start gap-3 text-muted-foreground">
+                    <span className="text-primary-foreground font-bold">✓</span>
                     {item}
                   </li>
                 ))}
@@ -358,8 +358,8 @@ const Studio = () => {
               <h3 className="text-2xl font-bold mb-6">DesignoAI Studio ✨</h3>
               <ul className="space-y-3">
                 {designoaiList.map((item, index) => (
-                  <li key={index} className="flex items-start gap-3 text-white/85">
-                    <span className="text-[#667eea] font-bold">✓</span>
+                  <li key={index} className="flex items-start gap-3 text-muted-foreground">
+                    <span className="text-primary-foreground font-bold">✓</span>
                     {item}
                   </li>
                 ))}
@@ -376,23 +376,23 @@ const Studio = () => {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
               Como Funciona
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
+            <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {steps.map((item, index) => (
               <motion.div
                 key={index}
-                className="group bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:-translate-y-2 hover:border-[#667eea]/50 hover:shadow-[0_20px_40px_rgba(102,126,234,0.2)] transition-all duration-400 relative overflow-hidden"
+ className="group bg-secondary p-8 rounded-2xl border border-border hover:-translate-y-2 hover:border-foreground/20 hover:shadow-card-hover transition-all duration-400 relative overflow-hidden"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:left-[100%] transition-all duration-500" />
+                <div className="absolute top-0 left-[-100%] w-full h-full bg-transparent group-hover:left-[100%] transition-all duration-500" />
                 <span className="text-4xl mb-4 block">{item.icon}</span>
                 <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-white/80 leading-relaxed">{item.description}</p>
+                <p className="text-muted-foreground leading-relaxed">{item.description}</p>
               </motion.div>
             ))}
           </div>
@@ -403,13 +403,13 @@ const Studio = () => {
       <section className="py-20 px-4 md:px-8">
         <div className="max-w-4xl mx-auto">
           <motion.div 
-            className="bg-gradient-to-br from-[#667eea] to-[#764ba2] rounded-3xl p-8 md:p-12 text-center relative overflow-hidden"
+ className="bg-secondary rounded-3xl p-8 md:p-12 text-center relative overflow-hidden"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
             <motion.div 
-              className="absolute -top-1/2 -right-1/2 w-[200%] h-[200%] bg-[radial-gradient(circle,rgba(255,255,255,0.1)_0%,transparent_70%)]"
+ className="absolute -top-1/2 -right-1/2 w-[200%] h-[200%] bg-[radial-gradient(circle,rgba(255,255,255,0.1)_0%,transparent_70%)]"
               animate={{ y: [0, -20, 0] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
             />
@@ -417,7 +417,7 @@ const Studio = () => {
               <span className="text-5xl mb-4 block">🛡️</span>
               <h2 className="text-2xl md:text-3xl font-bold mb-2">Garantia DesignoAI</h2>
               <h3 className="text-3xl md:text-4xl font-extrabold mb-4">100% Satisfação Garantida</h3>
-              <p className="text-lg md:text-xl text-white/95 max-w-2xl mx-auto">
+              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
                 Se você não ficar completamente satisfeito com suas fotos profissionais, devolvemos seu investimento integral. Sem perguntas. Sem burocracia.
               </p>
             </div>
@@ -432,14 +432,14 @@ const Studio = () => {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
               Perguntas Frequentes
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
+            <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
 
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <motion.div
                 key={index}
-                className="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden hover:border-[#667eea]/50 transition-all"
+ className="bg-secondary rounded-2xl border border-border overflow-hidden hover:border-foreground/20 transition-all"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -447,7 +447,7 @@ const Studio = () => {
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full p-6 text-left font-bold text-white flex justify-between items-center hover:bg-white/5 transition-all"
+ className="w-full p-6 text-left font-bold text-foreground flex justify-between items-center hover:bg-secondary transition-all"
                 >
                   <span>{faq.question}</span>
                   <span className={`text-2xl transition-transform ${openFaq === index ? 'rotate-45' : ''}`}>+</span>
@@ -456,7 +456,7 @@ const Studio = () => {
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
-                    className="px-6 pb-6 text-white/80 leading-relaxed"
+ className="px-6 pb-6 text-muted-foreground leading-relaxed"
                   >
                     {faq.answer}
                   </motion.div>
@@ -474,7 +474,7 @@ const Studio = () => {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
               Entre em Contato
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] mx-auto rounded-full mb-12" />
+            <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -484,21 +484,21 @@ const Studio = () => {
                 href={contact.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 text-center hover:-translate-y-1 hover:border-[#667eea]/50 transition-all block"
+ className="bg-secondary p-6 rounded-2xl border border-border text-center hover:-translate-y-1 hover:border-foreground/20 transition-all block"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <div className="text-[#667eea] flex justify-center mb-3">{contact.icon}</div>
+                <div className="text-primary-foreground flex justify-center mb-3">{contact.icon}</div>
                 <h3 className="font-bold mb-1">{contact.title}</h3>
-                <p className="text-[#667eea] font-semibold">{contact.info}</p>
-                <p className="text-white/60 text-sm">{contact.subtitle}</p>
+                <p className="text-primary-foreground font-semibold">{contact.info}</p>
+                <p className="text-muted-foreground text-sm">{contact.subtitle}</p>
               </motion.a>
             ))}
           </div>
 
-          <p className="text-center text-white/60 text-lg">
+          <p className="text-center text-muted-foreground text-lg">
             🌎 Atendimento 100% Online - Todo o Brasil
           </p>
         </div>
@@ -506,15 +506,15 @@ const Studio = () => {
 
       {/* Final CTA Section */}
       <section className="py-20 px-4 md:px-8 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#667eea] via-[#764ba2] to-[#667eea] bg-[length:400%_400%] animate-[gradient_15s_ease_infinite]" />
+        <div className="absolute inset-0 bg-secondary" />
         <motion.div 
-          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_50%)]"
+ className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_50%)]"
           animate={{ y: [0, -20, 0] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         />
 
         <motion.div 
-          className="max-w-4xl mx-auto text-center relative z-10"
+ className="max-w-4xl mx-auto text-center relative z-10"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -522,33 +522,33 @@ const Studio = () => {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4">
             Transforme Sua Imagem Profissional Agora
           </h2>
-          <p className="text-xl md:text-2xl text-white/95 mb-8">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8">
             Não deixe que fotos amadoras prejudiquem sua credibilidade e oportunidades.
           </p>
           <button 
             onClick={handleWhatsAppClick}
-            className="inline-block bg-white text-[#667eea] px-8 py-4 text-lg md:text-xl font-bold rounded-full shadow-2xl hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
+ className="inline-block bg-primary text-primary-foreground px-8 py-4 text-lg md:text-xl font-bold rounded-full shadow-card hover:-translate-y-1 hover:shadow-card-hover transition-all duration-300"
           >
             Começar Minha Transformação
           </button>
-          <p className="mt-6 text-white/80">
+          <p className="mt-6 text-muted-foreground">
             ⚡ Vagas limitadas por mês para garantir o mais alto padrão de qualidade
           </p>
         </motion.div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 bg-[#0a0a0a] border-t border-white/10 text-center">
-        <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-clip-text text-transparent">
+      <footer className="py-12 px-4 bg-background border-t border-border text-center">
+        <h3 className="text-2xl font-bold mb-2 text-foreground">
           DesignoAI
         </h3>
-        <p className="text-white/60 mb-4">
+        <p className="text-muted-foreground mb-4">
           Soluções criativas com inteligência artificial aplicadas à imagem profissional
         </p>
-        <p className="text-white/40 text-sm">
+        <p className="text-muted-foreground text-sm">
           © 2026 DesignoAI. Todos os direitos reservados.
         </p>
-        <p className="text-white/40 text-sm mt-2">
+        <p className="text-muted-foreground text-sm mt-2">
           Atendimento via WhatsApp e e-mail. Serviço 100% online.
         </p>
       </footer>

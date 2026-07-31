@@ -94,7 +94,7 @@ const Services = () => {
     initial="hidden"
     whileInView="visible"
     viewport={{ once: true }}
-    className="card-surface rounded-2xl p-6 hover:border-primary/20 transition-all duration-300 group">
+ className="card-surface rounded-2xl p-6 hover:border-primary/20 transition-all duration-300 group">
       <div className="flex items-center gap-3 mb-4">
         {icon &&
       <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
@@ -178,8 +178,8 @@ const Services = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="card-surface rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-[hsl(270,70%,60%)]/5" />
+ className="card-surface rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-secondary" />
                 <div className="relative z-10">
                   <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
                     <span className="text-foreground">Pronto para </span>
@@ -244,7 +244,7 @@ const Services = () => {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
-                  className="card-surface rounded-xl p-5 flex items-center justify-between hover:border-primary/20 transition-all duration-300">
+ className="card-surface rounded-xl p-5 flex items-center justify-between hover:border-primary/20 transition-all duration-300">
                     <div className="flex items-center gap-3">
                       <span className="text-xl">{s.icon}</span>
                       <span className="text-sm font-medium text-foreground">{s.name}</span>
@@ -260,13 +260,13 @@ const Services = () => {
 
       {/* Bottom CTA */}
       <section className="py-20 md:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.03] to-transparent" />
+        <div className="absolute inset-0 bg-secondary" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-3xl mx-auto text-center">
+ className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6">
               <span className="text-foreground">Pronto para transformar </span>
               <span className="text-foreground">seu negócio?</span>

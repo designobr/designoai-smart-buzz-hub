@@ -54,7 +54,7 @@ const SobreNos = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {stats.map((stat, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="card-surface rounded-2xl p-6 text-center"
+ className="card-surface rounded-2xl p-6 text-center"
               >
                 <div className="text-2xl font-heading font-bold text-foreground">{stat.number}</div>
                 <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
@@ -87,7 +87,7 @@ const SobreNos = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {values.map((v, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
-                className="card-surface rounded-2xl p-6 text-center group hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
+ className="card-surface rounded-2xl p-6 text-center group hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
                   <v.icon className="w-6 h-6 text-primary" />

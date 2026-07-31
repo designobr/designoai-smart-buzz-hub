@@ -73,13 +73,13 @@ const SitesIA = () => {
     >
       {/* Why you need a site */}
       <section className="py-20 md:py-28 relative">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-secondary" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto"
+ className="max-w-4xl mx-auto"
           >
             <motion.div variants={fadeUp} custom={0} className="text-center mb-12">
               <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
@@ -105,7 +105,7 @@ const SitesIA = () => {
 
       {/* Who is it for */}
       <section className="py-20 md:py-28 relative">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-secondary" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="max-w-5xl mx-auto">
             <motion.div variants={fadeUp} custom={0} className="text-center mb-12">
@@ -127,7 +127,7 @@ const SitesIA = () => {
                   key={i}
                   variants={fadeUp}
                   custom={i * 0.5}
-                  className="card-surface rounded-xl p-4 flex items-start gap-3 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300"
+ className="card-surface rounded-xl p-4 flex items-start gap-3 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300"
                 >
                   <Check className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                   <span className="text-muted-foreground group-hover:text-foreground transition-colors">{item}</span>
@@ -158,8 +158,8 @@ const SitesIA = () => {
 
       {/* Advantages */}
       <section className="py-20 md:py-28 relative">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-        <div className="absolute top-1/3 right-0 w-[400px] h-[400px] bg-primary/5 rounded-full " />
+        <div className="absolute top-0 left-0 right-0 h-px bg-secondary" />
+        <div className="absolute top-1/3 right-0 w-[400px] h-[400px] bg-primary/5 rounded-full" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -179,7 +179,7 @@ const SitesIA = () => {
                   key={i}
                   variants={fadeUp}
                   custom={i}
-                  className="card-surface rounded-2xl p-6 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
+ className="card-surface rounded-2xl p-6 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                     <adv.icon className="w-6 h-6 text-primary" />
@@ -197,7 +197,7 @@ const SitesIA = () => {
 
       {/* How it works */}
       <section className="py-20 md:py-28 relative">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-secondary" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <motion.div variants={fadeUp} custom={0} className="text-center mb-16">
@@ -217,7 +217,7 @@ const SitesIA = () => {
                   key={i}
                   variants={fadeUp}
                   custom={i}
-                  className="card-surface rounded-2xl p-6 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
+ className="card-surface rounded-2xl p-6 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="text-5xl font-heading font-bold text-primary/10 mb-4 group-hover:text-primary/20 transition-colors">
                     {step.number}
@@ -235,8 +235,8 @@ const SitesIA = () => {
 
       {/* Deliverables */}
       <section className="py-20 md:py-28 relative">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-        <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-[hsl(270,70%,60%)]/5 rounded-full " />
+        <div className="absolute top-0 left-0 right-0 h-px bg-secondary" />
+        <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-[hsl(270,70%,60%)]/5 rounded-full" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -259,7 +259,7 @@ const SitesIA = () => {
                   key={i}
                   variants={fadeUp}
                   custom={i}
-                  className="card-surface rounded-2xl p-6 flex items-start gap-4 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300"
+ className="card-surface rounded-2xl p-6 flex items-start gap-4 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300"
                 >
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
                     <item.icon className="w-5 h-5 text-primary" />
@@ -278,13 +278,13 @@ const SitesIA = () => {
 
       {/* Differentiator */}
       <section className="py-20 md:py-28 relative">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-secondary" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto"
+ className="max-w-4xl mx-auto"
           >
             <motion.div variants={fadeUp} custom={0} className="text-center mb-12">
               <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
@@ -319,8 +319,8 @@ const SitesIA = () => {
 
       {/* CTA Final */}
       <section className="py-20 md:py-28 relative">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.03] to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-secondary" />
+        <div className="absolute inset-0 bg-secondary" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -328,7 +328,7 @@ const SitesIA = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="max-w-3xl mx-auto text-center"
+ className="max-w-3xl mx-auto text-center"
           >
             <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6">
               <span className="text-foreground">Pronto para Ter um Site que </span>
@@ -340,7 +340,7 @@ const SitesIA = () => {
 
             <Button
               size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-10 py-6 h-auto"
+ className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-10 py-6 h-auto"
               onClick={handleWhatsApp}
             >
               <MessageCircle className="w-5 h-5 mr-2" />
