@@ -40,7 +40,7 @@ const Hero = () => {
             <dl className="mt-16 grid max-w-lg grid-cols-3 gap-8 border-t border-border pt-8">
               {[
                 { k: '500+', v: 'Projetos entregues' },
-                { k: 'Especialistas', v: 'Design, tecnologia e IA aplicada a negócios' },
+                { k: 'Especialistas', v: 'Tecnologia & inovação' },
                 { k: '4.9/5', v: 'Satisfação média' },
               ].map((s) => (
                 <div key={s.k}>
