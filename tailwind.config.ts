@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -13,14 +12,15 @@ export default {
 	theme: {
 		container: {
 			center: true,
-			padding: '2rem',
+			padding: '1.5rem',
 			screens: {
-				'2xl': '1400px'
+				'2xl': '1280px'
 			}
 		},
 		extend: {
 			colors: {
 				border: 'hsl(var(--border))',
+				divider: 'hsl(var(--divider))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
@@ -83,12 +83,27 @@ export default {
 			},
 			fontFamily: {
 				sans: ['Inter', 'system-ui', 'sans-serif'],
-				heading: ['Sora', 'system-ui', 'sans-serif']
+				heading: ['Inter', 'system-ui', 'sans-serif']
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				sm: '12px',
+				md: '16px',
+				lg: '20px',
+				xl: '24px',
+				'2xl': '24px',
+				'3xl': '28px',
+				pill: '999px'
+			},
+			spacing: {
+				xs: '8px',
+				sm: '16px',
+				md: '24px',
+				lg: '40px',
+				xl: '72px',
+				'2xl': '140px'
+			},
+			transitionDuration: {
+				DEFAULT: '220ms'
 			},
 			keyframes: {
 				'accordion-down': {
@@ -99,51 +114,16 @@ export default {
 					from: { height: 'var(--radix-accordion-content-height)' },
 					to: { height: '0' }
 				},
-				'fade-in': {
-					'0%': { opacity: '0', transform: 'translateY(20px)' },
+				'fade-up': {
+					'0%': { opacity: '0', transform: 'translateY(12px)' },
 					'100%': { opacity: '1', transform: 'translateY(0)' }
-				},
-				'fade-in-up': {
-					'0%': { opacity: '0', transform: 'translateY(30px)' },
-					'100%': { opacity: '1', transform: 'translateY(0)' }
-				},
-				'slide-up': {
-					'0%': { opacity: '0', transform: 'translateY(40px)' },
-					'100%': { opacity: '1', transform: 'translateY(0)' }
-				},
-				'float': {
-					'0%, 100%': { transform: 'translateY(0)' },
-					'50%': { transform: 'translateY(-10px)' }
-				},
-				'glow-pulse': {
-					'0%, 100%': { opacity: '0.4' },
-					'50%': { opacity: '0.8' }
-				},
-			'shimmer': {
-				'0%': { transform: 'translateX(-100%)' },
-				'100%': { transform: 'translateX(100%)' }
+				}
 			},
-			'ripple': {
-				'0%': { transform: 'scale(0)', opacity: '0.5' },
-				'100%': { transform: 'scale(4)', opacity: '0' }
-			},
-			'pulse-glow': {
-				'0%, 100%': { boxShadow: '0 0 20px -5px hsl(195 100% 50% / 0.2)' },
-				'50%': { boxShadow: '0 0 40px -5px hsl(195 100% 50% / 0.4)' }
+			animation: {
+				'accordion-down': 'accordion-down 0.22s ease-out',
+				'accordion-up': 'accordion-up 0.22s ease-out',
+				'fade-up': 'fade-up 0.5s ease-out forwards'
 			}
-		},
-		animation: {
-			'accordion-down': 'accordion-down 0.2s ease-out',
-			'accordion-up': 'accordion-up 0.2s ease-out',
-			'fade-in': 'fade-in 0.6s ease-out forwards',
-			'fade-in-up': 'fade-in-up 0.7s ease-out forwards',
-			'slide-up': 'slide-up 0.8s ease-out forwards',
-			'float': 'float 6s ease-in-out infinite',
-			'glow-pulse': 'glow-pulse 3s ease-in-out infinite',
-			'shimmer': 'shimmer 2s ease-in-out infinite',
-			'ripple': 'ripple 0.6s ease-out',
-			'pulse-glow': 'pulse-glow 2s ease-in-out infinite'
-		}
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
