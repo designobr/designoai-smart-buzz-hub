@@ -1,180 +1,99 @@
-
-import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Cpu, Users, TrendingUp, LayoutDashboard, FileText, RefreshCw, ArrowRight } from 'lucide-react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { ArrowRight, Cpu, FileText, LayoutDashboard, RefreshCw, TrendingUp, Users } from 'lucide-react';
+import Reveal from '@/components/Reveal';
+import ActionButton from '@/components/ActionButton';
+import editorialTeam from '@/assets/editorial-team.jpg';
+import editorialBrand from '@/assets/editorial-brand.jpg';
 
-const ProgressBar = ({ label, value }: { label: string; value: number }) => (
-  <div className="mb-3">
-    <div className="flex justify-between text-xs mb-1">
-      <span className="text-muted-foreground">{label}</span>
-      <span className="text-primary font-semibold">{value}%</span>
-    </div>
-    <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
-      <motion.div
-        className="h-full bg-gradient-to-r from-primary to-[hsl(270,70%,60%)] rounded-full"
-        initial={{ width: 0 }}
-        whileInView={{ width: `${value}%` }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
-      />
-    </div>
-  </div>
+const blockOne = [
+  { icon: Cpu, title: 'Operação organizada', description: 'Processos claros substituem retrabalho e improviso.' },
+  { icon: Users, title: 'Personalização em escala', description: 'Mensagens ajustadas a cada segmento do seu público.' },
+  { icon: TrendingUp, title: 'Leitura antecipada', description: 'Tendências identificadas antes de virarem custo.' },
+];
+
+const blockTwo = [
+  { icon: LayoutDashboard, title: 'Painel único', description: 'Todos os indicadores reunidos em um só lugar.' },
+  { icon: FileText, title: 'Relatórios objetivos', description: 'Resumos semanais com decisões recomendadas.' },
+  { icon: RefreshCw, title: 'Melhoria contínua', description: 'Ciclos curtos de teste, revisão e ajuste.' },
+];
+
+const ItemList = ({ items }: { items: typeof blockOne }) => (
+  <ul className="mt-10 space-y-8">
+    {items.map((item) => (
+      <li key={item.title} className="flex gap-5 border-t border-border pt-8 first:border-t-0 first:pt-0">
+        <item.icon className="mt-0.5 h-5 w-5 shrink-0 text-foreground" strokeWidth={2} />
+        <div>
+          <h4 className="text-base font-semibold tracking-[-0.02em] text-foreground">{item.title}</h4>
+          <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
 );
 
-const Features = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
-  const img1Y = useTransform(scrollYProgress, [0, 1], [30, -30]);
-  const img2Y = useTransform(scrollYProgress, [0, 1], [-20, 20]);
-
-  return (
-    <section id="features" className="py-24 md:py-32 relative overflow-hidden" ref={sectionRef}>
-      <div className="absolute inset-0">
-        <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-[hsl(270,70%,60%)]/3 rounded-full blur-[120px]" />
-      </div>
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
-        >
-          <div className="inline-flex items-center px-4 py-2 glass rounded-full text-sm font-medium text-primary mb-6">
-            Por que DesignoAI?
-          </div>
-          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
-            <span className="text-gradient">A Revolução</span>
-            <span className="text-foreground"> do Marketing</span>
+const Features = () => (
+  <section id="features" className="section border-t border-border">
+    <div className="container-editorial">
+      <Reveal>
+        <div className="max-w-3xl">
+          <p className="eyebrow">Por que a DesignoAI</p>
+          <h2 className="display-2 mt-6 text-foreground">
+            Trabalho de estúdio, com a disciplina de uma operação.
           </h2>
-          <p className="text-muted-foreground text-lg">
-            Nossa plataforma reúne o melhor da inteligência artificial para transformar sua estratégia
-          </p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 gap-16 items-center mb-24">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="order-2 md:order-1"
-          >
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-[hsl(270,70%,60%)]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <motion.div className="relative glass rounded-2xl p-6 overflow-hidden" style={{ y: img1Y }}>
-                <img
-                  src="/lovable-uploads/d829b16b-0e24-4f64-beac-e8a25b579587.png"
-                  alt="DesignoAI Coffee Cup"
-                  className="w-full h-auto rounded-xl transition-transform duration-500 group-hover:scale-[1.03]"
-                />
-                {/* Reflection */}
-                <div className="absolute bottom-0 left-6 right-6 h-16 bg-gradient-to-t from-card/80 to-transparent rounded-b-xl" />
-              </motion.div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="order-1 md:order-2"
-          >
-            <h3 className="text-2xl md:text-3xl font-heading font-bold mb-8">
-              <span className="text-gradient">Ganhe tempo e eficiência</span>
-              <br />
-              <span className="text-foreground">em suas campanhas</span>
-            </h3>
-
-            <div className="space-y-5 mb-6">
-              {[
-                { icon: Cpu, title: "Automação Inteligente", description: "Reduza horas de trabalho com automação de tarefas de marketing" },
-                { icon: Users, title: "Personalização em Escala", description: "Crie conteúdo personalizado para diferentes segmentos" },
-                { icon: TrendingUp, title: "Análise Preditiva", description: "Antecipe tendências e comportamentos do seu público-alvo" },
-              ].map((item, index) => (
-                <div key={index} className="flex items-start group">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-primary/10 to-[hsl(270,70%,60%)]/10 flex items-center justify-center mr-4 mt-0.5 group-hover:from-primary/20 group-hover:to-[hsl(270,70%,60%)]/20 transition-all">
-                    <item.icon className="w-4 h-4 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1 group-hover:text-primary transition-colors duration-200">{item.title}</h4>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <ProgressBar label="Economia de Tempo" value={85} />
-            <ProgressBar label="Aumento de Engajamento" value={92} />
-            <ProgressBar label="Satisfação dos Clientes" value={98} />
-
-            <Link to="/recursos" className="mt-4 inline-block">
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 group">
-                Conheça todos os recursos
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-              </Button>
-            </Link>
-          </motion.div>
         </div>
+      </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <h3 className="text-2xl md:text-3xl font-heading font-bold mb-8">
-              <span className="text-gradient">Resultados mensuráveis</span>
-              <br />
-              <span className="text-foreground">e consistentes</span>
-            </h3>
-
-            <div className="space-y-5">
-              {[
-                { icon: LayoutDashboard, title: "Dashboard Intuitivo", description: "Acompanhe todos os seus KPIs em um único lugar" },
-                { icon: FileText, title: "Relatórios Automatizados", description: "Receba insights semanais sobre o desempenho" },
-                { icon: RefreshCw, title: "Otimização Contínua", description: "Nossa IA aprende e melhora suas estratégias automaticamente" },
-              ].map((item, index) => (
-                <div key={index} className="flex items-start group">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-primary/10 to-[hsl(270,70%,60%)]/10 flex items-center justify-center mr-4 mt-0.5 group-hover:from-primary/20 group-hover:to-[hsl(270,70%,60%)]/20 transition-all">
-                    <item.icon className="w-4 h-4 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1 group-hover:text-primary transition-colors duration-200">{item.title}</h4>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-[hsl(270,70%,60%)]/20 to-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <motion.div className="relative glass rounded-2xl p-6 overflow-hidden" style={{ y: img2Y }}>
-                <img
-                  src="/lovable-uploads/f8692a56-e528-4392-9a28-98a1e875ec76.png"
-                  alt="DesignoAI Mug"
-                  className="w-full h-auto rounded-xl transition-transform duration-500 group-hover:scale-[1.03]"
-                />
-                <div className="absolute bottom-0 left-6 right-6 h-16 bg-gradient-to-t from-card/80 to-transparent rounded-b-xl" />
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
+      <div className="mt-20 grid items-center gap-14 lg:grid-cols-12 lg:gap-20">
+        <Reveal className="lg:col-span-7">
+          <div className="overflow-hidden rounded-3xl border border-border">
+            <img
+              src={editorialTeam}
+              alt="Equipe revisando layouts impressos sobre uma mesa branca"
+              loading="lazy"
+              width={1408}
+              height={1008}
+              className="h-[320px] w-full object-cover md:h-[460px]"
+            />
+          </div>
+        </Reveal>
+        <Reveal delay={0.08} className="lg:col-span-5">
+          <h3 className="text-2xl font-bold tracking-[-0.03em] text-foreground md:text-3xl">
+            Tempo bem investido em cada campanha.
+          </h3>
+          <ItemList items={blockOne} />
+          <Link to="/recursos" className="mt-10 inline-block">
+            <ActionButton variant="secondary">
+              Conhecer os recursos
+              <ArrowRight className="h-[18px] w-[18px]" strokeWidth={2} />
+            </ActionButton>
+          </Link>
+        </Reveal>
       </div>
-    </section>
-  );
-};
+
+      <div className="mt-24 grid items-center gap-14 lg:grid-cols-12 lg:gap-20">
+        <Reveal className="lg:col-span-5 lg:order-2">
+          <div className="overflow-hidden rounded-3xl border border-border">
+            <img
+              src={editorialBrand}
+              alt="Celular e livreto de identidade visual sobre superfície clara"
+              loading="lazy"
+              width={1408}
+              height={1008}
+              className="h-[320px] w-full object-cover md:h-[460px]"
+            />
+          </div>
+        </Reveal>
+        <Reveal delay={0.08} className="lg:col-span-7 lg:order-1">
+          <h3 className="text-2xl font-bold tracking-[-0.03em] text-foreground md:text-3xl">
+            Resultados mensuráveis e consistentes.
+          </h3>
+          <div className="max-w-xl">
+            <ItemList items={blockTwo} />
+          </div>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+);
 
 export default Features;

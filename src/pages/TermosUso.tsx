@@ -16,12 +16,12 @@ const TermosUso = () => {
   ];
 
   return (
-    <SubpageLayout title="Termos de Uso" subtitle="Conheça os termos e condições que regem o uso da plataforma DesignoAI." badge="📋 Termos" seoPath="/termos-uso">
+    <SubpageLayout title="Termos de Uso" subtitle="Conheça os termos e condições que regem o uso da plataforma DesignoAI." badge=" Termos" seoPath="/termos-uso">
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl space-y-6">
           <p className="text-center text-muted-foreground text-sm mb-8">Última atualização: 10 de junho de 2025</p>
           {sections.map((s, i) => (
-            <Card key={i} className="glass border-border/50">
+            <Card key={i} className="card-surface border-border/50">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-xl"><s.icon className="text-primary w-6 h-6" /><span className="text-foreground">{s.title}</span></CardTitle>
               </CardHeader>
@@ -31,9 +31,9 @@ const TermosUso = () => {
               </CardContent>
             </Card>
           ))}
-          <Card className="glass border-primary/20">
+          <Card className="card-surface border-primary/20">
             <CardContent className="p-8 text-center">
-              <h3 className="text-xl font-heading font-bold text-gradient mb-4">Contato</h3>
+              <h3 className="text-xl font-heading font-bold text-foreground mb-4">Contato</h3>
               <p className="text-muted-foreground mb-2">Se tiver dúvidas sobre estes Termos de Uso:</p>
               <p className="text-primary font-semibold">contato@designoai.com.br</p>
             </CardContent>

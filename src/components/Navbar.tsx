@@ -1,188 +1,137 @@
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import ActionButton from '@/components/ActionButton';
 
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Menu, X, MessageCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useSparkEffect } from '@/hooks/useSparkEffect';
-import { motion, AnimatePresence } from 'framer-motion';
+const primaryLinks = [
+  { to: '/studio', label: 'Studio' },
+  { to: '/sites-ia', label: 'Sites IA' },
+  { to: '/ai-sdr', label: 'AI SDR' },
+  { to: '/services', label: 'Serviços' },
+  { to: '/recursos', label: 'Recursos' },
+];
+
+const anchorLinks = [
+  { href: '/#how-it-works', label: 'Processo' },
+  { href: '/#pricing', label: 'Planos' },
+  { href: '/#contact', label: 'Contato' },
+];
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const spark = useSparkEffect({ count: 6, spread: 40 });
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      const y = window.scrollY;
-      setIsScrolled(y > 20);
-      setScrollProgress(Math.min(y / 200, 1));
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const handleConsultorClick = () => {
-    window.open('https://wa.me/5511947968158?text=Olá! Gostaria de falar com um consultor sobre o DesignoAI.', '_blank');
-  };
-  const handleWhatsAppClick = () => {
-    window.open('https://wa.me/5511947968158?text=Olá! Gostaria de saber mais sobre o DesignoAI.', '_blank');
-  };
+  useEffect(() => setOpen(false), [pathname]);
 
-  const navLinks = [
-    { to: '/studio', label: 'Studio' },
-    { to: '/sites-ia', label: 'Sites IA' },
-    { to: '/ai-sdr', label: 'AI SDR' },
-    { to: '/services', label: 'Serviços' },
-    { to: '/recursos', label: 'Recursos' },
-    { href: '#how-it-works', label: 'Como Funciona' },
-    { href: '#pricing', label: 'Preços' },
-    { href: '#contact', label: 'Contato' },
-  ];
+  const openWhatsApp = () =>
+    window.open(
+      'https://wa.me/5511947968158?text=' +
+        encodeURIComponent('Olá! Gostaria de conversar sobre um projeto com a DesignoAI.'),
+      '_blank'
+    );
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
-      style={{
-        backgroundColor: `hsl(220 16% 6% / ${0.4 + scrollProgress * 0.5})`,
-        backdropFilter: `blur(${8 + scrollProgress * 16}px)`,
-        borderBottom: isScrolled ? '1px solid hsl(220 14% 16% / 0.5)' : '1px solid transparent',
-      }}
+      className={`fixed inset-x-0 top-0 z-50 bg-background transition-colors duration-[220ms] ${
+        scrolled ? 'border-b border-border' : 'border-b border-transparent'
+      }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="flex items-center space-x-2 group">
-            <div className="relative">
-              <img
-                alt="DesignoAI Logo"
-                src="/lovable-uploads/09cb8eca-27b9-431a-97cf-fd9a75f478f8.png"
-                className="w-8 h-8 object-contain transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_hsl(195,100%,50%,0.5)]"
-                onClick={(e) => spark(e, 'logo')}
-              />
-            </div>
-            <span className="text-lg font-heading font-bold text-foreground">
-              Designo<span className="text-primary">AI</span>
-            </span>
+      <div className="container-editorial">
+        <div className="flex h-[72px] items-center justify-between">
+          <Link to="/" className="text-[17px] font-bold tracking-[-0.03em] text-foreground">
+            Designo<span className="text-muted-foreground">AI</span>
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-1">
-            {navLinks.map((item) =>
-              'to' in item && item.to ? (
-                <Link
-                  key={item.label}
-                  to={item.to}
-                  className="relative px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-md text-muted-foreground hover:text-foreground group"
-                >
-                  {item.label}
-                  <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
-                </Link>
-              ) : (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="relative px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-md text-muted-foreground hover:text-foreground group"
-                >
-                  {item.label}
-                  <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
-                </a>
-              )
-            )}
+          <nav className="hidden items-center gap-8 lg:flex">
+            {primaryLinks.map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                className={`text-sm transition-colors duration-[220ms] ${
+                  pathname === l.to ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                {l.label}
+              </Link>
+            ))}
+            {anchorLinks.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className="text-sm text-muted-foreground transition-colors duration-[220ms] hover:text-foreground"
+              >
+                {l.label}
+              </a>
+            ))}
           </nav>
 
-          <div className="hidden md:flex items-center">
-            <div className="w-px h-6 bg-border mr-4" />
-            <div className="flex items-center space-x-3">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-muted-foreground hover:text-foreground"
-                onClick={handleConsultorClick}
-              >
-                Falar com Consultor
-              </Button>
-              <Button
-                size="sm"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 glow-sm animate-pulse-glow group"
-                onClick={handleWhatsAppClick}
-              >
-                <MessageCircle className="w-4 h-4 mr-2 group-hover:animate-bounce" />
-                WhatsApp
-              </Button>
-            </div>
+          <div className="hidden items-center gap-2 lg:flex">
+            <ActionButton variant="quiet" size="sm" onClick={openWhatsApp}>
+              Falar com consultor
+            </ActionButton>
+            <ActionButton size="sm" onClick={openWhatsApp}>
+              Solicitar proposta
+            </ActionButton>
           </div>
 
           <button
             type="button"
-            className="md:hidden p-2 text-foreground"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+            className="flex h-11 w-11 items-center justify-center rounded-pill border border-border text-foreground lg:hidden"
+            onClick={() => setOpen(!open)}
           >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {open ? <X className="h-5 w-5" strokeWidth={2} /> : <Menu className="h-5 w-5" strokeWidth={2} />}
           </button>
         </div>
       </div>
 
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {open && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="md:hidden overflow-hidden"
-            style={{ backgroundColor: 'hsl(220 16% 6% / 0.95)', backdropFilter: 'blur(24px)' }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+            className="overflow-hidden border-t border-border bg-background lg:hidden"
           >
-            <div className="px-4 pt-2 pb-3 space-y-1 border-t border-border">
-              {[
-                { to: '/studio', label: 'Studio' },
-                { to: '/sites-ia', label: 'Sites IA' },
-                { to: '/ai-sdr', label: 'AI SDR' },
-                { to: '/services', label: 'Serviços' },
-                { to: '/recursos', label: 'Recursos' },
-              ].map((item, i) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                >
+            <div className="container-editorial py-6">
+              <div className="grid gap-1">
+                {primaryLinks.map((l) => (
                   <Link
-                    to={item.to}
-                    className="block px-3 py-3 text-foreground hover:bg-secondary rounded-lg transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
+                    key={l.to}
+                    to={l.to}
+                    className="py-3 text-base text-foreground"
+                    onClick={() => setOpen(false)}
                   >
-                    {item.label}
+                    {l.label}
                   </Link>
-                </motion.div>
-              ))}
-              {[
-                { href: '#how-it-works', label: 'Como Funciona' },
-                { href: '#pricing', label: 'Preços' },
-                { href: '#contact', label: 'Contato' },
-              ].map((item, i) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: (i + 4) * 0.05 }}
-                >
+                ))}
+                {anchorLinks.map((l) => (
                   <a
-                    href={item.href}
-                    className="block px-3 py-3 text-foreground hover:bg-secondary rounded-lg transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
+                    key={l.href}
+                    href={l.href}
+                    className="py-3 text-base text-muted-foreground"
+                    onClick={() => setOpen(false)}
                   >
-                    {item.label}
+                    {l.label}
                   </a>
-                </motion.div>
-              ))}
-            </div>
-            <div className="px-4 py-4 border-t border-border space-y-2">
-              <Button variant="ghost" className="w-full justify-center" onClick={handleConsultorClick}>
-                Falar com Consultor
-              </Button>
-              <Button className="w-full bg-primary text-primary-foreground" onClick={handleWhatsAppClick}>
-                <MessageCircle className="w-4 h-4 mr-2" />
-                WhatsApp
-              </Button>
+                ))}
+              </div>
+              <div className="mt-6 grid gap-3">
+                <ActionButton onClick={openWhatsApp}>Solicitar proposta</ActionButton>
+                <ActionButton variant="secondary" onClick={openWhatsApp}>
+                  Falar com consultor
+                </ActionButton>
+              </div>
             </div>
           </motion.div>
         )}

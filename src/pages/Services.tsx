@@ -8,7 +8,6 @@ import { Check, ArrowRight, Smartphone, Camera, Brain, Star, MessageCircle, Zap,
 import { motion } from 'framer-motion';
 import SEOHead from '@/components/SEOHead';
 import PremiumHero from '@/components/PremiumHero';
-import OrbitVisual from '@/components/hero-visuals/OrbitVisual';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -68,13 +67,13 @@ const Services = () => {
   }];
 
   const additionalServices = [
-  { name: "Impressão de 100 cartões de visita", price: "R$ 80 – R$ 120", icon: "🎴" },
-  { name: "Catálogo digital interativo", price: "R$ 300", icon: "📱" },
-  { name: "Vídeos Reels (extra)", price: "R$ 80 – R$ 150/un", icon: "🎬" },
-  { name: "Landing Page para campanha", price: "R$ 400", icon: "🌐" },
-  { name: "Consultoria estratégica mensal", price: "R$ 250", icon: "💡" },
-  { name: "Criação de e-mail profissional", price: "R$ 100 (setup)", icon: "📧" },
-  { name: "Google Meu Negócio otimizado", price: "R$ 200", icon: "🗺️" }];
+  { name: "Impressão de 100 cartões de visita", price: "R$ 80 – R$ 120", icon: "" },
+  { name: "Catálogo digital interativo", price: "R$ 300", icon: "" },
+  { name: "Vídeos Reels (extra)", price: "R$ 80 – R$ 150/un", icon: "" },
+  { name: "Landing Page para campanha", price: "R$ 400", icon: "" },
+  { name: "Consultoria estratégica mensal", price: "R$ 250", icon: "" },
+  { name: "Criação de e-mail profissional", price: "R$ 100 (setup)", icon: "" },
+  { name: "Google Meu Negócio otimizado", price: "R$ 200", icon: "" }];
 
   const handleConsultationClick = () => {
     window.open('https://wa.me/5511947968158?text=Olá! Gostaria de agendar uma consultoria gratuita sobre o Plano Fusion.', '_blank');
@@ -95,7 +94,7 @@ const Services = () => {
     initial="hidden"
     whileInView="visible"
     viewport={{ once: true }}
-    className="glass rounded-2xl p-6 hover:border-primary/20 transition-all duration-300 group">
+ className="card-surface rounded-2xl p-6 hover:border-primary/20 transition-all duration-300 group">
       <div className="flex items-center gap-3 mb-4">
         {icon &&
       <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
@@ -142,7 +141,6 @@ const Services = () => {
         subtitle="Atendemos empresas pequenas, médias e grandes, que querem atuar tanto no físico como também no digital"
         ctaLabel="Agende sua Consultoria Gratuita"
         ctaHref="https://wa.me/5511947968158?text=Olá! Gostaria de agendar uma consultoria gratuita sobre o Plano Fusion."
-        visualElement={<OrbitVisual />}
       />
 
       {/* Tabs Content */}
@@ -180,12 +178,11 @@ const Services = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="glass-strong rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-[hsl(270,70%,60%)]/5" />
+ className="card-surface rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
                 <div className="relative z-10">
                   <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
                     <span className="text-foreground">Pronto para </span>
-                    <span className="text-gradient">revolucionar</span>
+                    <span className="text-foreground">revolucionar</span>
                     <br />
                     <span className="text-foreground">seu marketing digital?</span>
                   </h2>
@@ -196,7 +193,7 @@ const Services = () => {
                     </span>
                   </p>
                   <div className="flex flex-col sm:flex-row justify-center gap-4 mb-10">
-                    <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-sm group" onClick={handleStartClick}>
+                    <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 group" onClick={handleStartClick}>
                       Comece Agora
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Button>
@@ -246,7 +243,7 @@ const Services = () => {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
-                  className="glass rounded-xl p-5 flex items-center justify-between hover:border-primary/20 transition-all duration-300">
+ className="card-surface rounded-xl p-5 flex items-center justify-between hover:border-primary/20 transition-all duration-300">
                     <div className="flex items-center gap-3">
                       <span className="text-xl">{s.icon}</span>
                       <span className="text-sm font-medium text-foreground">{s.name}</span>
@@ -262,21 +259,20 @@ const Services = () => {
 
       {/* Bottom CTA */}
       <section className="py-20 md:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.03] to-transparent" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-3xl mx-auto text-center">
+ className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6">
               <span className="text-foreground">Pronto para transformar </span>
-              <span className="text-gradient">seu negócio?</span>
+              <span className="text-foreground">seu negócio?</span>
             </h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
               Entre em contato conosco e descubra como podemos impulsionar sua empresa
             </p>
-            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-sm group" onClick={handleConsultationClick}>
+            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 group" onClick={handleConsultationClick}>
               <MessageCircle className="w-4 h-4 mr-2" />
               Fale Conosco no WhatsApp
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

@@ -15,12 +15,12 @@ const Cookies = () => {
   ];
 
   return (
-    <SubpageLayout title="Política de Cookies" subtitle="Entenda como utilizamos cookies e tecnologias similares para melhorar sua experiência." badge="🍪 Cookies" seoPath="/cookies">
+    <SubpageLayout title="Política de Cookies" subtitle="Entenda como utilizamos cookies e tecnologias similares para melhorar sua experiência." badge=" Cookies" seoPath="/cookies">
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl space-y-6">
           <p className="text-center text-muted-foreground text-sm mb-8">Última atualização: 10 de junho de 2025</p>
 
-          <Card className="glass border-border/50">
+          <Card className="card-surface border-border/50">
             <CardHeader><CardTitle className="flex items-center gap-3 text-xl"><Cookie className="text-primary w-6 h-6" /><span className="text-foreground">O que são Cookies?</span></CardTitle></CardHeader>
             <CardContent className="text-muted-foreground space-y-4">
               <p>Cookies são pequenos arquivos de texto armazenados no seu dispositivo quando você visita um site. Eles nos ajudam a melhorar sua experiência.</p>
@@ -28,7 +28,7 @@ const Cookies = () => {
             </CardContent>
           </Card>
 
-          <Card className="glass border-border/50">
+          <Card className="card-surface border-border/50">
             <CardHeader><CardTitle className="flex items-center gap-3 text-xl"><Settings className="text-primary w-6 h-6" /><span className="text-foreground">Tipos de Cookies</span></CardTitle></CardHeader>
             <CardContent>
               <div className="grid md:grid-cols-2 gap-4">
@@ -42,7 +42,7 @@ const Cookies = () => {
             </CardContent>
           </Card>
 
-          <Card className="glass border-border/50">
+          <Card className="card-surface border-border/50">
             <CardHeader><CardTitle className="flex items-center gap-3 text-xl"><Settings className="text-primary w-6 h-6" /><span className="text-foreground">Cookies Específicos</span></CardTitle></CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
@@ -64,9 +64,9 @@ const Cookies = () => {
             </CardContent>
           </Card>
 
-          <Card className="glass border-primary/20">
+          <Card className="card-surface border-primary/20">
             <CardContent className="p-8 text-center">
-              <h3 className="text-xl font-heading font-bold text-gradient mb-4">Contato</h3>
+              <h3 className="text-xl font-heading font-bold text-foreground mb-4">Contato</h3>
               <p className="text-muted-foreground mb-4">Se tiver dúvidas sobre nossa Política de Cookies:</p>
               <p className="text-primary font-semibold">contato@designoai.com.br</p>
               <p className="text-primary font-semibold">WhatsApp: +55 11 94796-8158</p>

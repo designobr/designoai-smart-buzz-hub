@@ -1,4 +1,3 @@
-
 import { ReactNode } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -18,27 +17,37 @@ interface SubpageLayoutProps {
   onCtaClick?: () => void;
 }
 
-const SubpageLayout = ({ children, title, subtitle, badge, seoDescription, seoPath, visualElement, ctaLabel, ctaHref, onCtaClick }: SubpageLayoutProps) => {
+const SubpageLayout = ({
+  children,
+  title,
+  subtitle,
+  badge,
+  seoDescription,
+  seoPath,
+  ctaLabel,
+  ctaHref,
+  onCtaClick,
+}: SubpageLayoutProps) => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title={title}
-        description={seoDescription || subtitle || `${title} - Soluções de marketing digital com IA da DesignoAI.`}
+        description={seoDescription || subtitle || `${title} — DesignoAI, estúdio de marketing e design.`}
         path={seoPath}
       />
       <Navbar />
 
-      <PremiumHero
-        badge={badge}
-        titleGradient={title}
-        subtitle={subtitle}
-        visualElement={visualElement}
-        ctaLabel={ctaLabel}
-        ctaHref={ctaHref}
-        onCtaClick={onCtaClick}
-      />
-
-      {children}
+      <main>
+        <PremiumHero
+          badge={badge}
+          title={title}
+          subtitle={subtitle}
+          ctaLabel={ctaLabel}
+          ctaHref={ctaHref}
+          onCtaClick={onCtaClick}
+        />
+        {children}
+      </main>
 
       <Footer />
     </div>

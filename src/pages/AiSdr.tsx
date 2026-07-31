@@ -10,7 +10,7 @@ const WHATSAPP_CTA = 'https://wa.me/5511947968158?text=Olá! Quero saber mais so
 
 const FloatingParticle = ({ delay, x, y, size }: { delay: number; x: string; y: string; size: number }) => (
   <motion.div
-    className="absolute rounded-full bg-primary"
+ className="absolute rounded-full bg-primary"
     style={{ left: x, top: y, width: size, height: size, boxShadow: `0 0 ${size * 3}px ${size}px hsl(195 100% 50% / 0.4)` }}
     animate={{ y: [0, -30, 0], opacity: [0.4, 0.9, 0.4], scale: [1, 1.3, 1] }}
     transition={{ duration: 4 + delay, repeat: Infinity, ease: 'easeInOut', delay }}
@@ -39,8 +39,6 @@ const AiSdr = () => {
       {/* ───── HERO ───── */}
       <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[hsl(270,70%,60%)]/5 rounded-full blur-[120px]" />
           <FloatingParticle delay={0} x="10%" y="20%" size={6} />
           <FloatingParticle delay={1} x="85%" y="25%" size={4} />
           <FloatingParticle delay={2} x="15%" y="75%" size={5} />
@@ -50,7 +48,7 @@ const AiSdr = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div {...fadeUp()}>
-              <div className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium text-primary mb-8 animated-border bg-card my-[8px]">
+              <div className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium text-primary mb-8 card-surface bg-card my-[8px]">
                 <Sparkles className="w-4 h-4 mr-2" />
                 O futuro da prospecção B2B chegou. Conheça o seu novo AI SDR.
               </div>
@@ -58,7 +56,7 @@ const AiSdr = () => {
 
             <motion.h1 {...fadeUp(0.1)} className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-[1.1] mb-6">
               <span className="text-foreground">Contrate um AI SDR e transforme seu WhatsApp em uma </span>
-              <span className="shimmer-text">Máquina de Vendas Automática.</span>
+              <span className="text-foreground">Máquina de Vendas Automática.</span>
             </motion.h1>
 
             <motion.p {...fadeUp(0.2)} className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed">
@@ -68,7 +66,7 @@ const AiSdr = () => {
             <motion.div {...fadeUp(0.3)}>
               <Button
                 size="lg"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 glow-md text-sm sm:text-base px-5 sm:px-8 py-5 sm:py-6 rounded-xl group transition-all duration-300 hover:-translate-y-0.5 w-full sm:w-auto max-w-xs sm:max-w-none mx-auto"
+ className="bg-primary text-primary-foreground hover:bg-primary/90 text-sm sm:text-base px-5 sm:px-8 py-5 sm:py-6 rounded-xl group transition-all duration-300 hover:-translate-y-0.5 w-full sm:w-auto max-w-xs sm:max-w-none mx-auto"
                 onClick={openWhatsApp}
               >
                 Quero automatizar minhas vendas com IA
@@ -78,8 +76,8 @@ const AiSdr = () => {
           </div>
         </div>
         <div className="absolute bottom-0 left-0 right-0">
-          <div className="h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-          <div className="h-32 bg-gradient-to-t from-background to-transparent" />
+          <div className="h-px bg-secondary" />
+          <div className="h-32 bg-secondary" />
         </div>
       </section>
 
@@ -89,14 +87,13 @@ const AiSdr = () => {
           <motion.div {...fadeUp()} className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-heading font-bold">
               <span className="text-foreground">O problema é </span>
-              <span className="text-gradient">claro.</span>
+              <span className="text-foreground">claro.</span>
             </h2>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {/* Jeito Antigo */}
-            <motion.div {...fadeUp(0.1)} className="glass rounded-2xl p-8 border-l-4 border-l-destructive relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-destructive/5 rounded-full blur-[60px]" />
+            <motion.div {...fadeUp(0.1)} className="card-surface rounded-2xl p-8 border-l-4 border-l-destructive relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2.5 rounded-xl bg-destructive/10">
                   <XCircle className="w-6 h-6 text-destructive" />
@@ -109,8 +106,7 @@ const AiSdr = () => {
             </motion.div>
 
             {/* Jeito DesignoAI */}
-            <motion.div {...fadeUp(0.2)} className="glass rounded-2xl p-8 border-l-4 border-l-primary relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-[60px]" />
+            <motion.div {...fadeUp(0.2)} className="card-surface rounded-2xl p-8 border-l-4 border-l-primary relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2.5 rounded-xl bg-primary/10">
                   <CheckCircle className="w-6 h-6 text-primary" />
@@ -127,15 +123,15 @@ const AiSdr = () => {
 
       {/* ───── COMO A IA TRABALHA POR VOCÊ ───── */}
       <section className="py-24 md:py-32 relative">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-secondary" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp()} className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-2 glass rounded-full text-sm font-medium text-primary mb-6">
+            <div className="inline-flex items-center px-4 py-2 card-surface rounded-full text-sm font-medium text-primary mb-6">
               Processo
             </div>
             <h2 className="text-3xl md:text-5xl font-heading font-bold">
               <span className="text-foreground">Como a IA </span>
-              <span className="text-gradient">Trabalha por Você</span>
+              <span className="text-foreground">Trabalha por Você</span>
             </h2>
           </motion.div>
 
@@ -162,7 +158,7 @@ const AiSdr = () => {
             ].map((item, i) => {
               const Icon = item.icon;
               return (
-                <motion.div key={i} {...fadeUp(i * 0.15)} className="glass rounded-2xl p-8 hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 group text-center">
+                <motion.div key={i} {...fadeUp(i * 0.15)} className="card-surface rounded-2xl p-8 hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 group text-center">
                   <div className="text-5xl font-heading font-bold text-primary/10 mb-4 group-hover:text-primary/20 transition-colors">
                     {item.step}
                   </div>
@@ -180,17 +176,15 @@ const AiSdr = () => {
 
       {/* ───── AUTORIDADE (EFEITO INCEPTION) ───── */}
       <section className="py-24 md:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary/5" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px]" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div {...fadeUp()} className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center px-4 py-2 glass rounded-full text-sm font-medium text-primary mb-8">
+            <div className="inline-flex items-center px-4 py-2 card-surface rounded-full text-sm font-medium text-primary mb-8">
               <Zap className="w-4 h-4 mr-2" />
               Prova Real
             </div>
             <h2 className="text-3xl md:text-5xl font-heading font-bold mb-8">
               <span className="text-foreground">Como você </span>
-              <span className="text-gradient">chegou até aqui</span>
+              <span className="text-foreground">chegou até aqui</span>
               <span className="text-foreground"> hoje?</span>
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
@@ -204,12 +198,12 @@ const AiSdr = () => {
 
       {/* ───── BENEFÍCIOS ───── */}
       <section className="py-24 md:py-32 relative">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-secondary" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp()} className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-heading font-bold">
               <span className="text-foreground">Por que escolher o </span>
-              <span className="text-gradient">AI SDR?</span>
+              <span className="text-foreground">AI SDR?</span>
             </h2>
           </motion.div>
 
@@ -233,7 +227,7 @@ const AiSdr = () => {
             ].map((item, i) => {
               const Icon = item.icon;
               return (
-                <motion.div key={i} {...fadeUp(i * 0.15)} className="glass rounded-2xl p-8 hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 group">
+                <motion.div key={i} {...fadeUp(i * 0.15)} className="card-surface rounded-2xl p-8 hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 group">
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
                     <Icon className="w-7 h-7 text-primary" />
                   </div>
@@ -248,19 +242,19 @@ const AiSdr = () => {
 
       {/* ───── TESTE AGORA ───── */}
       <section className="py-24 md:py-32 relative overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-secondary" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(142_70%_45%/0.05),transparent_70%)]" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Coluna Esquerda */}
             <motion.div {...fadeUp()} className="text-center md:text-left">
-              <div className="inline-flex items-center px-4 py-2 glass rounded-full text-sm font-medium text-primary mb-6">
+              <div className="inline-flex items-center px-4 py-2 card-surface rounded-full text-sm font-medium text-primary mb-6">
                 <Sparkles className="w-4 h-4 mr-2" />
                 Demonstração ao Vivo
               </div>
               <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6">
                 <span className="text-foreground">Veja a IA </span>
-                <span className="text-gradient">em Ação</span>
+                <span className="text-foreground">em Ação</span>
               </h2>
               <p className="text-lg text-muted-foreground mb-10 leading-relaxed max-w-lg mx-auto md:mx-0">
                 Faça o teste real agora: clique no botão para abrir o WhatsApp, mande a mensagem pré-pronta e sinta a velocidade da nossa automação na prática!
@@ -269,7 +263,7 @@ const AiSdr = () => {
                 href="https://wa.me/5511978594803?text=Quero%20testar%20a%20IA%20da%20DesignoAI"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-10 py-6 rounded-2xl text-lg font-bold text-white transition-all duration-300 hover:-translate-y-1 hover:scale-105 group"
+ className="inline-flex items-center gap-3 px-10 py-6 rounded-2xl text-lg font-bold text-foreground transition-all duration-300 hover:-translate-y-1 hover:scale-105 group"
                 style={{
                   background: 'linear-gradient(135deg, #25D366, #128C7E)',
                   boxShadow: '0 0 30px 5px rgba(37, 211, 102, 0.3), 0 10px 40px -10px rgba(37, 211, 102, 0.5)',
@@ -286,27 +280,26 @@ const AiSdr = () => {
             {/* Coluna Direita — Phone Mockup */}
             <motion.div
               {...fadeUp(0.2)}
-              className="flex justify-center relative"
+ className="flex justify-center relative"
             >
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[400px] bg-primary/20 rounded-full blur-[80px]" />
               <motion.div
                 animate={{ y: [0, -15, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                className="relative w-[280px] h-[500px] rounded-[3rem] border-2 border-border/50 bg-card/80 backdrop-blur-xl shadow-2xl overflow-hidden"
+ className="relative w-[280px] h-[500px] rounded-[3rem] border-2 border-border/50 bg-card/80 shadow-card overflow-hidden"
               >
                 {/* Notch */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-background rounded-b-2xl z-10" />
                 {/* Status bar */}
-                <div className="h-12 bg-[#075E54] flex items-end px-4 pb-1">
-                  <span className="text-white/90 text-xs font-medium">DesignoAI Bot</span>
+                <div className="h-12 bg-secondary flex items-end px-4 pb-1">
+                  <span className="text-muted-foreground text-xs font-medium">DesignoAI Bot</span>
                 </div>
                 {/* Chat area */}
-                <div className="p-3 space-y-3 bg-[#0B141A] flex-1 h-[calc(100%-3rem)]">
+                <div className="p-3 space-y-3 bg-secondary flex-1 h-[calc(100%-3rem)]">
                   {[
-                    { msg: 'Olá! Encontramos sua empresa e acreditamos que podemos ajudar. 🤖', delay: 0.3, fromBot: true },
+                    { msg: 'Olá! Encontramos sua empresa e acreditamos que podemos ajudar. ', delay: 0.3, fromBot: true },
                     { msg: 'Temos uma solução de IA que automatiza a prospecção B2B via WhatsApp.', delay: 0.8, fromBot: true },
                     { msg: 'Interessante! Como funciona?', delay: 1.4, fromBot: false },
-                    { msg: 'Posso agendar uma demonstração gratuita agora mesmo! 🚀', delay: 2.0, fromBot: true },
+                    { msg: 'Posso agendar uma demonstração gratuita agora mesmo! ', delay: 2.0, fromBot: true },
                   ].map((item, i) => (
                     <motion.div
                       key={i}
@@ -314,10 +307,10 @@ const AiSdr = () => {
                       whileInView={{ opacity: 1, y: 0, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.4, delay: item.delay }}
-                      className={`max-w-[85%] px-3 py-2 rounded-xl text-xs leading-relaxed ${
+ className={`max-w-[85%] px-3 py-2 rounded-xl text-xs leading-relaxed ${
                         item.fromBot
-                          ? 'bg-[#1F2C34] text-white/90 rounded-tl-sm mr-auto'
-                          : 'bg-[#005C4B] text-white/90 rounded-tr-sm ml-auto'
+                          ? 'bg-secondary text-muted-foreground rounded-tl-sm mr-auto'
+                          : 'bg-secondary text-muted-foreground rounded-tr-sm ml-auto'
                       }`}
                     >
                       {item.msg}
@@ -332,19 +325,18 @@ const AiSdr = () => {
 
       {/* ───── CTA FINAL ───── */}
       <section className="py-24 md:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div {...fadeUp()} className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6">
               <span className="text-foreground">Assuma o controle do seu </span>
-              <span className="text-gradient">crescimento comercial.</span>
+              <span className="text-foreground">crescimento comercial.</span>
             </h2>
             <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
               Agende uma sessão de diagnóstico gratuita e descubra quantas empresas na sua região estão prontas para comprar o seu serviço hoje.
             </p>
             <Button
               size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 glow-lg text-sm sm:text-base px-5 sm:px-8 py-5 sm:py-7 rounded-xl group transition-all duration-300 hover:-translate-y-0.5 w-full sm:w-auto max-w-xs sm:max-w-none mx-auto"
+ className="bg-primary text-primary-foreground hover:bg-primary/90 text-sm sm:text-base px-5 sm:px-8 py-5 sm:py-7 rounded-xl group transition-all duration-300 hover:-translate-y-0.5 w-full sm:w-auto max-w-xs sm:max-w-none mx-auto"
               onClick={openWhatsApp}
             >
               Falar com um Especialista no WhatsApp

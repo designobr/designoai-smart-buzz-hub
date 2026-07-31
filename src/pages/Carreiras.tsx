@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Code, Brain, Palette, TrendingUp, Users, Headphones, Target, Clock, Globe, Package, CheckCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/components/ui/use-toast';
-import TeamVisual from '@/components/hero-visuals/TeamVisual';
 
 const Carreiras = () => {
   const [selectedJob, setSelectedJob] = useState<any>(null);
@@ -88,19 +87,18 @@ const Carreiras = () => {
       subtitle="Junte-se à DesignoAI e faça parte de uma equipe inovadora que está revolucionando o marketing digital através da inteligência artificial."
       seoPath="/carreiras"
       seoDescription="Trabalhe na DesignoAI: vagas em marketing digital, design, desenvolvimento e IA. Faça parte da revolução do marketing com inteligência artificial."
-      badge="💼 Venha fazer parte"
-      visualElement={<TeamVisual />}
+      badge=" Venha fazer parte"
     >
       {/* Benefits */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-3xl md:text-4xl font-heading font-bold text-center mb-12">
-            <span className="text-gradient">Por que trabalhar na DesignoAI?</span>
+            <span className="text-foreground">Por que trabalhar na DesignoAI?</span>
           </motion.h2>
           <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {benefits.map((b, i) => (
               <motion.div key={i} variants={itemVariants}>
-                <Card className="glass border-border/50 hover:border-primary/30 transition-all duration-300 group h-full">
+                <Card className="card-surface border-border/50 hover:border-primary/30 transition-all duration-300 group h-full">
                   <CardHeader className="text-center pb-3">
                     <div className="mx-auto mb-3 p-3 rounded-xl bg-primary/10 w-fit group-hover:bg-primary/20 transition-colors">
                       <b.icon className="w-7 h-7 text-primary" />
@@ -116,9 +114,9 @@ const Carreiras = () => {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <Card className="glass border-border/50">
+            <Card className="card-surface border-border/50">
               <CardContent className="p-8 md:p-12">
-                <h3 className="text-2xl font-heading font-bold text-center mb-8 text-gradient">Benefícios Completos</h3>
+                <h3 className="text-2xl font-heading font-bold text-center mb-8 text-foreground">Benefícios Completos</h3>
                 <div className="grid md:grid-cols-2 gap-6">
                   {[
                     { icon: Target, text: "Planos de carreira personalizados" },
@@ -143,12 +141,12 @@ const Carreiras = () => {
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-3xl md:text-4xl font-heading font-bold text-center mb-12">
-            <span className="text-gradient">Vagas Disponíveis</span>
+            <span className="text-foreground">Vagas Disponíveis</span>
           </motion.h2>
           <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {jobs.map((job) => (
               <motion.div key={job.id} variants={itemVariants}>
-                <Card className="glass border-border/50 hover:border-primary/30 cursor-pointer transition-all duration-300 group h-full" onClick={() => setSelectedJob(job)}>
+                <Card className="card-surface border-border/50 hover:border-primary/30 cursor-pointer transition-all duration-300 group h-full" onClick={() => setSelectedJob(job)}>
                   <CardHeader className="text-center pb-3">
                     <div className="mx-auto mb-3 p-3 rounded-xl bg-primary/10 w-fit group-hover:bg-primary/20 transition-colors">
                       <job.icon className="w-7 h-7 text-primary" />
@@ -172,7 +170,7 @@ const Carreiras = () => {
 
           {selectedJob && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-              <Card className="glass border-primary/20 mb-12">
+              <Card className="card-surface border-primary/20 mb-12">
                 <CardContent className="p-8">
                   <div className="flex items-center mb-6 gap-4">
                     <div className="p-3 rounded-xl bg-primary/10">
@@ -204,9 +202,9 @@ const Carreiras = () => {
       {/* Form */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
-          <Card className="glass border-border/50">
+          <Card className="card-surface border-border/50">
             <CardHeader className="text-center pb-4">
-              <CardTitle className="text-3xl text-gradient">Candidate-se</CardTitle>
+              <CardTitle className="text-3xl text-foreground">Candidate-se</CardTitle>
               <CardDescription className="text-muted-foreground text-lg">Preencha o formulário abaixo e envie sua candidatura</CardDescription>
             </CardHeader>
             <CardContent className="p-8 pt-0">
@@ -226,7 +224,7 @@ const Carreiras = () => {
                       required={field.required}
                       value={(formData as any)[field.id]}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
+ className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
                     />
                   </div>
                 ))}
@@ -238,7 +236,7 @@ const Carreiras = () => {
                     required
                     value={formData.position}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
+ className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
                   >
                     <option value="">Selecione uma vaga</option>
                     {jobs.map((j) => <option key={j.id} value={j.title}>{j.title}</option>)}
@@ -253,7 +251,7 @@ const Carreiras = () => {
                     value={formData.experience}
                     onChange={handleInputChange}
                     rows={3}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors resize-none"
+ className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors resize-none"
                   />
                 </div>
                 <div className="space-y-2">
@@ -265,7 +263,7 @@ const Carreiras = () => {
                     value={formData.motivation}
                     onChange={handleInputChange}
                     rows={3}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors resize-none"
+ className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors resize-none"
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={isSubmitting}>

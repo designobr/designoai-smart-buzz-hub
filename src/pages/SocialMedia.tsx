@@ -26,14 +26,14 @@ const SocialMedia = () => {
   ];
 
   return (
-    <SubpageLayout title="Social Media" subtitle="Transforme sua presença digital com inteligência artificial que cria conteúdo envolvente e gerencia suas redes sociais." badge="📱 Social Media" seoPath="/social-media" seoDescription="Social Media com IA: gestão completa de redes sociais, criação de conteúdo e análise de métricas. Transforme sua presença digital com a DesignoAI.">
+    <SubpageLayout title="Social Media" subtitle="Transforme sua presença digital com inteligência artificial que cria conteúdo envolvente e gerencia suas redes sociais." badge=" Social Media" seoPath="/social-media" seoDescription="Social Media com IA: gestão completa de redes sociais, criação de conteúdo e análise de métricas. Transforme sua presença digital com a DesignoAI.">
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-gradient">Recursos Principais</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Recursos Principais</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((f, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
-                <Card className="glass border-border/50 hover:border-primary/30 transition-all group h-full">
+                <Card className="card-surface border-border/50 hover:border-primary/30 transition-all group h-full">
                   <CardHeader className="text-center pb-3">
                     <div className="mx-auto mb-3 p-3 rounded-xl bg-primary/10 w-fit group-hover:bg-primary/20 transition-colors"><f.icon className="w-7 h-7 text-primary" /></div>
                     <CardTitle className="text-lg text-foreground">{f.title}</CardTitle>
@@ -48,8 +48,8 @@ const SocialMedia = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-gradient">Resultados Comprovados</h2>
-          <Card className="glass border-border/50">
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Resultados Comprovados</h2>
+          <Card className="card-surface border-border/50">
             <CardContent className="p-8 md:p-12">
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <ul className="space-y-4">
@@ -57,8 +57,8 @@ const SocialMedia = () => {
                     <li key={i} className="flex items-start gap-3"><CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" /><span className="text-muted-foreground">{b}</span></li>
                   ))}
                 </ul>
-                <div className="glass-strong rounded-2xl p-8 text-center">
-                  <h4 className="text-4xl font-heading font-bold text-gradient mb-2">98%</h4>
+                <div className="card-surface rounded-2xl p-8 text-center">
+                  <h4 className="text-4xl font-heading font-bold text-foreground mb-2">98%</h4>
                   <p className="text-muted-foreground">Taxa de satisfação dos clientes</p>
                 </div>
               </div>

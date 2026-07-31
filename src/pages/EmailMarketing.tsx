@@ -24,14 +24,14 @@ const EmailMarketing = () => {
   ];
 
   return (
-    <SubpageLayout title="Email Marketing" subtitle="Revolucione sua comunicação com campanhas de email marketing inteligentes e personalizadas." badge="📧 Email com IA" seoPath="/email-marketing" seoDescription="Email marketing com IA: campanhas automatizadas, segmentação inteligente e personalização avançada. Aumente suas conversões com a DesignoAI.">
+    <SubpageLayout title="Email Marketing" subtitle="Revolucione sua comunicação com campanhas de email marketing inteligentes e personalizadas." badge=" Email com IA" seoPath="/email-marketing" seoDescription="Email marketing com IA: campanhas automatizadas, segmentação inteligente e personalização avançada. Aumente suas conversões com a DesignoAI.">
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-gradient">Recursos Principais</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Recursos Principais</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((f, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
-                <Card className="glass border-border/50 hover:border-primary/30 transition-all group h-full">
+                <Card className="card-surface border-border/50 hover:border-primary/30 transition-all group h-full">
                   <CardHeader className="text-center pb-3">
                     <div className="mx-auto mb-3 p-3 rounded-xl bg-primary/10 w-fit group-hover:bg-primary/20 transition-colors"><f.icon className="w-7 h-7 text-primary" /></div>
                     <CardTitle className="text-lg text-foreground">{f.title}</CardTitle>
@@ -46,8 +46,8 @@ const EmailMarketing = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-gradient">Automação Inteligente</h2>
-          <Card className="glass border-border/50">
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Automação Inteligente</h2>
+          <Card className="card-surface border-border/50">
             <CardContent className="p-8 md:p-12">
               <p className="text-lg text-muted-foreground text-center mb-8">Configuramos fluxos automatizados que respondem ao comportamento do usuário em tempo real:</p>
               <div className="grid md:grid-cols-2 gap-4">

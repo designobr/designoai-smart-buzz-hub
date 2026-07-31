@@ -37,7 +37,7 @@ const OtimizacaoImagens = () => {
   ];
 
   return (
-    <SubpageLayout title="Otimização de Imagens" subtitle="Transforme fotos comuns em poderosas ferramentas de venda com IA." badge="📸 Imagens com IA" seoPath="/otimizacao-imagens" seoDescription="Otimização de imagens com IA: melhore a qualidade, comprima sem perda e gere imagens profissionais para suas campanhas de marketing digital.">
+    <SubpageLayout title="Otimização de Imagens" subtitle="Transforme fotos comuns em poderosas ferramentas de venda com IA." badge=" Imagens com IA" seoPath="/otimizacao-imagens" seoDescription="Otimização de imagens com IA: melhore a qualidade, comprima sem perda e gere imagens profissionais para suas campanhas de marketing digital.">
       {/* Problems */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
@@ -46,7 +46,7 @@ const OtimizacaoImagens = () => {
           <div className="grid md:grid-cols-3 gap-6">
             {problems.map((p, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                <Card className="glass border-border/50 hover:border-primary/30 transition-all group h-full">
+                <Card className="card-surface border-border/50 hover:border-primary/30 transition-all group h-full">
                   <CardHeader className="text-center pb-3">
                     <div className="mx-auto mb-3 p-3 rounded-xl bg-destructive/10 w-fit"><p.icon className={`w-7 h-7 ${p.color}`} /></div>
                     <CardTitle className="text-lg text-foreground">{p.title}</CardTitle>
@@ -68,8 +68,8 @@ const OtimizacaoImagens = () => {
       {/* Solution */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
-          <div className="glass-strong rounded-3xl p-8 md:p-12">
-            <h2 className="text-3xl font-heading font-bold mb-6 text-gradient">A Solução que Vai Revolucionar Suas Vendas</h2>
+          <div className="card-surface rounded-3xl p-8 md:p-12">
+            <h2 className="text-3xl font-heading font-bold mb-6 text-foreground">A Solução que Vai Revolucionar Suas Vendas</h2>
             <p className="text-lg text-muted-foreground mb-8">Nossa tecnologia de otimização profissional com IA transforma suas imagens comuns em ferramentas poderosas de conversão.</p>
             <div className="inline-flex items-center px-6 py-3 rounded-full bg-primary/20 border border-primary/30 mb-8">
               <span className="text-2xl font-bold text-primary">+25%</span>
@@ -90,11 +90,11 @@ const OtimizacaoImagens = () => {
       {/* Benefits */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-gradient">Por Que Escolher Nosso Serviço?</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Por Que Escolher Nosso Serviço?</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {benefitsCards.map((b, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                <Card className="glass border-border/50 hover:border-primary/30 transition-all group h-full">
+                <Card className="card-surface border-border/50 hover:border-primary/30 transition-all group h-full">
                   <CardHeader className="text-center pb-3">
                     <div className="mx-auto mb-3 p-3 rounded-xl bg-primary/10 w-fit group-hover:bg-primary/20 transition-colors"><b.icon className="w-7 h-7 text-primary" /></div>
                     <CardTitle className="text-lg text-foreground">{b.title}</CardTitle>
@@ -110,8 +110,8 @@ const OtimizacaoImagens = () => {
       {/* Package */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-lg text-center">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-6">🔥 OFERTA ESPECIAL</div>
-          <Card className="glass border-primary/30 relative overflow-hidden">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-6"> OFERTA ESPECIAL</div>
+          <Card className="card-surface border-primary/30 relative overflow-hidden">
             <div className="absolute top-4 right-4 bg-destructive text-destructive-foreground px-3 py-1 rounded-full text-xs font-bold">POPULAR</div>
             <CardHeader className="text-center pb-4">
               <CardTitle className="text-2xl text-foreground mb-2">Pacote Profissional</CardTitle>
@@ -140,7 +140,7 @@ const OtimizacaoImagens = () => {
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-6">
-            Garanta Agora Fotos Profissionais <span className="text-gradient">e Aumente Suas Vendas!</span>
+            Garanta Agora Fotos Profissionais <span className="text-foreground">e Aumente Suas Vendas!</span>
           </h2>
           <p className="text-lg text-muted-foreground mb-8">Não perca mais clientes por causa de imagens amadoras. Transforme seu negócio hoje.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
