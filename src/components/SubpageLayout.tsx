@@ -32,7 +32,7 @@ const SubpageLayout = ({
     <div className="min-h-screen bg-background">
       <SEOHead
         title={title}
-        description={seoDescription || subtitle || `${title} — DesignoAI, estúdio de marketing e design.`}
+        description={seoDescription || subtitle || `${title} - DesignoAI, estúdio de marketing e design.`}
         path={seoPath}
       />
       <Navbar />

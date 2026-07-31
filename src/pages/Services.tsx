@@ -67,9 +67,9 @@ const Services = () => {
   }];
 
   const additionalServices = [
-  { name: "Impressão de 100 cartões de visita", price: "R$ 80 – R$ 120", icon: "" },
+  { name: "Impressão de 100 cartões de visita", price: "R$ 80 a R$ 120", icon: "" },
   { name: "Catálogo digital interativo", price: "R$ 300", icon: "" },
-  { name: "Vídeos Reels (extra)", price: "R$ 80 – R$ 150/un", icon: "" },
+  { name: "Vídeos Reels (extra)", price: "R$ 80 a R$ 150/un", icon: "" },
   { name: "Landing Page para campanha", price: "R$ 400", icon: "" },
   { name: "Consultoria estratégica mensal", price: "R$ 250", icon: "" },
   { name: "Criação de e-mail profissional", price: "R$ 100 (setup)", icon: "" },

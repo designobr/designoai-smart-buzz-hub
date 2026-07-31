@@ -24,8 +24,8 @@ const Hero = () => {
               Marcas construídas com clareza, método e inteligência.
             </h1>
             <p className="lead mt-7 max-w-xl">
-              Estratégia, identidade visual e crescimento digital para empresas que querem parecer —
-              e operar — no seu melhor nível.
+              Estratégia, identidade visual e crescimento digital para empresas que querem parecer
+              e operar no seu melhor nível.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <ActionButton onClick={() => scrollTo('contact')}>

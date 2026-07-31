@@ -30,7 +30,7 @@ const AiSdr = () => {
   return (
     <>
       <SEOHead
-        title="AI SDR — Máquina de Prospecção B2B com IA"
+        title="AI SDR: Máquina de Prospecção B2B com IA"
         description="Contrate um AI SDR e transforme seu WhatsApp em uma máquina de vendas automática. Prospecção B2B inteligente com Inteligência Artificial pela DesignoAI."
         path="/ai-sdr"
       />
@@ -277,7 +277,7 @@ const AiSdr = () => {
               </a>
             </motion.div>
 
-            {/* Coluna Direita — Phone Mockup */}
+            {/* Coluna Direita: Phone Mockup */}
             <motion.div
               {...fadeUp(0.2)}
  className="flex justify-center relative"

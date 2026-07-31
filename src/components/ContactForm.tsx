@@ -146,9 +146,9 @@ const ContactForm = () => {
                   className="field appearance-none"
                 >
                   <option value="">Selecione uma faixa</option>
-                  <option value="2000-4000">R$ 2.000 — R$ 4.000</option>
-                  <option value="4000-6000">R$ 4.000 — R$ 6.000</option>
-                  <option value="6000-10000">R$ 6.000 — R$ 10.000</option>
+                  <option value="2000-4000">R$ 2.000 a R$ 4.000</option>
+                  <option value="4000-6000">R$ 4.000 a R$ 6.000</option>
+                  <option value="6000-10000">R$ 6.000 a R$ 10.000</option>
                   <option value="10000+">Acima de R$ 10.000</option>
                 </select>
               </div>
