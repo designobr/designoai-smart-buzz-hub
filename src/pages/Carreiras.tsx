@@ -87,7 +87,7 @@ const Carreiras = () => {
       subtitle="Junte-se à DesignoAI e faça parte de uma equipe inovadora que está revolucionando o marketing digital através da inteligência artificial."
       seoPath="/carreiras"
       seoDescription="Trabalhe na DesignoAI: vagas em marketing digital, design, desenvolvimento e IA. Faça parte da revolução do marketing com inteligência artificial."
-      badge="💼 Venha fazer parte"
+      badge=" Venha fazer parte"
     >
       {/* Benefits */}
       <section className="py-20">

@@ -67,13 +67,13 @@ const Services = () => {
   }];
 
   const additionalServices = [
-  { name: "Impressão de 100 cartões de visita", price: "R$ 80 – R$ 120", icon: "🎴" },
-  { name: "Catálogo digital interativo", price: "R$ 300", icon: "📱" },
-  { name: "Vídeos Reels (extra)", price: "R$ 80 – R$ 150/un", icon: "🎬" },
-  { name: "Landing Page para campanha", price: "R$ 400", icon: "🌐" },
-  { name: "Consultoria estratégica mensal", price: "R$ 250", icon: "💡" },
-  { name: "Criação de e-mail profissional", price: "R$ 100 (setup)", icon: "📧" },
-  { name: "Google Meu Negócio otimizado", price: "R$ 200", icon: "🗺️" }];
+  { name: "Impressão de 100 cartões de visita", price: "R$ 80 – R$ 120", icon: "" },
+  { name: "Catálogo digital interativo", price: "R$ 300", icon: "" },
+  { name: "Vídeos Reels (extra)", price: "R$ 80 – R$ 150/un", icon: "" },
+  { name: "Landing Page para campanha", price: "R$ 400", icon: "" },
+  { name: "Consultoria estratégica mensal", price: "R$ 250", icon: "" },
+  { name: "Criação de e-mail profissional", price: "R$ 100 (setup)", icon: "" },
+  { name: "Google Meu Negócio otimizado", price: "R$ 200", icon: "" }];
 
   const handleConsultationClick = () => {
     window.open('https://wa.me/5511947968158?text=Olá! Gostaria de agendar uma consultoria gratuita sobre o Plano Fusion.', '_blank');
@@ -179,7 +179,6 @@ const Services = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
  className="card-surface rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-secondary" />
                 <div className="relative z-10">
                   <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
                     <span className="text-foreground">Pronto para </span>
@@ -260,7 +259,6 @@ const Services = () => {
 
       {/* Bottom CTA */}
       <section className="py-20 md:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-secondary" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

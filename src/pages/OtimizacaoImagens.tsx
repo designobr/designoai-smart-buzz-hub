@@ -37,7 +37,7 @@ const OtimizacaoImagens = () => {
   ];
 
   return (
-    <SubpageLayout title="Otimização de Imagens" subtitle="Transforme fotos comuns em poderosas ferramentas de venda com IA." badge="📸 Imagens com IA" seoPath="/otimizacao-imagens" seoDescription="Otimização de imagens com IA: melhore a qualidade, comprima sem perda e gere imagens profissionais para suas campanhas de marketing digital.">
+    <SubpageLayout title="Otimização de Imagens" subtitle="Transforme fotos comuns em poderosas ferramentas de venda com IA." badge=" Imagens com IA" seoPath="/otimizacao-imagens" seoDescription="Otimização de imagens com IA: melhore a qualidade, comprima sem perda e gere imagens profissionais para suas campanhas de marketing digital.">
       {/* Problems */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
@@ -110,7 +110,7 @@ const OtimizacaoImagens = () => {
       {/* Package */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-lg text-center">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-6">🔥 OFERTA ESPECIAL</div>
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-6"> OFERTA ESPECIAL</div>
           <Card className="card-surface border-primary/30 relative overflow-hidden">
             <div className="absolute top-4 right-4 bg-destructive text-destructive-foreground px-3 py-1 rounded-full text-xs font-bold">POPULAR</div>
             <CardHeader className="text-center pb-4">

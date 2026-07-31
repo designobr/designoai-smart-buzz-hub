@@ -24,7 +24,7 @@ const Recursos = () => {
     <SubpageLayout
       title="Recursos Poderosos"
       subtitle="Descubra todas as funcionalidades que fazem do DesignoAI a ferramenta mais completa para seu marketing digital"
-      badge="🚀 Recursos"
+      badge=" Recursos"
       seoPath="/recursos"
       seoDescription="Recursos completos da DesignoAI: automação de marketing, design com IA, SEO inteligente, gestão de redes sociais e muito mais para impulsionar seu negócio."
     >

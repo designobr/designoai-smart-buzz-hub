@@ -15,7 +15,7 @@ const Cookies = () => {
   ];
 
   return (
-    <SubpageLayout title="Política de Cookies" subtitle="Entenda como utilizamos cookies e tecnologias similares para melhorar sua experiência." badge="🍪 Cookies" seoPath="/cookies">
+    <SubpageLayout title="Política de Cookies" subtitle="Entenda como utilizamos cookies e tecnologias similares para melhorar sua experiência." badge=" Cookies" seoPath="/cookies">
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl space-y-6">
           <p className="text-center text-muted-foreground text-sm mb-8">Última atualização: 10 de junho de 2025</p>

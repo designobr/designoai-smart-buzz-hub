@@ -34,7 +34,7 @@ const CriacaoConteudo = () => {
   ];
 
   return (
-    <SubpageLayout title="Criação de Conteúdo" subtitle="Transforme sua comunicação com inteligência artificial que gera textos, imagens e gráficos de alta qualidade." badge="✍️ Conteúdo com IA" seoPath="/criacao-conteudo" seoDescription="Criação de conteúdo com IA: textos, imagens e gráficos de alta qualidade para redes sociais, blogs e campanhas. Aumente seu engajamento com a DesignoAI.">
+    <SubpageLayout title="Criação de Conteúdo" subtitle="Transforme sua comunicação com inteligência artificial que gera textos, imagens e gráficos de alta qualidade." badge=" Conteúdo com IA" seoPath="/criacao-conteudo" seoDescription="Criação de conteúdo com IA: textos, imagens e gráficos de alta qualidade para redes sociais, blogs e campanhas. Aumente seu engajamento com a DesignoAI.">
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Recursos Principais</h2>

@@ -34,17 +34,17 @@ const Studio = () => {
   };
 
   const targetAudience = [
-    { icon: '💼', title: 'Empreendedores & Coaches', description: 'Transmita autoridade e profissionalismo em seus canais digitais' },
-    { icon: '⚖️', title: 'Profissionais Liberais', description: 'Advogados, corretores, consultores e mentores que fortalecem sua marca pessoal' },
-    { icon: '📱', title: 'Criadores de Conteúdo', description: 'Eleve a qualidade visual do seu feed e perfil profissional' },
-    { icon: '🎯', title: 'Executivos & Lideranças', description: 'Imagens profissionais para LinkedIn, site corporativo e materiais institucionais' },
+    { icon: '', title: 'Empreendedores & Coaches', description: 'Transmita autoridade e profissionalismo em seus canais digitais' },
+    { icon: '', title: 'Profissionais Liberais', description: 'Advogados, corretores, consultores e mentores que fortalecem sua marca pessoal' },
+    { icon: '', title: 'Criadores de Conteúdo', description: 'Eleve a qualidade visual do seu feed e perfil profissional' },
+    { icon: '', title: 'Executivos & Lideranças', description: 'Imagens profissionais para LinkedIn, site corporativo e materiais institucionais' },
   ];
 
   const benefits = [
-    { icon: '🎨', title: 'Alta Qualidade', description: 'IA treinada em fotografia profissional, direção de arte e personal branding. Preservação natural da sua identidade única.' },
-    { icon: '⚡', title: 'Entrega em 24h', description: 'Receba suas fotos profissionais em até 24 horas. Sem deslocamento, sem estúdio, 100% online.' },
-    { icon: '🔒', title: 'Privacidade Total', description: 'Seus dados protegidos com criptografia. Processamento seguro e confidencial.' },
-    { icon: '✅', title: 'Garantia Absoluta', description: 'Satisfação garantida ou seu dinheiro de volta. Sem perguntas, sem burocracia.' },
+    { icon: '', title: 'Alta Qualidade', description: 'IA treinada em fotografia profissional, direção de arte e personal branding. Preservação natural da sua identidade única.' },
+    { icon: '', title: 'Entrega em 24h', description: 'Receba suas fotos profissionais em até 24 horas. Sem deslocamento, sem estúdio, 100% online.' },
+    { icon: '', title: 'Privacidade Total', description: 'Seus dados protegidos com criptografia. Processamento seguro e confidencial.' },
+    { icon: '', title: 'Garantia Absoluta', description: 'Satisfação garantida ou seu dinheiro de volta. Sem perguntas, sem burocracia.' },
   ];
 
   const traditionalList = [
@@ -64,10 +64,10 @@ const Studio = () => {
   ];
 
   const steps = [
-    { icon: '1️⃣', title: 'Contratação', description: 'Escolha o pacote ideal e finalize sua compra de forma segura.' },
-    { icon: '2️⃣', title: 'Envio das Selfies', description: 'Envie 5 a 10 selfies simples tiradas com seu celular. Sem produção prévia necessária.' },
-    { icon: '3️⃣', title: 'Processamento IA', description: 'Nossa IA recria você em cenários profissionais de alto padrão.' },
-    { icon: '4️⃣', title: 'Entrega', description: 'Receba seu pack completo em até 24h, pronto para usar.' },
+    { icon: '1⃣', title: 'Contratação', description: 'Escolha o pacote ideal e finalize sua compra de forma segura.' },
+    { icon: '2⃣', title: 'Envio das Selfies', description: 'Envie 5 a 10 selfies simples tiradas com seu celular. Sem produção prévia necessária.' },
+    { icon: '3⃣', title: 'Processamento IA', description: 'Nossa IA recria você em cenários profissionais de alto padrão.' },
+    { icon: '4⃣', title: 'Entrega', description: 'Receba seu pack completo em até 24h, pronto para usar.' },
   ];
 
   const faqs = [
@@ -130,8 +130,6 @@ const Studio = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/6 w-[500px] h-[500px] bg-[hsl(240,70%,60%)]/10 rounded-full" />
-          <div className="absolute bottom-1/4 right-1/6 w-[400px] h-[400px] bg-[hsl(270,70%,60%)]/10 rounded-full" />
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -143,7 +141,7 @@ const Studio = () => {
  className="text-center md:text-left"
             >
               <div className="inline-flex items-center px-4 py-2 bg-secondary rounded-full text-sm font-medium text-muted-foreground mb-6 border border-border">
-                ✨ Fotografia com IA
+                 Fotografia com IA
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-[1.1] mb-6 text-foreground">
                 DesignoAI <span className="text-muted-foreground">Studio</span>
@@ -183,7 +181,6 @@ const Studio = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <div className="absolute top-0 left-[-100%] w-full h-full bg-transparent group-hover:left-[100%] transition-all duration-500" />
                 <span className="text-4xl mb-4 block">{item.icon}</span>
                 <h3 className="text-xl font-bold mb-3">{item.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{item.description}</p>
@@ -213,7 +210,6 @@ const Studio = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <div className="absolute top-0 left-[-100%] w-full h-full bg-transparent group-hover:left-[100%] transition-all duration-500" />
                 <span className="text-4xl mb-4 block">{item.icon}</span>
                 <h3 className="text-xl font-bold mb-3">{item.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{item.description}</p>
@@ -254,7 +250,7 @@ const Studio = () => {
                 />
                 <div className="absolute inset-0 bg-foreground/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                  <span className="text-foreground text-sm font-semibold">✨ Criado com IA</span>
+                  <span className="text-foreground text-sm font-semibold"> Criado com IA</span>
                 </div>
               </motion.div>
             ))}
@@ -294,7 +290,6 @@ const Studio = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.15 }}
               >
-                <div className="absolute top-0 left-[-100%] w-full h-full bg-transparent group-hover:left-[100%] transition-all duration-500" />
                 
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-border">
@@ -347,7 +342,7 @@ const Studio = () => {
               <ul className="space-y-3">
                 {traditionalList.map((item, index) => (
                   <li key={index} className="flex items-start gap-3 text-muted-foreground">
-                    <span className="text-primary-foreground font-bold">✓</span>
+                    <span className="text-primary-foreground font-bold"></span>
                     {item}
                   </li>
                 ))}
@@ -355,11 +350,11 @@ const Studio = () => {
             </div>
 
             <div className="relative z-10">
-              <h3 className="text-2xl font-bold mb-6">DesignoAI Studio ✨</h3>
+              <h3 className="text-2xl font-bold mb-6">DesignoAI Studio </h3>
               <ul className="space-y-3">
                 {designoaiList.map((item, index) => (
                   <li key={index} className="flex items-start gap-3 text-muted-foreground">
-                    <span className="text-primary-foreground font-bold">✓</span>
+                    <span className="text-primary-foreground font-bold"></span>
                     {item}
                   </li>
                 ))}
@@ -389,7 +384,6 @@ const Studio = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <div className="absolute top-0 left-[-100%] w-full h-full bg-transparent group-hover:left-[100%] transition-all duration-500" />
                 <span className="text-4xl mb-4 block">{item.icon}</span>
                 <h3 className="text-xl font-bold mb-3">{item.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{item.description}</p>
@@ -414,7 +408,7 @@ const Studio = () => {
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
             />
             <div className="relative z-10">
-              <span className="text-5xl mb-4 block">🛡️</span>
+              <span className="text-5xl mb-4 block"></span>
               <h2 className="text-2xl md:text-3xl font-bold mb-2">Garantia DesignoAI</h2>
               <h3 className="text-3xl md:text-4xl font-extrabold mb-4">100% Satisfação Garantida</h3>
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -499,14 +493,13 @@ const Studio = () => {
           </div>
 
           <p className="text-center text-muted-foreground text-lg">
-            🌎 Atendimento 100% Online - Todo o Brasil
+             Atendimento 100% Online - Todo o Brasil
           </p>
         </div>
       </section>
 
       {/* Final CTA Section */}
       <section className="py-20 px-4 md:px-8 relative overflow-hidden">
-        <div className="absolute inset-0 bg-secondary" />
         <motion.div 
  className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_50%)]"
           animate={{ y: [0, -20, 0] }}
@@ -532,7 +525,7 @@ const Studio = () => {
             Começar Minha Transformação
           </button>
           <p className="mt-6 text-muted-foreground">
-            ⚡ Vagas limitadas por mês para garantir o mais alto padrão de qualidade
+             Vagas limitadas por mês para garantir o mais alto padrão de qualidade
           </p>
         </motion.div>
       </section>

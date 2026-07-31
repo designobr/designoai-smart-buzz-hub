@@ -31,7 +31,7 @@ const Parcerias = () => {
     <SubpageLayout
       title="Parcerias"
       subtitle="Construindo relacionamentos duradouros para oferecer soluções ainda mais completas e inovadoras."
-      badge="🤝 Cresça conosco"
+      badge=" Cresça conosco"
       seoPath="/parcerias"
       seoDescription="Parcerias DesignoAI: junte-se a nós e ofereça soluções de marketing digital com IA para seus clientes. Programa de parceiros com comissões atrativas."
     >

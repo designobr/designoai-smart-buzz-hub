@@ -32,7 +32,7 @@ const Blog = () => {
     <SubpageLayout
       title="Blog"
       subtitle="Seu portal de conhecimento sobre IA aplicada ao marketing digital."
-      badge="📝 Conteúdo"
+      badge=" Conteúdo"
       seoPath="/blog"
       seoDescription="Blog DesignoAI: dicas, tutoriais e insights sobre marketing digital com IA, gestão de redes sociais, SEO e design automatizado."
     >

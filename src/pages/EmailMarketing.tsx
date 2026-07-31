@@ -24,7 +24,7 @@ const EmailMarketing = () => {
   ];
 
   return (
-    <SubpageLayout title="Email Marketing" subtitle="Revolucione sua comunicação com campanhas de email marketing inteligentes e personalizadas." badge="📧 Email com IA" seoPath="/email-marketing" seoDescription="Email marketing com IA: campanhas automatizadas, segmentação inteligente e personalização avançada. Aumente suas conversões com a DesignoAI.">
+    <SubpageLayout title="Email Marketing" subtitle="Revolucione sua comunicação com campanhas de email marketing inteligentes e personalizadas." badge=" Email com IA" seoPath="/email-marketing" seoDescription="Email marketing com IA: campanhas automatizadas, segmentação inteligente e personalização avançada. Aumente suas conversões com a DesignoAI.">
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Recursos Principais</h2>

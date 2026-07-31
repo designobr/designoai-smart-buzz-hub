@@ -16,7 +16,7 @@ const DesignAutomatizado = () => {
   ];
 
   return (
-    <SubpageLayout title="Design Automatizado" subtitle="Criação de designs profissionais para suas publicações em redes sociais" badge="🎨 Design" seoPath="/design-automatizado" seoDescription="Design automatizado com IA: criação de posts, banners e materiais visuais profissionais para redes sociais. Designs incríveis em segundos com a DesignoAI.">
+    <SubpageLayout title="Design Automatizado" subtitle="Criação de designs profissionais para suas publicações em redes sociais" badge=" Design" seoPath="/design-automatizado" seoDescription="Design automatizado com IA: criação de posts, banners e materiais visuais profissionais para redes sociais. Designs incríveis em segundos com a DesignoAI.">
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <div className="grid md:grid-cols-3 gap-6">

@@ -39,8 +39,6 @@ const AiSdr = () => {
       {/* ───── HERO ───── */}
       <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full" />
-          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[hsl(270,70%,60%)]/5 rounded-full" />
           <FloatingParticle delay={0} x="10%" y="20%" size={6} />
           <FloatingParticle delay={1} x="85%" y="25%" size={4} />
           <FloatingParticle delay={2} x="15%" y="75%" size={5} />
@@ -96,7 +94,6 @@ const AiSdr = () => {
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {/* Jeito Antigo */}
             <motion.div {...fadeUp(0.1)} className="card-surface rounded-2xl p-8 border-l-4 border-l-destructive relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-destructive/5 rounded-full" />
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2.5 rounded-xl bg-destructive/10">
                   <XCircle className="w-6 h-6 text-destructive" />
@@ -110,7 +107,6 @@ const AiSdr = () => {
 
             {/* Jeito DesignoAI */}
             <motion.div {...fadeUp(0.2)} className="card-surface rounded-2xl p-8 border-l-4 border-l-primary relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full" />
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2.5 rounded-xl bg-primary/10">
                   <CheckCircle className="w-6 h-6 text-primary" />
@@ -180,8 +176,6 @@ const AiSdr = () => {
 
       {/* ───── AUTORIDADE (EFEITO INCEPTION) ───── */}
       <section className="py-24 md:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-secondary" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div {...fadeUp()} className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center px-4 py-2 card-surface rounded-full text-sm font-medium text-primary mb-8">
@@ -288,7 +282,6 @@ const AiSdr = () => {
               {...fadeUp(0.2)}
  className="flex justify-center relative"
             >
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[400px] bg-primary/20 rounded-full" />
               <motion.div
                 animate={{ y: [0, -15, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
@@ -303,10 +296,10 @@ const AiSdr = () => {
                 {/* Chat area */}
                 <div className="p-3 space-y-3 bg-secondary flex-1 h-[calc(100%-3rem)]">
                   {[
-                    { msg: 'Olá! Encontramos sua empresa e acreditamos que podemos ajudar. 🤖', delay: 0.3, fromBot: true },
+                    { msg: 'Olá! Encontramos sua empresa e acreditamos que podemos ajudar. ', delay: 0.3, fromBot: true },
                     { msg: 'Temos uma solução de IA que automatiza a prospecção B2B via WhatsApp.', delay: 0.8, fromBot: true },
                     { msg: 'Interessante! Como funciona?', delay: 1.4, fromBot: false },
-                    { msg: 'Posso agendar uma demonstração gratuita agora mesmo! 🚀', delay: 2.0, fromBot: true },
+                    { msg: 'Posso agendar uma demonstração gratuita agora mesmo! ', delay: 2.0, fromBot: true },
                   ].map((item, i) => (
                     <motion.div
                       key={i}
@@ -332,7 +325,6 @@ const AiSdr = () => {
 
       {/* ───── CTA FINAL ───── */}
       <section className="py-24 md:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-secondary" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div {...fadeUp()} className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6">

@@ -159,7 +159,6 @@ const SitesIA = () => {
       {/* Advantages */}
       <section className="py-20 md:py-28 relative">
         <div className="absolute top-0 left-0 right-0 h-px bg-secondary" />
-        <div className="absolute top-1/3 right-0 w-[400px] h-[400px] bg-primary/5 rounded-full" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -236,7 +235,6 @@ const SitesIA = () => {
       {/* Deliverables */}
       <section className="py-20 md:py-28 relative">
         <div className="absolute top-0 left-0 right-0 h-px bg-secondary" />
-        <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-[hsl(270,70%,60%)]/5 rounded-full" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -320,7 +318,6 @@ const SitesIA = () => {
       {/* CTA Final */}
       <section className="py-20 md:py-28 relative">
         <div className="absolute top-0 left-0 right-0 h-px bg-secondary" />
-        <div className="absolute inset-0 bg-secondary" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div

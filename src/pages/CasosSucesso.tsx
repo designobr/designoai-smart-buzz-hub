@@ -30,7 +30,7 @@ const CasosSucesso = () => {
     <SubpageLayout
       title="Casos de Sucesso"
       subtitle="Descubra como empresas de diferentes setores transformaram seus resultados com as soluções da DesignoAI."
-      badge="🏆 Resultados reais"
+      badge=" Resultados reais"
       seoPath="/casos-sucesso"
       seoDescription="Casos de sucesso da DesignoAI: veja como empresas aumentaram vendas, engajamento e visibilidade com nossas soluções de marketing digital com IA."
     >
