@@ -24,7 +24,7 @@ const NotFound = () => {
           transition={{ duration: 0.6 }}
           className="text-center px-4"
         >
-          <h1 className="text-8xl md:text-9xl font-heading font-bold text-gradient mb-4">404</h1>
+          <h1 className="text-8xl md:text-9xl font-heading font-bold text-foreground mb-4">404</h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8">Página não encontrada</p>
           <Link to="/">
             <Button size="lg">

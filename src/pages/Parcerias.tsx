@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import SubpageLayout from '@/components/SubpageLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Handshake, Globe, Users, Award, Mail, MessageCircle } from 'lucide-react';
-import HandshakeVisual from '@/components/hero-visuals/HandshakeVisual';
 
 const Parcerias = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -35,15 +34,14 @@ const Parcerias = () => {
       badge="🤝 Cresça conosco"
       seoPath="/parcerias"
       seoDescription="Parcerias DesignoAI: junte-se a nós e ofereça soluções de marketing digital com IA para seus clientes. Programa de parceiros com comissões atrativas."
-      visualElement={<HandshakeVisual />}
     >
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-gradient">Tipos de Parcerias</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Tipos de Parcerias</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {partnershipTypes.map((t, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                <Card className="glass border-border/50 hover:border-primary/30 transition-all group h-full">
+                <Card className="card-surface border-border/50 hover:border-primary/30 transition-all group h-full">
                   <CardHeader className="text-center pb-3">
                     <div className="mx-auto mb-3 p-3 rounded-xl bg-primary/10 w-fit group-hover:bg-primary/20 transition-colors"><t.icon className="w-7 h-7 text-primary" /></div>
                     <CardTitle className="text-lg text-foreground">{t.title}</CardTitle>
@@ -58,8 +56,8 @@ const Parcerias = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-gradient">Benefícios das Parcerias</h2>
-          <Card className="glass border-border/50">
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Benefícios das Parcerias</h2>
+          <Card className="card-surface border-border/50">
             <CardContent className="p-8 md:p-12">
               <div className="grid md:grid-cols-2 gap-4">
                 {benefits.map((b, i) => (
@@ -76,8 +74,8 @@ const Parcerias = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-gradient">Como se Tornar Parceiro</h2>
-          <Card className="glass border-border/50">
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Como se Tornar Parceiro</h2>
+          <Card className="card-surface border-border/50">
             <CardContent className="p-8 md:p-12 space-y-4">
               {processSteps.map((s, i) => (
                 <div key={i} className="flex items-center gap-4">
@@ -92,8 +90,8 @@ const Parcerias = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <Card className="glass border-border/50">
-            <CardHeader><CardTitle className="text-2xl text-center text-gradient">Entre em Contato para Parcerias</CardTitle></CardHeader>
+          <Card className="card-surface border-border/50">
+            <CardHeader><CardTitle className="text-2xl text-center text-foreground">Entre em Contato para Parcerias</CardTitle></CardHeader>
             <CardContent className="p-8">
               <div className="grid md:grid-cols-2 gap-6 mb-8">
                 <div className="flex items-center gap-4 p-6 rounded-xl bg-primary/5 border border-primary/10">

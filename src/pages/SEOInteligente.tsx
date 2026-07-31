@@ -34,11 +34,11 @@ const SEOInteligente = () => {
     <SubpageLayout title="SEO Inteligente" subtitle="Domine os resultados de busca com inteligência artificial que otimiza automaticamente seu site." badge="🔍 SEO com IA" seoPath="/seo-inteligente" seoDescription="SEO com inteligência artificial: pesquisa de palavras-chave, otimização automática, link building e relatórios em tempo real. Aumente seu tráfego orgânico em até 200%.">
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-gradient">Recursos Principais</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Recursos Principais</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((f, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
-                <Card className="glass border-border/50 hover:border-primary/30 transition-all group h-full">
+                <Card className="card-surface border-border/50 hover:border-primary/30 transition-all group h-full">
                   <CardHeader className="text-center pb-3">
                     <div className="mx-auto mb-3 p-3 rounded-xl bg-primary/10 w-fit group-hover:bg-primary/20 transition-colors"><f.icon className="w-7 h-7 text-primary" /></div>
                     <CardTitle className="text-lg text-foreground">{f.title}</CardTitle>
@@ -53,11 +53,11 @@ const SEOInteligente = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-gradient">SEO Técnico Avançado</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">SEO Técnico Avançado</h2>
           <div className="grid md:grid-cols-2 gap-6">
             {technicalFeatures.map((f, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                <Card className="glass border-border/50 hover:border-primary/30 transition-all group">
+                <Card className="card-surface border-border/50 hover:border-primary/30 transition-all group">
                   <CardContent className="p-6 flex items-start gap-4">
                     <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors"><f.icon className="w-7 h-7 text-primary" /></div>
                     <div><h3 className="text-lg font-semibold text-foreground mb-2">{f.title}</h3><p className="text-muted-foreground">{f.description}</p></div>
@@ -71,8 +71,8 @@ const SEOInteligente = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-gradient">Resultados Mensuráveis</h2>
-          <Card className="glass border-border/50">
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Resultados Mensuráveis</h2>
+          <Card className="card-surface border-border/50">
             <CardContent className="p-8 md:p-12">
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <ul className="space-y-4">
@@ -81,8 +81,8 @@ const SEOInteligente = () => {
                   ))}
                 </ul>
                 <div className="space-y-4">
-                  <div className="glass-strong rounded-2xl p-6 text-center"><h4 className="text-3xl font-heading font-bold text-gradient mb-1">200%</h4><p className="text-muted-foreground text-sm">Aumento no tráfego orgânico</p></div>
-                  <div className="glass-strong rounded-2xl p-6 text-center"><h4 className="text-3xl font-heading font-bold text-gradient mb-1">Top 3</h4><p className="text-muted-foreground text-sm">Posicionamento médio</p></div>
+                  <div className="card-surface rounded-2xl p-6 text-center"><h4 className="text-3xl font-heading font-bold text-foreground mb-1">200%</h4><p className="text-muted-foreground text-sm">Aumento no tráfego orgânico</p></div>
+                  <div className="card-surface rounded-2xl p-6 text-center"><h4 className="text-3xl font-heading font-bold text-foreground mb-1">Top 3</h4><p className="text-muted-foreground text-sm">Posicionamento médio</p></div>
                 </div>
               </div>
             </CardContent>

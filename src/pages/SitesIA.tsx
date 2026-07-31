@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Zap, Gem, Target, Palette, Rocket, Settings, Check, MessageCircle, ArrowRight, Search, Shield, Globe, Mail, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SubpageLayout from '@/components/SubpageLayout';
-import WireframeVisual from '@/components/hero-visuals/WireframeVisual';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -71,7 +70,6 @@ const SitesIA = () => {
       seoPath="/sites-ia"
       seoDescription="Criação de sites profissionais com inteligência artificial: design moderno, SEO otimizado, responsivo e focado em conversões. Sites prontos em dias, não meses."
       badge="O Futuro Chegou"
-      visualElement={<WireframeVisual />}
     >
       {/* Why you need a site */}
       <section className="py-20 md:py-28 relative">
@@ -86,11 +84,11 @@ const SitesIA = () => {
             <motion.div variants={fadeUp} custom={0} className="text-center mb-12">
               <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
                 <span className="text-foreground">Por Que Sua Empresa </span>
-                <span className="text-gradient">Precisa de um Site?</span>
+                <span className="text-foreground">Precisa de um Site?</span>
               </h2>
             </motion.div>
 
-            <motion.div variants={fadeUp} custom={1} className="glass rounded-2xl p-8 md:p-10 space-y-6">
+            <motion.div variants={fadeUp} custom={1} className="card-surface rounded-2xl p-8 md:p-10 space-y-6">
               <p className="text-muted-foreground text-lg leading-relaxed">
                 No mundo digital de hoje, depender apenas de redes sociais é limitar o crescimento do seu negócio. <strong className="text-foreground">O Instagram e o Facebook são importantes, mas você não é dono dessas plataformas.</strong> As regras mudam, o alcance diminui e seus clientes podem não encontrar você.
               </p>
@@ -111,12 +109,12 @@ const SitesIA = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="max-w-5xl mx-auto">
             <motion.div variants={fadeUp} custom={0} className="text-center mb-12">
-              <div className="inline-flex items-center px-4 py-2 glass rounded-full text-sm font-medium text-primary mb-6">
+              <div className="inline-flex items-center px-4 py-2 card-surface rounded-full text-sm font-medium text-primary mb-6">
                 Público-Alvo
               </div>
               <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
                 <span className="text-foreground">Para Quem é </span>
-                <span className="text-gradient">Este Serviço?</span>
+                <span className="text-foreground">Este Serviço?</span>
               </h2>
               <p className="text-muted-foreground text-lg">
                 Solução desenvolvida para <strong className="text-foreground">empresas em todo o Brasil</strong> que desejam crescer de forma inteligente
@@ -129,7 +127,7 @@ const SitesIA = () => {
                   key={i}
                   variants={fadeUp}
                   custom={i * 0.5}
-                  className="glass rounded-xl p-4 flex items-start gap-3 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300"
+                  className="card-surface rounded-xl p-4 flex items-start gap-3 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300"
                 >
                   <Check className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                   <span className="text-muted-foreground group-hover:text-foreground transition-colors">{item}</span>
@@ -138,7 +136,7 @@ const SitesIA = () => {
             </div>
 
             {/* Pain points */}
-            <motion.div variants={fadeUp} custom={5} className="glass-strong rounded-2xl p-8 md:p-10">
+            <motion.div variants={fadeUp} custom={5} className="card-surface rounded-2xl p-8 md:p-10">
               <h3 className="text-xl font-heading font-semibold text-foreground mb-6">
                 Se você enfrenta qualquer uma destas dores:
               </h3>
@@ -161,17 +159,17 @@ const SitesIA = () => {
       {/* Advantages */}
       <section className="py-20 md:py-28 relative">
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-        <div className="absolute top-1/3 right-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[120px]" />
+        <div className="absolute top-1/3 right-0 w-[400px] h-[400px] bg-primary/5 rounded-full " />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <motion.div variants={fadeUp} custom={0} className="text-center mb-16">
-              <div className="inline-flex items-center px-4 py-2 glass rounded-full text-sm font-medium text-primary mb-6">
+              <div className="inline-flex items-center px-4 py-2 card-surface rounded-full text-sm font-medium text-primary mb-6">
                 Diferenciais
               </div>
               <h2 className="text-3xl md:text-5xl font-heading font-bold">
                 <span className="text-foreground">Vantagens Que </span>
-                <span className="text-gradient">Fazem a Diferença</span>
+                <span className="text-foreground">Fazem a Diferença</span>
               </h2>
             </motion.div>
 
@@ -181,7 +179,7 @@ const SitesIA = () => {
                   key={i}
                   variants={fadeUp}
                   custom={i}
-                  className="glass rounded-2xl p-6 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
+                  className="card-surface rounded-2xl p-6 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                     <adv.icon className="w-6 h-6 text-primary" />
@@ -203,12 +201,12 @@ const SitesIA = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <motion.div variants={fadeUp} custom={0} className="text-center mb-16">
-              <div className="inline-flex items-center px-4 py-2 glass rounded-full text-sm font-medium text-primary mb-6">
+              <div className="inline-flex items-center px-4 py-2 card-surface rounded-full text-sm font-medium text-primary mb-6">
                 Processo
               </div>
               <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
                 <span className="text-foreground">Como </span>
-                <span className="text-gradient">Funciona?</span>
+                <span className="text-foreground">Funciona?</span>
               </h2>
               <p className="text-muted-foreground text-lg">Um processo simples e transparente</p>
             </motion.div>
@@ -219,7 +217,7 @@ const SitesIA = () => {
                   key={i}
                   variants={fadeUp}
                   custom={i}
-                  className="glass rounded-2xl p-6 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
+                  className="card-surface rounded-2xl p-6 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="text-5xl font-heading font-bold text-primary/10 mb-4 group-hover:text-primary/20 transition-colors">
                     {step.number}
@@ -238,17 +236,17 @@ const SitesIA = () => {
       {/* Deliverables */}
       <section className="py-20 md:py-28 relative">
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-        <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-[hsl(270,70%,60%)]/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-[hsl(270,70%,60%)]/5 rounded-full " />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <motion.div variants={fadeUp} custom={0} className="text-center mb-16">
-              <div className="inline-flex items-center px-4 py-2 glass rounded-full text-sm font-medium text-primary mb-6">
+              <div className="inline-flex items-center px-4 py-2 card-surface rounded-full text-sm font-medium text-primary mb-6">
                 Entrega Completa
               </div>
               <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
                 <span className="text-foreground">O Que Você </span>
-                <span className="text-gradient">Receberá</span>
+                <span className="text-foreground">Receberá</span>
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                 Você não recebe apenas um site. Você recebe uma <strong className="text-foreground">solução digital completa</strong>.
@@ -261,7 +259,7 @@ const SitesIA = () => {
                   key={i}
                   variants={fadeUp}
                   custom={i}
-                  className="glass rounded-2xl p-6 flex items-start gap-4 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300"
+                  className="card-surface rounded-2xl p-6 flex items-start gap-4 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300"
                 >
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
                     <item.icon className="w-5 h-5 text-primary" />
@@ -291,11 +289,11 @@ const SitesIA = () => {
             <motion.div variants={fadeUp} custom={0} className="text-center mb-12">
               <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
                 <span className="text-foreground">O Que Torna Este </span>
-                <span className="text-gradient">Serviço Diferente?</span>
+                <span className="text-foreground">Serviço Diferente?</span>
               </h2>
             </motion.div>
 
-            <motion.div variants={fadeUp} custom={1} className="glass-strong rounded-2xl p-8 md:p-10 space-y-6 text-center">
+            <motion.div variants={fadeUp} custom={1} className="card-surface rounded-2xl p-8 md:p-10 space-y-6 text-center">
               <p className="text-muted-foreground text-lg leading-relaxed">
                 Enquanto agências tradicionais cobram valores altos e demoram meses, e plataformas DIY te deixam sozinho, <strong className="text-foreground">nós combinamos o melhor dos dois mundos</strong>:
               </p>
@@ -305,7 +303,7 @@ const SitesIA = () => {
                   { label: "Expertise e personalização", sub: "de profissionais especializados" },
                   { label: "Custo acessível", sub: "que empresas podem investir" },
                 ].map((item, i) => (
-                  <div key={i} className="glass rounded-xl p-5">
+                  <div key={i} className="card-surface rounded-xl p-5">
                     <p className="text-foreground font-semibold mb-1">{item.label}</p>
                     <p className="text-sm text-muted-foreground">{item.sub}</p>
                   </div>
@@ -334,7 +332,7 @@ const SitesIA = () => {
           >
             <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6">
               <span className="text-foreground">Pronto para Ter um Site que </span>
-              <span className="text-gradient">Realmente Traz Resultados?</span>
+              <span className="text-foreground">Realmente Traz Resultados?</span>
             </h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
               Pare de perder clientes para concorrentes que já têm presença digital profissional. <strong className="text-foreground">Sua empresa merece ser encontrada, reconhecida e escolhida.</strong>
@@ -342,7 +340,7 @@ const SitesIA = () => {
 
             <Button
               size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 glow-md text-lg px-10 py-6 h-auto"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-10 py-6 h-auto"
               onClick={handleWhatsApp}
             >
               <MessageCircle className="w-5 h-5 mr-2" />

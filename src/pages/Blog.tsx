@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import SubpageLayout from '@/components/SubpageLayout';
 import { BookOpen, TrendingUp, Users, Video, Download, Podcast } from 'lucide-react';
 import { motion } from 'framer-motion';
-import DocumentVisual from '@/components/hero-visuals/DocumentVisual';
 
 const Blog = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -36,7 +35,6 @@ const Blog = () => {
       badge="📝 Conteúdo"
       seoPath="/blog"
       seoDescription="Blog DesignoAI: dicas, tutoriais e insights sobre marketing digital com IA, gestão de redes sociais, SEO e design automatizado."
-      visualElement={<DocumentVisual />}
     >
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
@@ -44,7 +42,7 @@ const Blog = () => {
           <div className="grid md:grid-cols-3 gap-6">
             {categories.map((c, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="glass rounded-2xl p-6 text-center group hover:border-primary/20 transition-all duration-300"
+                className="card-surface rounded-2xl p-6 text-center group hover:border-primary/20 transition-all duration-300"
               >
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
                   <c.icon className="w-6 h-6 text-primary" />
@@ -59,8 +57,8 @@ const Blog = () => {
 
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-2xl font-heading font-bold text-center text-foreground mb-10">Artigos em <span className="text-gradient">Destaque</span></h2>
-          <div className="glass rounded-2xl p-6 md:p-8">
+          <h2 className="text-2xl font-heading font-bold text-center text-foreground mb-10">Artigos em <span className="text-foreground">Destaque</span></h2>
+          <div className="card-surface rounded-2xl p-6 md:p-8">
             <div className="grid md:grid-cols-2 gap-4">
               {articles.map((a, i) => (
                 <div key={i} className="flex items-start p-3 rounded-xl bg-primary/5 border border-primary/10 hover:border-primary/20 transition-colors">
@@ -75,11 +73,11 @@ const Blog = () => {
 
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-          <h2 className="text-2xl font-heading font-bold text-center text-foreground mb-10">Recursos <span className="text-gradient">Exclusivos</span></h2>
+          <h2 className="text-2xl font-heading font-bold text-center text-foreground mb-10">Recursos <span className="text-foreground">Exclusivos</span></h2>
           <div className="grid md:grid-cols-3 gap-6">
             {resources.map((r, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="glass rounded-2xl p-6 text-center group hover:border-primary/20 transition-all duration-300"
+                className="card-surface rounded-2xl p-6 text-center group hover:border-primary/20 transition-all duration-300"
               >
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
                   <r.icon className="w-6 h-6 text-primary" />

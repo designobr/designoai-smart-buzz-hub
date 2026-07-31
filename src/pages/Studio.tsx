@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Phone, Mail, Instagram, Linkedin, Star } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import SEOHead from '@/components/SEOHead';
-import LensVisualInline from '@/components/hero-visuals/LensVisual';
 
 // Gallery portrait images
 import portrait1 from '@/assets/studio/portrait-1.png';
@@ -131,8 +130,8 @@ const Studio = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/6 w-[500px] h-[500px] bg-[hsl(240,70%,60%)]/10 rounded-full blur-[120px]" />
-          <div className="absolute bottom-1/4 right-1/6 w-[400px] h-[400px] bg-[hsl(270,70%,60%)]/10 rounded-full blur-[120px]" />
+          <div className="absolute top-1/4 left-1/6 w-[500px] h-[500px] bg-[hsl(240,70%,60%)]/10 rounded-full " />
+          <div className="absolute bottom-1/4 right-1/6 w-[400px] h-[400px] bg-[hsl(270,70%,60%)]/10 rounded-full " />
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
