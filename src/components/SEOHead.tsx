@@ -10,9 +10,9 @@ interface SEOHeadProps {
 }
 
 const SITE_NAME = 'DesignoAI';
-const BASE_URL = 'https://designoai.lovable.app';
+const BASE_URL = 'https://designoai.com.br';
 const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`;
-const DEFAULT_DESCRIPTION = 'Agência de marketing digital com inteligência artificial. Gestão de redes sociais, design automatizado, SEO inteligente e criação de conteúdo com IA para impulsionar sua marca.';
+const DEFAULT_DESCRIPTION = 'Agência especializada em criação de sites, social media, SEO e automação com IA.';
 
 const SEOHead = ({
   title,
@@ -22,7 +22,8 @@ const SEOHead = ({
   type = 'website',
   jsonLd,
 }: SEOHeadProps) => {
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} - Marketing Digital e Social Media com IA`;
+  const fullTitle = title ? `${title} | ${SITE_NAME}` : 'DesignoAI | Marketing Digital e Criação de Sites';
+
   const canonicalUrl = `${BASE_URL}${path}`;
 
   const defaultJsonLd = {
