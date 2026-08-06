@@ -77,7 +77,11 @@ const SEOHead = ({
       <meta name="twitter:image" content={image} />
 
       {/* Extra SEO */}
-      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <meta
+        name="robots"
+        content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
+      />
+
       <meta name="theme-color" content="#ffffff" />
       <html lang="pt-BR" />
 
