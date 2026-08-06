@@ -1,6 +1,7 @@
 
 import { useEffect } from 'react';
 import SubpageLayout from '@/components/SubpageLayout';
+import { serviceSchema } from '@/lib/seo-schemas';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, PenTool, Palette, Zap } from 'lucide-react';
