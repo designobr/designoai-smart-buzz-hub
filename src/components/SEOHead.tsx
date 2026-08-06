@@ -34,7 +34,7 @@ const SEOHead = ({
     '@type': 'Organization',
     name: 'DesignoAI',
     url: BASE_URL,
-    logo: `${BASE_URL}/star-icon.svg`,
+    logo: `${BASE_URL}/android-chrome-512x512.png`,
     description: DEFAULT_DESCRIPTION,
     contactPoint: {
       '@type': 'ContactPoint',
