@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SubpageLayout from '@/components/SubpageLayout';
+import { serviceSchema } from '@/lib/seo-schemas';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar, Users, MessageCircle } from 'lucide-react';
 
