@@ -1,6 +1,7 @@
 
 import { useEffect } from 'react';
 import SubpageLayout from '@/components/SubpageLayout';
+import { blogSchema } from '@/lib/seo-schemas';
 import { BookOpen, TrendingUp, Users, Video, Download, Podcast } from 'lucide-react';
 import { motion } from 'framer-motion';
 
