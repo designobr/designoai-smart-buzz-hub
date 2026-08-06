@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Home } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
 
 const NotFound = () => {
   const location = useLocation();
@@ -16,7 +17,14 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Página não encontrada (404)"
+        description="Esta página não existe ou foi movida. Volte para a página inicial da DesignoAI e explore nossos serviços de sites, social media, SEO e IA."
+        path="/404"
+        noindex
+      />
       <Navbar />
+
       <div className="min-h-[70vh] flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
