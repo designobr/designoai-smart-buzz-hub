@@ -35,7 +35,10 @@ const Blog = () => {
       badge=" Conteúdo"
       seoPath="/blog"
       seoDescription="Blog DesignoAI: dicas, tutoriais e insights sobre marketing digital com IA, gestão de redes sociais, SEO e design automatizado."
+      seoType="article"
+      jsonLd={blogSchema('Blog DesignoAI', 'Dicas, tutoriais e insights sobre marketing digital com IA, redes sociais, SEO e design automatizado.', '/blog')}
     >
+
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <h2 className="text-2xl font-heading font-bold text-center text-foreground mb-10">Categorias</h2>
