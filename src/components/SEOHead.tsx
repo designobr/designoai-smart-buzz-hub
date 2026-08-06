@@ -73,7 +73,7 @@ const SEOHead = ({
 
       {/* Extra SEO */}
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-      <meta name="theme-color" content="#7c3aed" />
+      <meta name="theme-color" content="#ffffff" />
       <html lang="pt-BR" />
 
       {/* JSON-LD */}
