@@ -6,6 +6,7 @@ interface SEOHeadProps {
   path?: string;
   image?: string;
   type?: string;
+  noindex?: boolean;
   jsonLd?: Record<string, unknown>;
 }
 
@@ -20,8 +21,10 @@ const SEOHead = ({
   path = '/',
   image = DEFAULT_IMAGE,
   type = 'website',
+  noindex = false,
   jsonLd,
 }: SEOHeadProps) => {
+
   const fullTitle = title ? `${title} | ${SITE_NAME}` : 'DesignoAI | Marketing Digital e Criação de Sites';
 
   const canonicalUrl = `${BASE_URL}${path}`;
@@ -74,7 +77,11 @@ const SEOHead = ({
       <meta name="twitter:image" content={image} />
 
       {/* Extra SEO */}
-      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <meta
+        name="robots"
+        content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
+      />
+
       <meta name="theme-color" content="#ffffff" />
       <html lang="pt-BR" />
 

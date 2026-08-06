@@ -18,7 +18,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         path="/"
-        description="Estúdio de marketing e design com inteligência artificial. Estratégia, identidade visual, conteúdo, tráfego pago e sites para marcas que querem crescer com consistência."
+        description="Estúdio de marketing e design com IA: estratégia, identidade visual, conteúdo, tráfego pago e criação de sites para marcas que querem crescer."
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'LocalBusiness',

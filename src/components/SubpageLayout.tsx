@@ -11,6 +11,8 @@ interface SubpageLayoutProps {
   badge?: string;
   seoDescription?: string;
   seoPath?: string;
+  seoType?: string;
+  jsonLd?: Record<string, unknown>;
   visualElement?: ReactNode;
   ctaLabel?: string;
   ctaHref?: string;
@@ -24,6 +26,8 @@ const SubpageLayout = ({
   badge,
   seoDescription,
   seoPath,
+  seoType,
+  jsonLd,
   ctaLabel,
   ctaHref,
   onCtaClick,
@@ -34,7 +38,10 @@ const SubpageLayout = ({
         title={title}
         description={seoDescription || subtitle || `${title} - DesignoAI, estúdio de marketing e design.`}
         path={seoPath}
+        type={seoType}
+        jsonLd={jsonLd}
       />
+
       <Navbar />
 
       <main>

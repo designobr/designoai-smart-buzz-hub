@@ -1,6 +1,7 @@
 
 import { useEffect } from 'react';
 import SubpageLayout from '@/components/SubpageLayout';
+import { serviceSchema } from '@/lib/seo-schemas';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, PenTool, Palette, Zap } from 'lucide-react';
@@ -16,10 +17,12 @@ const DesignAutomatizado = () => {
   ];
 
   return (
-    <SubpageLayout title="Design Automatizado" subtitle="Criação de designs profissionais para suas publicações em redes sociais" badge=" Design" seoPath="/design-automatizado" seoDescription="Design automatizado com IA: criação de posts, banners e materiais visuais profissionais para redes sociais. Designs incríveis em segundos com a DesignoAI.">
+    <SubpageLayout title="Design Automatizado" subtitle="Criação de designs profissionais para suas publicações em redes sociais" badge=" Design" seoPath="/design-automatizado" seoDescription="Design automatizado com IA: criação de posts, banners e materiais visuais profissionais para redes sociais em segundos." jsonLd={serviceSchema('Design Automatizado', 'Criação automatizada de posts, banners e materiais visuais profissionais com inteligência artificial.', '/design-automatizado')}>
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+          <h2 className="text-2xl md:text-3xl font-heading font-semibold text-foreground text-center mb-10">Recursos principais</h2>
           <div className="grid md:grid-cols-3 gap-6">
+
             {features.map((f, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
  className="card-surface rounded-2xl p-6 text-center group hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
