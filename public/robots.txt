@@ -16,4 +16,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://designoai.lovable.app/sitemap.xml
+Sitemap: https://designoai.com.br/sitemap.xml

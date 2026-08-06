@@ -23,7 +23,7 @@ const Index = () => {
           '@context': 'https://schema.org',
           '@type': 'LocalBusiness',
           name: 'DesignoAI',
-          url: 'https://designoai.lovable.app',
+          url: 'https://designoai.com.br',
           description:
             'Estúdio de marketing e design que combina método editorial e inteligência artificial.',
           telephone: '+55-11-94796-8158',
