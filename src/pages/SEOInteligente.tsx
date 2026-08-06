@@ -31,7 +31,7 @@ const SEOInteligente = () => {
   ];
 
   return (
-    <SubpageLayout title="SEO Inteligente" subtitle="Domine os resultados de busca com inteligência artificial que otimiza automaticamente seu site." badge=" SEO com IA" seoPath="/seo-inteligente" seoDescription="SEO com inteligência artificial: pesquisa de palavras-chave, otimização automática, link building e relatórios em tempo real. Aumente seu tráfego orgânico em até 200%.">
+    <SubpageLayout title="SEO Inteligente" subtitle="Domine os resultados de busca com inteligência artificial que otimiza automaticamente seu site." badge=" SEO com IA" seoPath="/seo-inteligente" seoDescription="SEO com IA: pesquisa de palavras-chave, otimização automática, link building e relatórios em tempo real para aumentar seu tráfego orgânico." jsonLd={serviceSchema('SEO Inteligente', 'SEO com inteligência artificial: pesquisa de palavras-chave, otimização automática, link building e relatórios em tempo real.', '/seo-inteligente')}>
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Recursos Principais</h2>
