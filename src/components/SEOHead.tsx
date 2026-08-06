@@ -6,6 +6,7 @@ interface SEOHeadProps {
   path?: string;
   image?: string;
   type?: string;
+  noindex?: boolean;
   jsonLd?: Record<string, unknown>;
 }
 
@@ -20,8 +21,10 @@ const SEOHead = ({
   path = '/',
   image = DEFAULT_IMAGE,
   type = 'website',
+  noindex = false,
   jsonLd,
 }: SEOHeadProps) => {
+
   const fullTitle = title ? `${title} | ${SITE_NAME}` : 'DesignoAI | Marketing Digital e Criação de Sites';
 
   const canonicalUrl = `${BASE_URL}${path}`;
