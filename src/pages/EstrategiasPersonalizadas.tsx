@@ -16,10 +16,12 @@ const EstrategiasPersonalizadas = () => {
   ];
 
   return (
-    <SubpageLayout title="Estratégias Personalizadas" subtitle="Recomendações baseadas em IA para maximizar seus resultados de marketing." badge=" Estratégias com IA" seoPath="/estrategias-personalizadas" seoDescription="Estratégias de marketing personalizadas com IA: análise do seu negócio, recomendações inteligentes e planos de ação para maximizar seus resultados.">
+    <SubpageLayout title="Estratégias Personalizadas" subtitle="Recomendações baseadas em IA para maximizar seus resultados de marketing." badge=" Estratégias com IA" seoPath="/estrategias-personalizadas" seoDescription="Estratégias de marketing personalizadas com IA: análise do seu negócio, recomendações inteligentes e planos de ação sob medida." jsonLd={serviceSchema('Estratégias Personalizadas', 'Estratégias de marketing personalizadas com IA: análise do negócio, recomendações inteligentes e planos de ação.', '/estrategias-personalizadas')}>
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+          <h2 className="text-2xl md:text-3xl font-heading font-semibold text-foreground text-center mb-10">Recursos principais</h2>
           <div className="grid md:grid-cols-3 gap-6">
+
             {features.map((f, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                 <Card className="card-surface border-border/50 hover:border-primary/30 transition-all group h-full">
