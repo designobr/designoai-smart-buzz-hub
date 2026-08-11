@@ -1,3 +1,104 @@
-const sitesIa = {};
+const sitesIa = {
+  seo: {
+    title: 'Sites Web Professionnels avec IA',
+    description: 'Création de sites web professionnels avec intelligence artificielle : design moderne, SEO optimisé, responsive et axé sur la conversion. Sites prêts en quelques jours, pas en mois.',
+  },
+  hero: {
+    badge: 'Le Futur Est Arrivé',
+    subtitle: 'Fatigué des devis élevés et des délais interminables ? Libérez le potentiel de votre entreprise avec une présence digitale professionnelle, rapide et axée sur les résultats.',
+  },
+  whyNeed: {
+    title1: 'Pourquoi Votre Entreprise ',
+    title2: 'A Besoin d\'un Site Web ?',
+    p1Html: 'Dans le monde numérique actuel, dépendre uniquement des réseaux sociaux limite la croissance de votre entreprise. <strong class="text-foreground">Instagram et Facebook sont importants, mais vous n\'êtes pas propriétaire de ces plateformes.</strong> Les règles changent, la portée diminue et vos clients risquent de ne pas vous trouver.',
+    p2Html: '<strong class="text-primary">Un site propre est votre territoire numérique</strong>, où vous contrôlez tout : l\'expérience client, le message de votre marque et, surtout, la conversion des visiteurs en vrais clients.',
+    p3Html: 'Nous utilisons les outils d\'<strong class="text-foreground">Intelligence Artificielle</strong> les plus avancés pour créer des sites qui fonctionnent réellement pour votre entreprise, en combinant technologie de pointe et expertise humaine.',
+  },
+  audience: {
+    badge: 'Public Cible',
+    title1: 'Pour Qui Est ',
+    title2: 'Ce Service ?',
+    subtitleHtml: 'Une solution conçue pour les <strong class="text-foreground">entreprises de tout le Brésil</strong> qui souhaitent croître intelligemment',
+    items: [
+      'Cliniques d\'esthétique qui ont besoin de plus de rendez-vous pour leurs traitements',
+      'Cliniques vétérinaires qui veulent faciliter la prise de rendez-vous',
+      'Dentistes à la recherche de nouveaux patients',
+      'Cabinets d\'avocats qui veulent transmettre de l\'autorité',
+      'Restaurants qui ont besoin d\'un menu numérique et de commandes en ligne',
+      'Cabinets de conseil qui veulent capter des prospects qualifiés',
+      'Salles de sport et coachs personnels axés sur l\'acquisition de membres',
+      'Industries et distributeurs cherchant à étendre leur présence numérique',
+      'Toute entreprise en quête de plus de clients et d\'une présence digitale professionnelle',
+    ],
+    painTitle: 'Si vous rencontrez l\'un de ces problèmes :',
+    painPoints: [
+      'Perdre des clients au profit de concurrents ayant un site web',
+      'Paraître moins professionnel sans votre propre vitrine numérique',
+      'Dépendre à 100 % des réseaux sociaux dont les règles changent constamment',
+      'Ne pas avoir d\'endroit pour centraliser les informations et faciliter le contact',
+      'Vouloir grandir mais penser qu\'un site web coûte trop cher ou prend trop de temps',
+    ],
+    painFooter: 'Alors ce service a été conçu pour vous.',
+  },
+  advantages: {
+    badge: 'Nos Atouts',
+    title1: 'Des Avantages Qui ',
+    title2: 'Font la Différence',
+    items: [
+      { title: 'Rapidité Incroyable', description: 'Site en ligne dans un délai record (jusqu\'à 72 heures), sans la bureaucratie et les mois d\'attente des agences traditionnelles. Pendant que d\'autres chiffrent encore, vous captez déjà des clients.' },
+      { title: 'Qualité Premium', description: 'Design moderne et responsive, parfaitement adapté à tout appareil : mobile, tablette ou ordinateur. Vos clients bénéficient d\'une expérience professionnelle.' },
+      { title: 'Axé sur les Résultats', description: 'Chaque élément est pensé stratégiquement pour transformer les visiteurs en clients, avec des appels à l\'action clairs et un parcours intuitif.' },
+      { title: 'Entièrement Personnalisé', description: 'Chaque projet est supervisé et affiné par des spécialistes pour refléter l\'identité unique de votre marque. Aucun modèle générique.' },
+      { title: 'Technologie de Pointe', description: 'Construit avec les plateformes d\'Intelligence Artificielle les plus avancées du marché, garantissant performance, sécurité et évolutivité.' },
+      { title: 'Performance Optimisée', description: 'Sites légers, rapides et optimisés pour les moteurs de recherche, garantissant un meilleur positionnement sur Google.' },
+    ],
+  },
+  process: {
+    badge: 'Processus',
+    title1: 'Comment ',
+    title2: 'Ça Marche ?',
+    subtitle: 'Un processus simple et transparent',
+    steps: [
+      { number: '01', title: 'Découverte', description: 'Nous commençons par comprendre votre entreprise, vos objectifs et votre public cible. Chaque détail compte pour créer un site qui représente vraiment votre entreprise.' },
+      { number: '02', title: 'Création Intelligente', description: 'Notre IA génère un prototype initial basé sur les informations stratégiques de votre entreprise. La technologie travaille 24h/24 et 7j/7 pour accélérer le processus.' },
+      { number: '03', title: 'Personnalisation Sur Mesure', description: 'C\'est là qu\'intervient la touche humaine. Nous ajustons chaque détail : textes persuasifs, couleurs de marque, images, fonctionnalités.' },
+      { number: '04', title: 'Lancement Rapide', description: 'Nous publions votre site sur votre propre domaine (.com.br), configurons des e-mails professionnels, des certificats de sécurité et Google Mon Entreprise.' },
+    ],
+  },
+  deliverables: {
+    badge: 'Livraison Complète',
+    title1: 'Ce Que Vous ',
+    title2: 'Recevrez',
+    subtitleHtml: 'Vous ne recevez pas seulement un site web. Vous recevez une <strong class="text-foreground">solution digitale complète</strong>.',
+    items: [
+      { text: 'Domaine .com.br enregistré à votre nom' },
+      { text: 'E-mails professionnels (@votreentreprise.com.br)' },
+      { text: 'Certificat SSL (site sécurisé avec cadenas vert)' },
+      { text: 'Intégration WhatsApp pour un contact direct' },
+      { text: 'Optimisation pour les moteurs de recherche (SEO)' },
+      { text: 'Site 100 % responsive sur tous les appareils' },
+    ],
+    footer: 'Tout livré prêt à générer des résultats immédiatement.',
+  },
+  differentiator: {
+    title1: 'Qu\'est-ce Qui Rend Ce ',
+    title2: 'Service Différent ?',
+    p1Html: 'Alors que les agences traditionnelles facturent cher et prennent des mois, et que les plateformes DIY vous laissent seul, <strong class="text-foreground">nous combinons le meilleur des deux mondes</strong> :',
+    items: [
+      { label: 'Rapidité et efficacité', sub: 'de l\'Intelligence Artificielle' },
+      { label: 'Expertise et personnalisation', sub: 'de professionnels spécialisés' },
+      { label: 'Coût accessible', sub: 'que les entreprises peuvent investir' },
+    ],
+    p2Html: 'Vous n\'avez pas besoin de choisir entre qualité, rapidité et prix juste. Avec notre solution, vous avez <span class="text-primary font-bold">les trois</span>.',
+  },
+  ctaFinal: {
+    title1: 'Prêt à Avoir un Site qui ',
+    title2: 'Apporte Vraiment des Résultats ?',
+    descriptionHtml: 'Arrêtez de perdre des clients au profit de concurrents qui ont déjà une présence digitale professionnelle. <strong class="text-foreground">Votre entreprise mérite d\'être trouvée, reconnue et choisie.</strong>',
+    button: 'Contactez-Nous sur WhatsApp',
+    noteHtml: 'Bénéficiez d\'une <strong class="text-foreground">consultation gratuite</strong> et découvrez comment l\'IA peut transformer la présence digitale de votre entreprise. Sans engagement.',
+    whatsappMessage: 'Bonjour ! J\'aimerais en savoir plus sur la création de sites web avec IA.',
+  },
+};
 
 export default sitesIa;

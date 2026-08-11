@@ -3,23 +3,33 @@ import { useEffect } from 'react';
 import SubpageLayout from '@/components/SubpageLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FileText, Shield, AlertTriangle, Users } from 'lucide-react';
+import { useI18n } from '@/i18n/I18nProvider';
+
+interface TermSection {
+  title: string;
+  content?: string;
+  list?: string[];
+}
+
+const icons = [Users, Shield, FileText, AlertTriangle, FileText];
 
 const TermosUso = () => {
+  const { t, tList } = useI18n();
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  const sections = [
-    { icon: Users, title: "1. Aceitação dos Termos", content: "Ao acessar e usar a plataforma DesignoAI, você concorda em cumprir e ficar vinculado aos seguintes termos e condições de uso. Se você não concordar com qualquer parte destes termos, não deve usar nossos serviços." },
-    { icon: Shield, title: "2. Uso da Plataforma", list: ["Você deve ter pelo menos 18 anos para usar nossos serviços", "É responsável por manter a confidencialidade de sua conta", "Não deve usar a plataforma para atividades ilegais", "Deve fornecer informações precisas e atualizadas"] },
-    { icon: FileText, title: "3. Propriedade Intelectual", content: "Todo o conteúdo da plataforma é propriedade da DesignoAI ou de seus licenciadores. Os conteúdos criados por você usando nossa plataforma permanecem de sua propriedade." },
-    { icon: AlertTriangle, title: "4. Limitação de Responsabilidade", content: "A DesignoAI não será responsável por quaisquer danos diretos, indiretos, incidentais, especiais ou consequenciais resultantes do uso de nossos serviços. Fornecemos nossos serviços \"como estão\"." },
-    { icon: FileText, title: "5. Modificações dos Termos", content: "Reservamos o direito de modificar estes termos a qualquer momento. As alterações entrarão em vigor imediatamente após a publicação. É sua responsabilidade revisar periodicamente estes termos." },
-  ];
+  const sections = tList<TermSection>('legal.termosUso.sections').map((s, i) => ({ ...s, icon: icons[i] }));
 
   return (
-    <SubpageLayout title="Termos de Uso" subtitle="Conheça os termos e condições que regem o uso da plataforma DesignoAI." badge=" Termos" seoPath="/termos-uso">
+    <SubpageLayout
+      title={t('legal.termosUso.title')}
+      subtitle={t('legal.termosUso.subtitle')}
+      badge={t('legal.termosUso.badge')}
+      seoDescription={t('legal.termosUso.seo.description')}
+      seoPath="/termos-uso"
+    >
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl space-y-6">
-          <p className="text-center text-muted-foreground text-sm mb-8">Última atualização: 10 de junho de 2025</p>
+          <p className="text-center text-muted-foreground text-sm mb-8">{t('legal.termosUso.lastUpdated')}</p>
           {sections.map((s, i) => (
             <Card key={i} className="card-surface border-border/50">
               <CardHeader>
@@ -33,9 +43,9 @@ const TermosUso = () => {
           ))}
           <Card className="card-surface border-primary/20">
             <CardContent className="p-8 text-center">
-              <h3 className="text-xl font-heading font-bold text-foreground mb-4">Contato</h3>
-              <p className="text-muted-foreground mb-2">Se tiver dúvidas sobre estes Termos de Uso:</p>
-              <p className="text-primary font-semibold">contato@designoai.com.br</p>
+              <h3 className="text-xl font-heading font-bold text-foreground mb-4">{t('legal.termosUso.contact.title')}</h3>
+              <p className="text-muted-foreground mb-2">{t('legal.termosUso.contact.text')}</p>
+              <p className="text-primary font-semibold">{t('legal.termosUso.contact.email')}</p>
             </CardContent>
           </Card>
         </div>

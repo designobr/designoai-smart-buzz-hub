@@ -3,60 +3,74 @@ import { useEffect } from 'react';
 import SubpageLayout from '@/components/SubpageLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, Eye, Database, Lock, UserCheck, Settings } from 'lucide-react';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const PoliticaPrivacidade = () => {
+  const { t } = useI18n();
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
+  const infoProvidedItems = t('legal.politicaPrivacidade.sections.info.provided.items') as unknown as string[];
+  const infoAutomaticItems = t('legal.politicaPrivacidade.sections.info.automatic.items') as unknown as string[];
+  const usageItems = t('legal.politicaPrivacidade.sections.usage.items') as unknown as string[];
+  const sharingItems = t('legal.politicaPrivacidade.sections.sharing.items') as unknown as string[];
+  const securityTechItems = t('legal.politicaPrivacidade.sections.security.technical.items') as unknown as string[];
+  const securityOrgItems = t('legal.politicaPrivacidade.sections.security.organizational.items') as unknown as string[];
+  const rightsItems = t('legal.politicaPrivacidade.sections.rights.items') as unknown as { label: string; desc: string }[];
+
   const sections = [
-    { icon: Eye, title: "1. Informações que Coletamos", content: (
+    { icon: Eye, title: t('legal.politicaPrivacidade.sections.info.title'), content: (
       <div className="space-y-4">
-        <p>Coletamos informações que você nos fornece diretamente e automaticamente quando usa nossos serviços:</p>
+        <p>{t('legal.politicaPrivacidade.sections.info.intro')}</p>
         <div className="grid md:grid-cols-2 gap-6">
-          <div><h4 className="font-semibold text-foreground mb-2">Informações Fornecidas:</h4><ul className="list-disc pl-6 space-y-1 text-muted-foreground"><li>Nome e informações de contato</li><li>Informações de conta e perfil</li><li>Conteúdo que você cria</li><li>Comunicações conosco</li></ul></div>
-          <div><h4 className="font-semibold text-foreground mb-2">Informações Automáticas:</h4><ul className="list-disc pl-6 space-y-1 text-muted-foreground"><li>Dados de uso da plataforma</li><li>Informações do dispositivo</li><li>Endereço IP e localização</li><li>Cookies e tecnologias similares</li></ul></div>
+          <div><h4 className="font-semibold text-foreground mb-2">{t('legal.politicaPrivacidade.sections.info.provided.title')}</h4><ul className="list-disc pl-6 space-y-1 text-muted-foreground">{infoProvidedItems.map((item, i) => <li key={i}>{item}</li>)}</ul></div>
+          <div><h4 className="font-semibold text-foreground mb-2">{t('legal.politicaPrivacidade.sections.info.automatic.title')}</h4><ul className="list-disc pl-6 space-y-1 text-muted-foreground">{infoAutomaticItems.map((item, i) => <li key={i}>{item}</li>)}</ul></div>
         </div>
       </div>
     )},
-    { icon: Settings, title: "2. Como Usamos suas Informações", content: (
+    { icon: Settings, title: t('legal.politicaPrivacidade.sections.usage.title'), content: (
       <div className="space-y-4">
-        <p>Utilizamos suas informações para:</p>
-        <ul className="list-disc pl-6 space-y-2 text-muted-foreground"><li>Fornecer e melhorar nossos serviços</li><li>Personalizar sua experiência na plataforma</li><li>Processar transações e pagamentos</li><li>Enviar comunicações importantes</li><li>Analisar o uso da plataforma</li><li>Cumprir obrigações legais</li></ul>
+        <p>{t('legal.politicaPrivacidade.sections.usage.intro')}</p>
+        <ul className="list-disc pl-6 space-y-2 text-muted-foreground">{usageItems.map((item, i) => <li key={i}>{item}</li>)}</ul>
       </div>
     )},
-    { icon: UserCheck, title: "3. Compartilhamento de Informações", content: (
+    { icon: UserCheck, title: t('legal.politicaPrivacidade.sections.sharing.title'), content: (
       <div className="space-y-4">
-        <p>Não vendemos suas informações pessoais. Podemos compartilhar apenas:</p>
-        <ul className="list-disc pl-6 space-y-2 text-muted-foreground"><li>Com seu consentimento explícito</li><li>Com prestadores de serviços</li><li>Para cumprir obrigações legais</li><li>Para proteger nossos direitos e segurança</li></ul>
+        <p>{t('legal.politicaPrivacidade.sections.sharing.intro')}</p>
+        <ul className="list-disc pl-6 space-y-2 text-muted-foreground">{sharingItems.map((item, i) => <li key={i}>{item}</li>)}</ul>
       </div>
     )},
-    { icon: Lock, title: "4. Segurança dos Dados", content: (
+    { icon: Lock, title: t('legal.politicaPrivacidade.sections.security.title'), content: (
       <div className="space-y-4">
-        <p>Implementamos medidas de segurança técnicas e organizacionais para proteger suas informações.</p>
+        <p>{t('legal.politicaPrivacidade.sections.security.intro')}</p>
         <div className="grid md:grid-cols-2 gap-6">
-          <div><h4 className="font-semibold text-foreground mb-2">Segurança Técnica:</h4><ul className="list-disc pl-6 space-y-1 text-muted-foreground"><li>Criptografia de dados</li><li>Firewalls e detecção</li><li>Acesso restrito</li><li>Monitoramento contínuo</li></ul></div>
-          <div><h4 className="font-semibold text-foreground mb-2">Segurança Organizacional:</h4><ul className="list-disc pl-6 space-y-1 text-muted-foreground"><li>Treinamento de funcionários</li><li>Políticas de acesso</li><li>Auditorias regulares</li><li>Contratos de confidencialidade</li></ul></div>
+          <div><h4 className="font-semibold text-foreground mb-2">{t('legal.politicaPrivacidade.sections.security.technical.title')}</h4><ul className="list-disc pl-6 space-y-1 text-muted-foreground">{securityTechItems.map((item, i) => <li key={i}>{item}</li>)}</ul></div>
+          <div><h4 className="font-semibold text-foreground mb-2">{t('legal.politicaPrivacidade.sections.security.organizational.title')}</h4><ul className="list-disc pl-6 space-y-1 text-muted-foreground">{securityOrgItems.map((item, i) => <li key={i}>{item}</li>)}</ul></div>
         </div>
       </div>
     )},
-    { icon: Database, title: "5. Seus Direitos", content: (
+    { icon: Database, title: t('legal.politicaPrivacidade.sections.rights.title'), content: (
       <div className="space-y-4">
-        <p>Você tem os seguintes direitos:</p>
+        <p>{t('legal.politicaPrivacidade.sections.rights.intro')}</p>
         <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-          <li><strong className="text-foreground">Acesso:</strong> Solicitar cópias de suas informações</li>
-          <li><strong className="text-foreground">Retificação:</strong> Corrigir informações incorretas</li>
-          <li><strong className="text-foreground">Exclusão:</strong> Solicitar a exclusão de suas informações</li>
-          <li><strong className="text-foreground">Portabilidade:</strong> Receber seus dados em formato estruturado</li>
-          <li><strong className="text-foreground">Oposição:</strong> Opor-se ao processamento</li>
+          {rightsItems.map((item, i) => (
+            <li key={i}><strong className="text-foreground">{item.label}</strong> {item.desc}</li>
+          ))}
         </ul>
       </div>
     )},
   ];
 
   return (
-    <SubpageLayout title="Política de Privacidade" subtitle="Sua privacidade é importante para nós. Saiba como coletamos, usamos e protegemos suas informações." badge=" Privacidade" seoPath="/politica-privacidade">
+    <SubpageLayout
+      title={t('legal.politicaPrivacidade.title')}
+      subtitle={t('legal.politicaPrivacidade.subtitle')}
+      badge={t('legal.politicaPrivacidade.badge')}
+      seoDescription={t('legal.politicaPrivacidade.seo.description')}
+      seoPath="/politica-privacidade"
+    >
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl space-y-6">
-          <p className="text-center text-muted-foreground text-sm mb-8">Última atualização: 10 de junho de 2025</p>
+          <p className="text-center text-muted-foreground text-sm mb-8">{t('legal.politicaPrivacidade.lastUpdated')}</p>
           {sections.map((s, i) => (
             <Card key={i} className="card-surface border-border/50">
               <CardHeader>
@@ -67,10 +81,10 @@ const PoliticaPrivacidade = () => {
           ))}
           <Card className="card-surface border-primary/20">
             <CardContent className="p-8 text-center">
-              <h3 className="text-xl font-heading font-bold text-foreground mb-4">Entre em Contato</h3>
-              <p className="text-muted-foreground mb-4">Para exercer seus direitos ou esclarecer dúvidas:</p>
-              <p className="text-primary font-semibold">contato@designoai.com.br</p>
-              <p className="text-primary font-semibold">WhatsApp: +55 11 94796-8158</p>
+              <h3 className="text-xl font-heading font-bold text-foreground mb-4">{t('legal.politicaPrivacidade.contact.title')}</h3>
+              <p className="text-muted-foreground mb-4">{t('legal.politicaPrivacidade.contact.text')}</p>
+              <p className="text-primary font-semibold">{t('legal.politicaPrivacidade.contact.email')}</p>
+              <p className="text-primary font-semibold">{t('legal.politicaPrivacidade.contact.whatsapp')}</p>
             </CardContent>
           </Card>
         </div>

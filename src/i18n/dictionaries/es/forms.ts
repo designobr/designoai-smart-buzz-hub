@@ -1,3 +1,38 @@
-const forms = {};
+const forms = {
+  contact: {
+    eyebrow: 'Contacto',
+    title: 'Hablemos sobre tu proyecto.',
+    description: 'Cuéntanos lo esencial y te enviamos una propuesta con alcance, plazo e inversión.',
+    whatsappLabel: 'WhatsApp',
+    emailLabel: 'Correo',
+    hoursLabel: 'Atención',
+    hoursValue: 'Lunes a viernes, 9h a 18h',
+    nameLabel: 'Nombre completo',
+    namePlaceholder: 'Tu nombre',
+    emailFieldLabel: 'Correo',
+    emailPlaceholder: 'tu@correo.com',
+    phoneLabel: 'WhatsApp',
+    phonePlaceholder: '(11) 99999-9999',
+    companyLabel: 'Empresa',
+    companyPlaceholder: 'Nombre de la empresa',
+    budgetLabel: 'Inversión mensual',
+    budgetPlaceholder: 'Selecciona un rango',
+    budgetOptions: [
+      { value: '2000-4000', label: 'R$ 2.000 a R$ 4.000' },
+      { value: '4000-6000', label: 'R$ 4.000 a R$ 6.000' },
+      { value: '6000-10000', label: 'R$ 6.000 a R$ 10.000' },
+      { value: '10000+', label: 'Más de R$ 10.000' },
+    ],
+    messageLabel: 'Sobre el proyecto',
+    messagePlaceholder: 'Contexto, objetivos y plazos.',
+    submit: 'Enviar solicitud',
+    sending: 'Enviando',
+    privacyNote: 'Tus datos se usan únicamente para responder a este contacto comercial.',
+    toastSuccessTitle: 'Solicitud enviada',
+    toastSuccessDescription: 'Nos pondremos en contacto en un plazo de 24 horas.',
+    toastErrorTitle: 'Error al enviar',
+    toastErrorDescription: 'Inténtalo de nuevo o escríbenos por WhatsApp.',
+  },
+};
 
 export default forms;
