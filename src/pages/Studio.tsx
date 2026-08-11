@@ -123,7 +123,6 @@ const Studio = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <span className="text-4xl mb-4 block">{item.icon}</span>
                 <h3 className="text-xl font-bold mb-3">{item.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{item.description}</p>
               </motion.div>
@@ -152,7 +151,6 @@ const Studio = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <span className="text-4xl mb-4 block">{item.icon}</span>
                 <h3 className="text-xl font-bold mb-3">{item.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{item.description}</p>
               </motion.div>
@@ -326,7 +324,6 @@ const Studio = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <span className="text-4xl mb-4 block">{item.icon}</span>
                 <h3 className="text-xl font-bold mb-3">{item.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{item.description}</p>
               </motion.div>
