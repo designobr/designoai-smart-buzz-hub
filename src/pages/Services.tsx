@@ -8,6 +8,7 @@ import { Check, ArrowRight, Smartphone, Camera, Brain, Star, MessageCircle, Zap,
 import { motion } from 'framer-motion';
 import SEOHead from '@/components/SEOHead';
 import PremiumHero from '@/components/PremiumHero';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -17,66 +18,37 @@ const fadeUp = {
   })
 };
 
+interface ServiceItem {
+  title: string;
+  description?: string;
+  features: string[];
+}
+
+interface ExtraServiceItem {
+  name: string;
+  price: string;
+}
+
 const Services = () => {
+  const { t, tList, path } = useI18n();
+
   useEffect(() => {window.scrollTo(0, 0);}, []);
 
-  const digitalServices = [
-  {
-    icon: <Globe className="w-5 h-5" />,
-    title: "Gestão de Redes Sociais",
-    description: "12 posts mensais personalizados com design premium e copywriting otimizado para engajamento.",
-    features: ["12 posts/mês", "Stories diários programados", "Design profissional", "Copywriting otimizado"]
-  },
-  {
-    icon: <BarChart3 className="w-5 h-5" />,
-    title: "Tráfego Pago",
-    description: "Campanhas estratégicas no Instagram e Facebook para aumentar sua visibilidade e conversões.",
-    features: ["Campanhas Instagram/Facebook", "Otimização de conversões", "Relatórios de performance", "Segmentação avançada"]
-  },
-  {
-    icon: <Smartphone className="w-5 h-5" />,
-    title: "Site One Page",
-    description: "Site responsivo e profissional para estabelecer sua presença digital com design moderno.",
-    features: ["Design responsivo", "Otimizado para SEO", "Formulário de contato", "Integração redes sociais"]
-  },
-  {
-    icon: <Sparkles className="w-5 h-5" />,
-    title: "Design Gráfico Completo",
-    description: "Identidade visual consistente em todos os materiais digitais da sua empresa.",
-    features: ["Logotipo profissional", "Paleta de cores", "Tipografia personalizada", "Manual de marca"]
-  }];
+  const digitalIcons = [
+    <Globe className="w-5 h-5" />,
+    <BarChart3 className="w-5 h-5" />,
+    <Smartphone className="w-5 h-5" />,
+    <Sparkles className="w-5 h-5" />,
+  ];
 
-  const physicalServices = [
-  {
-    title: "Cartões de Visita",
-    features: ["Cartão de Visita Digital com QR Code", "Cartão de Visita Físico (opcional)", "Design alinhado com identidade visual"]
-  },
-  {
-    title: "Produção Audiovisual",
-    features: ["1 Sessão de Fotos Presencial (mês)", "1 Gravação de Vídeo Institucional (mês)", "Material profissional para redes sociais"]
-  }];
-
-  const aiServices = [
-  {
-    title: "Relatórios Inteligentes",
-    features: ["Relatórios mensais de desempenho automáticos", "Análise de métricas e insights", "Sugestões de otimização baseadas em dados"]
-  },
-  {
-    title: "Assistente Virtual",
-    features: ["Assistente por WhatsApp com IA", "Suporte humano quando necessário", "Diagnóstico de marketing automático"]
-  }];
-
-  const additionalServices = [
-  { name: "Impressão de 100 cartões de visita", price: "R$ 80 a R$ 120", icon: "" },
-  { name: "Catálogo digital interativo", price: "R$ 300", icon: "" },
-  { name: "Vídeos Reels (extra)", price: "R$ 80 a R$ 150/un", icon: "" },
-  { name: "Landing Page para campanha", price: "R$ 400", icon: "" },
-  { name: "Consultoria estratégica mensal", price: "R$ 250", icon: "" },
-  { name: "Criação de e-mail profissional", price: "R$ 100 (setup)", icon: "" },
-  { name: "Google Meu Negócio otimizado", price: "R$ 200", icon: "" }];
+  const digitalServices = tList<ServiceItem>('servicesPage.digital.services');
+  const physicalServices = tList<ServiceItem>('servicesPage.physical.services');
+  const aiServices = tList<ServiceItem>('servicesPage.ai.services');
+  const additionalServices = tList<ExtraServiceItem>('servicesPage.extras.services');
+  const guarantees = tList<string>('servicesPage.ctaBlock.guarantees');
 
   const handleConsultationClick = () => {
-    window.open('https://wa.me/5511947968158?text=Olá! Gostaria de agendar uma consultoria gratuita sobre o Plano Fusion.', '_blank');
+    window.open(`https://wa.me/5511947968158?text=${encodeURIComponent(t('servicesPage.wa.consultation'))}`, '_blank');
   };
 
   const handleStartClick = () => {
@@ -84,7 +56,7 @@ const Services = () => {
   };
 
   const handleSpecialistClick = () => {
-    window.open('https://wa.me/5511947968158?text=Olá! Gostaria de falar com um especialista sobre o Plano Fusion.', '_blank');
+    window.open(`https://wa.me/5511947968158?text=${encodeURIComponent(t('servicesPage.wa.specialist'))}`, '_blank');
   };
 
   const ServiceCard = ({ icon, title, description, features, index }: {icon?: React.ReactNode;title: string;description?: string;features: string[];index: number;}) =>
@@ -128,19 +100,19 @@ const Services = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Plano Fusion - Serviços Completos"
-        description="Plano Fusion: gestão de redes sociais, tráfego pago, design gráfico, produção audiovisual e IA. Solução completa para empresas que querem crescer no digital e no físico."
+        title={t('servicesPage.seo.title')}
+        description={t('servicesPage.seo.description')}
         path="/servicos"
       />
       <Navbar />
 
       <PremiumHero
-        badge="Plano Fusion"
-        title="Plano Fusion"
-        titleGradient="Completo"
-        subtitle="Atendemos empresas pequenas, médias e grandes, que querem atuar tanto no físico como também no digital"
-        ctaLabel="Agende sua Consultoria Gratuita"
-        ctaHref="https://wa.me/5511947968158?text=Olá! Gostaria de agendar uma consultoria gratuita sobre o Plano Fusion."
+        badge={t('servicesPage.hero.badge')}
+        title={t('servicesPage.hero.title')}
+        titleGradient={t('servicesPage.hero.titleGradient')}
+        subtitle={t('servicesPage.hero.subtitle')}
+        ctaLabel={t('servicesPage.hero.cta')}
+        ctaHref={`https://wa.me/5511947968158?text=${encodeURIComponent(t('servicesPage.wa.consultation'))}`}
       />
 
       {/* Tabs Content */}
@@ -150,27 +122,27 @@ const Services = () => {
             <TabsList className="grid w-full grid-cols-4 mb-12 h-12">
               <TabsTrigger value="digital" className="text-xs sm:text-sm">
                 <Smartphone className="w-4 h-4 mr-1.5 hidden sm:inline-block" />
-                Digital
+                {t('servicesPage.tabs.digital')}
               </TabsTrigger>
               <TabsTrigger value="physical" className="text-xs sm:text-sm">
                 <Camera className="w-4 h-4 mr-1.5 hidden sm:inline-block" />
-                Físico
+                {t('servicesPage.tabs.physical')}
               </TabsTrigger>
               <TabsTrigger value="ai" className="text-xs sm:text-sm">
                 <Brain className="w-4 h-4 mr-1.5 hidden sm:inline-block" />
-                IA
+                {t('servicesPage.tabs.ai')}
               </TabsTrigger>
               <TabsTrigger value="extras" className="text-xs sm:text-sm">
                 <Star className="w-4 h-4 mr-1.5 hidden sm:inline-block" />
-                Extras
+                {t('servicesPage.tabs.extras')}
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="digital">
-              <TabHeader icon={<Smartphone className="w-6 h-6" />} title="Serviços Digitais" subtitle="Transforme sua presença digital com soluções completas" />
+              <TabHeader icon={<Smartphone className="w-6 h-6" />} title={t('servicesPage.digital.heading')} subtitle={t('servicesPage.digital.subtitle')} />
               <div className="grid md:grid-cols-2 gap-5 mb-16">
                 {digitalServices.map((s, i) =>
-                <ServiceCard key={i} index={i} icon={s.icon} title={s.title} description={s.description} features={s.features} />
+                <ServiceCard key={i} index={i} icon={digitalIcons[i]} title={s.title} description={s.description} features={s.features} />
                 )}
               </div>
 
@@ -181,29 +153,29 @@ const Services = () => {
  className="card-surface rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
                 <div className="relative z-10">
                   <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
-                    <span className="text-foreground">Pronto para </span>
-                    <span className="text-foreground">revolucionar</span>
+                    <span className="text-foreground">{t('servicesPage.ctaBlock.titleLine1')}</span>
+                    <span className="text-foreground">{t('servicesPage.ctaBlock.titleLine2')}</span>
                     <br />
-                    <span className="text-foreground">seu marketing digital?</span>
+                    <span className="text-foreground">{t('servicesPage.ctaBlock.titleLine3')}</span>
                   </h2>
                   <p className="text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
-                    Comece agora e conte com suporte total da nossa equipe desde o primeiro dia.
+                    {t('servicesPage.ctaBlock.description')}
                     <span className="block mt-2 text-foreground font-medium">
-                      Junte-se a mais de 500 empresas que já transformaram seus resultados!
+                      {t('servicesPage.ctaBlock.highlight')}
                     </span>
                   </p>
                   <div className="flex flex-col sm:flex-row justify-center gap-4 mb-10">
                     <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 group" onClick={handleStartClick}>
-                      Comece Agora
+                      {t('servicesPage.ctaBlock.startButton')}
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Button>
                     <Button size="lg" variant="outline" className="border-border hover:bg-surface-elevated text-destructive-foreground" onClick={handleSpecialistClick}>
                       <MessageCircle className="w-4 h-4 mr-2" />
-                      Fale com um Especialista
+                      {t('servicesPage.ctaBlock.specialistButton')}
                     </Button>
                   </div>
                   <div className="grid sm:grid-cols-3 gap-4">
-                    {["Não é necessário cartão de crédito", "Cancelamento a qualquer momento", "Suporte premium incluído"].map((text, i) =>
+                    {guarantees.map((text, i) =>
                     <div key={i} className="flex items-center justify-center text-sm text-muted-foreground gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-primary" />
                         {text}
@@ -215,7 +187,7 @@ const Services = () => {
             </TabsContent>
 
             <TabsContent value="physical">
-              <TabHeader icon={<Camera className="w-6 h-6" />} title="Materiais Físicos" subtitle="Integração perfeita entre físico e digital" />
+              <TabHeader icon={<Camera className="w-6 h-6" />} title={t('servicesPage.physical.heading')} subtitle={t('servicesPage.physical.subtitle')} />
               <div className="grid md:grid-cols-2 gap-5">
                 {physicalServices.map((s, i) =>
                 <ServiceCard key={i} index={i} title={s.title} features={s.features} />
@@ -224,7 +196,7 @@ const Services = () => {
             </TabsContent>
 
             <TabsContent value="ai">
-              <TabHeader icon={<Brain className="w-6 h-6" />} title="Inteligência Artificial" subtitle="Tecnologia avançada para otimizar seus resultados" />
+              <TabHeader icon={<Brain className="w-6 h-6" />} title={t('servicesPage.ai.heading')} subtitle={t('servicesPage.ai.subtitle')} />
               <div className="grid md:grid-cols-2 gap-5">
                 {aiServices.map((s, i) =>
                 <ServiceCard key={i} index={i} title={s.title} features={s.features} />
@@ -233,7 +205,7 @@ const Services = () => {
             </TabsContent>
 
             <TabsContent value="extras">
-              <TabHeader icon={<Star className="w-6 h-6" />} title="Serviços Adicionais" subtitle="Expanda seu pacote com serviços personalizados" />
+              <TabHeader icon={<Star className="w-6 h-6" />} title={t('servicesPage.extras.heading')} subtitle={t('servicesPage.extras.subtitle')} />
               <div className="grid sm:grid-cols-2 gap-4">
                 {additionalServices.map((s, i) =>
                 <motion.div
@@ -245,7 +217,6 @@ const Services = () => {
                   viewport={{ once: true }}
  className="card-surface rounded-xl p-5 flex items-center justify-between hover:border-primary/20 transition-all duration-300">
                     <div className="flex items-center gap-3">
-                      <span className="text-xl">{s.icon}</span>
                       <span className="text-sm font-medium text-foreground">{s.name}</span>
                     </div>
                     <span className="text-sm font-semibold text-primary whitespace-nowrap ml-4">{s.price}</span>
@@ -266,15 +237,15 @@ const Services = () => {
             viewport={{ once: true }}
  className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6">
-              <span className="text-foreground">Pronto para transformar </span>
-              <span className="text-foreground">seu negócio?</span>
+              <span className="text-foreground">{t('servicesPage.bottomCta.titleLine1')}</span>
+              <span className="text-foreground">{t('servicesPage.bottomCta.titleLine2')}</span>
             </h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Entre em contato conosco e descubra como podemos impulsionar sua empresa
+              {t('servicesPage.bottomCta.subtitle')}
             </p>
             <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 group" onClick={handleConsultationClick}>
               <MessageCircle className="w-4 h-4 mr-2" />
-              Fale Conosco no WhatsApp
+              {t('servicesPage.bottomCta.button')}
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </motion.div>
