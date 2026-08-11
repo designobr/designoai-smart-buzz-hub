@@ -1,54 +1,18 @@
-import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import Reveal from '@/components/Reveal';
 import ActionButton from '@/components/ActionButton';
+import LocaleLink from '@/components/LocaleLink';
+import { useI18n } from '@/i18n/I18nProvider';
 
-const plans = [
-  {
-    name: 'Start',
-    summary: 'Para negócios que precisam de presença visual consistente.',
-    features: [
-      '12 artes premium personalizadas',
-      'Direção criativa assistida por IA',
-      'Sugestão de temas por tendências',
-      'Ciclo de revisão e aprovação',
-      'Atendimento via WhatsApp',
-    ],
-  },
-  {
-    name: 'Plus',
-    summary: 'Volume maior de produção e planejamento mais amplo.',
-    features: [
-      '18 artes premium personalizadas',
-      'Direção criativa assistida por IA',
-      'Sugestão de temas por tendências',
-      'Ciclo de revisão e aprovação',
-      'Atendimento via WhatsApp',
-    ],
-  },
-  {
-    name: 'Fusion',
-    summary: 'Marketing digital, material físico e automação em um só plano.',
-    highlight: true,
-    features: [
-      'Gestão de redes sociais (12 posts/mês)',
-      'Stories diários programados',
-      'Design gráfico e copywriting',
-      'Tráfego pago e site responsivo',
-      'Cartão de visita digital',
-      'Sessão de fotos e vídeo',
-      'Relatórios de desempenho',
-      'Assistente de WhatsApp com IA',
-    ],
-  },
-];
+type Plan = { name: string; summary: string; highlight?: boolean; features: string[] };
 
 const Pricing = () => {
+  const { t, tList } = useI18n();
+  const plans = tList<Plan>('home.pricing.plans');
+
   const requestQuote = (planName: string) =>
     window.open(
-      `https://wa.me/5511947968158?text=${encodeURIComponent(
-        `Olá! Tenho interesse no plano ${planName} da DesignoAI. Gostaria de solicitar um orçamento.`
-      )}`,
+      `https://wa.me/5511947968158?text=${encodeURIComponent(t('home.pricing.waQuote', { plan: planName }))}`,
       '_blank'
     );
 
@@ -63,12 +27,10 @@ const Pricing = () => {
         <Reveal>
           <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-7">
-              <p className="eyebrow">Planos</p>
-              <h2 className="display-2 mt-6 text-foreground">Escopos claros, orçamento sob consulta.</h2>
+              <p className="eyebrow">{t('home.pricing.eyebrow')}</p>
+              <h2 className="display-2 mt-6 text-foreground">{t('home.pricing.title')}</h2>
             </div>
-            <p className="text-base text-muted-foreground lg:col-span-5">
-              Cada plano é ajustado ao seu momento. Sem taxas escondidas e sem contrato de longo prazo.
-            </p>
+            <p className="text-base text-muted-foreground lg:col-span-5">{t('home.pricing.description')}</p>
           </div>
         </Reveal>
 
@@ -84,12 +46,12 @@ const Pricing = () => {
                   <h3 className="text-2xl font-bold tracking-[-0.03em] text-foreground">{plan.name}</h3>
                   {plan.highlight && (
                     <span className="rounded-pill border border-border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                      Completo
+                      {t('home.pricing.highlightLabel')}
                     </span>
                   )}
                 </div>
                 <p className="mt-4 text-sm text-muted-foreground">{plan.summary}</p>
-                <p className="mt-8 text-base font-semibold text-foreground">Orçamento sob consulta</p>
+                <p className="mt-8 text-base font-semibold text-foreground">{t('home.pricing.priceLabel')}</p>
 
                 <ul className="mt-8 flex-1 space-y-4 border-t border-border pt-8">
                   {plan.features.map((f) => (
@@ -106,14 +68,14 @@ const Pricing = () => {
                     variant={plan.highlight ? 'primary' : 'secondary'}
                     onClick={() => requestQuote(plan.name)}
                   >
-                    Solicitar orçamento
+                    {t('home.pricing.ctaQuote')}
                   </ActionButton>
                   {plan.highlight && (
-                    <Link to="/services" className="block">
+                    <LocaleLink page="services" className="block">
                       <ActionButton variant="quiet" className="w-full">
-                        Ver detalhes
+                        {t('home.pricing.ctaDetails')}
                       </ActionButton>
-                    </Link>
+                    </LocaleLink>
                   )}
                 </div>
               </article>
@@ -124,7 +86,7 @@ const Pricing = () => {
         <Reveal delay={0.1}>
           <div className="mt-14">
             <button type="button" onClick={goToCalculator} className="link-underline text-sm font-semibold">
-              Montar seu escopo no seletor de serviços
+              {t('home.pricing.ctaCalculator')}
             </button>
           </div>
         </Reveal>

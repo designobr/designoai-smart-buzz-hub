@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import Reveal from '@/components/Reveal';
 import ActionButton from '@/components/ActionButton';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const Field = ({
   id,
@@ -19,6 +20,9 @@ const Field = ({
 );
 
 const ContactForm = () => {
+  const { t, tList } = useI18n();
+  const budgetOptions = tList<{ value: string; label: string }>('forms.contact.budgetOptions');
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -36,13 +40,16 @@ const ContactForm = () => {
     try {
       const { error } = await supabase.functions.invoke('submit-contact-form', { body: formData });
       if (error) throw error;
-      toast({ title: 'Solicitação enviada', description: 'Entraremos em contato em até 24 horas.' });
+      toast({
+        title: t('forms.contact.toastSuccessTitle'),
+        description: t('forms.contact.toastSuccessDescription'),
+      });
       setFormData({ name: '', email: '', phone: '', company: '', budget: '', message: '' });
     } catch (error) {
       console.error('Erro ao enviar formulário');
       toast({
-        title: 'Erro ao enviar',
-        description: 'Tente novamente ou fale com a gente pelo WhatsApp.',
+        title: t('forms.contact.toastErrorTitle'),
+        description: t('forms.contact.toastErrorDescription'),
         variant: 'destructive',
       });
     } finally {
@@ -59,15 +66,13 @@ const ContactForm = () => {
       <div className="container-editorial">
         <div className="grid gap-16 lg:grid-cols-12 lg:gap-20">
           <Reveal className="lg:col-span-5">
-            <p className="eyebrow">Contato</p>
-            <h2 className="display-2 mt-6 text-foreground">Vamos conversar sobre o seu projeto.</h2>
-            <p className="lead mt-6 max-w-md">
-              Conte o essencial e devolvemos uma proposta com escopo, prazo e investimento.
-            </p>
+            <p className="eyebrow">{t('forms.contact.eyebrow')}</p>
+            <h2 className="display-2 mt-6 text-foreground">{t('forms.contact.title')}</h2>
+            <p className="lead mt-6 max-w-md">{t('forms.contact.description')}</p>
 
             <dl className="mt-14 space-y-8 border-t border-border pt-8">
               <div>
-                <dt className="eyebrow">WhatsApp</dt>
+                <dt className="eyebrow">{t('forms.contact.whatsappLabel')}</dt>
                 <dd className="mt-2">
                   <a href="https://wa.me/5511947968158" className="link-underline text-base">
                     +55 11 94796-8158
@@ -75,7 +80,7 @@ const ContactForm = () => {
                 </dd>
               </div>
               <div>
-                <dt className="eyebrow">E-mail</dt>
+                <dt className="eyebrow">{t('forms.contact.emailLabel')}</dt>
                 <dd className="mt-2">
                   <a href="mailto:contato@designoai.com.br" className="link-underline text-base">
                     contato@designoai.com.br
@@ -83,8 +88,8 @@ const ContactForm = () => {
                 </dd>
               </div>
               <div>
-                <dt className="eyebrow">Atendimento</dt>
-                <dd className="mt-2 text-base text-muted-foreground">Segunda a sexta, 9h às 18h</dd>
+                <dt className="eyebrow">{t('forms.contact.hoursLabel')}</dt>
+                <dd className="mt-2 text-base text-muted-foreground">{t('forms.contact.hoursValue')}</dd>
               </div>
             </dl>
           </Reveal>
@@ -95,21 +100,21 @@ const ContactForm = () => {
                 <Field
                   id="name"
                   name="name"
-                  label="Nome completo"
+                  label={t('forms.contact.nameLabel')}
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Seu nome"
+                  placeholder={t('forms.contact.namePlaceholder')}
                 />
                 <Field
                   id="email"
                   name="email"
                   type="email"
-                  label="E-mail"
+                  label={t('forms.contact.emailFieldLabel')}
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="seu@email.com"
+                  placeholder={t('forms.contact.emailPlaceholder')}
                 />
               </div>
 
@@ -118,25 +123,25 @@ const ContactForm = () => {
                   id="phone"
                   name="phone"
                   type="tel"
-                  label="WhatsApp"
+                  label={t('forms.contact.phoneLabel')}
                   required
                   value={formData.phone}
                   onChange={handleChange}
-                  placeholder="(11) 99999-9999"
+                  placeholder={t('forms.contact.phonePlaceholder')}
                 />
                 <Field
                   id="company"
                   name="company"
-                  label="Empresa"
+                  label={t('forms.contact.companyLabel')}
                   value={formData.company}
                   onChange={handleChange}
-                  placeholder="Nome da empresa"
+                  placeholder={t('forms.contact.companyPlaceholder')}
                 />
               </div>
 
               <div>
                 <label htmlFor="budget" className="mb-2 block text-sm font-medium text-foreground">
-                  Investimento mensal
+                  {t('forms.contact.budgetLabel')}
                 </label>
                 <select
                   id="budget"
@@ -145,17 +150,18 @@ const ContactForm = () => {
                   onChange={handleChange}
                   className="field appearance-none"
                 >
-                  <option value="">Selecione uma faixa</option>
-                  <option value="2000-4000">R$ 2.000 a R$ 4.000</option>
-                  <option value="4000-6000">R$ 4.000 a R$ 6.000</option>
-                  <option value="6000-10000">R$ 6.000 a R$ 10.000</option>
-                  <option value="10000+">Acima de R$ 10.000</option>
+                  <option value="">{t('forms.contact.budgetPlaceholder')}</option>
+                  {budgetOptions.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
                 </select>
               </div>
 
               <div>
                 <label htmlFor="message" className="mb-2 block text-sm font-medium text-foreground">
-                  Sobre o projeto
+                  {t('forms.contact.messageLabel')}
                 </label>
                 <textarea
                   id="message"
@@ -163,19 +169,17 @@ const ContactForm = () => {
                   rows={5}
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Contexto, objetivos e prazos."
+                  placeholder={t('forms.contact.messagePlaceholder')}
                   className="field h-auto resize-none py-4"
                 />
               </div>
 
               <ActionButton type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" strokeWidth={2} />}
-                {isSubmitting ? 'Enviando' : 'Enviar solicitação'}
+                {isSubmitting ? t('forms.contact.sending') : t('forms.contact.submit')}
               </ActionButton>
 
-              <p className="text-xs text-muted-foreground">
-                Seus dados são usados apenas para o retorno comercial deste contato.
-              </p>
+              <p className="text-xs text-muted-foreground">{t('forms.contact.privacyNote')}</p>
             </form>
           </Reveal>
         </div>

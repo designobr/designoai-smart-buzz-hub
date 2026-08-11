@@ -3,25 +3,30 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import ActionButton from '@/components/ActionButton';
+import LocaleLink from '@/components/LocaleLink';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { useI18n } from '@/i18n/I18nProvider';
+import type { PageKey } from '@/i18n/routes';
 
-const primaryLinks = [
-  { to: '/studio', label: 'Studio' },
-  { to: '/sites-ia', label: 'Sites IA' },
-  { to: '/ai-sdr', label: 'AI SDR' },
-  { to: '/services', label: 'Serviços' },
-  { to: '/recursos', label: 'Recursos' },
+const primaryLinks: { page: PageKey; key: string }[] = [
+  { page: 'studio', key: 'nav.links.studio' },
+  { page: 'sitesIa', key: 'nav.links.sitesIa' },
+  { page: 'aiSdr', key: 'nav.links.aiSdr' },
+  { page: 'services', key: 'nav.links.services' },
+  { page: 'recursos', key: 'nav.links.recursos' },
 ];
 
-const anchorLinks = [
-  { href: '/#how-it-works', label: 'Processo' },
-  { href: '/#pricing', label: 'Planos' },
-  { href: '/#contact', label: 'Contato' },
+const anchors = [
+  { hash: '#how-it-works', key: 'nav.anchors.process' },
+  { hash: '#pricing', key: 'nav.anchors.pricing' },
+  { hash: '#contact', key: 'nav.anchors.contact' },
 ];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
+  const { t, path } = useI18n();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -33,11 +38,9 @@ const Navbar = () => {
   useEffect(() => setOpen(false), [pathname]);
 
   const openWhatsApp = () =>
-    window.open(
-      'https://wa.me/5511947968158?text=' +
-        encodeURIComponent('Olá! Gostaria de conversar sobre um projeto com a DesignoAI.'),
-      '_blank'
-    );
+    window.open('https://wa.me/5511947968158?text=' + encodeURIComponent(t('common.wa.default')), '_blank');
+
+  const homePath = path('home');
 
   return (
     <header
@@ -47,45 +50,52 @@ const Navbar = () => {
     >
       <div className="container-editorial">
         <div className="flex h-[72px] items-center justify-between">
-          <Link to="/" className="text-[17px] font-bold tracking-[-0.03em] text-foreground">
+          <LocaleLink
+            page="home"
+            aria-label={t('nav.aria.home')}
+            className="text-[17px] font-bold tracking-[-0.03em] text-foreground"
+          >
             Designo<span className="text-muted-foreground">AI</span>
-          </Link>
+          </LocaleLink>
 
           <nav className="hidden items-center gap-8 lg:flex">
             {primaryLinks.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
+              <LocaleLink
+                key={l.page}
+                page={l.page}
                 className={`text-sm transition-colors duration-[220ms] ${
-                  pathname === l.to ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                  pathname === path(l.page)
+                    ? 'text-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
-                {l.label}
-              </Link>
+                {t(l.key)}
+              </LocaleLink>
             ))}
-            {anchorLinks.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
+            {anchors.map((l) => (
+              <Link
+                key={l.hash}
+                to={`${homePath}${l.hash}`}
                 className="text-sm text-muted-foreground transition-colors duration-[220ms] hover:text-foreground"
               >
-                {l.label}
-              </a>
+                {t(l.key)}
+              </Link>
             ))}
           </nav>
 
           <div className="hidden items-center gap-2 lg:flex">
+            <LanguageSwitcher />
             <ActionButton variant="quiet" size="sm" onClick={openWhatsApp}>
-              Falar com consultor
+              {t('common.cta.talkToConsultant')}
             </ActionButton>
             <ActionButton size="sm" onClick={openWhatsApp}>
-              Solicitar proposta
+              {t('common.cta.requestProposal')}
             </ActionButton>
           </div>
 
           <button
             type="button"
-            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+            aria-label={open ? t('nav.aria.closeMenu') : t('nav.aria.openMenu')}
             className="flex h-11 w-11 items-center justify-center rounded-pill border border-border text-foreground lg:hidden"
             onClick={() => setOpen(!open)}
           >
@@ -106,30 +116,31 @@ const Navbar = () => {
             <div className="container-editorial py-6">
               <div className="grid gap-1">
                 {primaryLinks.map((l) => (
-                  <Link
-                    key={l.to}
-                    to={l.to}
+                  <LocaleLink
+                    key={l.page}
+                    page={l.page}
                     className="py-3 text-base text-foreground"
                     onClick={() => setOpen(false)}
                   >
-                    {l.label}
-                  </Link>
+                    {t(l.key)}
+                  </LocaleLink>
                 ))}
-                {anchorLinks.map((l) => (
-                  <a
-                    key={l.href}
-                    href={l.href}
+                {anchors.map((l) => (
+                  <Link
+                    key={l.hash}
+                    to={`${homePath}${l.hash}`}
                     className="py-3 text-base text-muted-foreground"
                     onClick={() => setOpen(false)}
                   >
-                    {l.label}
-                  </a>
+                    {t(l.key)}
+                  </Link>
                 ))}
               </div>
               <div className="mt-6 grid gap-3">
-                <ActionButton onClick={openWhatsApp}>Solicitar proposta</ActionButton>
+                <LanguageSwitcher variant="block" />
+                <ActionButton onClick={openWhatsApp}>{t('common.cta.requestProposal')}</ActionButton>
                 <ActionButton variant="secondary" onClick={openWhatsApp}>
-                  Falar com consultor
+                  {t('common.cta.talkToConsultant')}
                 </ActionButton>
               </div>
             </div>

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Zap, Gem, Target, Palette, Rocket, Settings, Check, MessageCircle, ArrowRight, Search, Shield, Globe, Mail, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SubpageLayout from '@/components/SubpageLayout';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -13,63 +14,35 @@ const fadeUp = {
   }),
 };
 
-const audiences = [
-  "Clínicas de Estética que precisam agendar mais procedimentos",
-  "Veterinárias que querem facilitar o agendamento de consultas",
-  "Dentistas em busca de novos pacientes",
-  "Escritórios de Advocacia que desejam transmitir autoridade",
-  "Restaurantes que precisam de cardápio digital e pedidos online",
-  "Consultorias que querem captar leads qualificados",
-  "Academias e Personal Trainers focados em atrair alunos",
-  "Indústrias e Distribuidoras que buscam expandir sua presença digital",
-  "Qualquer empresa que busca mais clientes e presença digital profissional",
-];
+const advantageIcons = [Zap, Gem, Target, Palette, Rocket, Settings];
+const deliverableIcons = [Globe, Mail, Shield, MessageCircle, Search, Smartphone];
 
-const painPoints = [
-  "Perder clientes para concorrentes que têm site",
-  "Parecer menos profissional sem uma vitrine digital própria",
-  "Depender 100% de redes sociais que mudam as regras constantemente",
-  "Não ter onde centralizar informações e facilitar contato",
-  "Querer crescer mas achar que um site é muito caro ou demorado",
-];
-
-const advantages = [
-  { icon: Zap, title: "Velocidade Incrível", description: "Site no ar em tempo recorde (até 72 horas), sem a burocracia e os meses de espera das agências tradicionais. Enquanto outros ainda estão orçando, você já está capturando clientes." },
-  { icon: Gem, title: "Qualidade Premium", description: "Design moderno e responsivo, perfeitamente adaptado para qualquer dispositivo: celular, tablet ou desktop. Seus clientes terão uma experiência profissional." },
-  { icon: Target, title: "Foco em Resultados", description: "Cada elemento é pensado estrategicamente para transformar visitantes em clientes, com chamadas para ação claras e jornada intuitiva." },
-  { icon: Palette, title: "Totalmente Personalizado", description: "Cada projeto é supervisionado e refinado por especialistas para refletir a identidade única da sua marca. Nada de templates genéricos." },
-  { icon: Rocket, title: "Tecnologia de Ponta", description: "Construído com as mais avançadas plataformas de Inteligência Artificial do mercado, garantindo performance, segurança e escalabilidade." },
-  { icon: Settings, title: "Performance Otimizada", description: "Sites leves, rápidos e otimizados para os mecanismos de busca, garantindo melhor posicionamento no Google." },
-];
-
-const steps = [
-  { number: "01", title: "Descoberta", description: "Começamos entendendo seu negócio, seus objetivos e seu público-alvo. Cada detalhe importa para criar um site que realmente representa sua empresa." },
-  { number: "02", title: "Criação Inteligente", description: "Nossa IA gera um protótipo inicial com base nas informações estratégicas da sua empresa. A tecnologia trabalha 24/7 para acelerar o processo." },
-  { number: "03", title: "Refinamento Personalizado", description: "Aqui entra o toque humano. Ajustamos cada detalhe: textos persuasivos, cores da marca, imagens, funcionalidades." },
-  { number: "04", title: "Lançamento Rápido", description: "Publicamos seu site em domínio próprio (.com.br), configuramos e-mails profissionais, certificados de segurança e Google Meu Negócio." },
-];
-
-const deliverables = [
-  { icon: Globe, text: "Domínio .com.br registrado em seu nome" },
-  { icon: Mail, text: "E-mails Profissionais (@suaempresa.com.br)" },
-  { icon: Shield, text: "Certificado SSL (site seguro com cadeado verde)" },
-  { icon: MessageCircle, text: "Integração com WhatsApp para contato direto" },
-  { icon: Search, text: "Otimização para Buscadores (SEO)" },
-  { icon: Smartphone, text: "Site 100% Responsivo em todos os dispositivos" },
-];
-
-const handleWhatsApp = () => {
-  window.open('https://wa.me/5511947968158?text=Olá! Gostaria de saber mais sobre criação de sites com IA.', '_blank');
-};
+interface Advantage { title: string; description: string; }
+interface Step { number: string; title: string; description: string; }
+interface Deliverable { text: string; }
+interface DiffItem { label: string; sub: string; }
 
 const SitesIA = () => {
+  const { t, tList } = useI18n();
+
+  const audiences = tList<string>('sitesIa.audience.items');
+  const painPoints = tList<string>('sitesIa.audience.painPoints');
+  const advantages = tList<Advantage>('sitesIa.advantages.items');
+  const steps = tList<Step>('sitesIa.process.steps');
+  const deliverables = tList<Deliverable>('sitesIa.deliverables.items');
+  const diffItems = tList<DiffItem>('sitesIa.differentiator.items');
+
+  const handleWhatsApp = () => {
+    window.open(`https://wa.me/5511947968158?text=${encodeURIComponent(t('sitesIa.ctaFinal.whatsappMessage'))}`, '_blank');
+  };
+
   return (
     <SubpageLayout
-      title="Sites Profissionais com IA"
-      subtitle="Cansado de orçamentos altos e prazos intermináveis? Desbloqueie o potencial da sua empresa com uma presença digital profissional, ágil e focada em resultados."
+      title={t('sitesIa.seo.title')}
+      subtitle={t('sitesIa.hero.subtitle')}
       seoPath="/sites-ia"
-      seoDescription="Criação de sites profissionais com inteligência artificial: design moderno, SEO otimizado, responsivo e focado em conversões. Sites prontos em dias, não meses."
-      badge="O Futuro Chegou"
+      seoDescription={t('sitesIa.seo.description')}
+      badge={t('sitesIa.hero.badge')}
     >
       {/* Why you need a site */}
       <section className="py-20 md:py-28 relative">
@@ -83,21 +56,15 @@ const SitesIA = () => {
           >
             <motion.div variants={fadeUp} custom={0} className="text-center mb-12">
               <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
-                <span className="text-foreground">Por Que Sua Empresa </span>
-                <span className="text-foreground">Precisa de um Site?</span>
+                <span className="text-foreground">{t('sitesIa.whyNeed.title1')}</span>
+                <span className="text-foreground">{t('sitesIa.whyNeed.title2')}</span>
               </h2>
             </motion.div>
 
             <motion.div variants={fadeUp} custom={1} className="card-surface rounded-2xl p-8 md:p-10 space-y-6">
-              <p className="text-muted-foreground text-lg leading-relaxed">
-                No mundo digital de hoje, depender apenas de redes sociais é limitar o crescimento do seu negócio. <strong className="text-foreground">O Instagram e o Facebook são importantes, mas você não é dono dessas plataformas.</strong> As regras mudam, o alcance diminui e seus clientes podem não encontrar você.
-              </p>
-              <p className="text-muted-foreground text-lg leading-relaxed">
-                <strong className="text-primary">Um site próprio é seu território digital</strong>, onde você controla tudo: a experiência do cliente, a mensagem da sua marca e, principalmente, a conversão de visitantes em clientes reais.
-              </p>
-              <p className="text-muted-foreground text-lg leading-relaxed">
-                Utilizamos as mais avançadas ferramentas de <strong className="text-foreground">Inteligência Artificial</strong> para construir sites que realmente funcionam para o seu negócio, combinando tecnologia de ponta com expertise humana.
-              </p>
+              <p className="text-muted-foreground text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: t('sitesIa.whyNeed.p1Html') }} />
+              <p className="text-muted-foreground text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: t('sitesIa.whyNeed.p2Html') }} />
+              <p className="text-muted-foreground text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: t('sitesIa.whyNeed.p3Html') }} />
             </motion.div>
           </motion.div>
         </div>
@@ -110,15 +77,13 @@ const SitesIA = () => {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="max-w-5xl mx-auto">
             <motion.div variants={fadeUp} custom={0} className="text-center mb-12">
               <div className="inline-flex items-center px-4 py-2 card-surface rounded-full text-sm font-medium text-primary mb-6">
-                Público-Alvo
+                {t('sitesIa.audience.badge')}
               </div>
               <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
-                <span className="text-foreground">Para Quem é </span>
-                <span className="text-foreground">Este Serviço?</span>
+                <span className="text-foreground">{t('sitesIa.audience.title1')}</span>
+                <span className="text-foreground">{t('sitesIa.audience.title2')}</span>
               </h2>
-              <p className="text-muted-foreground text-lg">
-                Solução desenvolvida para <strong className="text-foreground">empresas em todo o Brasil</strong> que desejam crescer de forma inteligente
-              </p>
+              <p className="text-muted-foreground text-lg" dangerouslySetInnerHTML={{ __html: t('sitesIa.audience.subtitleHtml') }} />
             </motion.div>
 
             <div className="grid md:grid-cols-2 gap-4 mb-12">
@@ -138,7 +103,7 @@ const SitesIA = () => {
             {/* Pain points */}
             <motion.div variants={fadeUp} custom={5} className="card-surface rounded-2xl p-8 md:p-10">
               <h3 className="text-xl font-heading font-semibold text-foreground mb-6">
-                Se você enfrenta qualquer uma destas dores:
+                {t('sitesIa.audience.painTitle')}
               </h3>
               <div className="space-y-3">
                 {painPoints.map((point, i) => (
@@ -149,7 +114,7 @@ const SitesIA = () => {
                 ))}
               </div>
               <p className="mt-6 text-lg font-semibold text-primary">
-                Então este serviço foi feito para você.
+                {t('sitesIa.audience.painFooter')}
               </p>
             </motion.div>
           </motion.div>
@@ -164,16 +129,18 @@ const SitesIA = () => {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <motion.div variants={fadeUp} custom={0} className="text-center mb-16">
               <div className="inline-flex items-center px-4 py-2 card-surface rounded-full text-sm font-medium text-primary mb-6">
-                Diferenciais
+                {t('sitesIa.advantages.badge')}
               </div>
               <h2 className="text-3xl md:text-5xl font-heading font-bold">
-                <span className="text-foreground">Vantagens Que </span>
-                <span className="text-foreground">Fazem a Diferença</span>
+                <span className="text-foreground">{t('sitesIa.advantages.title1')}</span>
+                <span className="text-foreground">{t('sitesIa.advantages.title2')}</span>
               </h2>
             </motion.div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {advantages.map((adv, i) => (
+              {advantages.map((adv, i) => {
+                const Icon = advantageIcons[i];
+                return (
                 <motion.div
                   key={i}
                   variants={fadeUp}
@@ -181,14 +148,14 @@ const SitesIA = () => {
  className="card-surface rounded-2xl p-6 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                    <adv.icon className="w-6 h-6 text-primary" />
+                    <Icon className="w-6 h-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-heading font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
                     {adv.title}
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{adv.description}</p>
                 </motion.div>
-              ))}
+              );})}
             </div>
           </motion.div>
         </div>
@@ -201,13 +168,13 @@ const SitesIA = () => {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <motion.div variants={fadeUp} custom={0} className="text-center mb-16">
               <div className="inline-flex items-center px-4 py-2 card-surface rounded-full text-sm font-medium text-primary mb-6">
-                Processo
+                {t('sitesIa.process.badge')}
               </div>
               <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
-                <span className="text-foreground">Como </span>
-                <span className="text-foreground">Funciona?</span>
+                <span className="text-foreground">{t('sitesIa.process.title1')}</span>
+                <span className="text-foreground">{t('sitesIa.process.title2')}</span>
               </h2>
-              <p className="text-muted-foreground text-lg">Um processo simples e transparente</p>
+              <p className="text-muted-foreground text-lg">{t('sitesIa.process.subtitle')}</p>
             </motion.div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
@@ -240,19 +207,19 @@ const SitesIA = () => {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <motion.div variants={fadeUp} custom={0} className="text-center mb-16">
               <div className="inline-flex items-center px-4 py-2 card-surface rounded-full text-sm font-medium text-primary mb-6">
-                Entrega Completa
+                {t('sitesIa.deliverables.badge')}
               </div>
               <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
-                <span className="text-foreground">O Que Você </span>
-                <span className="text-foreground">Receberá</span>
+                <span className="text-foreground">{t('sitesIa.deliverables.title1')}</span>
+                <span className="text-foreground">{t('sitesIa.deliverables.title2')}</span>
               </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Você não recebe apenas um site. Você recebe uma <strong className="text-foreground">solução digital completa</strong>.
-              </p>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto" dangerouslySetInnerHTML={{ __html: t('sitesIa.deliverables.subtitleHtml') }} />
             </motion.div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {deliverables.map((item, i) => (
+              {deliverables.map((item, i) => {
+                const Icon = deliverableIcons[i];
+                return (
                 <motion.div
                   key={i}
                   variants={fadeUp}
@@ -260,15 +227,15 @@ const SitesIA = () => {
  className="card-surface rounded-2xl p-6 flex items-start gap-4 group hover:bg-white/[0.06] hover:border-primary/20 transition-all duration-300"
                 >
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-                    <item.icon className="w-5 h-5 text-primary" />
+                    <Icon className="w-5 h-5 text-primary" />
                   </div>
                   <span className="text-muted-foreground group-hover:text-foreground transition-colors">{item.text}</span>
                 </motion.div>
-              ))}
+              );})}
             </div>
 
             <motion.p variants={fadeUp} custom={6} className="text-center text-lg text-primary font-semibold mt-10">
-              Tudo entregue pronto para começar a gerar resultados imediatamente.
+              {t('sitesIa.deliverables.footer')}
             </motion.p>
           </motion.div>
         </div>
@@ -286,30 +253,22 @@ const SitesIA = () => {
           >
             <motion.div variants={fadeUp} custom={0} className="text-center mb-12">
               <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
-                <span className="text-foreground">O Que Torna Este </span>
-                <span className="text-foreground">Serviço Diferente?</span>
+                <span className="text-foreground">{t('sitesIa.differentiator.title1')}</span>
+                <span className="text-foreground">{t('sitesIa.differentiator.title2')}</span>
               </h2>
             </motion.div>
 
             <motion.div variants={fadeUp} custom={1} className="card-surface rounded-2xl p-8 md:p-10 space-y-6 text-center">
-              <p className="text-muted-foreground text-lg leading-relaxed">
-                Enquanto agências tradicionais cobram valores altos e demoram meses, e plataformas DIY te deixam sozinho, <strong className="text-foreground">nós combinamos o melhor dos dois mundos</strong>:
-              </p>
+              <p className="text-muted-foreground text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: t('sitesIa.differentiator.p1Html') }} />
               <div className="grid md:grid-cols-3 gap-6 py-4">
-                {[
-                  { label: "Velocidade e eficiência", sub: "da Inteligência Artificial" },
-                  { label: "Expertise e personalização", sub: "de profissionais especializados" },
-                  { label: "Custo acessível", sub: "que empresas podem investir" },
-                ].map((item, i) => (
+                {diffItems.map((item, i) => (
                   <div key={i} className="card-surface rounded-xl p-5">
                     <p className="text-foreground font-semibold mb-1">{item.label}</p>
                     <p className="text-sm text-muted-foreground">{item.sub}</p>
                   </div>
                 ))}
               </div>
-              <p className="text-lg text-foreground font-medium">
-                Você não precisa escolher entre qualidade, velocidade e preço justo. Com nossa solução, você tem <span className="text-primary font-bold">os três</span>.
-              </p>
+              <p className="text-lg text-foreground font-medium" dangerouslySetInnerHTML={{ __html: t('sitesIa.differentiator.p2Html') }} />
             </motion.div>
           </motion.div>
         </div>
@@ -328,12 +287,10 @@ const SitesIA = () => {
  className="max-w-3xl mx-auto text-center"
           >
             <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6">
-              <span className="text-foreground">Pronto para Ter um Site que </span>
-              <span className="text-foreground">Realmente Traz Resultados?</span>
+              <span className="text-foreground">{t('sitesIa.ctaFinal.title1')}</span>
+              <span className="text-foreground">{t('sitesIa.ctaFinal.title2')}</span>
             </h2>
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Pare de perder clientes para concorrentes que já têm presença digital profissional. <strong className="text-foreground">Sua empresa merece ser encontrada, reconhecida e escolhida.</strong>
-            </p>
+            <p className="text-lg text-muted-foreground mb-8 leading-relaxed" dangerouslySetInnerHTML={{ __html: t('sitesIa.ctaFinal.descriptionHtml') }} />
 
             <Button
               size="lg"
@@ -341,12 +298,10 @@ const SitesIA = () => {
               onClick={handleWhatsApp}
             >
               <MessageCircle className="w-5 h-5 mr-2" />
-              Fale Conosco via WhatsApp
+              {t('sitesIa.ctaFinal.button')}
             </Button>
 
-            <p className="text-sm text-muted-foreground mt-6">
-              Receba uma <strong className="text-foreground">consultoria gratuita</strong> e veja como a IA pode transformar a presença digital do seu negócio. Sem compromisso.
-            </p>
+            <p className="text-sm text-muted-foreground mt-6" dangerouslySetInnerHTML={{ __html: t('sitesIa.ctaFinal.noteHtml') }} />
           </motion.div>
         </div>
       </section>

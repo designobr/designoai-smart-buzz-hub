@@ -1,0 +1,38 @@
+const forms = {
+  contact: {
+    eyebrow: 'Contact',
+    title: 'Parlons de votre projet.',
+    description: "Racontez nous l'essentiel et nous vous renvoyons une proposition avec périmètre, délai et investissement.",
+    whatsappLabel: 'WhatsApp',
+    emailLabel: 'E-mail',
+    hoursLabel: 'Disponibilité',
+    hoursValue: 'Du lundi au vendredi, 9h à 18h',
+    nameLabel: 'Nom complet',
+    namePlaceholder: 'Votre nom',
+    emailFieldLabel: 'E-mail',
+    emailPlaceholder: 'vous@email.com',
+    phoneLabel: 'WhatsApp',
+    phonePlaceholder: '(11) 99999-9999',
+    companyLabel: 'Entreprise',
+    companyPlaceholder: "Nom de l'entreprise",
+    budgetLabel: 'Investissement mensuel',
+    budgetPlaceholder: 'Sélectionnez une tranche',
+    budgetOptions: [
+      { value: '2000-4000', label: 'R$ 2.000 à R$ 4.000' },
+      { value: '4000-6000', label: 'R$ 4.000 à R$ 6.000' },
+      { value: '6000-10000', label: 'R$ 6.000 à R$ 10.000' },
+      { value: '10000+', label: 'Plus de R$ 10.000' },
+    ],
+    messageLabel: 'À propos du projet',
+    messagePlaceholder: 'Contexte, objectifs et délais.',
+    submit: 'Envoyer la demande',
+    sending: 'Envoi en cours',
+    privacyNote: 'Vos données sont utilisées uniquement pour répondre à cette demande commerciale.',
+    toastSuccessTitle: 'Demande envoyée',
+    toastSuccessDescription: 'Nous vous contacterons sous 24 heures.',
+    toastErrorTitle: "Erreur lors de l'envoi",
+    toastErrorDescription: 'Réessayez ou contactez nous sur WhatsApp.',
+  },
+};
+
+export default forms;
