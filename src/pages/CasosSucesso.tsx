@@ -4,35 +4,27 @@ import { motion } from 'framer-motion';
 import SubpageLayout from '@/components/SubpageLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { TrendingUp, ShoppingBag, Stethoscope, Utensils, Briefcase, Dumbbell } from 'lucide-react';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const CasosSucesso = () => {
+  const { t, tList } = useI18n();
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  const cases = [
-    { icon: ShoppingBag, title: "E-commerce de Moda", subtitle: "Aumento de 320% no Engajamento", description: "Uma loja online de moda feminina transformou seus resultados com nossa solução de criação de conteúdo personalizado.", results: ["Engajamento aumentou 320% em 3 meses", "Conversões cresceram 85%", "ROI da campanha aumentou 150%", "Alcance orgânico expandiu 240%"] },
-    { icon: Stethoscope, title: "Clínica Médica", subtitle: "200% Mais Pacientes", description: "Clínica especializada superou desafios de presença digital com SEO inteligente e gestão automatizada.", results: ["Aumento de 200% em novos pacientes", "Visitas no site cresceram 180%", "Top 3 no Google para palavras-chave principais", "Redução de 60% no custo por lead"] },
-    { icon: Utensils, title: "Restaurante Gourmet", subtitle: "400% de Crescimento Online", description: "Durante a pandemia, um restaurante gourmet desenvolveu seu canal de delivery com campanhas automatizadas.", results: ["Vendas online aumentaram 400%", "Base de clientes cresceu 150%", "Taxa de retenção subiu 90%", "Satisfação do cliente: 98%"] },
-  ];
+  const caseIcons = [ShoppingBag, Stethoscope, Utensils];
+  const cases = tList<{ title: string; subtitle: string; description: string; results: string[] }>('company.casosSucesso.cases').map((c, i) => ({ ...c, icon: caseIcons[i] }));
 
-  const additionalCases = [
-    { icon: Briefcase, title: "Consultoria Empresarial", subtitle: "Autoridade Digital", metrics: ["250% mais leads", "120% conversão", "80% ticket médio"] },
-    { icon: Dumbbell, title: "Academia de Ginástica", subtitle: "Retenção Record", metrics: ["180% retenção", "160% novos membros", "140% receita"] },
-  ];
+  const additionalCaseIcons = [Briefcase, Dumbbell];
+  const additionalCases = tList<{ title: string; subtitle: string; metrics: string[] }>('company.casosSucesso.additionalCases').map((c, i) => ({ ...c, icon: additionalCaseIcons[i] }));
 
-  const impactStats = [
-    { number: "500+", label: "Empresas Transformadas" },
-    { number: "200%", label: "Aumento Médio em Conversões" },
-    { number: "98%", label: "Taxa de Satisfação" },
-    { number: "3x", label: "ROI Médio do Investimento" },
-  ];
+  const impactStats = tList<{ number: string; label: string }>('company.casosSucesso.impactStats');
 
   return (
     <SubpageLayout
-      title="Casos de Sucesso"
-      subtitle="Descubra como empresas de diferentes setores transformaram seus resultados com as soluções da DesignoAI."
-      badge=" Resultados reais"
+      title={t('company.casosSucesso.seo.title')}
+      subtitle={t('company.casosSucesso.subtitle')}
+      badge={t('company.casosSucesso.badge')}
       seoPath="/casos-sucesso"
-      seoDescription="Casos de sucesso da DesignoAI: veja como empresas aumentaram vendas, engajamento e visibilidade com nossas soluções de marketing digital com IA."
+      seoDescription={t('company.casosSucesso.seo.description')}
     >
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl space-y-12">
@@ -52,7 +44,7 @@ const CasosSucesso = () => {
                       <p className="text-muted-foreground leading-relaxed">{c.description}</p>
                     </div>
                     <div className="card-surface rounded-2xl p-6">
-                      <h4 className="text-lg font-heading font-bold text-foreground mb-4">Resultados Alcançados:</h4>
+                      <h4 className="text-lg font-heading font-bold text-foreground mb-4">{t('company.casosSucesso.resultsAchieved')}</h4>
                       <ul className="space-y-3">
                         {c.results.map((r, ri) => (
                           <li key={ri} className="flex items-start gap-3">
@@ -72,7 +64,7 @@ const CasosSucesso = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Mais Transformações</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">{t('company.casosSucesso.moreTransformationsTitle')}</h2>
           <div className="grid md:grid-cols-2 gap-6">
             {additionalCases.map((c, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -96,7 +88,7 @@ const CasosSucesso = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Nosso Impacto Consolidado</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">{t('company.casosSucesso.impactTitle')}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {impactStats.map((s, i) => (
               <motion.div key={i} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}>

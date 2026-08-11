@@ -2,31 +2,13 @@ import { useState } from 'react';
 import { Minus, Plus } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Reveal from '@/components/Reveal';
+import { useI18n } from '@/i18n/I18nProvider';
 
-const faqs = [
-  {
-    q: 'Como funciona o início de um projeto?',
-    a: 'Começamos com uma conversa de diagnóstico, seguida de uma proposta com escopo, cronograma e investimento. Aprovada a proposta, a produção inicia em até cinco dias úteis.',
-  },
-  {
-    q: 'Existe contrato de fidelidade?',
-    a: 'Não. Trabalhamos com ciclos mensais renováveis. Você permanece porque os resultados justificam, não porque um contrato obriga.',
-  },
-  {
-    q: 'Quem cuida do meu projeto no dia a dia?',
-    a: 'Cada cliente tem um responsável de conta e uma equipe fixa de criação. Você fala sempre com quem executa.',
-  },
-  {
-    q: 'Vocês atendem empresas de qualquer segmento?',
-    a: 'Atendemos negócios de serviços, varejo, saúde, educação, tecnologia e indústria. Se não fizer sentido para o seu caso, dizemos isso na primeira conversa.',
-  },
-  {
-    q: 'Como o desempenho é acompanhado?',
-    a: 'Você recebe relatórios periódicos com indicadores de alcance, engajamento e conversão, além de recomendações para o ciclo seguinte.',
-  },
-];
+type FaqItem = { q: string; a: string };
 
 const FAQ = () => {
+  const { t, tList } = useI18n();
+  const faqs = tList<FaqItem>('home.faq.items');
   const [open, setOpen] = useState<number | null>(0);
 
   return (
@@ -34,8 +16,8 @@ const FAQ = () => {
       <div className="container-editorial">
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-20">
           <Reveal className="lg:col-span-4">
-            <p className="eyebrow">Dúvidas frequentes</p>
-            <h2 className="display-2 mt-6 text-foreground">Tudo transparente, desde o início.</h2>
+            <p className="eyebrow">{t('home.faq.eyebrow')}</p>
+            <h2 className="display-2 mt-6 text-foreground">{t('home.faq.title')}</h2>
           </Reveal>
 
           <div className="lg:col-span-8">

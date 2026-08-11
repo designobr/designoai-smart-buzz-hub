@@ -2,8 +2,12 @@ import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ActionButton from '@/components/ActionButton';
 import heroStudio from '@/assets/hero-studio.jpg';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const Hero = () => {
+  const { t, tList } = useI18n();
+  const stats = tList<{ k: string; v: string }>('home.hero.stats');
+
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -19,30 +23,21 @@ const Hero = () => {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-6"
           >
-            <p className="eyebrow">Estúdio de marketing e design</p>
-            <h1 className="display-1 mt-6 text-foreground">
-              Marcas construídas com clareza, método e inteligência.
-            </h1>
-            <p className="lead mt-7 max-w-xl">
-              Estratégia, identidade visual e crescimento digital para empresas que querem parecer
-              e operar no seu melhor nível.
-            </p>
+            <p className="eyebrow">{t('home.hero.eyebrow')}</p>
+            <h1 className="display-1 mt-6 text-foreground">{t('home.hero.title')}</h1>
+            <p className="lead mt-7 max-w-xl">{t('home.hero.description')}</p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <ActionButton onClick={() => scrollTo('contact')}>
-                Solicitar proposta
+                {t('home.hero.ctaPrimary')}
                 <ArrowRight className="h-[18px] w-[18px]" strokeWidth={2} />
               </ActionButton>
               <ActionButton variant="secondary" onClick={() => scrollTo('services')}>
-                Ver serviços
+                {t('home.hero.ctaSecondary')}
               </ActionButton>
             </div>
 
             <dl className="mt-16 grid max-w-lg grid-cols-3 gap-8 border-t border-border pt-8">
-              {[
-                { k: '500+', v: 'Projetos entregues' },
-                { k: 'Soluções', v: 'Tecnologia & inovação' },
-                { k: '4.9/5', v: 'Satisfação média' },
-              ].map((s) => (
+              {stats.map((s) => (
                 <div key={s.k}>
                   <dt className="text-2xl font-bold tracking-[-0.03em] text-foreground">{s.k}</dt>
                   <dd className="mt-1 text-sm text-muted-foreground">{s.v}</dd>
@@ -60,7 +55,7 @@ const Hero = () => {
             <div className="overflow-hidden rounded-3xl border border-border bg-secondary">
               <img
                 src={heroStudio}
-                alt="Mesa de trabalho de um estúdio de design com luz natural"
+                alt={t('home.hero.imageAlt')}
                 width={1280}
                 height={1600}
                 className="h-[420px] w-full object-cover md:h-[560px] lg:h-[640px]"

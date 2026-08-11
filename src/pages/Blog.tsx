@@ -4,45 +4,32 @@ import SubpageLayout from '@/components/SubpageLayout';
 import { blogSchema } from '@/lib/seo-schemas';
 import { BookOpen, TrendingUp, Users, Video, Download, Podcast } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const Blog = () => {
+  const { t, tList } = useI18n();
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  const categories = [
-    { icon: BookOpen, title: "Inteligência Artificial", description: "Novidades e aplicações de IA no marketing" },
-    { icon: TrendingUp, title: "Marketing Digital", description: "Estratégias e best practices" },
-    { icon: Users, title: "Cases de Sucesso", description: "Histórias reais de transformação" },
-  ];
-
-  const articles = [
-    "Como a IA está revolucionando o e-commerce brasileiro",
-    "10 estratégias de automação que aumentam vendas em 300%",
-    "O futuro do atendimento com chatbots inteligentes",
-    "ROI em marketing digital: métricas que importam",
-    "Personalização em massa com IA",
-    "Tendências de marketing digital para 2025",
-  ];
-
-  const resources = [
-    { icon: Download, title: "E-books Gratuitos", description: "Guias completos sobre marketing com IA" },
-    { icon: Video, title: "Webinars Mensais", description: "Sessões ao vivo com especialistas" },
-    { icon: Podcast, title: "Podcasts", description: "Conversas com líderes do mercado" },
-  ];
+  const categoryIcons = [BookOpen, TrendingUp, Users];
+  const categories = tList<{ title: string; description: string }>('company.blog.categories').map((c, i) => ({ ...c, icon: categoryIcons[i] }));
+  const articles = tList<string>('company.blog.articles');
+  const resourceIcons = [Download, Video, Podcast];
+  const resources = tList<{ title: string; description: string }>('company.blog.resources').map((r, i) => ({ ...r, icon: resourceIcons[i] }));
 
   return (
     <SubpageLayout
-      title="Blog"
-      subtitle="Seu portal de conhecimento sobre IA aplicada ao marketing digital."
-      badge=" Conteúdo"
+      title={t('company.blog.seo.title')}
+      subtitle={t('company.blog.subtitle')}
+      badge={t('company.blog.badge')}
       seoPath="/blog"
-      seoDescription="Blog DesignoAI: dicas, tutoriais e insights sobre marketing digital com IA, gestão de redes sociais, SEO e design automatizado."
+      seoDescription={t('company.blog.seo.description')}
       seoType="article"
-      jsonLd={blogSchema('Blog DesignoAI', 'Dicas, tutoriais e insights sobre marketing digital com IA, redes sociais, SEO e design automatizado.', '/blog')}
+      jsonLd={blogSchema(t('company.blog.schemaName'), t('company.blog.schemaDescription'), '/blog')}
     >
 
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-          <h2 className="text-2xl font-heading font-bold text-center text-foreground mb-10">Categorias</h2>
+          <h2 className="text-2xl font-heading font-bold text-center text-foreground mb-10">{t('company.blog.categoriesTitle')}</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {categories.map((c, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
@@ -61,7 +48,7 @@ const Blog = () => {
 
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-2xl font-heading font-bold text-center text-foreground mb-10">Artigos em <span className="text-foreground">Destaque</span></h2>
+          <h2 className="text-2xl font-heading font-bold text-center text-foreground mb-10">{t('company.blog.featuredArticlesTitle')}</h2>
           <div className="card-surface rounded-2xl p-6 md:p-8">
             <div className="grid md:grid-cols-2 gap-4">
               {articles.map((a, i) => (
@@ -77,7 +64,7 @@ const Blog = () => {
 
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-          <h2 className="text-2xl font-heading font-bold text-center text-foreground mb-10">Recursos <span className="text-foreground">Exclusivos</span></h2>
+          <h2 className="text-2xl font-heading font-bold text-center text-foreground mb-10">{t('company.blog.exclusiveResourcesTitle')}</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {resources.map((r, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}

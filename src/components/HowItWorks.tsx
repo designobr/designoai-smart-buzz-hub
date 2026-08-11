@@ -1,30 +1,13 @@
 import Reveal from '@/components/Reveal';
 import ActionButton from '@/components/ActionButton';
+import { useI18n } from '@/i18n/I18nProvider';
 
-const steps = [
-  {
-    number: '01',
-    title: 'Diagnóstico',
-    description: 'Analisamos mercado, concorrência e o estado atual da sua marca.',
-  },
-  {
-    number: '02',
-    title: 'Estratégia',
-    description: 'Definimos posicionamento, prioridades e metas mensuráveis.',
-  },
-  {
-    number: '03',
-    title: 'Produção',
-    description: 'Criamos conteúdo, design e materiais dentro de um sistema único.',
-  },
-  {
-    number: '04',
-    title: 'Distribuição',
-    description: 'Publicamos, acompanhamos e refinamos com base em dados.',
-  },
-];
+type Step = { number: string; title: string; description: string };
 
 const HowItWorks = () => {
+  const { t, tList } = useI18n();
+  const steps = tList<Step>('home.howItWorks.steps');
+
   const goToContact = () => {
     const el = document.getElementById('contact');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -36,12 +19,10 @@ const HowItWorks = () => {
         <Reveal>
           <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-7">
-              <p className="eyebrow">Processo</p>
-              <h2 className="display-2 mt-6 text-foreground">Quatro etapas, sem etapas invisíveis.</h2>
+              <p className="eyebrow">{t('home.howItWorks.eyebrow')}</p>
+              <h2 className="display-2 mt-6 text-foreground">{t('home.howItWorks.title')}</h2>
             </div>
-            <p className="text-base text-muted-foreground lg:col-span-5">
-              Você acompanha cada fase com escopo, prazo e responsável definidos desde o início.
-            </p>
+            <p className="text-base text-muted-foreground lg:col-span-5">{t('home.howItWorks.description')}</p>
           </div>
         </Reveal>
 
@@ -61,7 +42,7 @@ const HowItWorks = () => {
 
         <Reveal delay={0.1}>
           <div className="mt-14">
-            <ActionButton onClick={goToContact}>Iniciar um projeto</ActionButton>
+            <ActionButton onClick={goToContact}>{t('home.howItWorks.cta')}</ActionButton>
           </div>
         </Reveal>
       </div>
