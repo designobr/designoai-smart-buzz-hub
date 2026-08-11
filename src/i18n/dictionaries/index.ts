@@ -1,10 +1,11 @@
 import type { Locale } from '../config';
 import ptBR from './pt-BR';
 
-export type DictValue = string | string[] | DictNode | DictNode[];
+export type DictValue = string | number | boolean | readonly DictValue[] | DictNode;
 export interface DictNode {
   [key: string]: DictValue;
 }
+
 export type Dictionary = DictNode;
 
 /** pt-BR ships in the initial bundle; the other locales load as separate chunks. */

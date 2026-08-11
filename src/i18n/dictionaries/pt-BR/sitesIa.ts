@@ -1,3 +1,104 @@
-const sitesIa = {};
+const sitesIa = {
+  seo: {
+    title: 'Sites Profissionais com IA',
+    description: 'Criação de sites profissionais com inteligência artificial: design moderno, SEO otimizado, responsivo e focado em conversões. Sites prontos em dias, não meses.',
+  },
+  hero: {
+    badge: 'O Futuro Chegou',
+    subtitle: 'Cansado de orçamentos altos e prazos intermináveis? Desbloqueie o potencial da sua empresa com uma presença digital profissional, ágil e focada em resultados.',
+  },
+  whyNeed: {
+    title1: 'Por Que Sua Empresa ',
+    title2: 'Precisa de um Site?',
+    p1Html: 'No mundo digital de hoje, depender apenas de redes sociais é limitar o crescimento do seu negócio. <strong class="text-foreground">O Instagram e o Facebook são importantes, mas você não é dono dessas plataformas.</strong> As regras mudam, o alcance diminui e seus clientes podem não encontrar você.',
+    p2Html: '<strong class="text-primary">Um site próprio é seu território digital</strong>, onde você controla tudo: a experiência do cliente, a mensagem da sua marca e, principalmente, a conversão de visitantes em clientes reais.',
+    p3Html: 'Utilizamos as mais avançadas ferramentas de <strong class="text-foreground">Inteligência Artificial</strong> para construir sites que realmente funcionam para o seu negócio, combinando tecnologia de ponta com expertise humana.',
+  },
+  audience: {
+    badge: 'Público-Alvo',
+    title1: 'Para Quem é ',
+    title2: 'Este Serviço?',
+    subtitleHtml: 'Solução desenvolvida para <strong class="text-foreground">empresas em todo o Brasil</strong> que desejam crescer de forma inteligente',
+    items: [
+      'Clínicas de Estética que precisam agendar mais procedimentos',
+      'Veterinárias que querem facilitar o agendamento de consultas',
+      'Dentistas em busca de novos pacientes',
+      'Escritórios de Advocacia que desejam transmitir autoridade',
+      'Restaurantes que precisam de cardápio digital e pedidos online',
+      'Consultorias que querem captar leads qualificados',
+      'Academias e Personal Trainers focados em atrair alunos',
+      'Indústrias e Distribuidoras que buscam expandir sua presença digital',
+      'Qualquer empresa que busca mais clientes e presença digital profissional',
+    ],
+    painTitle: 'Se você enfrenta qualquer uma destas dores:',
+    painPoints: [
+      'Perder clientes para concorrentes que têm site',
+      'Parecer menos profissional sem uma vitrine digital própria',
+      'Depender 100% de redes sociais que mudam as regras constantemente',
+      'Não ter onde centralizar informações e facilitar contato',
+      'Querer crescer mas achar que um site é muito caro ou demorado',
+    ],
+    painFooter: 'Então este serviço foi feito para você.',
+  },
+  advantages: {
+    badge: 'Diferenciais',
+    title1: 'Vantagens Que ',
+    title2: 'Fazem a Diferença',
+    items: [
+      { title: 'Velocidade Incrível', description: 'Site no ar em tempo recorde (até 72 horas), sem a burocracia e os meses de espera das agências tradicionais. Enquanto outros ainda estão orçando, você já está capturando clientes.' },
+      { title: 'Qualidade Premium', description: 'Design moderno e responsivo, perfeitamente adaptado para qualquer dispositivo: celular, tablet ou desktop. Seus clientes terão uma experiência profissional.' },
+      { title: 'Foco em Resultados', description: 'Cada elemento é pensado estrategicamente para transformar visitantes em clientes, com chamadas para ação claras e jornada intuitiva.' },
+      { title: 'Totalmente Personalizado', description: 'Cada projeto é supervisionado e refinado por especialistas para refletir a identidade única da sua marca. Nada de templates genéricos.' },
+      { title: 'Tecnologia de Ponta', description: 'Construído com as mais avançadas plataformas de Inteligência Artificial do mercado, garantindo performance, segurança e escalabilidade.' },
+      { title: 'Performance Otimizada', description: 'Sites leves, rápidos e otimizados para os mecanismos de busca, garantindo melhor posicionamento no Google.' },
+    ],
+  },
+  process: {
+    badge: 'Processo',
+    title1: 'Como ',
+    title2: 'Funciona?',
+    subtitle: 'Um processo simples e transparente',
+    steps: [
+      { number: '01', title: 'Descoberta', description: 'Começamos entendendo seu negócio, seus objetivos e seu público-alvo. Cada detalhe importa para criar um site que realmente representa sua empresa.' },
+      { number: '02', title: 'Criação Inteligente', description: 'Nossa IA gera um protótipo inicial com base nas informações estratégicas da sua empresa. A tecnologia trabalha 24/7 para acelerar o processo.' },
+      { number: '03', title: 'Refinamento Personalizado', description: 'Aqui entra o toque humano. Ajustamos cada detalhe: textos persuasivos, cores da marca, imagens, funcionalidades.' },
+      { number: '04', title: 'Lançamento Rápido', description: 'Publicamos seu site em domínio próprio (.com.br), configuramos e-mails profissionais, certificados de segurança e Google Meu Negócio.' },
+    ],
+  },
+  deliverables: {
+    badge: 'Entrega Completa',
+    title1: 'O Que Você ',
+    title2: 'Receberá',
+    subtitleHtml: 'Você não recebe apenas um site. Você recebe uma <strong class="text-foreground">solução digital completa</strong>.',
+    items: [
+      { text: 'Domínio .com.br registrado em seu nome' },
+      { text: 'E-mails Profissionais (@suaempresa.com.br)' },
+      { text: 'Certificado SSL (site seguro com cadeado verde)' },
+      { text: 'Integração com WhatsApp para contato direto' },
+      { text: 'Otimização para Buscadores (SEO)' },
+      { text: 'Site 100% Responsivo em todos os dispositivos' },
+    ],
+    footer: 'Tudo entregue pronto para começar a gerar resultados imediatamente.',
+  },
+  differentiator: {
+    title1: 'O Que Torna Este ',
+    title2: 'Serviço Diferente?',
+    p1Html: 'Enquanto agências tradicionais cobram valores altos e demoram meses, e plataformas DIY te deixam sozinho, <strong class="text-foreground">nós combinamos o melhor dos dois mundos</strong>:',
+    items: [
+      { label: 'Velocidade e eficiência', sub: 'da Inteligência Artificial' },
+      { label: 'Expertise e personalização', sub: 'de profissionais especializados' },
+      { label: 'Custo acessível', sub: 'que empresas podem investir' },
+    ],
+    p2Html: 'Você não precisa escolher entre qualidade, velocidade e preço justo. Com nossa solução, você tem <span class="text-primary font-bold">os três</span>.',
+  },
+  ctaFinal: {
+    title1: 'Pronto para Ter um Site que ',
+    title2: 'Realmente Traz Resultados?',
+    descriptionHtml: 'Pare de perder clientes para concorrentes que já têm presença digital profissional. <strong class="text-foreground">Sua empresa merece ser encontrada, reconhecida e escolhida.</strong>',
+    button: 'Fale Conosco via WhatsApp',
+    noteHtml: 'Receba uma <strong class="text-foreground">consultoria gratuita</strong> e veja como a IA pode transformar a presença digital do seu negócio. Sem compromisso.',
+    whatsappMessage: 'Olá! Gostaria de saber mais sobre criação de sites com IA.',
+  },
+};
 
 export default sitesIa;
