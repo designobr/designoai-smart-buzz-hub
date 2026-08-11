@@ -6,16 +6,16 @@ import { Shield, Eye, Database, Lock, UserCheck, Settings } from 'lucide-react';
 import { useI18n } from '@/i18n/I18nProvider';
 
 const PoliticaPrivacidade = () => {
-  const { t } = useI18n();
+  const { t, tList } = useI18n();
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  const infoProvidedItems = t('legal.politicaPrivacidade.sections.info.provided.items') as unknown as string[];
-  const infoAutomaticItems = t('legal.politicaPrivacidade.sections.info.automatic.items') as unknown as string[];
-  const usageItems = t('legal.politicaPrivacidade.sections.usage.items') as unknown as string[];
-  const sharingItems = t('legal.politicaPrivacidade.sections.sharing.items') as unknown as string[];
-  const securityTechItems = t('legal.politicaPrivacidade.sections.security.technical.items') as unknown as string[];
-  const securityOrgItems = t('legal.politicaPrivacidade.sections.security.organizational.items') as unknown as string[];
-  const rightsItems = t('legal.politicaPrivacidade.sections.rights.items') as unknown as { label: string; desc: string }[];
+  const infoProvidedItems = tList<string>('legal.politicaPrivacidade.sections.info.provided.items');
+  const infoAutomaticItems = tList<string>('legal.politicaPrivacidade.sections.info.automatic.items');
+  const usageItems = tList<string>('legal.politicaPrivacidade.sections.usage.items');
+  const sharingItems = tList<string>('legal.politicaPrivacidade.sections.sharing.items');
+  const securityTechItems = tList<string>('legal.politicaPrivacidade.sections.security.technical.items');
+  const securityOrgItems = tList<string>('legal.politicaPrivacidade.sections.security.organizational.items');
+  const rightsItems = tList<{ label: string; desc: string }>('legal.politicaPrivacidade.sections.rights.items');
 
   const sections = [
     { icon: Eye, title: t('legal.politicaPrivacidade.sections.info.title'), content: (

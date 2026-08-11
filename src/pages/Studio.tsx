@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Phone, Mail, Instagram, Linkedin, Star } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import SEOHead from '@/components/SEOHead';
+import { useI18n } from '@/i18n/I18nProvider';
 
 // Gallery portrait images
 import portrait1 from '@/assets/studio/portrait-1.png';
@@ -21,6 +22,7 @@ import testimonialAmanda from '@/assets/studio/testimonial-amanda.png';
 import testimonialGabriel from '@/assets/studio/testimonial-gabriel.png';
 
 const Studio = () => {
+  const { t, tList } = useI18n();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const fadeInUp = {
@@ -33,96 +35,36 @@ const Studio = () => {
     window.open('https://wa.me/5511947968158', '_blank');
   };
 
-  const targetAudience = [
-    { icon: '', title: 'Empreendedores & Coaches', description: 'Transmita autoridade e profissionalismo em seus canais digitais' },
-    { icon: '', title: 'Profissionais Liberais', description: 'Advogados, corretores, consultores e mentores que fortalecem sua marca pessoal' },
-    { icon: '', title: 'Criadores de Conteúdo', description: 'Eleve a qualidade visual do seu feed e perfil profissional' },
-    { icon: '', title: 'Executivos & Lideranças', description: 'Imagens profissionais para LinkedIn, site corporativo e materiais institucionais' },
-  ];
+  const targetAudience = tList<{ title: string; description: string }>('studio.audience.items');
+  const benefits = tList<{ title: string; description: string }>('studio.benefits.items');
+  const traditionalList = tList<string>('studio.comparison.traditionalList');
+  const designoaiList = tList<string>('studio.comparison.designoaiList');
+  const steps = tList<{ title: string; description: string }>('studio.steps.items');
+  const faqs = tList<{ question: string; answer: string }>('studio.faq.items');
 
-  const benefits = [
-    { icon: '', title: 'Alta Qualidade', description: 'IA treinada em fotografia profissional, direção de arte e personal branding. Preservação natural da sua identidade única.' },
-    { icon: '', title: 'Entrega em 24h', description: 'Receba suas fotos profissionais em até 24 horas. Sem deslocamento, sem estúdio, 100% online.' },
-    { icon: '', title: 'Privacidade Total', description: 'Seus dados protegidos com criptografia. Processamento seguro e confidencial.' },
-    { icon: '', title: 'Garantia Absoluta', description: 'Satisfação garantida ou seu dinheiro de volta. Sem perguntas, sem burocracia.' },
-  ];
-
-  const traditionalList = [
-    'Investimento a partir de R$ 800',
-    'Entrega em 15 a 30 dias',
-    'Deslocamento necessário',
-    'Custos adicionais com produção',
-    'Refações pagas separadamente',
-  ];
-
-  const designoaiList = [
-    'Valor acessível e previsível',
-    'Entrega em até 24 horas',
-    '100% online, zero deslocamento',
-    'Tudo incluído no pacote',
-    'Garantia de satisfação total',
-  ];
-
-  const steps = [
-    { icon: '1⃣', title: 'Contratação', description: 'Escolha o pacote ideal e finalize sua compra de forma segura.' },
-    { icon: '2⃣', title: 'Envio das Selfies', description: 'Envie 5 a 10 selfies simples tiradas com seu celular. Sem produção prévia necessária.' },
-    { icon: '3⃣', title: 'Processamento IA', description: 'Nossa IA recria você em cenários profissionais de alto padrão.' },
-    { icon: '4⃣', title: 'Entrega', description: 'Receba seu pack completo em até 24h, pronto para usar.' },
-  ];
-
-  const faqs = [
-    { question: 'As fotos parecem artificiais?', answer: 'Não. Nossa tecnologia é focada em realismo e preservação da sua identidade natural. As fotos têm qualidade profissional mantendo sua essência e características únicas.' },
-    { question: 'Preciso de equipamento profissional para as selfies?', answer: 'Não. Basta usar a câmera do seu celular em um ambiente bem iluminado. Enviamos um guia simples de como tirar as selfies ideais.' },
-    { question: 'Posso escolher os cenários e estilos?', answer: 'Sim. Você pode indicar suas preferências: corporativo, criativo, casual-profissional ou outros estilos alinhados ao seu posicionamento.' },
-    { question: 'E se eu não gostar do resultado?', answer: 'Oferecemos garantia de satisfação total. Se não ficar satisfeito, devolvemos 100% do seu investimento.' },
-    { question: 'Os dados das minhas fotos ficam seguros?', answer: 'Absolutamente. Trabalhamos com protocolos rigorosos de privacidade e segurança. Suas fotos são processadas de forma criptografada e nunca compartilhadas.' },
-  ];
-
+  const contactData = tList<{ title: string; info: string; subtitle: string }>('studio.contact.items');
   const contacts = [
-    { icon: <Phone className="w-8 h-8" />, title: 'WhatsApp', info: '(11) 94796-8158', subtitle: 'Atendimento direto', link: 'https://wa.me/5511947968158' },
-    { icon: <Mail className="w-8 h-8" />, title: 'E-mail', info: 'contato@designoai.com.br', subtitle: 'Suporte ao cliente', link: 'mailto:contato@designoai.com.br' },
-    { icon: <Instagram className="w-8 h-8" />, title: 'Instagram', info: '@designoai.br', subtitle: 'Conteúdos e novidades', link: 'https://instagram.com/designoai.br' },
-    { icon: <Linkedin className="w-8 h-8" />, title: 'LinkedIn', info: 'Kauê Webster', subtitle: 'Perfil do fundador', link: 'https://www.linkedin.com/in/kauewebster' },
+    { ...contactData[0], icon: <Phone className="w-8 h-8" />, link: 'https://wa.me/5511947968158' },
+    { ...contactData[1], icon: <Mail className="w-8 h-8" />, link: 'mailto:contato@designoai.com.br' },
+    { ...contactData[2], icon: <Instagram className="w-8 h-8" />, link: 'https://instagram.com/designoai.br' },
+    { ...contactData[3], icon: <Linkedin className="w-8 h-8" />, link: 'https://www.linkedin.com/in/kauewebster' },
   ];
 
   const galleryImages = [portrait1, portrait2, portrait3, portrait4, example5, example6, example7, example8];
 
-  const testimonials = [
-    {
-      name: 'Fernanda Oliveira',
-      role: 'Consultora de Imagem',
-      image: testimonialFernanda,
-      rating: 5,
-      text: 'Simplesmente incrível! As fotos ficaram tão profissionais que todos perguntam qual fotógrafo eu contratei. Recomendo demais!'
-    },
-    {
-      name: 'Lucas Andrade',
-      role: 'Empreendedor Digital',
-      image: testimonialLucas,
-      rating: 5,
-      text: 'Nunca imaginei que fotos geradas por IA pudessem ser tão realistas. A entrega foi super rápida e o resultado superou minhas expectativas.'
-    },
-    {
-      name: 'Amanda Ribeiro',
-      role: 'Advogada',
-      image: testimonialAmanda,
-      rating: 5,
-      text: 'Precisava de fotos profissionais para meu escritório e a DesignoAI entregou exatamente o que eu precisava. Qualidade excepcional!'
-    },
-    {
-      name: 'Gabriel Santos',
-      role: 'CEO & Consultor',
-      image: testimonialGabriel,
-      rating: 5,
-      text: 'Como executivo, transmitir credibilidade é essencial. As fotos da DesignoAI me ajudaram a elevar minha presença no LinkedIn.'
-    },
-  ];
+  const testimonialImages = [testimonialFernanda, testimonialLucas, testimonialAmanda, testimonialGabriel];
+  const testimonialData = tList<{ name: string; role: string; text: string }>('studio.testimonials.items');
+  const testimonials = testimonialData.map((item, i) => ({
+    ...item,
+    image: testimonialImages[i],
+    rating: 5,
+  }));
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEOHead
-        title="Studio - Fotografia e Produção Audiovisual"
-        description="Studio DesignoAI: sessões fotográficas profissionais, vídeos institucionais e produção audiovisual completa para sua marca. Transforme sua imagem com qualidade premium."
+        title={t('studio.seo.title')}
+        description={t('studio.seo.description')}
         path="/studio"
       />
       <Navbar />
@@ -141,19 +83,19 @@ const Studio = () => {
  className="text-center md:text-left"
             >
               <div className="inline-flex items-center px-4 py-2 bg-secondary rounded-full text-sm font-medium text-muted-foreground mb-6 border border-border">
-                 Fotografia com IA
+                {t('studio.hero.badge')}
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-[1.1] mb-6 text-foreground">
-                DesignoAI <span className="text-muted-foreground">Studio</span>
+                {t('studio.hero.titlePrefix')} <span className="text-muted-foreground">{t('studio.hero.titleSuffix')}</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto md:mx-0 leading-relaxed mb-8">
-                Fotos profissionais de alta qualidade criadas com inteligência artificial. Mais de 500 profissionais já transformaram sua presença digital.
+                {t('studio.hero.subtitle')}
               </p>
               <button
                 onClick={handleWhatsAppClick}
  className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 text-lg font-bold rounded-xl shadow-card hover:-translate-y-1 hover:shadow-card-hover transition-all duration-300"
               >
-                Começar Minha Transformação
+                {t('studio.hero.cta')}
               </button>
             </motion.div>
           </div>
@@ -166,7 +108,7 @@ const Studio = () => {
         <div className="max-w-6xl mx-auto">
           <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
-              Para Quem é o DesignoAI Studio
+              {t('studio.audience.heading')}
             </h2>
             <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
@@ -195,7 +137,7 @@ const Studio = () => {
         <div className="max-w-6xl mx-auto">
           <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
-              Por Que Escolher a DesignoAI
+              {t('studio.benefits.heading')}
             </h2>
             <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
@@ -224,10 +166,10 @@ const Studio = () => {
         <div className="max-w-6xl mx-auto">
           <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
-              Exemplos de Resultados
+              {t('studio.gallery.heading')}
             </h2>
             <p className="text-center text-muted-foreground mb-4 max-w-2xl mx-auto">
-              Veja a qualidade profissional que a DesignoAI entrega aos seus clientes
+              {t('studio.gallery.subtitle')}
             </p>
             <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
@@ -245,12 +187,12 @@ const Studio = () => {
               >
                 <img 
                   src={image} 
-                  alt={`Exemplo de foto profissional ${index + 1}`}
+                  alt={t('studio.gallery.imageAlt', { number: index + 1 })}
  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-foreground/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                  <span className="text-foreground text-sm font-semibold"> Criado com IA</span>
+                  <span className="text-foreground text-sm font-semibold">{t('studio.gallery.badge')}</span>
                 </div>
               </motion.div>
             ))}
@@ -262,7 +204,7 @@ const Studio = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            * Todas as imagens foram geradas com inteligência artificial a partir de selfies simples
+            {t('studio.gallery.footnote')}
           </motion.p>
         </div>
       </section>
@@ -272,10 +214,10 @@ const Studio = () => {
         <div className="max-w-6xl mx-auto">
           <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
-              O Que Nossos Clientes Dizem
+              {t('studio.testimonials.heading')}
             </h2>
             <p className="text-center text-muted-foreground mb-4 max-w-2xl mx-auto">
-              Veja os depoimentos de quem já transformou sua imagem profissional
+              {t('studio.testimonials.subtitle')}
             </p>
             <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
@@ -324,7 +266,7 @@ const Studio = () => {
         <div className="max-w-6xl mx-auto">
           <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
-              DesignoAI vs Sessão Tradicional
+              {t('studio.comparison.heading')}
             </h2>
             <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
@@ -338,7 +280,7 @@ const Studio = () => {
             <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl md:text-8xl font-black text-muted-foreground z-0">VS</span>
             
             <div className="relative z-10">
-              <h3 className="text-2xl font-bold mb-6">Sessão Fotográfica Tradicional</h3>
+              <h3 className="text-2xl font-bold mb-6">{t('studio.comparison.traditionalTitle')}</h3>
               <ul className="space-y-3">
                 {traditionalList.map((item, index) => (
                   <li key={index} className="flex items-start gap-3 text-muted-foreground">
@@ -350,7 +292,7 @@ const Studio = () => {
             </div>
 
             <div className="relative z-10">
-              <h3 className="text-2xl font-bold mb-6">DesignoAI Studio </h3>
+              <h3 className="text-2xl font-bold mb-6">{t('studio.comparison.designoaiTitle')}</h3>
               <ul className="space-y-3">
                 {designoaiList.map((item, index) => (
                   <li key={index} className="flex items-start gap-3 text-muted-foreground">
@@ -369,7 +311,7 @@ const Studio = () => {
         <div className="max-w-6xl mx-auto">
           <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
-              Como Funciona
+              {t('studio.steps.heading')}
             </h2>
             <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
@@ -409,10 +351,10 @@ const Studio = () => {
             />
             <div className="relative z-10">
               <span className="text-5xl mb-4 block"></span>
-              <h2 className="text-2xl md:text-3xl font-bold mb-2">Garantia DesignoAI</h2>
-              <h3 className="text-3xl md:text-4xl font-extrabold mb-4">100% Satisfação Garantida</h3>
+              <h2 className="text-2xl md:text-3xl font-bold mb-2">{t('studio.guarantee.heading')}</h2>
+              <h3 className="text-3xl md:text-4xl font-extrabold mb-4">{t('studio.guarantee.subheading')}</h3>
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-                Se você não ficar completamente satisfeito com suas fotos profissionais, devolvemos seu investimento integral. Sem perguntas. Sem burocracia.
+                {t('studio.guarantee.description')}
               </p>
             </div>
           </motion.div>
@@ -424,7 +366,7 @@ const Studio = () => {
         <div className="max-w-4xl mx-auto">
           <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
-              Perguntas Frequentes
+              {t('studio.faq.heading')}
             </h2>
             <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
@@ -466,7 +408,7 @@ const Studio = () => {
         <div className="max-w-6xl mx-auto">
           <motion.div {...fadeInUp} viewport={{ once: true }} whileInView="animate" initial="initial">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4">
-              Entre em Contato
+              {t('studio.contact.heading')}
             </h2>
             <div className="w-20 h-1 bg-border mx-auto rounded-full mb-12" />
           </motion.div>
@@ -493,7 +435,7 @@ const Studio = () => {
           </div>
 
           <p className="text-center text-muted-foreground text-lg">
-             Atendimento 100% Online - Todo o Brasil
+            {t('studio.contact.footnote')}
           </p>
         </div>
       </section>
@@ -513,19 +455,19 @@ const Studio = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4">
-            Transforme Sua Imagem Profissional Agora
+            {t('studio.finalCta.heading')}
           </h2>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-            Não deixe que fotos amadoras prejudiquem sua credibilidade e oportunidades.
+            {t('studio.finalCta.subtitle')}
           </p>
           <button 
             onClick={handleWhatsAppClick}
  className="inline-block bg-primary text-primary-foreground px-8 py-4 text-lg md:text-xl font-bold rounded-full shadow-card hover:-translate-y-1 hover:shadow-card-hover transition-all duration-300"
           >
-            Começar Minha Transformação
+            {t('studio.finalCta.button')}
           </button>
           <p className="mt-6 text-muted-foreground">
-             Vagas limitadas por mês para garantir o mais alto padrão de qualidade
+            {t('studio.finalCta.footnote')}
           </p>
         </motion.div>
       </section>
@@ -536,13 +478,13 @@ const Studio = () => {
           DesignoAI
         </h3>
         <p className="text-muted-foreground mb-4">
-          Soluções criativas com inteligência artificial aplicadas à imagem profissional
+          {t('studio.footer.tagline')}
         </p>
         <p className="text-muted-foreground text-sm">
-          © 2026 DesignoAI. Todos os direitos reservados.
+          {t('studio.footer.copyright')}
         </p>
         <p className="text-muted-foreground text-sm mt-2">
-          Atendimento via WhatsApp e e-mail. Serviço 100% online.
+          {t('studio.footer.note')}
         </p>
       </footer>
     </div>

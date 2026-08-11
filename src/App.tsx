@@ -1,10 +1,13 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
+import { I18nProvider } from '@/i18n/I18nProvider';
+import { LOCALES } from '@/i18n/config';
+import { PAGES, pathFor, type PageKey } from '@/i18n/routes';
+import type { ComponentType } from 'react';
 import Index from "./pages/Index";
 import Services from "./pages/Services";
 import Recursos from "./pages/Recursos";
@@ -29,45 +32,64 @@ import OtimizacaoImagens from "./pages/OtimizacaoImagens";
 import Studio from "./pages/Studio";
 import SitesIA from "./pages/SitesIA";
 import AiSdr from "./pages/AiSdr";
+
 const queryClient = new QueryClient();
+
+const COMPONENTS: Record<PageKey, ComponentType> = {
+  home: Index,
+  services: Services,
+  recursos: Recursos,
+  gestaoRedesSociais: GestaoRedesSociais,
+  criacaoConteudo: CriacaoConteudo,
+  designAutomatizado: DesignAutomatizado,
+  estrategiasPersonalizadas: EstrategiasPersonalizadas,
+  analiseDados: AnalyseDados,
+  seoInteligente: SEOInteligente,
+  socialMedia: SocialMedia,
+  emailMarketing: EmailMarketing,
+  otimizacaoImagens: OtimizacaoImagens,
+  sobreNos: SobreNos,
+  carreiras: Carreiras,
+  blog: Blog,
+  casosSucesso: CasosSucesso,
+  parcerias: Parcerias,
+  termosUso: TermosUso,
+  politicaPrivacidade: PoliticaPrivacidade,
+  cookies: Cookies,
+  studio: Studio,
+  sitesIa: SitesIA,
+  aiSdr: AiSdr,
+};
+
+/** One route per (page, locale), plus legacy aliases so existing links keep working. */
+const localizedRoutes = LOCALES.flatMap((locale) =>
+  PAGES.flatMap((page) => {
+    const Component = COMPONENTS[page.key];
+    const routes = [{ path: pathFor(page.key, locale), key: `${locale}-${page.key}` }];
+    (page.aliases?.[locale] || []).forEach((alias) => {
+      const prefix = locale === 'pt-BR' ? '' : `/${locale}`;
+      routes.push({ path: `${prefix}/${alias}`, key: `${locale}-${page.key}-${alias}` });
+    });
+    return routes.map((r) => <Route key={r.key} path={r.path} element={<Component />} />);
+  }),
+);
 
 const App = () => (
   <HelmetProvider>
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/servicos" element={<Services />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/recursos" element={<Recursos />} />
-          <Route path="/gestao-redes-sociais" element={<GestaoRedesSociais />} />
-          <Route path="/criacao-conteudo" element={<CriacaoConteudo />} />
-          <Route path="/design-automatizado" element={<DesignAutomatizado />} />
-          <Route path="/estrategias-personalizadas" element={<EstrategiasPersonalizadas />} />
-          <Route path="/analise-dados" element={<AnalyseDados />} />
-          <Route path="/seo-inteligente" element={<SEOInteligente />} />
-          <Route path="/social-media" element={<SocialMedia />} />
-          <Route path="/email-marketing" element={<EmailMarketing />} />
-          <Route path="/otimizacao-imagens" element={<OtimizacaoImagens />} />
-          <Route path="/sobre-nos" element={<SobreNos />} />
-          <Route path="/carreiras" element={<Carreiras />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/casos-sucesso" element={<CasosSucesso />} />
-          <Route path="/parcerias" element={<Parcerias />} />
-          <Route path="/termos-uso" element={<TermosUso />} />
-          <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
-          <Route path="/cookies" element={<Cookies />} />
-          <Route path="/studio" element={<Studio />} />
-          <Route path="/sites-ia" element={<SitesIA />} />
-          <Route path="/ai-sdr" element={<AiSdr />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <I18nProvider>
+            <Routes>
+              {localizedRoutes}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </I18nProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
   </HelmetProvider>
 );
 
