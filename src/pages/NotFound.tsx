@@ -1,5 +1,4 @@
-
-import { useLocation, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -7,9 +6,12 @@ import { Home } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import LocaleLink from "@/components/LocaleLink";
+import { useI18n } from "@/i18n/I18nProvider";
 
 const NotFound = () => {
   const location = useLocation();
+  const { t } = useI18n();
 
   useEffect(() => {
     console.error("404 Error: User attempted to access non-existent route:", location.pathname);
@@ -18,8 +20,8 @@ const NotFound = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Página não encontrada (404)"
-        description="Esta página não existe ou foi movida. Volte para a página inicial da DesignoAI e explore nossos serviços de sites, social media, SEO e IA."
+        title={t('subpages.notFound.seo.title')}
+        description={t('subpages.notFound.seo.description')}
         path="/404"
         noindex
       />
@@ -30,16 +32,16 @@ const NotFound = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
- className="text-center px-4"
+          className="text-center px-4"
         >
-          <h1 className="text-8xl md:text-9xl font-heading font-bold text-foreground mb-4">404</h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8">Página não encontrada</p>
-          <Link to="/">
+          <h1 className="text-8xl md:text-9xl font-heading font-bold text-foreground mb-4">{t('subpages.notFound.title')}</h1>
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8">{t('subpages.notFound.message')}</p>
+          <LocaleLink page="home">
             <Button size="lg">
               <Home className="mr-2 w-5 h-5" />
-              Voltar ao Início
+              {t('subpages.notFound.backHome')}
             </Button>
-          </Link>
+          </LocaleLink>
         </motion.div>
       </div>
       <Footer />

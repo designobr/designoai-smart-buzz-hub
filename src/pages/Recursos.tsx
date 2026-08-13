@@ -1,36 +1,32 @@
-
 import { useEffect } from 'react';
 import SubpageLayout from '@/components/SubpageLayout';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import LocaleLink from '@/components/LocaleLink';
 import { ArrowRight, Sparkles, Star, BarChart3, Zap, PenTool, Share2, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useI18n } from '@/i18n/I18nProvider';
+import type { PageKey } from '@/i18n/routes';
 
-const features = [
-  { title: "Geração de Conteúdo com IA", description: "Crie posts, artigos, legendas e materiais visuais automaticamente.", icon: Sparkles, link: "/criacao-conteudo" },
-  { title: "Análise de Concorrência", description: "Monitore estratégias dos concorrentes para se manter à frente.", icon: BarChart3, link: "/analise-dados" },
-  { title: "Agendamento Automático", description: "Programe publicações nos melhores horários para engajamento.", icon: Zap, link: "/gestao-redes-sociais" },
-  { title: "Dashboard Analytics", description: "Acompanhe métricas em tempo real com relatórios detalhados.", icon: BarChart3, link: "/analise-dados" },
-  { title: "Otimização de SEO", description: "Melhore automaticamente o SEO do seu conteúdo.", icon: Star, link: "/seo-inteligente" },
-  { title: "Integração Multi-plataforma", description: "Conecte todas as suas redes em uma única plataforma.", icon: Share2, link: "/gestao-redes-sociais" },
-  { title: "Personalização Avançada", description: "Adapte tom, estilo e formato para diferentes segmentos.", icon: PenTool, link: "/estrategias-personalizadas" },
-  { title: "Suporte 24/7", description: "Nossa equipe está sempre disponível para ajudar.", icon: MessageCircle, link: "/#contact" },
-];
+const icons = [Sparkles, BarChart3, Zap, BarChart3, Star, Share2, PenTool, MessageCircle];
 
 const Recursos = () => {
+  const { t, tList } = useI18n();
   useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  const features = tList<{ title: string; description: string; page: PageKey }>('subpages.recursos.features')
+    .map((f, i) => ({ ...f, icon: icons[i] ?? Sparkles }));
 
   return (
     <SubpageLayout
-      title="Recursos Poderosos"
-      subtitle="Descubra todas as funcionalidades que fazem do DesignoAI a ferramenta mais completa para seu marketing digital"
-      badge=" Recursos"
+      title={t('subpages.recursos.title')}
+      subtitle={t('subpages.recursos.subtitle')}
+      badge={t('subpages.recursos.badge')}
       seoPath="/recursos"
-      seoDescription="Recursos completos da DesignoAI: automação de marketing, design com IA, SEO inteligente, gestão de redes sociais e muito mais para impulsionar seu negócio."
+      seoDescription={t('subpages.recursos.seo.description')}
     >
       <section className="py-20 relative">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-heading font-semibold text-foreground text-center mb-10">Tudo o que você encontra na DesignoAI</h2>
+          <h2 className="text-2xl md:text-3xl font-heading font-semibold text-foreground text-center mb-10">{t('subpages.recursos.sectionTitle')}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => {
               const Icon = feature.icon;
@@ -42,27 +38,27 @@ const Recursos = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.05 }}
                 >
-                  <Link to={feature.link} className="block group">
-                    <div className="card-surface rounded-2xl p-6 h-full transition-all duration-300 hover:bg-white/[0.06] hover:border-primary/20 hover:-translate-y-1">
+                  <LocaleLink page={feature.page} hash={feature.page === 'home' ? '#contact' : ''} className="block group">
+                    <div className="card-surface rounded-2xl p-6 h-full transition-all duration-300 hover:border-primary/20 hover:-translate-y-1">
                       <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
                         <Icon className="w-6 h-6 text-primary" />
                       </div>
                       <h3 className="text-lg font-heading font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">{feature.title}</h3>
                       <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
                     </div>
-                  </Link>
+                  </LocaleLink>
                 </motion.div>
               );
             })}
           </div>
 
           <div className="text-center mt-16">
-            <Link to="/#contact">
+            <LocaleLink page="home" hash="#contact">
               <Button className="bg-primary text-primary-foreground hover:bg-primary/90 group">
-                Começar Agora
+                {t('subpages.recursos.ctaLabel')}
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
-            </Link>
+            </LocaleLink>
           </div>
         </div>
       </section>
