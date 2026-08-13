@@ -1,43 +1,34 @@
-
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SubpageLayout from '@/components/SubpageLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Pen, Target, BarChart3, Sparkles, Globe, Image, FileText, Camera, Video, CheckCircle } from 'lucide-react';
+import { useI18n } from '@/i18n/I18nProvider';
+
+const featureIcons = [Pen, Image, Target, Globe, BarChart3, Sparkles];
+const typeIcons = [FileText, Pen, Camera, Video];
 
 const CriacaoConteudo = () => {
+  const { t, tList } = useI18n();
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  const features = [
-    { icon: Pen, title: "Geração Automática de Textos", description: "IA cria textos otimizados para SEO e engajamento" },
-    { icon: Image, title: "Criação de Imagens", description: "Gráficos e imagens personalizados para sua marca" },
-    { icon: Target, title: "Templates Responsivos", description: "Designs que se adaptam a qualquer dispositivo" },
-    { icon: Globe, title: "Adaptação Multi-plataforma", description: "Conteúdo otimizado para diferentes redes sociais" },
-    { icon: BarChart3, title: "Análise de Performance", description: "Otimização contínua baseada em dados" },
-    { icon: Sparkles, title: "Biblioteca de Recursos", description: "Acesso a recursos visuais exclusivos" },
-  ];
-
-  const contentTypes = [
-    { icon: FileText, title: "Posts para Redes Sociais", description: "Conteúdo envolvente para Instagram, Facebook, LinkedIn" },
-    { icon: Pen, title: "Artigos para Blog", description: "Textos otimizados para SEO e engajamento" },
-    { icon: Camera, title: "Banners e Anúncios", description: "Designs impactantes para campanhas publicitárias" },
-    { icon: Video, title: "Vídeos Promocionais", description: "Conteúdo audiovisual para maior alcance" },
-  ];
-
-  const benefits = [
-    "Economia de 80% do tempo na produção de conteúdo",
-    "Consistência de 95% na comunicação da marca",
-    "Aumento de 300% no engajamento orgânico",
-    "Escalabilidade para grandes volumes de conteúdo",
-    "Redução de 70% nos custos com produção",
-    "Otimização automática baseada em performance",
-  ];
+  const features = tList<{ title: string; description: string }>('subpages.criacaoConteudo.features')
+    .map((f, i) => ({ ...f, icon: featureIcons[i] ?? Pen }));
+  const contentTypes = tList<{ title: string; description: string }>('subpages.criacaoConteudo.contentTypes')
+    .map((c, i) => ({ ...c, icon: typeIcons[i] ?? FileText }));
+  const benefits = tList<string>('subpages.criacaoConteudo.benefits');
 
   return (
-    <SubpageLayout title="Criação de Conteúdo" subtitle="Transforme sua comunicação com inteligência artificial que gera textos, imagens e gráficos de alta qualidade." badge=" Conteúdo com IA" seoPath="/criacao-conteudo" seoDescription="Criação de conteúdo com IA: textos, imagens e gráficos de alta qualidade para redes sociais, blogs e campanhas. Aumente seu engajamento com a DesignoAI.">
+    <SubpageLayout
+      title={t('subpages.criacaoConteudo.title')}
+      subtitle={t('subpages.criacaoConteudo.subtitle')}
+      badge={t('subpages.criacaoConteudo.badge')}
+      seoPath="/criacao-conteudo"
+      seoDescription={t('subpages.criacaoConteudo.seo.description')}
+    >
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Recursos Principais</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">{t('subpages.criacaoConteudo.featuresTitle')}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((f, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
@@ -56,16 +47,16 @@ const CriacaoConteudo = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Tipos de Conteúdo</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">{t('subpages.criacaoConteudo.contentTypesTitle')}</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            {contentTypes.map((t, i) => (
+            {contentTypes.map((ct, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                 <Card className="card-surface border-border/50 hover:border-primary/30 transition-all group">
                   <CardContent className="p-6 flex items-start gap-4">
-                    <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors"><t.icon className="w-7 h-7 text-primary" /></div>
+                    <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors"><ct.icon className="w-7 h-7 text-primary" /></div>
                     <div>
-                      <h3 className="text-lg font-semibold text-foreground mb-2">{t.title}</h3>
-                      <p className="text-muted-foreground">{t.description}</p>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">{ct.title}</h3>
+                      <p className="text-muted-foreground">{ct.description}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -77,7 +68,7 @@ const CriacaoConteudo = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Benefícios Mensuráveis</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">{t('subpages.criacaoConteudo.benefitsTitle')}</h2>
           <Card className="card-surface border-border/50">
             <CardContent className="p-8 md:p-12">
               <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -87,8 +78,8 @@ const CriacaoConteudo = () => {
                   ))}
                 </ul>
                 <div className="card-surface rounded-2xl p-8 text-center">
-                  <h4 className="text-4xl font-heading font-bold text-foreground mb-2">95%</h4>
-                  <p className="text-muted-foreground">Consistência na comunicação</p>
+                  <h4 className="text-4xl font-heading font-bold text-foreground mb-2">{t('subpages.criacaoConteudo.benefitsStatNumber')}</h4>
+                  <p className="text-muted-foreground">{t('subpages.criacaoConteudo.benefitsStatLabel')}</p>
                 </div>
               </div>
             </CardContent>

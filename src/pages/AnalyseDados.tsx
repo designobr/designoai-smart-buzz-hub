@@ -1,33 +1,32 @@
-
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SubpageLayout from '@/components/SubpageLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Brain, BarChart3, TrendingUp, Target, Database, Zap } from 'lucide-react';
+import { useI18n } from '@/i18n/I18nProvider';
+
+const icons = [Brain, TrendingUp, Target, BarChart3, Database, Zap];
 
 const AnalyseDados = () => {
+  const { t, tList } = useI18n();
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  const capabilities = [
-    { icon: Brain, title: "Análise Comportamental", description: "Compreensão profunda do comportamento dos clientes em tempo real" },
-    { icon: TrendingUp, title: "Identificação de Padrões", description: "Descoberta automática de tendências e oportunidades de mercado" },
-    { icon: Target, title: "Segmentação Automática", description: "Criação inteligente de grupos de audiência baseada em dados" },
-    { icon: BarChart3, title: "Previsão de Demanda", description: "Antecipação de sazonalidade e comportamentos futuros" },
-    { icon: Database, title: "Análise de Sentimento", description: "Monitoramento da percepção da marca em redes sociais" },
-    { icon: Zap, title: "Otimização de ROI", description: "Maximização do retorno por canal de marketing" },
-  ];
-
-  const predictiveFeatures = [
-    "Previsão de churn de clientes", "Identificação de clientes com maior potencial",
-    "Previsão de receita e crescimento", "Análise de lifetime value",
-    "Otimização de preços baseada em demanda", "Previsão de performance de campanhas",
-  ];
+  const capabilities = tList<{ title: string; description: string }>('subpages.analiseDados.capabilities')
+    .map((c, i) => ({ ...c, icon: icons[i] ?? Brain }));
+  const predictiveFeatures = tList<string>('subpages.analiseDados.predictiveFeatures');
+  const stats = tList<{ num: string; label: string }>('subpages.analiseDados.stats');
 
   return (
-    <SubpageLayout title="Análise de Dados" subtitle="Transforme dados em insights acionáveis com inteligência artificial que revela oportunidades ocultas." badge=" Data Analytics" seoPath="/analise-dados" seoDescription="Análise de dados com IA: dashboards em tempo real, insights acionáveis e previsões inteligentes para otimizar suas campanhas de marketing digital.">
+    <SubpageLayout
+      title={t('subpages.analiseDados.title')}
+      subtitle={t('subpages.analiseDados.subtitle')}
+      badge={t('subpages.analiseDados.badge')}
+      seoPath="/analise-dados"
+      seoDescription={t('subpages.analiseDados.seo.description')}
+    >
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Capacidades Analíticas</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">{t('subpages.analiseDados.capabilitiesTitle')}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {capabilities.map((c, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
@@ -46,7 +45,7 @@ const AnalyseDados = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Análise Preditiva</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">{t('subpages.analiseDados.predictiveTitle')}</h2>
           <Card className="card-surface border-border/50">
             <CardContent className="p-8 md:p-12">
               <div className="grid md:grid-cols-2 gap-4 mb-8">
@@ -58,7 +57,7 @@ const AnalyseDados = () => {
                 ))}
               </div>
               <div className="grid md:grid-cols-3 gap-4">
-                {[{ num: "360°", label: "Visão completa" }, { num: "24/7", label: "Monitoramento contínuo" }, { num: "AI", label: "Insights automatizados" }].map((s, i) => (
+                {stats.map((s, i) => (
                   <div key={i} className="card-surface rounded-xl p-6 text-center">
                     <h3 className="text-2xl font-heading font-bold text-foreground mb-1">{s.num}</h3>
                     <p className="text-muted-foreground text-sm">{s.label}</p>
