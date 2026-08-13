@@ -1,41 +1,37 @@
-
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SubpageLayout from '@/components/SubpageLayout';
 import { serviceSchema } from '@/lib/seo-schemas';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Search, Target, TrendingUp, BarChart3, Zap, Globe, Link, Shield, Clock, Users, CheckCircle } from 'lucide-react';
+import { useI18n } from '@/i18n/I18nProvider';
+
+const featureIcons = [Search, Target, TrendingUp, Zap, Link, BarChart3];
+const technicalIcons = [Shield, Globe, Clock, Users];
 
 const SEOInteligente = () => {
+  const { t, tList } = useI18n();
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  const features = [
-    { icon: Search, title: "Pesquisa Inteligente de Palavras-chave", description: "IA identifica keywords com baixa concorrência e alto potencial" },
-    { icon: Target, title: "Otimização Automática", description: "Meta tags, URLs e estrutura otimizadas automaticamente" },
-    { icon: TrendingUp, title: "Análise da Concorrência", description: "Identificação de oportunidades baseada nos competidores" },
-    { icon: Zap, title: "Velocidade Otimizada", description: "Melhoria automática da performance do site" },
-    { icon: Link, title: "Link Building Estratégico", description: "Construção inteligente de autoridade do domínio" },
-    { icon: BarChart3, title: "Relatórios em Tempo Real", description: "Monitoramento contínuo de posicionamento e tráfego" },
-  ];
-
-  const technicalFeatures = [
-    { icon: Shield, title: "Implementação de HTTPS", description: "Segurança e confiabilidade para melhor ranking" },
-    { icon: Globe, title: "Dados Estruturados", description: "Schema markup para rich snippets" },
-    { icon: Clock, title: "Core Web Vitals", description: "Otimização de métricas de experiência do usuário" },
-    { icon: Users, title: "SEO Local", description: "Posicionamento para buscas regionais" },
-  ];
-
-  const results = [
-    "Aumento médio de 200% no tráfego orgânico", "Melhoria do posicionamento para keywords estratégicas",
-    "Redução de 50% na taxa de rejeição", "Aumento de 180% no tempo de permanência",
-    "Crescimento de 300% na taxa de conversão orgânica", "ROI 5x superior em comparação com métodos tradicionais",
-  ];
+  const features = tList<{ title: string; description: string }>('subpages.seoInteligente.features')
+    .map((f, i) => ({ ...f, icon: featureIcons[i] ?? Search }));
+  const technicalFeatures = tList<{ title: string; description: string }>('subpages.seoInteligente.technicalFeatures')
+    .map((f, i) => ({ ...f, icon: technicalIcons[i] ?? Shield }));
+  const results = tList<string>('subpages.seoInteligente.results');
+  const resultStats = tList<{ num: string; label: string }>('subpages.seoInteligente.resultStats');
 
   return (
-    <SubpageLayout title="SEO Inteligente" subtitle="Domine os resultados de busca com inteligência artificial que otimiza automaticamente seu site." badge=" SEO com IA" seoPath="/seo-inteligente" seoDescription="SEO com IA: pesquisa de palavras-chave, otimização automática, link building e relatórios em tempo real para aumentar seu tráfego orgânico." jsonLd={serviceSchema('SEO Inteligente', 'SEO com inteligência artificial: pesquisa de palavras-chave, otimização automática, link building e relatórios em tempo real.', '/seo-inteligente')}>
+    <SubpageLayout
+      title={t('subpages.seoInteligente.title')}
+      subtitle={t('subpages.seoInteligente.subtitle')}
+      badge={t('subpages.seoInteligente.badge')}
+      seoPath="/seo-inteligente"
+      seoDescription={t('subpages.seoInteligente.seo.description')}
+      jsonLd={serviceSchema(t('subpages.seoInteligente.jsonLdTitle'), t('subpages.seoInteligente.jsonLdDescription'), '/seo-inteligente')}
+    >
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Recursos Principais</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">{t('subpages.seoInteligente.featuresTitle')}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((f, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
@@ -54,7 +50,7 @@ const SEOInteligente = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">SEO Técnico Avançado</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">{t('subpages.seoInteligente.technicalTitle')}</h2>
           <div className="grid md:grid-cols-2 gap-6">
             {technicalFeatures.map((f, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -72,7 +68,7 @@ const SEOInteligente = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Resultados Mensuráveis</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">{t('subpages.seoInteligente.resultsTitle')}</h2>
           <Card className="card-surface border-border/50">
             <CardContent className="p-8 md:p-12">
               <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -82,8 +78,12 @@ const SEOInteligente = () => {
                   ))}
                 </ul>
                 <div className="space-y-4">
-                  <div className="card-surface rounded-2xl p-6 text-center"><h4 className="text-3xl font-heading font-bold text-foreground mb-1">200%</h4><p className="text-muted-foreground text-sm">Aumento no tráfego orgânico</p></div>
-                  <div className="card-surface rounded-2xl p-6 text-center"><h4 className="text-3xl font-heading font-bold text-foreground mb-1">Top 3</h4><p className="text-muted-foreground text-sm">Posicionamento médio</p></div>
+                  {resultStats.map((s, i) => (
+                    <div key={i} className="card-surface rounded-2xl p-6 text-center">
+                      <h4 className="text-3xl font-heading font-bold text-foreground mb-1">{s.num}</h4>
+                      <p className="text-muted-foreground text-sm">{s.label}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </CardContent>

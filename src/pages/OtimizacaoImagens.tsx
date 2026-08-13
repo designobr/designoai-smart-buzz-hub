@@ -1,48 +1,46 @@
-
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SubpageLayout from '@/components/SubpageLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Camera, Zap, TrendingUp, Star, Target, CheckCircle, AlertTriangle, Smartphone } from 'lucide-react';
+import { useI18n } from '@/i18n/I18nProvider';
+
+const problemIcons = [AlertTriangle, Smartphone, Target];
+const problemColors = ['text-destructive', 'text-destructive', 'text-primary'];
+const benefitIcons = [TrendingUp, Star, Target, Zap];
 
 const OtimizacaoImagens = () => {
+  const { t, tList } = useI18n();
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  const handleWhatsAppClick = () => {
-    window.open(`https://wa.me/5511947968158?text=${encodeURIComponent("Olá! Tenho interesse no serviço de otimização de imagens. Gostaria de saber mais!")}`, '_blank');
+  const openWhatsApp = (message: string) => {
+    window.open(`https://wa.me/5511947968158?text=${encodeURIComponent(message)}`, '_blank');
   };
 
-  const handleConsultorClick = () => {
-    window.open(`https://wa.me/5511947968158?text=${encodeURIComponent("Olá! Gostaria de falar com um consultor sobre otimização de imagens para o meu negócio.")}`, '_blank');
-  };
+  const handleWhatsAppClick = () => openWhatsApp(t('subpages.otimizacaoImagens.whatsappMessage'));
+  const handleConsultorClick = () => openWhatsApp(t('subpages.otimizacaoImagens.consultorMessage'));
 
-  const problems = [
-    { icon: AlertTriangle, title: "Cardápios que Afastam", description: "Fotos amadoras de pratos fazem os clientes duvidarem da qualidade da sua comida, diminuindo pedidos em até 40%.", color: "text-destructive" },
-    { icon: Smartphone, title: "E-commerce Sem Conversão", description: "Produtos com fotos ruins têm taxa de conversão 67% menor. Clientes não confiam no que não conseguem ver claramente.", color: "text-destructive" },
-    { icon: Target, title: "Invisibilidade nas Redes", description: "Conteúdo visual fraco resulta em menos engajamento, alcance reduzido e perda de oportunidades de vendas.", color: "text-primary" },
-  ];
-
-  const benefitsCards = [
-    { icon: TrendingUp, title: "Mais Vendas", description: "Imagens profissionais a uma fração do custo. Economia de até 80% comparado a um fotógrafo tradicional." },
-    { icon: Star, title: "Qualidade Premium", description: "Imagens chamativas e profissionais que impressionam seus clientes e aumentam a credibilidade." },
-    { icon: Target, title: "Diferencial Competitivo", description: "Destaque-se no iFood, Instagram, Google e outras plataformas com conteúdo visual que converte." },
-    { icon: Zap, title: "Rapidez Garantida", description: "Processo otimizado com entrega em até 24 horas. Seus projetos nunca mais vão atrasar." },
-  ];
-
-  const packageFeatures = [
-    "10 imagens totalmente otimizadas", "Correção de cores e iluminação", "Remoção de imperfeições",
-    "Otimização para redes sociais", "Entrega em até 24 horas", "Garantia de satisfação",
-    "BÔNUS: Consultoria gratuita",
-  ];
+  const problems = tList<{ title: string; description: string }>('subpages.otimizacaoImagens.problems')
+    .map((p, i) => ({ ...p, icon: problemIcons[i] ?? AlertTriangle, color: problemColors[i] ?? 'text-primary' }));
+  const benefitsCards = tList<{ title: string; description: string }>('subpages.otimizacaoImagens.benefits')
+    .map((b, i) => ({ ...b, icon: benefitIcons[i] ?? TrendingUp }));
+  const solutionSteps = tList<string>('subpages.otimizacaoImagens.solutionSteps');
+  const packageFeatures = tList<string>('subpages.otimizacaoImagens.packageFeatures');
 
   return (
-    <SubpageLayout title="Otimização de Imagens" subtitle="Transforme fotos comuns em poderosas ferramentas de venda com IA." badge=" Imagens com IA" seoPath="/otimizacao-imagens" seoDescription="Otimização de imagens com IA: melhore a qualidade, comprima sem perda e gere imagens profissionais para suas campanhas de marketing digital.">
+    <SubpageLayout
+      title={t('subpages.otimizacaoImagens.title')}
+      subtitle={t('subpages.otimizacaoImagens.subtitle')}
+      badge={t('subpages.otimizacaoImagens.badge')}
+      seoPath="/otimizacao-imagens"
+      seoDescription={t('subpages.otimizacaoImagens.seo.description')}
+    >
       {/* Problems */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-4 text-foreground">Você está perdendo clientes por causa das suas imagens?</h2>
-          <p className="text-center text-muted-foreground mb-12 max-w-3xl mx-auto">Imagens de baixa qualidade são o maior obstáculo entre você e o sucesso do seu negócio.</p>
+          <h2 className="text-3xl font-heading font-bold text-center mb-4 text-foreground">{t('subpages.otimizacaoImagens.problemsTitle')}</h2>
+          <p className="text-center text-muted-foreground mb-12 max-w-3xl mx-auto">{t('subpages.otimizacaoImagens.problemsSubtitle')}</p>
           <div className="grid md:grid-cols-3 gap-6">
             {problems.map((p, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -59,7 +57,7 @@ const OtimizacaoImagens = () => {
           <div className="text-center mt-8">
             <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-destructive/10 border border-destructive/20">
               <AlertTriangle className="w-5 h-5 text-destructive" />
-              <span className="text-destructive font-semibold text-sm">90% das decisões de compra são influenciadas pela qualidade visual</span>
+              <span className="text-destructive font-semibold text-sm">{t('subpages.otimizacaoImagens.problemsBanner')}</span>
             </div>
           </div>
         </div>
@@ -69,14 +67,14 @@ const OtimizacaoImagens = () => {
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
           <div className="card-surface rounded-3xl p-8 md:p-12">
-            <h2 className="text-3xl font-heading font-bold mb-6 text-foreground">A Solução que Vai Revolucionar Suas Vendas</h2>
-            <p className="text-lg text-muted-foreground mb-8">Nossa tecnologia de otimização profissional com IA transforma suas imagens comuns em ferramentas poderosas de conversão.</p>
+            <h2 className="text-3xl font-heading font-bold mb-6 text-foreground">{t('subpages.otimizacaoImagens.solutionTitle')}</h2>
+            <p className="text-lg text-muted-foreground mb-8">{t('subpages.otimizacaoImagens.solutionDescription')}</p>
             <div className="inline-flex items-center px-6 py-3 rounded-full bg-primary/20 border border-primary/30 mb-8">
-              <span className="text-2xl font-bold text-primary">+25%</span>
-              <span className="text-muted-foreground ml-3">Aumento comprovado nas vendas</span>
+              <span className="text-2xl font-bold text-primary">{t('subpages.otimizacaoImagens.solutionStatNumber')}</span>
+              <span className="text-muted-foreground ml-3">{t('subpages.otimizacaoImagens.solutionStatLabel')}</span>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
-              {["Upload Simples", "IA + Especialistas", "Entrega Rápida"].map((step, i) => (
+              {solutionSteps.map((step, i) => (
                 <div key={i} className="text-center">
                   <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-3"><span className="text-primary font-bold">{i + 1}</span></div>
                   <h3 className="font-semibold text-foreground">{step}</h3>
@@ -90,7 +88,7 @@ const OtimizacaoImagens = () => {
       {/* Benefits */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Por Que Escolher Nosso Serviço?</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">{t('subpages.otimizacaoImagens.benefitsTitle')}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {benefitsCards.map((b, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -110,16 +108,16 @@ const OtimizacaoImagens = () => {
       {/* Package */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-lg text-center">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-6"> OFERTA ESPECIAL</div>
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-6">{t('subpages.otimizacaoImagens.offerBadge')}</div>
           <Card className="card-surface border-primary/30 relative overflow-hidden">
-            <div className="absolute top-4 right-4 bg-destructive text-destructive-foreground px-3 py-1 rounded-full text-xs font-bold">POPULAR</div>
+            <div className="absolute top-4 right-4 bg-destructive text-destructive-foreground px-3 py-1 rounded-full text-xs font-bold">{t('subpages.otimizacaoImagens.popularBadge')}</div>
             <CardHeader className="text-center pb-4">
-              <CardTitle className="text-2xl text-foreground mb-2">Pacote Profissional</CardTitle>
+              <CardTitle className="text-2xl text-foreground mb-2">{t('subpages.otimizacaoImagens.packageTitle')}</CardTitle>
               <div className="mb-2">
-                <span className="text-4xl font-bold text-primary">R$ 100</span>
-                <span className="text-muted-foreground line-through ml-2">R$ 300</span>
+                <span className="text-4xl font-bold text-primary">{t('subpages.otimizacaoImagens.packagePrice')}</span>
+                <span className="text-muted-foreground line-through ml-2">{t('subpages.otimizacaoImagens.packageOldPrice')}</span>
               </div>
-              <p className="text-primary font-semibold text-sm">Economize R$ 200 hoje!</p>
+              <p className="text-primary font-semibold text-sm">{t('subpages.otimizacaoImagens.packageSaving')}</p>
             </CardHeader>
             <CardContent className="space-y-3">
               {packageFeatures.map((f, i) => (
@@ -129,7 +127,7 @@ const OtimizacaoImagens = () => {
                 </div>
               ))}
               <Button className="w-full mt-4" size="lg" onClick={handleConsultorClick}>
-                <Camera className="mr-2 w-5 h-5" /> Quero Fotos Profissionais!
+                <Camera className="mr-2 w-5 h-5" /> {t('subpages.otimizacaoImagens.packageCta')}
               </Button>
             </CardContent>
           </Card>
@@ -140,12 +138,12 @@ const OtimizacaoImagens = () => {
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-6">
-            Garanta Agora Fotos Profissionais <span className="text-foreground">e Aumente Suas Vendas!</span>
+            {t('subpages.otimizacaoImagens.ctaTitle')} <span className="text-foreground">{t('subpages.otimizacaoImagens.ctaTitleHighlight')}</span>
           </h2>
-          <p className="text-lg text-muted-foreground mb-8">Não perca mais clientes por causa de imagens amadoras. Transforme seu negócio hoje.</p>
+          <p className="text-lg text-muted-foreground mb-8">{t('subpages.otimizacaoImagens.ctaDescription')}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" onClick={handleConsultorClick}><Camera className="mr-2" /> Começar Agora</Button>
-            <Button size="lg" variant="outline" onClick={handleWhatsAppClick}>Falar no WhatsApp</Button>
+            <Button size="lg" onClick={handleConsultorClick}><Camera className="mr-2" /> {t('subpages.otimizacaoImagens.ctaPrimary')}</Button>
+            <Button size="lg" variant="outline" onClick={handleWhatsAppClick}>{t('subpages.otimizacaoImagens.ctaSecondary')}</Button>
           </div>
         </div>
       </section>

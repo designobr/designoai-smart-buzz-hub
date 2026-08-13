@@ -1,35 +1,31 @@
-
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SubpageLayout from '@/components/SubpageLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Sparkles, Target, TrendingUp, Users, BarChart3, MessageCircle, CheckCircle } from 'lucide-react';
+import { useI18n } from '@/i18n/I18nProvider';
+
+const icons = [Sparkles, Target, TrendingUp, Users, BarChart3, MessageCircle];
 
 const SocialMedia = () => {
+  const { t, tList } = useI18n();
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  const features = [
-    { icon: Sparkles, title: "Criação de Conteúdo Visual", description: "IA gera posts personalizados para cada plataforma" },
-    { icon: Target, title: "Planejamento Estratégico", description: "Cronograma otimizado baseado em dados comportamentais" },
-    { icon: TrendingUp, title: "Análise de Tendências", description: "Identificação automática de hashtags e temas virais" },
-    { icon: Users, title: "Gestão Automatizada", description: "Publicação simultânea em múltiplas plataformas" },
-    { icon: BarChart3, title: "Relatórios Detalhados", description: "Métricas de performance em tempo real" },
-    { icon: MessageCircle, title: "Resposta Automatizada", description: "Chatbot inteligente para interações com seguidores" },
-  ];
-
-  const benefits = [
-    "Aumento de 300% no engajamento orgânico",
-    "Economia de 15 horas semanais de trabalho manual",
-    "Crescimento de 250% no número de seguidores",
-    "ROI 5x superior em campanhas pagas",
-    "Consistência de 98% na identidade visual da marca",
-  ];
+  const features = tList<{ title: string; description: string }>('subpages.socialMedia.features')
+    .map((f, i) => ({ ...f, icon: icons[i] ?? Sparkles }));
+  const benefits = tList<string>('subpages.socialMedia.benefits');
 
   return (
-    <SubpageLayout title="Social Media" subtitle="Transforme sua presença digital com inteligência artificial que cria conteúdo envolvente e gerencia suas redes sociais." badge=" Social Media" seoPath="/social-media" seoDescription="Social Media com IA: gestão completa de redes sociais, criação de conteúdo e análise de métricas. Transforme sua presença digital com a DesignoAI.">
+    <SubpageLayout
+      title={t('subpages.socialMedia.title')}
+      subtitle={t('subpages.socialMedia.subtitle')}
+      badge={t('subpages.socialMedia.badge')}
+      seoPath="/social-media"
+      seoDescription={t('subpages.socialMedia.seo.description')}
+    >
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Recursos Principais</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">{t('subpages.socialMedia.featuresTitle')}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((f, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
@@ -48,7 +44,7 @@ const SocialMedia = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">Resultados Comprovados</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12 text-foreground">{t('subpages.socialMedia.resultsTitle')}</h2>
           <Card className="card-surface border-border/50">
             <CardContent className="p-8 md:p-12">
               <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -58,8 +54,8 @@ const SocialMedia = () => {
                   ))}
                 </ul>
                 <div className="card-surface rounded-2xl p-8 text-center">
-                  <h4 className="text-4xl font-heading font-bold text-foreground mb-2">98%</h4>
-                  <p className="text-muted-foreground">Taxa de satisfação dos clientes</p>
+                  <h4 className="text-4xl font-heading font-bold text-foreground mb-2">{t('subpages.socialMedia.statNumber')}</h4>
+                  <p className="text-muted-foreground">{t('subpages.socialMedia.statLabel')}</p>
                 </div>
               </div>
             </CardContent>

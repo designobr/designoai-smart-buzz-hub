@@ -1,27 +1,33 @@
-
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SubpageLayout from '@/components/SubpageLayout';
 import { serviceSchema } from '@/lib/seo-schemas';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar, Users, MessageCircle } from 'lucide-react';
+import { useI18n } from '@/i18n/I18nProvider';
+
+const icons = [Calendar, Users, MessageCircle];
 
 const GestaoRedesSociais = () => {
+  const { t, tList } = useI18n();
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  const features = [
-    { icon: Calendar, title: "Agendamento Inteligente", description: "Postagens automáticas nos melhores horários com base em dados de engajamento." },
-    { icon: Users, title: "Gestão de Comunidade", description: "Engajamento automático e resposta inteligente a comentários e mensagens." },
-    { icon: MessageCircle, title: "Monitoramento 24/7", description: "Acompanhamento contínuo de menções, hashtags e tendências do seu setor." },
-  ];
+  const features = tList<{ title: string; description: string }>('subpages.gestaoRedesSociais.features')
+    .map((f, i) => ({ ...f, icon: icons[i] ?? Calendar }));
 
   return (
-    <SubpageLayout title="Gestão de Redes Sociais" subtitle="Automação inteligente para postagens, engajamento e monitoramento de suas redes sociais." badge=" Redes Sociais" seoPath="/gestao-redes-sociais" seoDescription="Gestão completa de redes sociais com IA: posts automatizados, stories, engajamento e monitoramento para ampliar sua presença digital." jsonLd={serviceSchema('Gestão de Redes Sociais', 'Gestão completa de redes sociais com IA: posts automatizados, engajamento e monitoramento.', '/gestao-redes-sociais')}>
+    <SubpageLayout
+      title={t('subpages.gestaoRedesSociais.title')}
+      subtitle={t('subpages.gestaoRedesSociais.subtitle')}
+      badge={t('subpages.gestaoRedesSociais.badge')}
+      seoPath="/gestao-redes-sociais"
+      seoDescription={t('subpages.gestaoRedesSociais.seo.description')}
+      jsonLd={serviceSchema(t('subpages.gestaoRedesSociais.jsonLdTitle'), t('subpages.gestaoRedesSociais.jsonLdDescription'), '/gestao-redes-sociais')}
+    >
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <h2 className="text-2xl md:text-3xl font-heading font-semibold text-foreground text-center mb-10">Recursos principais</h2>
+          <h2 className="text-2xl md:text-3xl font-heading font-semibold text-foreground text-center mb-10">{t('subpages.gestaoRedesSociais.sectionTitle')}</h2>
           <div className="grid md:grid-cols-3 gap-6">
-
             {features.map((f, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                 <Card className="card-surface border-border/50 hover:border-primary/30 transition-all group h-full">
