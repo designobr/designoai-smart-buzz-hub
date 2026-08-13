@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import SubpageLayout from '@/components/SubpageLayout';
@@ -7,9 +6,24 @@ import { Button } from '@/components/ui/button';
 import { Code, Brain, Palette, TrendingUp, Users, Headphones, Target, Clock, Globe, Package, CheckCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/components/ui/use-toast';
+import { useI18n } from '@/i18n/I18nProvider';
+
+const benefitIcons = [Target, Brain, Clock, Globe];
+const fullBenefitIcons = [Target, Package, Clock, Globe, TrendingUp];
+const jobIcons = [Code, Brain, TrendingUp, Palette, Users, Headphones];
+
+type Job = {
+  id: number;
+  title: string;
+  department: string;
+  description: string;
+  requirements: string[];
+  icon: typeof Code;
+};
 
 const Carreiras = () => {
-  const [selectedJob, setSelectedJob] = useState<any>(null);
+  const { t, tList } = useI18n();
+  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -25,12 +39,12 @@ const Carreiras = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const benefits = [
-    { icon: Target, title: "Ambiente Colaborativo", description: "Trabalhe em equipe inspiradora" },
-    { icon: Brain, title: "Aprendizado Contínuo", description: "Tecnologias de ponta sempre" },
-    { icon: Clock, title: "Flexibilidade", description: "Horários e trabalho remoto" },
-    { icon: Globe, title: "Projetos de Impacto", description: "Transforme empresas pelo Brasil" },
-  ];
+  const benefits = tList<{ title: string; description: string }>('company.carreiras.benefits')
+    .map((b, i) => ({ ...b, icon: benefitIcons[i] ?? Target }));
+  const fullBenefits = tList<string>('company.carreiras.fullBenefits')
+    .map((text, i) => ({ text, icon: fullBenefitIcons[i] ?? Target }));
+  const jobs: Job[] = tList<{ title: string; department: string; description: string; requirements: string[] }>('company.carreiras.jobs')
+    .map((j, i) => ({ ...j, id: i + 1, icon: jobIcons[i] ?? Code }));
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,38 +53,45 @@ const Carreiras = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    const unknownError = t('company.carreiras.toast.unknownError');
     try {
       if (!formData.name || !formData.email || !formData.position || !formData.experience || !formData.motivation) {
-        toast({ title: "Erro", description: "Por favor, preencha todos os campos obrigatórios.", variant: "destructive" });
+        toast({ title: t('company.carreiras.toast.missingFieldsTitle'), description: t('company.carreiras.toast.missingFieldsDescription'), variant: "destructive" });
         setIsSubmitting(false);
         return;
       }
       const { data, error } = await supabase.functions.invoke('submit-job-application', { body: formData });
       if (error) {
-        toast({ title: "Erro", description: `Ocorreu um erro ao enviar sua candidatura: ${error.message || 'Erro desconhecido'}`, variant: "destructive" });
+        toast({
+          title: t('company.carreiras.toast.errorTitle'),
+          description: t('company.carreiras.toast.submitErrorDescription').replace('{message}', error.message || unknownError),
+          variant: "destructive",
+        });
         return;
       }
       if (data?.error) {
-        toast({ title: "Erro", description: `Erro: ${data.error}${data.details ? ` - ${data.details}` : ''}`, variant: "destructive" });
+        toast({
+          title: t('company.carreiras.toast.errorTitle'),
+          description: t('company.carreiras.toast.genericErrorDescription')
+            .replace('{error}', String(data.error))
+            .replace('{details}', data.details ? ` - ${data.details}` : ''),
+          variant: "destructive",
+        });
         return;
       }
-      toast({ title: "Candidatura enviada!", description: "Sua candidatura foi enviada com sucesso. Entraremos em contato em breve." });
+      toast({ title: t('company.carreiras.toast.successTitle'), description: t('company.carreiras.toast.successDescription') });
       setFormData({ name: '', email: '', phone: '', position: '', experience: '', portfolio: '', motivation: '' });
-    } catch (error: any) {
-      toast({ title: "Erro", description: `Ocorreu um erro inesperado: ${error.message || 'Erro desconhecido'}`, variant: "destructive" });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : unknownError;
+      toast({
+        title: t('company.carreiras.toast.errorTitle'),
+        description: t('company.carreiras.toast.unexpectedErrorDescription').replace('{message}', message),
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
-
-  const jobs = [
-    { id: 1, title: "Desenvolvedor Full Stack", department: "Tecnologia", icon: Code, description: "Responsável pelo desenvolvimento de funcionalidades front-end e back-end da nossa plataforma de IA.", requirements: ["React.js", "Node.js", "TypeScript", "Python", "Experiência com APIs"] },
-    { id: 2, title: "Cientista de Dados", department: "Tecnologia", icon: Brain, description: "Desenvolvimento de modelos de machine learning e análise de dados para otimização das campanhas.", requirements: ["Python", "Machine Learning", "TensorFlow", "SQL", "Estatística"] },
-    { id: 3, title: "Especialista em Marketing Digital", department: "Marketing", icon: TrendingUp, description: "Criação e execução de estratégias de marketing digital para nossos clientes e para a própria empresa.", requirements: ["Google Ads", "Facebook Ads", "SEO/SEM", "Analytics", "Growth Hacking"] },
-    { id: 4, title: "Designer UX/UI", department: "Design", icon: Palette, description: "Design de interfaces intuitivas e experiências de usuário excepcionais para nossa plataforma.", requirements: ["Figma", "Adobe Creative Suite", "Prototipagem", "Design System", "User Research"] },
-    { id: 5, title: "Consultor Comercial", department: "Vendas", icon: Users, description: "Prospecção e fechamento de novos clientes, apresentação de soluções e consultoria comercial.", requirements: ["Vendas B2B", "CRM", "Negociação", "Consultiva", "Relacionamento"] },
-    { id: 6, title: "Customer Success", department: "Atendimento", icon: Headphones, description: "Garantir o sucesso dos nossos clientes, onboarding, suporte e identificação de oportunidades de upsell.", requirements: ["Atendimento ao Cliente", "Análise de Dados", "Comunicação", "Proatividade"] },
-  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -81,19 +102,26 @@ const Carreiras = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
 
+  const textFields = [
+    { id: 'name', label: t('company.carreiras.form.nameLabel'), type: 'text', required: true },
+    { id: 'email', label: t('company.carreiras.form.emailLabel'), type: 'email', required: true },
+    { id: 'phone', label: t('company.carreiras.form.phoneLabel'), type: 'tel', required: false },
+    { id: 'portfolio', label: t('company.carreiras.form.portfolioLabel'), type: 'url', required: false },
+  ] as const;
+
   return (
     <SubpageLayout
-      title="Carreiras"
-      subtitle="Junte-se à DesignoAI e faça parte de uma equipe inovadora que está revolucionando o marketing digital através da inteligência artificial."
+      title={t('company.carreiras.seo.title')}
+      subtitle={t('company.carreiras.subtitle')}
       seoPath="/carreiras"
-      seoDescription="Trabalhe na DesignoAI: vagas em marketing digital, design, desenvolvimento e IA. Faça parte da revolução do marketing com inteligência artificial."
-      badge=" Venha fazer parte"
+      seoDescription={t('company.carreiras.seo.description')}
+      badge={t('company.carreiras.badge')}
     >
       {/* Benefits */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-3xl md:text-4xl font-heading font-bold text-center mb-12">
-            <span className="text-foreground">Por que trabalhar na DesignoAI?</span>
+            <span className="text-foreground">{t('company.carreiras.whyWorkHere')}</span>
           </motion.h2>
           <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {benefits.map((b, i) => (
@@ -116,15 +144,9 @@ const Carreiras = () => {
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <Card className="card-surface border-border/50">
               <CardContent className="p-8 md:p-12">
-                <h3 className="text-2xl font-heading font-bold text-center mb-8 text-foreground">Benefícios Completos</h3>
+                <h3 className="text-2xl font-heading font-bold text-center mb-8 text-foreground">{t('company.carreiras.fullBenefitsTitle')}</h3>
                 <div className="grid md:grid-cols-2 gap-6">
-                  {[
-                    { icon: Target, text: "Planos de carreira personalizados" },
-                    { icon: Package, text: "Kit comercial" },
-                    { icon: Clock, text: "Horário flexível" },
-                    { icon: Globe, text: "Trabalho remoto" },
-                    { icon: TrendingUp, text: "Participação nos resultados" },
-                  ].map((item, i) => (
+                  {fullBenefits.map((item, i) => (
                     <div key={i} className="flex items-center gap-3">
                       <item.icon className="w-5 h-5 text-primary flex-shrink-0" />
                       <span className="text-muted-foreground">{item.text}</span>
@@ -141,7 +163,7 @@ const Carreiras = () => {
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-3xl md:text-4xl font-heading font-bold text-center mb-12">
-            <span className="text-foreground">Vagas Disponíveis</span>
+            <span className="text-foreground">{t('company.carreiras.availableJobsTitle')}</span>
           </motion.h2>
           <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {jobs.map((job) => (
@@ -182,7 +204,7 @@ const Carreiras = () => {
                     </div>
                   </div>
                   <p className="text-muted-foreground mb-6">{selectedJob.description}</p>
-                  <h4 className="font-semibold mb-4 text-foreground">Todos os requisitos:</h4>
+                  <h4 className="font-semibold mb-4 text-foreground">{t('company.carreiras.allRequirements')}</h4>
                   <div className="grid md:grid-cols-2 gap-3 mb-6">
                     {selectedJob.requirements.map((req: string, i: number) => (
                       <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-primary/5 border border-primary/10">
@@ -191,7 +213,7 @@ const Carreiras = () => {
                       </div>
                     ))}
                   </div>
-                  <Button variant="outline" onClick={() => setSelectedJob(null)}>Fechar Detalhes</Button>
+                  <Button variant="outline" onClick={() => setSelectedJob(null)}>{t('company.carreiras.closeDetails')}</Button>
                 </CardContent>
               </Card>
             </motion.div>
@@ -204,17 +226,12 @@ const Carreiras = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
           <Card className="card-surface border-border/50">
             <CardHeader className="text-center pb-4">
-              <CardTitle className="text-3xl text-foreground">Candidate-se</CardTitle>
-              <CardDescription className="text-muted-foreground text-lg">Preencha o formulário abaixo e envie sua candidatura</CardDescription>
+              <CardTitle className="text-3xl text-foreground">{t('company.carreiras.form.title')}</CardTitle>
+              <CardDescription className="text-muted-foreground text-lg">{t('company.carreiras.form.subtitle')}</CardDescription>
             </CardHeader>
             <CardContent className="p-8 pt-0">
               <form onSubmit={handleSubmit} className="space-y-5">
-                {[
-                  { id: 'name', label: 'Nome Completo *', type: 'text', required: true },
-                  { id: 'email', label: 'E-mail *', type: 'email', required: true },
-                  { id: 'phone', label: 'Telefone', type: 'tel', required: false },
-                  { id: 'portfolio', label: 'Portfolio / LinkedIn', type: 'url', required: false },
-                ].map((field) => (
+                {textFields.map((field) => (
                   <div key={field.id} className="space-y-2">
                     <label htmlFor={field.id} className="block text-sm font-medium text-foreground">{field.label}</label>
                     <input
@@ -222,28 +239,28 @@ const Carreiras = () => {
                       id={field.id}
                       name={field.id}
                       required={field.required}
-                      value={(formData as any)[field.id]}
+                      value={formData[field.id]}
                       onChange={handleInputChange}
- className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
+                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
                     />
                   </div>
                 ))}
                 <div className="space-y-2">
-                  <label htmlFor="position" className="block text-sm font-medium text-foreground">Cargo de Interesse *</label>
+                  <label htmlFor="position" className="block text-sm font-medium text-foreground">{t('company.carreiras.form.positionLabel')}</label>
                   <select
                     id="position"
                     name="position"
                     required
                     value={formData.position}
                     onChange={handleInputChange}
- className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
+                    className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
                   >
-                    <option value="">Selecione uma vaga</option>
+                    <option value="">{t('company.carreiras.form.positionPlaceholder')}</option>
                     {jobs.map((j) => <option key={j.id} value={j.title}>{j.title}</option>)}
                   </select>
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="experience" className="block text-sm font-medium text-foreground">Experiência Relevante *</label>
+                  <label htmlFor="experience" className="block text-sm font-medium text-foreground">{t('company.carreiras.form.experienceLabel')}</label>
                   <textarea
                     id="experience"
                     name="experience"
@@ -251,11 +268,11 @@ const Carreiras = () => {
                     value={formData.experience}
                     onChange={handleInputChange}
                     rows={3}
- className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors resize-none"
+                    className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors resize-none"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="motivation" className="block text-sm font-medium text-foreground">Por que quer trabalhar na DesignoAI? *</label>
+                  <label htmlFor="motivation" className="block text-sm font-medium text-foreground">{t('company.carreiras.form.motivationLabel')}</label>
                   <textarea
                     id="motivation"
                     name="motivation"
@@ -263,11 +280,11 @@ const Carreiras = () => {
                     value={formData.motivation}
                     onChange={handleInputChange}
                     rows={3}
- className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors resize-none"
+                    className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors resize-none"
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={isSubmitting}>
-                  {isSubmitting ? 'Enviando...' : 'Enviar Candidatura'}
+                  {isSubmitting ? t('company.carreiras.form.submitting') : t('company.carreiras.form.submit')}
                 </Button>
               </form>
             </CardContent>
