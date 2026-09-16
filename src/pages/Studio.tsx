@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Phone, Mail, Instagram, Linkedin, Star } from 'lucide-react';
+import { Phone, Mail, Instagram, Linkedin, Star, ArrowUpRight } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import SEOHead from '@/components/SEOHead';
 import { useI18n } from '@/i18n/I18nProvider';
@@ -51,6 +51,7 @@ const Studio = () => {
   ];
 
   const galleryImages = [portrait1, portrait2, portrait3, portrait4, example5, example6, example7, example8];
+  const galleryCreative = tList<{ title: string; description: string }>('studio.gallery.creatives');
 
   const testimonialImages = [testimonialFernanda, testimonialLucas, testimonialAmanda, testimonialGabriel];
   const testimonialData = tList<{ name: string; role: string; text: string }>('studio.testimonials.items');
@@ -174,9 +175,12 @@ const Studio = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {galleryImages.map((image, index) => (
-              <motion.div
+              <motion.a
                 key={index}
- className="group relative overflow-hidden rounded-2xl aspect-[3/4] border border-border hover:border-foreground/20 transition-all duration-500"
+                href="https://wa.me/5511947968158"
+                target="_blank"
+                rel="noreferrer"
+ className="group relative aspect-[3/4] cursor-pointer overflow-hidden rounded-2xl border border-border shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-card-hover"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -188,11 +192,23 @@ const Studio = () => {
                   alt={t('studio.gallery.imageAlt', { number: index + 1 })}
  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-foreground/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                  <span className="text-foreground text-sm font-semibold">{t('studio.gallery.badge')}</span>
+                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/5 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
+                 <div className="absolute inset-x-0 bottom-0 z-10 p-4 text-primary-foreground md:p-5">
+                   <span className="text-[9px] font-semibold uppercase tracking-[0.16em] text-primary-foreground/70 md:text-[10px]">
+                     {t('studio.gallery.badge')}
+                   </span>
+                   <h3 className="mt-2 text-base font-bold leading-tight text-primary-foreground md:text-lg">
+                     {galleryCreative[index]?.title || t('studio.gallery.heading')}
+                   </h3>
+                   <p className="mt-1 hidden text-xs leading-relaxed text-primary-foreground/75 sm:block">
+                     {galleryCreative[index]?.description || t('studio.gallery.subtitle')}
+                   </p>
+                   <span className="mt-3 inline-flex min-h-10 items-center gap-1.5 text-xs font-semibold text-primary-foreground">
+                     {t('studio.gallery.action')}
+                     <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none" />
+                   </span>
                 </div>
-              </motion.div>
+               </motion.a>
             ))}
           </div>
 
