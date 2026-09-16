@@ -7,6 +7,9 @@ const home = {
     ctaPrimary: 'Request a proposal',
     ctaSecondary: 'See services',
     imageAlt: 'Design studio desk lit by natural light',
+    creativeEyebrow: 'Marketing and design studio',
+    creativeTitle: 'Ideas that become results.',
+    creativeDescription: 'Strategy, design and technology for brands ready to grow.',
     stats: [
       { k: '500+', v: 'Projects delivered' },
       { k: 'Solutions', v: 'Technology & innovation' },
@@ -68,6 +71,18 @@ const home = {
     subtitle1: 'Time well invested in every campaign.',
     subtitle2: 'Measurable and consistent results.',
     ctaResources: 'Explore resources',
+    creativeOne: {
+      eyebrow: 'Strategy in motion',
+      title: 'Campaigns designed together.',
+      description: 'Creative direction and execution aligned from the first idea.',
+      action: 'See services',
+    },
+    creativeTwo: {
+      eyebrow: 'Brand and performance',
+      title: 'Consistency that builds recognition.',
+      description: 'Identity, content and data moving in the same direction.',
+      action: 'Request a proposal',
+    },
     blockOne: [
       { title: 'Organized operation', description: 'Clear processes replace rework and improvisation.' },
       { title: 'Personalization at scale', description: 'Messages adjusted to each segment of your audience.' },

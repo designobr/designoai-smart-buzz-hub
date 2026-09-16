@@ -29,11 +29,16 @@ const Services = () => {
             return (
               <Reveal key={s.title} delay={i * 0.06}>
                 <LocaleLink page={s.page} className="group block h-full">
-                  <article className="card-surface card-surface-hover flex h-full flex-col p-10">
-                    <Icon className="h-6 w-6 text-foreground" strokeWidth={2} />
-                    <h3 className="mt-8 text-xl font-bold tracking-[-0.03em] text-foreground">{s.title}</h3>
+                   <article className="card-surface card-surface-hover relative flex h-full cursor-pointer flex-col overflow-hidden p-10">
+                     <div className="flex h-24 items-end overflow-hidden rounded-2xl border border-border bg-secondary p-5 transition-colors duration-300 group-hover:bg-foreground">
+                       <Icon className="h-7 w-7 text-foreground transition-colors duration-300 group-hover:text-primary-foreground" strokeWidth={1.75} />
+                       <span className="ml-auto text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground transition-colors duration-300 group-hover:text-primary-foreground/70">
+                         {String(i + 1).padStart(2, '0')}
+                       </span>
+                     </div>
+                     <h3 className="mt-7 text-xl font-bold text-foreground">{s.title}</h3>
                     <p className="mt-3 flex-1 text-sm text-muted-foreground">{s.description}</p>
-                    <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-foreground">
+                     <span className="mt-8 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-foreground">
                       {t('home.services.learnMore')}
                       <ArrowUpRight
                         className="h-4 w-4 transition-transform duration-[220ms] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

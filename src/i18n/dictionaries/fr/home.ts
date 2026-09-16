@@ -7,6 +7,9 @@ const home = {
     ctaPrimary: 'Demander une proposition',
     ctaSecondary: 'Voir les services',
     imageAlt: 'Bureau d\'un studio de design éclairé par la lumière naturelle',
+    creativeEyebrow: 'Studio de marketing et de design',
+    creativeTitle: 'Des idées qui deviennent des résultats.',
+    creativeDescription: 'Stratégie, design et technologie pour les marques qui veulent grandir.',
     stats: [
       { k: '500+', v: 'Projets livrés' },
       { k: 'Solutions', v: 'Technologie et innovation' },
@@ -68,6 +71,18 @@ const home = {
     subtitle1: 'Du temps bien investi dans chaque campagne.',
     subtitle2: 'Des résultats mesurables et constants.',
     ctaResources: 'Découvrir les ressources',
+    creativeOne: {
+      eyebrow: 'Stratégie en mouvement',
+      title: 'Des campagnes pensées ensemble.',
+      description: 'Direction créative et exécution alignées dès la première idée.',
+      action: 'Voir les services',
+    },
+    creativeTwo: {
+      eyebrow: 'Marque et performance',
+      title: 'La cohérence qui crée la reconnaissance.',
+      description: 'Identité, contenu et données avancent dans la même direction.',
+      action: 'Demander une proposition',
+    },
     blockOne: [
       { title: 'Opération organisée', description: 'Des processus clairs remplacent le retravail et l\'improvisation.' },
       { title: 'Personnalisation à grande échelle', description: 'Des messages adaptés à chaque segment de votre public.' },
