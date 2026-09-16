@@ -51,7 +51,7 @@ const ServiceEditorialCard = ({
           <h3 className="text-xl font-bold leading-tight text-primary-foreground sm:text-2xl">
             {title}
           </h3>
-          <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-primary-foreground/80">
+          <p className="mt-3 text-sm leading-relaxed text-primary-foreground/80">
             {description}
           </p>
           <span className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-primary-foreground">
