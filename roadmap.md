@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Auditar imagens, cards, rotas, WhatsApp, traduções e depoimentos existentes.
+- [x] Auditar imagens, cards, rotas, WhatsApp, traduções e depoimentos existentes.
 - [ ] Adicionar camadas editoriais HTML somente às imagens adequadas da home.
 - [ ] Tornar os seis cards de serviços integralmente clicáveis, preservando conteúdo e rotas localizadas.
 - [ ] Adicionar camadas editoriais HTML às imagens da galeria Studio, preservando arquivos e proporções.
