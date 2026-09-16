@@ -1,10 +1,25 @@
-import { ArrowUpRight, BarChart3, Brain, PenTool, Share2, Sparkles, Zap } from 'lucide-react';
+import { BarChart3, Brain, PenTool, Share2, Sparkles, Zap } from 'lucide-react';
 import Reveal from '@/components/Reveal';
 import LocaleLink from '@/components/LocaleLink';
+import ServiceEditorialCard from '@/components/ServiceEditorialCard';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { PageKey } from '@/i18n/routes';
+import editorialBrand from '@/assets/editorial-brand.jpg';
+import editorialTeam from '@/assets/editorial-team.jpg';
+import studioExample5 from '@/assets/studio/example-5.png';
+import studioExample6 from '@/assets/studio/example-6.png';
+import studioExample7 from '@/assets/studio/example-7.png';
+import studioExample8 from '@/assets/studio/example-8.png';
 
 const icons = [Sparkles, BarChart3, PenTool, Share2, Zap, Brain];
+const serviceImages = [
+  editorialBrand,
+  editorialTeam,
+  studioExample5,
+  studioExample6,
+  studioExample7,
+  studioExample8,
+];
 
 const Services = () => {
   const { t, tList } = useI18n();
@@ -26,27 +41,18 @@ const Services = () => {
         <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => {
             const Icon = icons[i] || Sparkles;
+            const image = serviceImages[i] || editorialBrand;
             return (
               <Reveal key={s.title} delay={i * 0.06}>
-                <LocaleLink page={s.page} className="group block h-full">
-                   <article className="card-surface card-surface-hover relative flex h-full cursor-pointer flex-col overflow-hidden p-10">
-                     <div className="flex h-24 items-end overflow-hidden rounded-2xl border border-border bg-secondary p-5 transition-colors duration-300 group-hover:bg-foreground">
-                       <Icon className="h-7 w-7 text-foreground transition-colors duration-300 group-hover:text-primary-foreground" strokeWidth={1.75} />
-                       <span className="ml-auto text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground transition-colors duration-300 group-hover:text-primary-foreground/70">
-                         {String(i + 1).padStart(2, '0')}
-                       </span>
-                     </div>
-                     <h3 className="mt-7 text-xl font-bold text-foreground">{s.title}</h3>
-                    <p className="mt-3 flex-1 text-sm text-muted-foreground">{s.description}</p>
-                     <span className="mt-8 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-foreground">
-                      {t('home.services.learnMore')}
-                      <ArrowUpRight
-                        className="h-4 w-4 transition-transform duration-[220ms] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                        strokeWidth={2}
-                      />
-                    </span>
-                  </article>
-                </LocaleLink>
+                <ServiceEditorialCard
+                  page={s.page}
+                  image={image}
+                  icon={Icon}
+                  number={String(i + 1).padStart(2, '0')}
+                  title={s.title}
+                  description={s.description}
+                  actionLabel={t('home.services.learnMore')}
+                />
               </Reveal>
             );
           })}

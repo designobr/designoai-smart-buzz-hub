@@ -7,3 +7,5 @@
 - [x] Adicionar camadas editoriais HTML às imagens da galeria Studio, preservando arquivos e proporções.
 - [x] Manter fotos de depoimentos intactas e verificar acabamento sem sobreposição prejudicial.
 - [x] Validar home e Studio em celular e desktop, cliques, traduções e diagnósticos.
+- [x] Evoluir somente os seis cards de serviços da Home com imagens existentes, textos sobrepostos, ícones e destinos preservados.
+- [x] Validar os seis cards em celular e desktop, incluindo proporções, links, rolagem horizontal, compilação e console.
