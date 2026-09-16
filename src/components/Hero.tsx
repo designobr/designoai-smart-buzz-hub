@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ActionButton from '@/components/ActionButton';
+import EditorialImageOverlay from '@/components/EditorialImageOverlay';
 import heroStudio from '@/assets/hero-studio.jpg';
 import { useI18n } from '@/i18n/I18nProvider';
 
@@ -52,15 +53,21 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-6"
           >
-            <div className="overflow-hidden rounded-3xl border border-border bg-secondary">
-              <img
-                src={heroStudio}
-                alt={t('home.hero.imageAlt')}
-                width={1280}
-                height={1600}
-                className="h-[420px] w-full object-cover md:h-[560px] lg:h-[640px]"
-              />
-            </div>
+            <EditorialImageOverlay
+              src={heroStudio}
+              alt={t('home.hero.imageAlt')}
+              eyebrow={t('home.hero.creativeEyebrow')}
+              title={t('home.hero.creativeTitle')}
+              description={t('home.hero.creativeDescription')}
+              actionLabel={t('home.hero.ctaPrimary')}
+              href="https://wa.me/5511947968158"
+              external
+              showBrand
+              loading="eager"
+              width={1280}
+              height={1600}
+              className="h-[460px] md:h-[560px] lg:h-[640px]"
+            />
           </motion.div>
         </div>
       </div>

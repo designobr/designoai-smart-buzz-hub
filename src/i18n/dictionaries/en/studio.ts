@@ -35,6 +35,17 @@ const studio = {
     subtitle: 'See the professional quality DesignoAI delivers to its clients',
     imageAlt: 'Professional photo example {number}',
     badge: 'Created with AI',
+    action: 'Create mine',
+    creatives: [
+      { title: 'Presence that builds trust', description: 'Portraits designed to position your professional image.' },
+      { title: 'Authority in every detail', description: 'A visual presentation aligned with your moment.' },
+      { title: 'Your brand starts with you', description: 'Consistent imagery for all your channels.' },
+      { title: 'Expression with purpose', description: 'Natural presence and visual direction in balance.' },
+      { title: 'Ready for new opportunities', description: 'Professional photography with editorial polish.' },
+      { title: 'An identity that stands out', description: 'A strong image without losing your essence.' },
+      { title: 'Professionalism made visible', description: 'Portraits that communicate before words do.' },
+      { title: 'Your strongest positioning', description: 'Visual consistency to strengthen your presence.' },
+    ],
     footnote: 'All images were generated with artificial intelligence from simple selfies',
   },
   testimonials: {
