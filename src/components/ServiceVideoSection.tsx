@@ -5,11 +5,12 @@ import { useI18n } from '@/i18n/I18nProvider';
 interface ServiceVideoSectionProps {
   translationKey: string;
   src: string;
+  compatibleSrc: string;
   poster: string;
   id: string;
 }
 
-const ServiceVideoSection = ({ translationKey, src, poster, id }: ServiceVideoSectionProps) => {
+const ServiceVideoSection = ({ translationKey, src, compatibleSrc, poster, id }: ServiceVideoSectionProps) => {
   const { t } = useI18n();
 
   return (
@@ -27,7 +28,9 @@ const ServiceVideoSection = ({ translationKey, src, poster, id }: ServiceVideoSe
           </Button>
         </div>
         <figure className="mx-auto w-full max-w-[320px]">
-          <video src={src} poster={poster} controls playsInline preload="metadata" aria-label={t(`${translationKey}.videoLabel`)} className="aspect-[9/16] w-full rounded-2xl border border-border bg-secondary object-contain">
+          <video poster={poster} controls playsInline preload="metadata" aria-label={t(`${translationKey}.videoLabel`)} className="aspect-[9/16] w-full rounded-2xl border border-border bg-secondary object-contain">
+            <source src={src} type='video/mp4; codecs="avc1.640028, mp4a.40.2"' />
+            <source src={compatibleSrc} type="video/webm" />
             <a href={src}>{t(`${translationKey}.videoLabel`)}</a>
           </video>
           <figcaption className="mt-3 text-center text-sm text-muted-foreground">{t(`${translationKey}.caption`)}</figcaption>

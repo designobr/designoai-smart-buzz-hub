@@ -7,6 +7,7 @@ import { useI18n } from '@/i18n/I18nProvider';
 import ServiceVideoSection from '@/components/ServiceVideoSection';
 import contentVideo from '@/assets/designoai-publicar-com-proposito.mp4.asset.json';
 import contentPoster from '@/assets/designoai-publicar-com-proposito-poster.jpg.asset.json';
+import compatibleContentVideo from '@/assets/designoai-publicar-com-proposito.webm.asset.json';
 
 const featureIcons = [Pen, Image, Target, Globe, BarChart3, Sparkles];
 const typeIcons = [FileText, Pen, Camera, Video];
@@ -73,6 +74,7 @@ const CriacaoConteudo = () => {
         id="publicar-com-proposito"
         translationKey="subpages.criacaoConteudo.video"
         src={contentVideo.url}
+        compatibleSrc={compatibleContentVideo.url}
         poster={contentPoster.url}
       />
 
