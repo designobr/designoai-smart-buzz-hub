@@ -49,6 +49,15 @@ const aiSdr = {
       { title: 'Trafic Qualifié', text: 'L\'Intelligence Artificielle apporte des entreprises prêtes à échanger, pas de simples curieux.' },
     ],
   },
+  attendance: {
+    badge: 'Automatisation du service client',
+    title: 'Un service client disponible 24h/24 grâce à l’IA.',
+    description: 'Au-delà de la prospection, intégrez l’IA au service client de votre entreprise. Assurez un premier contact disponible 24h/24, même en dehors des heures de bureau, et reliez le service client aux opportunités commerciales.',
+    cta: 'Automatiser mon service client',
+    whatsappMessage: 'Bonjour ! Je souhaite en savoir plus sur le service client automatisé 24h/24 avec l’IA de DesignoAI.',
+    videoLabel: 'Vidéo DesignoAI sur le service client automatisé 24h/24',
+    caption: 'Vidéo en portugais.',
+  },
   demo: {
     badge: 'Démo en Direct',
     title1: 'Voyez l\'IA ',

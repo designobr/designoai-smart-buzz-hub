@@ -1,5 +1,8 @@
 # Roadmap
 
+- [ ] Incluir vídeo original no AI SDR, seção de atendimento 24h e textos em quatro idiomas.
+- [ ] Verificar reprodução, WhatsApp e apresentação no celular e desktop.
+
 - [x] Auditar imagens, cards, rotas, WhatsApp, traduções e depoimentos existentes.
 - [x] Integrar a logo oficial enviada nas camadas editoriais, sem substituir fotografias.
 - [x] Adicionar camadas editoriais HTML somente às imagens adequadas da home.

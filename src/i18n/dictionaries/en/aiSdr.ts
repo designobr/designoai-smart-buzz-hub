@@ -49,6 +49,15 @@ const aiSdr = {
       { title: 'Qualified Traffic', text: 'Artificial Intelligence brings in companies ready to talk, not just curious visitors.' },
     ],
   },
+  attendance: {
+    badge: 'Customer service automation',
+    title: '24-hour customer service powered by AI.',
+    description: 'Go beyond prospecting and bring AI to your customer service. Keep the first point of contact available around the clock, including outside business hours, and connect customer service with business opportunities.',
+    cta: 'Automate my customer service',
+    whatsappMessage: 'Hi! I want to learn more about DesignoAI’s 24-hour AI customer service automation.',
+    videoLabel: 'DesignoAI video about 24-hour customer service automation',
+    caption: 'Video in Portuguese.',
+  },
   demo: {
     badge: 'Live Demo',
     title1: 'See the AI ',
