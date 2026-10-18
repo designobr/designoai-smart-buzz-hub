@@ -49,6 +49,15 @@ const aiSdr = {
       { title: 'Tráfego Qualificado', text: 'A Inteligência Artificial traz empresas prontas para conversar, não curiosos.' },
     ],
   },
+  attendance: {
+    badge: 'Automação de atendimento',
+    title: 'Atendimento 24h com inteligência artificial.',
+    description: 'Além da prospecção, leve a IA para o atendimento da sua empresa. Mantenha o primeiro contato disponível 24 horas por dia, inclusive fora do horário comercial, e conecte atendimento e oportunidades de negócio.',
+    cta: 'Quero automatizar meu atendimento',
+    whatsappMessage: 'Olá! Quero saber mais sobre automação de atendimento 24h com IA da DesignoAI.',
+    videoLabel: 'Vídeo DesignoAI sobre automação de atendimento 24h',
+    caption: 'Vídeo em português.',
+  },
   demo: {
     badge: 'Demonstração ao Vivo',
     title1: 'Veja a IA ',

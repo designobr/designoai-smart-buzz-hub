@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SEOHead from '@/components/SEOHead';
 import { useI18n } from '@/i18n/I18nProvider';
+import atendimentoVideo from '@/assets/designoai-atendimento-24h.mp4.asset.json';
 
 const FloatingParticle = ({ delay, x, y, size }: { delay: number; x: string; y: string; size: number }) => (
   <motion.div
@@ -206,6 +207,37 @@ const AiSdr = () => {
                 </motion.div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      <section id="atendimento-24h" aria-labelledby="atendimento-title" className="py-20 md:py-28 border-t border-border bg-secondary/40">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center max-w-5xl mx-auto">
+            <div>
+              <p className="text-sm font-medium text-muted-foreground mb-4">{t('aiSdr.attendance.badge')}</p>
+              <h2 id="atendimento-title" className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">{t('aiSdr.attendance.title')}</h2>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8">{t('aiSdr.attendance.description')}</p>
+              <Button asChild size="lg" className="h-auto py-4 px-6 whitespace-normal text-center">
+                <a href={`https://wa.me/5511947968158?text=${encodeURIComponent(t('aiSdr.attendance.whatsappMessage'))}`} target="_blank" rel="noopener noreferrer">
+                  {t('aiSdr.attendance.cta')}
+                  <ArrowRight className="w-5 h-5 ml-2 shrink-0" />
+                </a>
+              </Button>
+            </div>
+            <figure className="w-full max-w-[320px] mx-auto">
+              <video
+                className="w-full aspect-[9/16] rounded-2xl bg-secondary object-contain border border-border"
+                src={atendimentoVideo.url}
+                controls
+                playsInline
+                preload="metadata"
+                aria-label={t('aiSdr.attendance.videoLabel')}
+              >
+                <a href={atendimentoVideo.url}>{t('aiSdr.attendance.videoLabel')}</a>
+              </video>
+              <figcaption className="text-sm text-muted-foreground mt-3 text-center">{t('aiSdr.attendance.caption')}</figcaption>
+            </figure>
           </div>
         </div>
       </section>
