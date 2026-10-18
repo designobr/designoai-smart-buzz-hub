@@ -18,6 +18,15 @@ const subpages = {
     ],
   },
   gestaoRedesSociais: {
+    video: {
+      "badge": "Our process",
+      "title": "More than a beautiful design.",
+      "description": "A professional presence starts before publishing. Discover the DesignoAI process: planning, design creation, client approval and scheduling organization for consistent communication.",
+      "cta": "Organize my social media",
+      "whatsappMessage": "Hello! I would like to learn more about social media planning and management with DesignoAI.",
+      "videoLabel": "DesignoAI: content planning, creation, approval and scheduling",
+      "caption": "Original video in Portuguese."
+    },
     seo: { title: 'Social Media Management', description: 'Complete AI-powered social media management: automated posts, stories, engagement and monitoring to expand your digital presence.' },
     title: 'Social Media Management',
     subtitle: 'Smart automation for posting, engagement and monitoring of your social media.',
@@ -32,6 +41,15 @@ const subpages = {
     ],
   },
   criacaoConteudo: {
+    video: {
+      "badge": "Content strategy",
+      "title": "Publish with purpose.",
+      "description": "Every piece of content needs a goal: attract people, build trust or present solutions. Before your next post, define who you want to reach, what problem you will solve and what action you expect from your audience.",
+      "cta": "I want strategic content",
+      "whatsappMessage": "Hello! I would like to learn more about strategic content creation with DesignoAI.",
+      "videoLabel": "DesignoAI: publishing with purpose on social media",
+      "caption": "Original video in Portuguese."
+    },
     seo: { title: 'Content Creation', description: 'AI content creation: high-quality texts, images and graphics for social media, blogs and campaigns. Boost your engagement with DesignoAI.' },
     title: 'Content Creation',
     subtitle: 'Transform your communication with artificial intelligence that generates high-quality texts, images and graphics.',

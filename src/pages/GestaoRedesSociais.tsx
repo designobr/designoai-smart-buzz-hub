@@ -5,6 +5,10 @@ import { serviceSchema } from '@/lib/seo-schemas';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar, Users, MessageCircle } from 'lucide-react';
 import { useI18n } from '@/i18n/I18nProvider';
+import ServiceVideoSection from '@/components/ServiceVideoSection';
+import managementVideo from '@/assets/designoai-processo-redes-sociais.mp4.asset.json';
+import managementPoster from '@/assets/designoai-processo-redes-sociais-poster.jpg.asset.json';
+import compatibleManagementVideo from '@/assets/designoai-processo-redes-sociais.webm.asset.json';
 
 const icons = [Calendar, Users, MessageCircle];
 
@@ -42,6 +46,13 @@ const GestaoRedesSociais = () => {
           </div>
         </div>
       </section>
+      <ServiceVideoSection
+        id="processo-redes-sociais"
+        translationKey="subpages.gestaoRedesSociais.video"
+        src={managementVideo.url}
+        compatibleSrc={compatibleManagementVideo.url}
+        poster={managementPoster.url}
+      />
     </SubpageLayout>
   );
 };
