@@ -18,6 +18,15 @@ const subpages = {
     ],
   },
   gestaoRedesSociais: {
+    video: {
+      "badge": "Nuestro proceso",
+      "title": "Mucho más que un diseño bonito.",
+      "description": "Una presencia profesional empieza antes de publicar. Conoce el proceso de DesignoAI: planificación, creación de diseños, aprobación del cliente y organización de la programación para una comunicación consistente.",
+      "cta": "Quiero organizar mis redes sociales",
+      "whatsappMessage": "¡Hola! Quiero saber más sobre planificación y gestión de redes sociales con DesignoAI.",
+      "videoLabel": "DesignoAI: planificación, creación, aprobación y programación de contenido",
+      "caption": "Video original en portugués."
+    },
     seo: { title: 'Gestión de Redes Sociales', description: 'Gestión completa de redes sociales con IA: publicaciones automatizadas, historias, engagement y monitoreo para ampliar tu presencia digital.' },
     title: 'Gestión de Redes Sociales',
     subtitle: 'Automatización inteligente para publicaciones, engagement y monitoreo de tus redes sociales.',
@@ -32,6 +41,15 @@ const subpages = {
     ],
   },
   criacaoConteudo: {
+    video: {
+      "badge": "Estrategia de contenido",
+      "title": "Publica con propósito.",
+      "description": "Cada contenido necesita un objetivo: atraer personas, generar confianza o presentar soluciones. Antes de tu próxima publicación, define a quién quieres llegar, qué problema vas a resolver y qué acción esperas de tu público.",
+      "cta": "Quiero contenido con estrategia",
+      "whatsappMessage": "¡Hola! Quiero saber más sobre creación de contenido estratégico con DesignoAI.",
+      "videoLabel": "DesignoAI: publicar con propósito en redes sociales",
+      "caption": "Video original en portugués."
+    },
     seo: { title: 'Creación de Contenido', description: 'Creación de contenido con IA: textos, imágenes y gráficos de alta calidad para redes sociales, blogs y campañas. Aumenta tu engagement con DesignoAI.' },
     title: 'Creación de Contenido',
     subtitle: 'Transforma tu comunicación con inteligencia artificial que genera textos, imágenes y gráficos de alta calidad.',

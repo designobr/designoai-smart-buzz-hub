@@ -4,6 +4,9 @@ import SubpageLayout from '@/components/SubpageLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Pen, Target, BarChart3, Sparkles, Globe, Image, FileText, Camera, Video, CheckCircle } from 'lucide-react';
 import { useI18n } from '@/i18n/I18nProvider';
+import ServiceVideoSection from '@/components/ServiceVideoSection';
+import contentVideo from '@/assets/designoai-publicar-com-proposito.mp4.asset.json';
+import contentPoster from '@/assets/designoai-publicar-com-proposito-poster.jpg.asset.json';
 
 const featureIcons = [Pen, Image, Target, Globe, BarChart3, Sparkles];
 const typeIcons = [FileText, Pen, Camera, Video];
@@ -65,6 +68,13 @@ const CriacaoConteudo = () => {
           </div>
         </div>
       </section>
+
+      <ServiceVideoSection
+        id="publicar-com-proposito"
+        translationKey="subpages.criacaoConteudo.video"
+        src={contentVideo.url}
+        poster={contentPoster.url}
+      />
 
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
