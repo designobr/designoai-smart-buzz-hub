@@ -1,7 +1,8 @@
 # Roadmap
 
-- [ ] Incluir vídeo original no AI SDR, seção de atendimento 24h e textos em quatro idiomas.
-- [ ] Verificar reprodução, WhatsApp e apresentação no celular e desktop.
+- [x] Incluir vídeo original no AI SDR, seção de atendimento 24h e textos em quatro idiomas.
+- [x] Verificar disponibilidade pública do vídeo, WhatsApp e apresentação no celular e desktop.
+- [ ] Confirmar reprodução em navegador com suporte H.264: navegador automatizado não possui o codec necessário.
 
 - [x] Auditar imagens, cards, rotas, WhatsApp, traduções e depoimentos existentes.
 - [x] Integrar a logo oficial enviada nas camadas editoriais, sem substituir fotografias.
