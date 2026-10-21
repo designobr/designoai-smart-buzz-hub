@@ -1,11 +1,13 @@
 # Roadmap
 
-- [ ] Analisar os dois vídeos e incluí-los em Criação de Conteúdo e Gestão de Redes Sociais com textos em quatro idiomas.
-- [ ] Validar vídeos, capas, links e apresentação em celular e desktop.
+- [x] Analisar os dois vídeos e incluí-los em Criação de Conteúdo e Gestão de Redes Sociais com textos em quatro idiomas.
+- [x] Validar vídeos, capas, links e apresentação em celular e desktop.
+- [x] Incluir vídeo de animação 2D do AI SDR na página AI SDR (seção "Veja na prática") com textos em quatro idiomas.
+- [x] Validar vídeo, capa, fallback webm, links e apresentação em celular e desktop (CDN responde 206 video/mp4).
 
 - [x] Incluir vídeo original no AI SDR, seção de atendimento 24h e textos em quatro idiomas.
 - [x] Verificar disponibilidade pública do vídeo, WhatsApp e apresentação no celular e desktop.
-- [ ] Confirmar reprodução em navegador com suporte H.264: navegador automatizado não possui o codec necessário.
+- [ ] Confirmar reprodução em navegador com suporte H.264: navegador automatizado não possui o codec necessário (arquivos servidos corretamente pela CDN).
 
 - [x] Auditar imagens, cards, rotas, WhatsApp, traduções e depoimentos existentes.
 - [x] Integrar a logo oficial enviada nas camadas editoriais, sem substituir fotografias.

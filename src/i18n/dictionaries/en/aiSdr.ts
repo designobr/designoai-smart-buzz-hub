@@ -49,6 +49,15 @@ const aiSdr = {
       { title: 'Qualified Traffic', text: 'Artificial Intelligence brings in companies ready to talk, not just curious visitors.' },
     ],
   },
+  video: {
+    badge: 'See it in action',
+    title: 'What the AI SDR does for your business.',
+    description: 'Watch: while you are busy, the AI answers on behalf of your company, clarifies questions, shares prices and still finds qualified opportunities. With instant attention, everyone wins.',
+    cta: 'I want to discover how it works',
+    whatsappMessage: 'Hi! I want to discover how DesignoAI\'s AI SDR works.',
+    videoLabel: 'DesignoAI animation presenting the AI SDR',
+    caption: 'Animation with text in Portuguese.',
+  },
   attendance: {
     badge: 'Customer service automation',
     title: '24-hour customer service powered by AI.',

@@ -49,6 +49,15 @@ const aiSdr = {
       { title: 'Tráfego Qualificado', text: 'A Inteligência Artificial traz empresas prontas para conversar, não curiosos.' },
     ],
   },
+  video: {
+    badge: 'Veja na prática',
+    title: 'O que o AI SDR faz pelo seu negócio.',
+    description: 'Assista: enquanto você está ocupado, a IA responde no lugar da sua empresa, esclarece dúvidas, informa preços e ainda encontra oportunidades qualificadas. Com atendimento imediato, todo mundo ganha.',
+    cta: 'Quero descobrir como funciona',
+    whatsappMessage: 'Olá! Quero descobrir como funciona o AI SDR da DesignoAI.',
+    videoLabel: 'Animação DesignoAI apresentando o AI SDR',
+    caption: 'Animação com texto em português.',
+  },
   attendance: {
     badge: 'Automação de atendimento',
     title: 'Atendimento 24h com inteligência artificial.',
