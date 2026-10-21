@@ -9,7 +9,7 @@ import { useI18n } from '@/i18n/I18nProvider';
 import atendimentoVideo from '@/assets/designoai-atendimento-24h.mp4.asset.json';
 import aiSdrVideo from '@/assets/designoai-ai-sdr-2d.mp4.asset.json';
 import aiSdrVideoWebm from '@/assets/designoai-ai-sdr-2d.webm.asset.json';
-import aiSdrVideoPoster from '@/assets/designoai-ai-sdr-2d-poster.jpg.asset.json';
+import aiSdrVideoPoster from '@/assets/designoai-ai-sdr-capa.png.asset.json';
 
 const FloatingParticle = ({ delay, x, y, size }: { delay: number; x: string; y: string; size: number }) => (
   <motion.div
