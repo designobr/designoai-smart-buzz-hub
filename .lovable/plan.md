@@ -41,7 +41,7 @@ Regras de acesso: `active` libera; `past_due` suspende a geração e a publicaç
 - `subscriptions`: adicionar `price_cents`, `currency` e `contracted_limits` (cópia dos limites e créditos do plano no momento da contratação), além de `billing_type`, `next_due_date`, `last_payment_at`; reaproveitar `provider='asaas'` e `provider_subscription_id`.
 - Nova `billing_payments`: id Asaas, assinatura, valor, forma, status, vencimento, data de pagamento, links de fatura/boleto/Pix. Cliente apenas lê os da própria empresa.
 - Nova `billing_webhook_events`: id do evento Asaas único, tipo, payload, processado em. Somente serviço.
-- Nova `subscription_changes`: alteração de valor ou limites de um contrato ativo. Campos: valores antigo e novo, motivo, admin que pediu, data de aviso ao cliente, data de vigência, status (`proposed`, `notified`, `authorized`, `applied`, `canceled`) e quem autorizou. Somente admin e serviço.
+- Nova `subscription_changes`: alteração de valor ou limites de um contrato ativo. Campos: valores antigo e novo, motivo, admin que pediu, data de aviso ao cliente, data de vigência, status (`proposed`, `notified`, `accepted`, `authorized`, `applied`, `rejected`, `canceled`), quem autorizou e a data de concordância do cliente. Somente admin e serviço.
 - Função `company_has_active_access(company)` usada pelas políticas e pelas funções de geração.
 - Tabela `orders` e demais tabelas permanecem intactas.
 
@@ -51,6 +51,17 @@ Regras de acesso: `active` libera; `past_due` suspende a geração e a publicaç
 - Editar um plano no admin não altera nenhuma assinatura existente.
 - Para mudar um contrato ativo, o admin cria uma proposta de alteração. O cliente é avisado no painel e por e-mail, com a data em que passa a valer. Um admin autoriza explicitamente.
 - Só então `asaas-apply-subscription-change` atualiza o valor no Asaas (sem alterar cobranças já geradas) e grava a mudança no histórico.
+
+## Regras de segurança dos pagamentos
+
+- **Primeira cobrança:** a assinatura nasce `pending`. Criar a assinatura não libera nada; só um pagamento confirmado libera.
+- **Cada cobrança é um registro próprio** em `billing_payments`: id Asaas único, valor, vencimento, status, forma de pagamento e vínculo com assinatura e empresa.
+- **Validação antes de liberar:** o webhook reconsulta a cobrança na API do Asaas e confere o id, se o valor bate com o `price_cents` contratado, se a assinatura é a mesma e se o cliente Asaas é o da empresa. Se algo não bater, nada é liberado: o evento fica como `rejected` e aparece para o admin.
+- **Idempotência:** o id do evento é único em `billing_webhook_events`, e o lançamento de crédito é único por (pagamento, motivo) em `credit_ledger`. Eventos repetidos são ignorados.
+- **Estorno e chargeback:** `PAYMENT_REFUNDED` e `PAYMENT_CHARGEBACK_*` registram o evento e lançam um débito dos créditos não usados daquele pagamento. Se o saldo ficar negativo, novas gerações são bloqueadas e a assinatura vai para `suspended` até a regularização.
+- **Cancelamento:** fica `canceled` com `cancel_at_period_end`; o acesso continua até `current_period_end` e só então é encerrado (verificado em `company_has_active_access`).
+- **Mudanças contratuais:** a autorização do admin não basta. A proposta só vira `applied` depois do aviso ao cliente, da concordância dele registrada no painel (data, usuário) e da data de vigência. Se o cliente recusar, o contrato atual continua.
+- **Auditoria:** nova `billing_audit_log` (somente acréscimos, nunca editada) com quem, quando, ação, antes e depois para: alterações de plano pelo admin, cobranças, créditos, cancelamentos, estornos e mudanças contratuais.
 
 ## Painel do cliente
 
@@ -74,6 +85,7 @@ O Asaas oferece Pix Automático por autorização recorrente, mas a disponibilid
 2. Edge functions + publicação do webhook (para você já ter a URL).
 3. Pedido dos segredos e configuração do webhook no Asaas Sandbox.
 4. Telas de assinatura e histórico.
+Ao fim de cada etapa: relatório de testes e limitações antes de seguir.
 5. Teste real no Sandbox: assinar, pagar pelo simulador do Asaas e conferir a liberação via webhook.
 
 Produção fica bloqueada: com `ASAAS_ENV=sandbox` as funções só falam com sandbox.asaas.com. A troca para produção só acontece com sua aprovação.
