@@ -35,7 +35,7 @@ Regras de acesso: `active` libera; `past_due` suspende a geração e a publicaç
 
 ## Alterações no banco (somente acréscimos)
 
-- `plans`: adicionar `price_cents` e `currency` (os limites atuais continuam iguais).
+- `plans`: adicionar `price_cents` e `currency`. Hoje não há nenhum plano cadastrado; serão criados Start (9700), Professional (19700) e Premium (39700), todos em BRL. Preço, limites e créditos ficam editáveis na tela de planos do admin, sem mudar código. A cobrança sempre lê o preço atual do banco; ao alterar um preço, assinaturas existentes são atualizadas no Asaas pelo admin.
 - `companies`: adicionar `billing_document` (CPF/CNPJ), `asaas_customer_id`.
 - `subscriptions`: adicionar `billing_type`, `next_due_date`, `last_payment_at`; reaproveitar `provider='asaas'` e `provider_subscription_id`.
 - Nova `billing_payments`: id Asaas, assinatura, valor, forma, status, vencimento, data de pagamento, links de fatura/boleto/Pix. Cliente apenas lê os da própria empresa.
@@ -67,4 +67,4 @@ O Asaas oferece Pix Automático por autorização recorrente, mas a disponibilid
 4. Telas de assinatura e histórico.
 5. Teste real no Sandbox: assinar, pagar pelo simulador do Asaas e conferir a liberação via webhook.
 
-Preciso que você informe os preços mensais de cada plano antes do teste.
+Produção fica bloqueada: com `ASAAS_ENV=sandbox` as funções só falam com sandbox.asaas.com. A troca para produção só acontece com sua aprovação.
