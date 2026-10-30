@@ -32,3 +32,6 @@
 - [ ] Integração Asaas: assinaturas, webhooks, acesso e créditos (aguardando aprovação do plano)
 - [ ] Preços iniciais Start R$97, Professional R$197, Premium R$397 em BRL, editáveis pelo admin
 - [ ] Assinaturas preservam preço/limites/créditos contratados; mudança só por ação admin registrada, aviso prévio e autorização
+- [ ] Cancelamento mantém acesso até current_period_end; cada cobrança com id/valor/vencimento/status próprios
+- [ ] Validação de consistência do webhook; estornos/chargebacks; idempotência de eventos e créditos
+- [ ] Concordância do cliente em mudanças contratuais; auditoria completa; relatório de testes entre etapas
