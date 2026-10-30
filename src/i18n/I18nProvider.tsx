@@ -87,6 +87,8 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
   // otherwise fall back to the browser languages. Never runs on prefixed URLs.
   useEffect(() => {
     if (hasPrefix) return;
+    // The client platform (/app, /auth, /admin) is not localized by URL.
+    if (/^\/(app|auth|admin)(\/|$)/.test(location.pathname)) return;
     const stored = readStoredLocale();
     const target = stored || detectBrowserLocale();
     if (target === DEFAULT_LOCALE) return;
