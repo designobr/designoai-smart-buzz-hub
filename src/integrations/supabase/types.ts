@@ -14,6 +14,160 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_log: {
+        Row: {
+          action: string
+          company_id: string | null
+          created_at: string
+          details: Json
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          company_id?: string | null
+          created_at?: string
+          details?: Json
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          company_id?: string | null
+          created_at?: string
+          details?: Json
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_log_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      automation_jobs: {
+        Row: {
+          attempts: number
+          company_id: string
+          created_at: string
+          error: string | null
+          finished_at: string | null
+          id: string
+          job_type: string
+          payload: Json
+          result: Json | null
+          run_after: string
+          started_at: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          attempts?: number
+          company_id: string
+          created_at?: string
+          error?: string | null
+          finished_at?: string | null
+          id?: string
+          job_type: string
+          payload?: Json
+          result?: Json | null
+          run_after?: string
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          attempts?: number
+          company_id?: string
+          created_at?: string
+          error?: string | null
+          finished_at?: string | null
+          id?: string
+          job_type?: string
+          payload?: Json
+          result?: Json | null
+          run_after?: string
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "automation_jobs_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      companies: {
+        Row: {
+          brand_colors: string[]
+          communication_preferences: string | null
+          created_at: string
+          description: string | null
+          differentials: string | null
+          id: string
+          logo_url: string | null
+          name: string
+          owner_id: string
+          products_services: string | null
+          publishing_mode: string
+          segment: string | null
+          site_analysis: Json | null
+          social_links: Json
+          status: string
+          target_audience: string | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          brand_colors?: string[]
+          communication_preferences?: string | null
+          created_at?: string
+          description?: string | null
+          differentials?: string | null
+          id?: string
+          logo_url?: string | null
+          name: string
+          owner_id: string
+          products_services?: string | null
+          publishing_mode?: string
+          segment?: string | null
+          site_analysis?: Json | null
+          social_links?: Json
+          status?: string
+          target_audience?: string | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          brand_colors?: string[]
+          communication_preferences?: string | null
+          created_at?: string
+          description?: string | null
+          differentials?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          owner_id?: string
+          products_services?: string | null
+          publishing_mode?: string
+          segment?: string | null
+          site_analysis?: Json | null
+          social_links?: Json
+          status?: string
+          target_audience?: string | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       contact_requests: {
         Row: {
           budget: string | null
@@ -46,6 +200,187 @@ export type Database = {
           phone?: string | null
         }
         Relationships: []
+      }
+      contents: {
+        Row: {
+          approved_at: string | null
+          caption: string | null
+          company_id: string
+          created_at: string
+          due_at: string | null
+          editorial_item_id: string | null
+          file_url: string | null
+          format: string
+          hashtags: string[]
+          id: string
+          network: string | null
+          preview_url: string | null
+          published_at: string | null
+          published_url: string | null
+          status: string
+          title: string | null
+          updated_at: string
+          version: number
+          versions: Json
+        }
+        Insert: {
+          approved_at?: string | null
+          caption?: string | null
+          company_id: string
+          created_at?: string
+          due_at?: string | null
+          editorial_item_id?: string | null
+          file_url?: string | null
+          format: string
+          hashtags?: string[]
+          id?: string
+          network?: string | null
+          preview_url?: string | null
+          published_at?: string | null
+          published_url?: string | null
+          status?: string
+          title?: string | null
+          updated_at?: string
+          version?: number
+          versions?: Json
+        }
+        Update: {
+          approved_at?: string | null
+          caption?: string | null
+          company_id?: string
+          created_at?: string
+          due_at?: string | null
+          editorial_item_id?: string | null
+          file_url?: string | null
+          format?: string
+          hashtags?: string[]
+          id?: string
+          network?: string | null
+          preview_url?: string | null
+          published_at?: string | null
+          published_url?: string | null
+          status?: string
+          title?: string | null
+          updated_at?: string
+          version?: number
+          versions?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contents_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contents_editorial_item_id_fkey"
+            columns: ["editorial_item_id"]
+            isOneToOne: false
+            referencedRelation: "editorial_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      credit_ledger: {
+        Row: {
+          amount: number
+          company_id: string
+          created_at: string
+          id: string
+          reason: string
+          reference_id: string | null
+        }
+        Insert: {
+          amount: number
+          company_id: string
+          created_at?: string
+          id?: string
+          reason: string
+          reference_id?: string | null
+        }
+        Update: {
+          amount?: number
+          company_id?: string
+          created_at?: string
+          id?: string
+          reason?: string
+          reference_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "credit_ledger_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      editorial_items: {
+        Row: {
+          caption: string | null
+          company_id: string
+          created_at: string
+          cta: string | null
+          format: string
+          hashtags: string[]
+          id: string
+          network: string | null
+          objective: string | null
+          pillar: string | null
+          plan_month: string
+          scheduled_for: string | null
+          script: string | null
+          status: string
+          theme: string
+          updated_at: string
+        }
+        Insert: {
+          caption?: string | null
+          company_id: string
+          created_at?: string
+          cta?: string | null
+          format: string
+          hashtags?: string[]
+          id?: string
+          network?: string | null
+          objective?: string | null
+          pillar?: string | null
+          plan_month: string
+          scheduled_for?: string | null
+          script?: string | null
+          status?: string
+          theme: string
+          updated_at?: string
+        }
+        Update: {
+          caption?: string | null
+          company_id?: string
+          created_at?: string
+          cta?: string | null
+          format?: string
+          hashtags?: string[]
+          id?: string
+          network?: string | null
+          objective?: string | null
+          pillar?: string | null
+          plan_month?: string
+          scheduled_for?: string | null
+          script?: string | null
+          status?: string
+          theme?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "editorial_items_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       orders: {
         Row: {
@@ -107,15 +442,228 @@ export type Database = {
         }
         Relationships: []
       }
+      plans: {
+        Row: {
+          allowed_networks: string[]
+          created_at: string
+          description: string | null
+          features: Json
+          generation_limit: number
+          id: string
+          is_active: boolean
+          monthly_carousels: number
+          monthly_credits: number
+          monthly_static: number
+          monthly_videos: number
+          name: string
+          posts_per_week: number
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          allowed_networks?: string[]
+          created_at?: string
+          description?: string | null
+          features?: Json
+          generation_limit?: number
+          id?: string
+          is_active?: boolean
+          monthly_carousels?: number
+          monthly_credits?: number
+          monthly_static?: number
+          monthly_videos?: number
+          name: string
+          posts_per_week?: number
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          allowed_networks?: string[]
+          created_at?: string
+          description?: string | null
+          features?: Json
+          generation_limit?: number
+          id?: string
+          is_active?: boolean
+          monthly_carousels?: number
+          monthly_credits?: number
+          monthly_static?: number
+          monthly_videos?: number
+          name?: string
+          posts_per_week?: number
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      social_accounts: {
+        Row: {
+          account_name: string | null
+          company_id: string
+          connected_at: string | null
+          created_at: string
+          external_account_id: string | null
+          id: string
+          last_error: string | null
+          platform: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          account_name?: string | null
+          company_id: string
+          connected_at?: string | null
+          created_at?: string
+          external_account_id?: string | null
+          id?: string
+          last_error?: string | null
+          platform: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          account_name?: string | null
+          company_id?: string
+          connected_at?: string | null
+          created_at?: string
+          external_account_id?: string | null
+          id?: string
+          last_error?: string | null
+          platform?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "social_accounts_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscriptions: {
+        Row: {
+          cancel_at_period_end: boolean
+          company_id: string
+          created_at: string
+          current_period_end: string | null
+          current_period_start: string | null
+          id: string
+          plan_id: string | null
+          provider: string | null
+          provider_subscription_id: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          cancel_at_period_end?: boolean
+          company_id: string
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          plan_id?: string | null
+          provider?: string | null
+          provider_subscription_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          cancel_at_period_end?: boolean
+          company_id?: string
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          plan_id?: string | null
+          provider?: string | null
+          provider_subscription_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscriptions_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      owns_company: { Args: { _company: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -242,6 +790,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
