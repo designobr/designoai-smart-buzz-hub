@@ -22,7 +22,8 @@ Asaas -> asaas-webhook (token verificado)
 1. **asaas-create-subscription**: usuário logado; valida plano e forma de pagamento; cria cliente Asaas (CPF/CNPJ obrigatório) e assinatura `cycle=MONTHLY`; retorna a URL da primeira cobrança.
 2. **asaas-webhook**: público; exige o header `asaas-access-token` igual ao segredo salvo; grava cada evento uma única vez; atualiza tudo com permissão de serviço.
 3. **asaas-manage-subscription**: usuário logado; cancela ou troca de plano/forma de pagamento no Asaas. O status local só muda quando o webhook correspondente chega.
-4. **asaas-sync-payments** (opcional, admin): reconsulta a API do Asaas para corrigir eventos perdidos.
+4. **asaas-apply-subscription-change**: somente admin; aplica no Asaas e no banco uma alteração já autorizada e com aviso prévio enviado.
+5. **asaas-sync-payments** (opcional, admin): reconsulta a API do Asaas para corrigir eventos perdidos.
 
 Um módulo `_shared/asaas.ts` centraliza a chamada à API (URL sandbox ou produção pelo segredo de ambiente).
 
@@ -35,13 +36,21 @@ Regras de acesso: `active` libera; `past_due` suspende a geração e a publicaç
 
 ## Alterações no banco (somente acréscimos)
 
-- `plans`: adicionar `price_cents` e `currency`. Hoje não há nenhum plano cadastrado; serão criados Start (9700), Professional (19700) e Premium (39700), todos em BRL. Preço, limites e créditos ficam editáveis na tela de planos do admin, sem mudar código. A cobrança sempre lê o preço atual do banco; ao alterar um preço, assinaturas existentes são atualizadas no Asaas pelo admin.
+- `plans`: adicionar `price_cents` e `currency`. Hoje não há nenhum plano cadastrado; serão criados Start (9700), Professional (19700) e Premium (39700), todos em BRL. Preço, limites e créditos ficam editáveis na tela de planos do admin, sem mudar código. O preço do plano vale apenas para novas assinaturas.
 - `companies`: adicionar `billing_document` (CPF/CNPJ), `asaas_customer_id`.
-- `subscriptions`: adicionar `billing_type`, `next_due_date`, `last_payment_at`; reaproveitar `provider='asaas'` e `provider_subscription_id`.
+- `subscriptions`: adicionar `price_cents`, `currency` e `contracted_limits` (cópia dos limites e créditos do plano no momento da contratação), além de `billing_type`, `next_due_date`, `last_payment_at`; reaproveitar `provider='asaas'` e `provider_subscription_id`.
 - Nova `billing_payments`: id Asaas, assinatura, valor, forma, status, vencimento, data de pagamento, links de fatura/boleto/Pix. Cliente apenas lê os da própria empresa.
 - Nova `billing_webhook_events`: id do evento Asaas único, tipo, payload, processado em. Somente serviço.
+- Nova `subscription_changes`: alteração de valor ou limites de um contrato ativo. Campos: valores antigo e novo, motivo, admin que pediu, data de aviso ao cliente, data de vigência, status (`proposed`, `notified`, `authorized`, `applied`, `canceled`) e quem autorizou. Somente admin e serviço.
 - Função `company_has_active_access(company)` usada pelas políticas e pelas funções de geração.
 - Tabela `orders` e demais tabelas permanecem intactas.
+
+## Proteção dos contratos ativos
+
+- Ao assinar, preço, limites e créditos do plano são copiados para a assinatura. Créditos mensais e limites sempre vêm dessa cópia, nunca do plano atual.
+- Editar um plano no admin não altera nenhuma assinatura existente.
+- Para mudar um contrato ativo, o admin cria uma proposta de alteração. O cliente é avisado no painel e por e-mail, com a data em que passa a valer. Um admin autoriza explicitamente.
+- Só então `asaas-apply-subscription-change` atualiza o valor no Asaas (sem alterar cobranças já geradas) e grava a mudança no histórico.
 
 ## Painel do cliente
 
