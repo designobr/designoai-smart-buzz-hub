@@ -87,7 +87,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <I18nProvider>
+          <AuthProvider><I18nProvider>
             <Routes>
               {localizedRoutes}
               <Route path="/auth/login" element={<LoginPage />} />
@@ -107,7 +107,7 @@ const App = () => (
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </I18nProvider>
+          </I18nProvider></AuthProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
