@@ -67,7 +67,14 @@ async function handlePayment(db: any, event: string, paymentId: string, fetchAsa
 
   // Confirmed payment: validate amount, then grant access and credits once.
   if ((event === "PAYMENT_CONFIRMED" || event === "PAYMENT_RECEIVED") && PAID.has(p.status)) {
-    if (valueCents !== sub.price_cents) {
+    let amountOk = valueCents === sub.price_cents;
+    if (!amountOk && p.dateCreated) {
+      // A charge generated before an authorized price change keeps the old contracted value.
+      const { data: prior } = await db.from("subscription_changes").select("id").eq("subscription_id", sub.id)
+        .eq("status", "applied").eq("old_price_cents", valueCents).gte("applied_at", p.dateCreated).limit(1);
+      amountOk = !!prior?.length;
+    }
+    if (!amountOk) {
       await db.from("billing_payments").update({ validation_error: `value ${valueCents} != contracted ${sub.price_cents}` }).eq("id", saved.id);
       return { status: "rejected", error: "amount mismatch" };
     }

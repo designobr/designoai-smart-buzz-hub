@@ -73,6 +73,7 @@ Deno.serve(async (req) => {
 
   // apply
   if (change.status !== "authorized" || !change.customer_response_at) return json({ error: "Alteração precisa estar aceita pelo cliente e autorizada." }, 409);
+  if (change.effective_date > new Date().toISOString().slice(0, 10)) return json({ error: "A data de vigência ainda não chegou." }, 409);
   const { data: sub } = await db.from("subscriptions").select("*").eq("id", change.subscription_id).single();
   try {
     if (change.new_price_cents !== sub.price_cents) {
