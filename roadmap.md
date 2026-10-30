@@ -31,3 +31,4 @@
 ## Asaas (Sandbox)
 - [ ] Integração Asaas: assinaturas, webhooks, acesso e créditos (aguardando aprovação do plano)
 - [ ] Preços iniciais Start R$97, Professional R$197, Premium R$397 em BRL, editáveis pelo admin
+- [ ] Assinaturas preservam preço/limites/créditos contratados; mudança só por ação admin registrada, aviso prévio e autorização
