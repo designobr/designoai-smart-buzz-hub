@@ -18,3 +18,12 @@
 - [x] Validar home e Studio em celular e desktop, cliques, traduções e diagnósticos.
 - [x] Evoluir somente os seis cards de serviços da Home com imagens existentes, textos sobrepostos, ícones e destinos preservados.
 - [x] Validar os seis cards em celular e desktop, incluindo proporções, links, rolagem horizontal, compilação e console.
+
+## DesignoAI Social Automation
+- [x] Etapa 1: banco com isolamento por cliente, login/cadastro/recuperação de senha, painel, empresa e marca, planejamento (lista/calendário), produção, redes sociais, assinatura, admin (clientes e planos)
+- [ ] Definir primeiro administrador (aguarda e-mail do usuário)
+- [ ] Gateway de pagamento + webhooks (aguarda escolha do gateway)
+- [ ] IA: análise de site e planejamento (aguarda chave Anthropic)
+- [ ] Narração ElevenLabs, geração de imagem/vídeo (aguarda chaves)
+- [ ] Conexões oficiais Instagram/Facebook/YouTube/Threads/TikTok ou Buffer (aguarda credenciais)
+- [ ] Executor da fila de tarefas em segundo plano
