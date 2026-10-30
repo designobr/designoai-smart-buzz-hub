@@ -27,3 +27,7 @@
 - [ ] Narração ElevenLabs, geração de imagem/vídeo (aguarda chaves)
 - [ ] Conexões oficiais Instagram/Facebook/YouTube/Threads/TikTok ou Buffer (aguarda credenciais)
 - [ ] Executor da fila de tarefas em segundo plano
+
+## Asaas (Sandbox)
+- [ ] Integração Asaas: assinaturas, webhooks, acesso e créditos (aguardando aprovação do plano)
+- [ ] Preços iniciais Start R$97, Professional R$197, Premium R$397 em BRL, editáveis pelo admin
