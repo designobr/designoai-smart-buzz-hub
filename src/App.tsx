@@ -33,6 +33,12 @@ import Studio from "./pages/Studio";
 import SitesIA from "./pages/SitesIA";
 import AiSdr from "./pages/AiSdr";
 
+import { AuthProvider } from "./platform/AuthProvider";
+import { RequireAuth } from "./platform/AppLayout";
+import { LoginPage, SignupPage, ForgotPasswordPage, ResetPasswordPage } from "./platform/AuthPages";
+import { DashboardPage, CompanyPage, PlanningPage, ProductionPage, ConnectionsPage, BillingPage } from "./platform/AppPages";
+import { AdminPage } from "./platform/AdminPages";
+
 const queryClient = new QueryClient();
 
 const COMPONENTS: Record<PageKey, ComponentType> = {
@@ -84,6 +90,21 @@ const App = () => (
           <I18nProvider>
             <Routes>
               {localizedRoutes}
+              <Route path="/auth/login" element={<LoginPage />} />
+              <Route path="/auth/cadastro" element={<SignupPage />} />
+              <Route path="/auth/recuperar-senha" element={<ForgotPasswordPage />} />
+              <Route path="/auth/nova-senha" element={<ResetPasswordPage />} />
+              <Route path="/app" element={<RequireAuth />}>
+                <Route index element={<DashboardPage />} />
+                <Route path="empresa" element={<CompanyPage />} />
+                <Route path="planejamento" element={<PlanningPage />} />
+                <Route path="producao" element={<ProductionPage />} />
+                <Route path="conexoes" element={<ConnectionsPage />} />
+                <Route path="assinatura" element={<BillingPage />} />
+              </Route>
+              <Route path="/admin" element={<RequireAuth admin />}>
+                <Route index element={<AdminPage />} />
+              </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
           </I18nProvider>
