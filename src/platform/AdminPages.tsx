@@ -17,7 +17,7 @@ const NUM = [
 function PlansAdmin() {
   const qc = useQueryClient();
   const plans = useQuery({ queryKey: ['admin-plans'], queryFn: async () => (await supabase.from('plans').select('*').order('sort_order')).data || [] });
-  const empty = { name: '', slug: '', description: '', ...Object.fromEntries(NUM.map(([k]) => [k, '0'])) } as Record<string, string>;
+  const empty = { name: '', slug: '', description: '', price: '0', ...Object.fromEntries(NUM.map(([k]) => [k, '0'])) } as Record<string, string>;
   const [form, setForm] = useState<Record<string, string>>(empty);
   const [nets, setNets] = useState<string[]>([]);
   const [editing, setEditing] = useState<string | null>(null);
@@ -25,7 +25,9 @@ function PlansAdmin() {
   const save = async (e: FormEvent) => {
     e.preventDefault();
     if (!form.name.trim() || !/^[a-z0-9-]+$/.test(form.slug)) return toast.error('Informe nome e um identificador (letras minúsculas, números e hífen).');
-    const payload: any = { name: form.name.trim(), slug: form.slug, description: form.description || null, allowed_networks: nets,
+    const priceCents = Math.round(parseFloat((form.price || '0').replace(',', '.')) * 100);
+    if (!Number.isFinite(priceCents) || priceCents < 0) return toast.error('Preço inválido.');
+    const payload: any = { name: form.name.trim(), slug: form.slug, description: form.description || null, allowed_networks: nets, price_cents: priceCents, currency: 'BRL',
       ...Object.fromEntries(NUM.map(([k]) => [k, Math.max(0, parseInt(form[k] || '0', 10) || 0)])) };
     const res = editing ? await supabase.from('plans').update(payload).eq('id', editing) : await supabase.from('plans').insert(payload);
     if (res.error) return toast.error(res.error.message);
@@ -46,10 +48,11 @@ function PlansAdmin() {
             <div className="flex flex-wrap justify-between gap-2">
               <p className="font-medium text-foreground">{p.name} <span className="text-xs text-muted-foreground">({p.slug})</span></p>
               <div className="flex gap-2">
-                <Button size="sm" variant="outline" className="rounded-full" onClick={() => { setEditing(p.id); setNets(p.allowed_networks || []); setForm({ name: p.name, slug: p.slug, description: p.description || '', ...Object.fromEntries(NUM.map(([k]) => [k, String(p[k])])) }); }}>Editar</Button>
+                <Button size="sm" variant="outline" className="rounded-full" onClick={() => { setEditing(p.id); setNets(p.allowed_networks || []); setForm({ name: p.name, slug: p.slug, description: p.description || '', price: ((p.price_cents || 0) / 100).toFixed(2), ...Object.fromEntries(NUM.map(([k]) => [k, String(p[k])])) }); }}>Editar</Button>
                 <Button size="sm" variant="ghost" className="rounded-full" onClick={() => toggleActive(p)}>{p.is_active ? 'Desativar' : 'Ativar'}</Button>
               </div>
             </div>
+            <p className="mt-2 text-sm text-foreground">{((p.price_cents || 0) / 100).toLocaleString('pt-BR', { style: 'currency', currency: p.currency || 'BRL' })} por mês</p>
             <p className="mt-2 text-xs text-muted-foreground">{NUM.map(([k, l]) => `${l}: ${p[k]}`).join(' · ')}</p>
             <p className="mt-1 text-xs text-muted-foreground">Redes: {(p.allowed_networks || []).join(', ') || 'nenhuma'}</p>
           </Panel>
@@ -61,6 +64,8 @@ function PlansAdmin() {
           {[['name', 'Nome'], ['slug', 'Identificador'], ['description', 'Descrição']].map(([k, l]) => (
             <div key={k} className="space-y-1.5"><Label htmlFor={k}>{l}</Label><Input id={k} className="rounded-xl" value={form[k]} onChange={(e) => setForm({ ...form, [k]: e.target.value })} maxLength={300} /></div>
           ))}
+          <div className="space-y-1.5"><Label htmlFor="price">Preço mensal (R$)</Label><Input id="price" inputMode="decimal" className="rounded-xl" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} /></div>
+          <p className="text-xs text-muted-foreground">Preço, limites e créditos valem só para novas assinaturas. Contratos ativos mantêm os valores contratados.</p>
           <div className="grid grid-cols-2 gap-3">
             {NUM.map(([k, l]) => <div key={k} className="space-y-1.5"><Label htmlFor={k} className="text-xs">{l}</Label><Input id={k} type="number" min={0} className="rounded-xl" value={form[k]} onChange={(e) => setForm({ ...form, [k]: e.target.value })} /></div>)}
           </div>

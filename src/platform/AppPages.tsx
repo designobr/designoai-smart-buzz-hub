@@ -328,33 +328,166 @@ export function ConnectionsPage() {
 }
 
 /* ---------------- Subscription ---------------- */
+const brl = (cents?: number | null, cur = 'BRL') => ((cents || 0) / 100).toLocaleString('pt-BR', { style: 'currency', currency: cur });
+const PAY_LABEL: Record<string, string> = {
+  PENDING: 'Aguardando pagamento', RECEIVED: 'Pago', CONFIRMED: 'Confirmado', RECEIVED_IN_CASH: 'Pago', OVERDUE: 'Vencido',
+  REFUNDED: 'Estornado', REFUND_REQUESTED: 'Estorno solicitado', CHARGEBACK_REQUESTED: 'Contestação', CHARGEBACK_DISPUTE: 'Contestação em disputa',
+  AWAITING_CHARGEBACK_REVERSAL: 'Contestação em análise', DELETED: 'Removida',
+};
+const METHOD_LABEL: Record<string, string> = { CREDIT_CARD: 'Cartão de crédito', PIX: 'Pix', BOLETO: 'Boleto', UNDEFINED: 'A escolher' };
+const day = (d?: string | null) => (d ? format(new Date(d.length === 10 ? `${d}T12:00:00` : d), 'dd/MM/yyyy') : '');
+
+async function callFn(name: string, body: unknown) {
+  const { data, error } = await supabase.functions.invoke(name, { body });
+  if (error) {
+    let msg = error.message;
+    try { const ctx = await (error as any).context?.json?.(); if (ctx?.error) msg = typeof ctx.error === 'string' ? ctx.error : 'Dados inválidos.'; } catch { /* keep message */ }
+    throw new Error(msg);
+  }
+  return data;
+}
+
 export function BillingPage() {
+  const qc = useQueryClient();
   const { data: company } = useCompany();
   const subs = useCompanyRows<any>('subscriptions', company?.id);
+  const ledger = useCompanyRows<any>('credit_ledger', company?.id);
   const plans = useQuery({ queryKey: ['plans'], queryFn: async () => (await supabase.from('plans').select('*').eq('is_active', true).order('sort_order')).data || [] });
-  const sub = subs.data?.[0];
+  const payments = useQuery({
+    queryKey: ['billing_payments', company?.id], enabled: !!company?.id,
+    queryFn: async () => (await supabase.from('billing_payments').select('*').eq('company_id', company!.id).order('due_date', { ascending: false })).data || [],
+  });
+  const changes = useQuery({
+    queryKey: ['subscription_changes', company?.id], enabled: !!company?.id,
+    queryFn: async () => (await supabase.from('subscription_changes').select('*').eq('company_id', company!.id).eq('status', 'notified')).data || [],
+  });
+  const [plan, setPlan] = useState<string | null>(null);
+  const [method, setMethod] = useState<'PIX' | 'BOLETO' | 'CREDIT_CARD'>('PIX');
+  const [doc, setDoc] = useState('');
+  const [busy, setBusy] = useState(false);
+
+  if (!company) return <NeedsCompany />;
+  const sub = (subs.data || []).find((s) => ['pending', 'active', 'past_due', 'suspended'].includes(s.status)) || subs.data?.[0];
+  const open = sub && ['pending', 'active', 'past_due', 'suspended'].includes(sub.status);
+  const balance = creditBalance(ledger.data || []);
+  const refresh = () => ['subscriptions', 'billing_payments', 'credit_ledger', 'subscription_changes'].forEach((k) => qc.invalidateQueries({ queryKey: [k] }));
+
+  const subscribe = async (e: FormEvent) => {
+    e.preventDefault();
+    const digits = doc.replace(/\D/g, '');
+    if (!plan) return toast.error('Escolha um plano.');
+    if (digits.length !== 11 && digits.length !== 14) return toast.error('Informe um CPF ou CNPJ válido.');
+    setBusy(true);
+    try {
+      const res = await callFn('asaas-create-subscription', { plan_slug: plan, billing_type: method, cpf_cnpj: digits });
+      toast.success('Assinatura criada. O acesso é liberado assim que o pagamento for confirmado.');
+      if (res?.invoice_url) window.open(res.invoice_url, '_blank', 'noopener');
+      refresh();
+    } catch (err: any) { toast.error(err.message); } finally { setBusy(false); }
+  };
+  const manage = async (body: any, ok?: string) => {
+    setBusy(true);
+    try {
+      const res = await callFn('asaas-manage-subscription', body);
+      if (res?.invoice_url) window.open(res.invoice_url, '_blank', 'noopener');
+      else if (body.action === 'pending_invoice') toast.message('Nenhuma cobrança em aberto.');
+      if (ok) toast.success(res?.message || ok);
+      refresh();
+    } catch (err: any) { toast.error(err.message); } finally { setBusy(false); }
+  };
+  const respond = async (id: string, accept: boolean) => {
+    const { error } = await supabase.rpc('respond_subscription_change' as any, { _change: id, _accept: accept });
+    if (error) return toast.error(error.message);
+    toast.success(accept ? 'Concordância registrada.' : 'Recusa registrada. Seu contrato atual continua.');
+    refresh();
+  };
+
   return (
     <>
-      <PageHeader title="Assinatura" description="Gerencie seu plano. Pagamentos serão confirmados automaticamente pelo gateway." />
-      <Panel className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <div><p className="text-xs text-muted-foreground">Status atual</p><p className="mt-1 font-medium text-foreground">{sub ? STATUS_LABEL[sub.status] || sub.status : 'Nenhuma assinatura ativa'}</p></div>
-        <PendingBadge>Gateway de pagamento pendente</PendingBadge>
-      </Panel>
-      {!(plans.data || []).length ? <EmptyState title="Nenhum plano publicado" text="Os planos serão exibidos aqui assim que forem configurados pela DesignoAI." /> : (
-        <div className="grid gap-4 md:grid-cols-3">
-          {plans.data!.map((p: any) => (
-            <Panel key={p.id}>
-              <p className="font-medium text-foreground">{p.name}</p>
-              {p.description && <p className="mt-1 text-sm text-muted-foreground">{p.description}</p>}
-              <ul className="mt-4 space-y-1 text-sm text-foreground">
-                <li>{p.monthly_videos} vídeos por mês</li><li>{p.monthly_carousels} carrosséis por mês</li>
-                <li>{p.posts_per_week} publicações por semana</li><li>{p.monthly_credits} créditos</li>
-              </ul>
-              <Button asChild variant="outline" className="mt-6 w-full rounded-full"><a href="https://wa.me/5511947968158" target="_blank" rel="noreferrer">Falar com a DesignoAI</a></Button>
-            </Panel>
-          ))}
-        </div>
+      <PageHeader title="Assinatura" description="Pagamentos processados pelo Asaas. O acesso é liberado apenas após a confirmação do pagamento." />
+      {sub?.environment === 'sandbox' && <p className="mb-4 text-xs text-muted-foreground">Ambiente de testes: nenhuma cobrança real é feita.</p>}
+
+      {(changes.data || []).map((c: any) => (
+        <Panel key={c.id} className="mb-6">
+          <p className="font-medium text-foreground">Proposta de alteração do seu contrato</p>
+          <p className="mt-2 text-sm text-muted-foreground">{c.reason}</p>
+          <p className="mt-2 text-sm text-foreground">Mensalidade: {brl(c.old_price_cents)} para {brl(c.new_price_cents)} · a partir de {day(c.effective_date)}</p>
+          <div className="mt-4 flex gap-2">
+            <Button className="rounded-full" onClick={() => respond(c.id, true)}>Concordo</Button>
+            <Button variant="outline" className="rounded-full" onClick={() => respond(c.id, false)}>Não concordo</Button>
+          </div>
+        </Panel>
+      ))}
+
+      {open ? (
+        <Panel className="mb-6">
+          <div className="grid gap-4 sm:grid-cols-4">
+            <div><p className="text-xs text-muted-foreground">Plano</p><p className="mt-1 font-medium text-foreground">{sub.contracted_limits?.plan_name}</p></div>
+            <div><p className="text-xs text-muted-foreground">Status</p><p className="mt-1 font-medium text-foreground">{STATUS_LABEL[sub.status] || sub.status}</p></div>
+            <div><p className="text-xs text-muted-foreground">Mensalidade contratada</p><p className="mt-1 font-medium text-foreground">{brl(sub.price_cents, sub.currency)}</p></div>
+            <div><p className="text-xs text-muted-foreground">Créditos disponíveis</p><p className="mt-1 font-medium text-foreground">{balance}</p></div>
+          </div>
+          {sub.current_period_end && <p className="mt-4 text-sm text-muted-foreground">Período pago até {day(sub.current_period_end)}{sub.billing_type ? ` · ${METHOD_LABEL[sub.billing_type] || sub.billing_type}` : ''}</p>}
+          {sub.status === 'pending' && <p className="mt-4 text-sm text-foreground">Aguardando a confirmação do primeiro pagamento.</p>}
+          {sub.status === 'past_due' && <p className="mt-4 text-sm text-foreground">Há uma cobrança vencida. A produção fica pausada até o pagamento.</p>}
+          {sub.status === 'suspended' && <p className="mt-4 text-sm text-foreground">Assinatura suspensa por estorno ou contestação. Fale com a DesignoAI.</p>}
+          <div className="mt-6 flex flex-wrap gap-2">
+            <Button className="rounded-full" disabled={busy} onClick={() => manage({ action: 'pending_invoice' })}>Pagar cobrança em aberto</Button>
+            <select aria-label="Forma de pagamento" className="rounded-full border border-border bg-background px-4 text-sm" disabled={busy}
+              value={sub.billing_type || ''} onChange={(e) => manage({ action: 'change_billing_type', billing_type: e.target.value }, 'Forma de pagamento alterada.')}>
+              {['PIX', 'BOLETO', 'CREDIT_CARD'].map((m) => <option key={m} value={m}>{METHOD_LABEL[m]}</option>)}
+            </select>
+            <Button variant="ghost" className="rounded-full" disabled={busy}
+              onClick={() => { if (confirm('Cancelar a assinatura? O acesso continua até o fim do período pago.')) manage({ action: 'cancel' }, 'Cancelamento solicitado.'); }}>Cancelar assinatura</Button>
+          </div>
+        </Panel>
+      ) : (
+        <form onSubmit={subscribe} className="mb-6">
+          {sub?.status === 'canceled' && sub.current_period_end && new Date(sub.current_period_end) > new Date() &&
+            <p className="mb-4 text-sm text-foreground">Assinatura cancelada. Seu acesso continua até {day(sub.current_period_end)}.</p>}
+          <div className="grid gap-4 md:grid-cols-3">
+            {(plans.data || []).map((p: any) => (
+              <button type="button" key={p.id} onClick={() => setPlan(p.slug)} className="text-left">
+                <Panel className={plan === p.slug ? 'border-foreground' : ''}>
+                  <p className="font-medium text-foreground">{p.name}</p>
+                  <p className="mt-2 text-2xl font-semibold text-foreground">{brl(p.price_cents, p.currency)}<span className="text-sm font-normal text-muted-foreground">/mês</span></p>
+                  {p.description && <p className="mt-1 text-sm text-muted-foreground">{p.description}</p>}
+                  <ul className="mt-4 space-y-1 text-sm text-foreground">
+                    <li>{p.monthly_videos} vídeos por mês</li><li>{p.monthly_carousels} carrosséis por mês</li>
+                    <li>{p.monthly_static} posts estáticos por mês</li><li>{p.posts_per_week} publicações por semana</li><li>{p.monthly_credits} créditos por mês</li>
+                  </ul>
+                </Panel>
+              </button>
+            ))}
+          </div>
+          <Panel className="mt-4 grid gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
+            <div className="space-y-1.5"><Label htmlFor="doc">CPF ou CNPJ</Label><Input id="doc" className="rounded-xl" inputMode="numeric" value={doc} onChange={(e) => setDoc(e.target.value)} maxLength={18} /></div>
+            <div className="space-y-1.5"><Label htmlFor="method">Forma de pagamento</Label>
+              <select id="method" className="h-10 w-full rounded-xl border border-border bg-background px-3 text-sm" value={method} onChange={(e) => setMethod(e.target.value as any)}>
+                {['PIX', 'BOLETO', 'CREDIT_CARD'].map((m) => <option key={m} value={m}>{METHOD_LABEL[m]}</option>)}
+              </select></div>
+            <Button type="submit" className="rounded-full" disabled={busy || !plan}>Assinar</Button>
+          </Panel>
+        </form>
       )}
+
+      <Panel>
+        <p className="font-medium text-foreground">Histórico de cobranças</p>
+        {(payments.data || []).length ? (
+          <div className="mt-4 overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead><tr className="text-left text-xs text-muted-foreground"><th className="py-2 pr-4 font-normal">Vencimento</th><th className="py-2 pr-4 font-normal">Valor</th><th className="py-2 pr-4 font-normal">Forma</th><th className="py-2 pr-4 font-normal">Status</th><th className="py-2 font-normal">Fatura</th></tr></thead>
+              <tbody className="divide-y divide-border">
+                {payments.data!.map((p: any) => (
+                  <tr key={p.id}><td className="py-3 pr-4 text-foreground">{day(p.due_date)}</td><td className="py-3 pr-4 text-foreground">{brl(p.value_cents)}</td>
+                    <td className="py-3 pr-4 text-foreground">{METHOD_LABEL[p.billing_type] || p.billing_type}</td><td className="py-3 pr-4 text-foreground">{PAY_LABEL[p.status] || p.status}</td>
+                    <td className="py-3">{p.invoice_url && <a href={p.invoice_url} target="_blank" rel="noreferrer" className="underline text-foreground">Abrir</a>}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : <p className="mt-3 text-sm text-muted-foreground">Nenhuma cobrança registrada ainda.</p>}
+      </Panel>
     </>
   );
 }
