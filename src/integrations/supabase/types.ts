@@ -105,8 +105,166 @@ export type Database = {
           },
         ]
       }
+      billing_audit_log: {
+        Row: {
+          action: string
+          actor_id: string | null
+          actor_type: string
+          after: Json | null
+          before: Json | null
+          company_id: string | null
+          created_at: string
+          entity: string
+          entity_id: string | null
+          id: string
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          actor_type?: string
+          after?: Json | null
+          before?: Json | null
+          company_id?: string | null
+          created_at?: string
+          entity: string
+          entity_id?: string | null
+          id?: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          actor_type?: string
+          after?: Json | null
+          before?: Json | null
+          company_id?: string | null
+          created_at?: string
+          entity?: string
+          entity_id?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
+      billing_payments: {
+        Row: {
+          asaas_payment_id: string
+          asaas_subscription_id: string | null
+          bank_slip_url: string | null
+          billing_type: string | null
+          company_id: string
+          created_at: string
+          credits_granted: number
+          due_date: string | null
+          environment: string
+          id: string
+          invoice_url: string | null
+          net_value_cents: number | null
+          paid_at: string | null
+          refunded_at: string | null
+          status: string
+          subscription_id: string | null
+          updated_at: string
+          validation_error: string | null
+          value_cents: number
+        }
+        Insert: {
+          asaas_payment_id: string
+          asaas_subscription_id?: string | null
+          bank_slip_url?: string | null
+          billing_type?: string | null
+          company_id: string
+          created_at?: string
+          credits_granted?: number
+          due_date?: string | null
+          environment?: string
+          id?: string
+          invoice_url?: string | null
+          net_value_cents?: number | null
+          paid_at?: string | null
+          refunded_at?: string | null
+          status: string
+          subscription_id?: string | null
+          updated_at?: string
+          validation_error?: string | null
+          value_cents: number
+        }
+        Update: {
+          asaas_payment_id?: string
+          asaas_subscription_id?: string | null
+          bank_slip_url?: string | null
+          billing_type?: string | null
+          company_id?: string
+          created_at?: string
+          credits_granted?: number
+          due_date?: string | null
+          environment?: string
+          id?: string
+          invoice_url?: string | null
+          net_value_cents?: number | null
+          paid_at?: string | null
+          refunded_at?: string | null
+          status?: string
+          subscription_id?: string | null
+          updated_at?: string
+          validation_error?: string | null
+          value_cents?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "billing_payments_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "billing_payments_subscription_id_fkey"
+            columns: ["subscription_id"]
+            isOneToOne: false
+            referencedRelation: "subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      billing_webhook_events: {
+        Row: {
+          created_at: string
+          error: string | null
+          event_id: string
+          event_type: string
+          id: string
+          payload: Json
+          processed_at: string | null
+          provider: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          error?: string | null
+          event_id: string
+          event_type: string
+          id?: string
+          payload: Json
+          processed_at?: string | null
+          provider?: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          error?: string | null
+          event_id?: string
+          event_type?: string
+          id?: string
+          payload?: Json
+          processed_at?: string | null
+          provider?: string
+          status?: string
+        }
+        Relationships: []
+      }
       companies: {
         Row: {
+          asaas_customer_id: string | null
+          billing_document: string | null
           brand_colors: string[]
           communication_preferences: string | null
           created_at: string
@@ -127,6 +285,8 @@ export type Database = {
           website: string | null
         }
         Insert: {
+          asaas_customer_id?: string | null
+          billing_document?: string | null
           brand_colors?: string[]
           communication_preferences?: string | null
           created_at?: string
@@ -147,6 +307,8 @@ export type Database = {
           website?: string | null
         }
         Update: {
+          asaas_customer_id?: string | null
+          billing_document?: string | null
           brand_colors?: string[]
           communication_preferences?: string | null
           created_at?: string
@@ -446,6 +608,7 @@ export type Database = {
         Row: {
           allowed_networks: string[]
           created_at: string
+          currency: string
           description: string | null
           features: Json
           generation_limit: number
@@ -457,6 +620,7 @@ export type Database = {
           monthly_videos: number
           name: string
           posts_per_week: number
+          price_cents: number
           slug: string
           sort_order: number
           updated_at: string
@@ -464,6 +628,7 @@ export type Database = {
         Insert: {
           allowed_networks?: string[]
           created_at?: string
+          currency?: string
           description?: string | null
           features?: Json
           generation_limit?: number
@@ -475,6 +640,7 @@ export type Database = {
           monthly_videos?: number
           name: string
           posts_per_week?: number
+          price_cents?: number
           slug: string
           sort_order?: number
           updated_at?: string
@@ -482,6 +648,7 @@ export type Database = {
         Update: {
           allowed_networks?: string[]
           created_at?: string
+          currency?: string
           description?: string | null
           features?: Json
           generation_limit?: number
@@ -493,6 +660,7 @@ export type Database = {
           monthly_videos?: number
           name?: string
           posts_per_week?: number
+          price_cents?: number
           slug?: string
           sort_order?: number
           updated_at?: string
@@ -570,41 +738,146 @@ export type Database = {
           },
         ]
       }
-      subscriptions: {
+      subscription_changes: {
         Row: {
-          cancel_at_period_end: boolean
+          applied_at: string | null
+          authorized_at: string | null
+          authorized_by: string | null
           company_id: string
           created_at: string
+          customer_response_at: string | null
+          customer_response_by: string | null
+          effective_date: string
+          id: string
+          new_limits: Json | null
+          new_price_cents: number | null
+          notified_at: string | null
+          old_limits: Json | null
+          old_price_cents: number | null
+          reason: string
+          requested_by: string
+          status: string
+          subscription_id: string
+          updated_at: string
+        }
+        Insert: {
+          applied_at?: string | null
+          authorized_at?: string | null
+          authorized_by?: string | null
+          company_id: string
+          created_at?: string
+          customer_response_at?: string | null
+          customer_response_by?: string | null
+          effective_date: string
+          id?: string
+          new_limits?: Json | null
+          new_price_cents?: number | null
+          notified_at?: string | null
+          old_limits?: Json | null
+          old_price_cents?: number | null
+          reason: string
+          requested_by: string
+          status?: string
+          subscription_id: string
+          updated_at?: string
+        }
+        Update: {
+          applied_at?: string | null
+          authorized_at?: string | null
+          authorized_by?: string | null
+          company_id?: string
+          created_at?: string
+          customer_response_at?: string | null
+          customer_response_by?: string | null
+          effective_date?: string
+          id?: string
+          new_limits?: Json | null
+          new_price_cents?: number | null
+          notified_at?: string | null
+          old_limits?: Json | null
+          old_price_cents?: number | null
+          reason?: string
+          requested_by?: string
+          status?: string
+          subscription_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscription_changes_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscription_changes_subscription_id_fkey"
+            columns: ["subscription_id"]
+            isOneToOne: false
+            referencedRelation: "subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscriptions: {
+        Row: {
+          billing_type: string | null
+          cancel_at_period_end: boolean
+          canceled_at: string | null
+          company_id: string
+          contracted_limits: Json
+          created_at: string
+          currency: string
           current_period_end: string | null
           current_period_start: string | null
+          environment: string
           id: string
+          last_payment_at: string | null
+          next_due_date: string | null
           plan_id: string | null
+          price_cents: number | null
           provider: string | null
           provider_subscription_id: string | null
           status: string
           updated_at: string
         }
         Insert: {
+          billing_type?: string | null
           cancel_at_period_end?: boolean
+          canceled_at?: string | null
           company_id: string
+          contracted_limits?: Json
           created_at?: string
+          currency?: string
           current_period_end?: string | null
           current_period_start?: string | null
+          environment?: string
           id?: string
+          last_payment_at?: string | null
+          next_due_date?: string | null
           plan_id?: string | null
+          price_cents?: number | null
           provider?: string | null
           provider_subscription_id?: string | null
           status?: string
           updated_at?: string
         }
         Update: {
+          billing_type?: string | null
           cancel_at_period_end?: boolean
+          canceled_at?: string | null
           company_id?: string
+          contracted_limits?: Json
           created_at?: string
+          currency?: string
           current_period_end?: string | null
           current_period_start?: string | null
+          environment?: string
           id?: string
+          last_payment_at?: string | null
+          next_due_date?: string | null
           plan_id?: string | null
+          price_cents?: number | null
           provider?: string | null
           provider_subscription_id?: string | null
           status?: string
@@ -653,6 +926,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      company_has_active_access: {
+        Args: { _company: string }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -661,6 +938,10 @@ export type Database = {
         Returns: boolean
       }
       owns_company: { Args: { _company: string }; Returns: boolean }
+      respond_subscription_change: {
+        Args: { _accept: boolean; _change: string }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "user"
