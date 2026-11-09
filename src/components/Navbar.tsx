@@ -22,6 +22,10 @@ const anchors = [
   { hash: '#contact', key: 'nav.anchors.contact' },
 ];
 
+// Caminho relativo: resolve para https://designoai.com.br/app/login em produção
+// e continua válido quando a plataforma for servida via proxy reverso.
+const LOGIN_PATH = '/app/login';
+
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -85,6 +89,13 @@ const Navbar = () => {
 
           <div className="hidden items-center gap-2 lg:flex">
             <LanguageSwitcher />
+            <a
+              href={LOGIN_PATH}
+              aria-label={t('nav.aria.login')}
+              className="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-pill px-5 text-sm font-semibold tracking-[-0.01em] text-muted-foreground transition-all duration-[220ms] ease-out hover:text-foreground"
+            >
+              {t('nav.login')}
+            </a>
             <ActionButton variant="quiet" size="sm" onClick={openWhatsApp}>
               {t('common.cta.talkToConsultant')}
             </ActionButton>
@@ -142,6 +153,14 @@ const Navbar = () => {
                 <ActionButton variant="secondary" onClick={openWhatsApp}>
                   {t('common.cta.talkToConsultant')}
                 </ActionButton>
+                <a
+                  href={LOGIN_PATH}
+                  aria-label={t('nav.aria.login')}
+                  onClick={() => setOpen(false)}
+                  className="inline-flex h-14 items-center justify-center gap-2 whitespace-nowrap rounded-pill border border-border bg-background px-7 text-[15px] font-semibold tracking-[-0.01em] text-foreground transition-all duration-[220ms] ease-out hover:-translate-y-0.5 hover:border-foreground/30"
+                >
+                  {t('nav.login')}
+                </a>
               </div>
             </div>
           </motion.div>
