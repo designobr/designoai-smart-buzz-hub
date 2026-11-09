@@ -11,10 +11,12 @@ const nav = {
     pricing: 'Planos',
     contact: 'Contato',
   },
+  login: 'Entrar',
   aria: {
     openMenu: 'Abrir menu',
     closeMenu: 'Fechar menu',
     home: 'DesignoAI, ir para a página inicial',
+    login: 'Entrar na plataforma DesignoAI',
   },
 };
 
