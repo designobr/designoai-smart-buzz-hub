@@ -90,6 +90,7 @@ const App = () => (
           <AuthProvider><I18nProvider>
             <Routes>
               {localizedRoutes}
+              <Route path="/app/login" element={<LoginPage />} />
               <Route path="/auth/login" element={<LoginPage />} />
               <Route path="/auth/cadastro" element={<SignupPage />} />
               <Route path="/auth/recuperar-senha" element={<ForgotPasswordPage />} />
