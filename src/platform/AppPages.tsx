@@ -1,493 +1,546 @@
-import { useEffect, useMemo, useState, type FormEvent } from 'react';
-import { Link } from 'react-router-dom';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+// Telas do cliente em /app. Todos os dados vêm da API v1 do motor (src/platform/motor.ts); nada é lido direto de tabelas.
+import { useEffect, useState, type FormEvent } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { useAuth } from './AuthProvider';
-import { useCompany } from './useCompany';
-import { EmptyState, PageHeader, Panel, PendingBadge } from './AppLayout';
-import { NETWORKS, STATUS_LABEL, creditBalance } from './domain';
+import { useMotor } from './useCompany';
+import { EmptyState, PageHeader, Panel } from './AppLayout';
+import {
+  api, enviarImagem, enviarVideo, reais, REDES, type AssinaturaApi, type Conta, type Conteudo, type Consumo, type Item, type Negocio, type Planejamento, type Rede,
+} from './motor';
 
-const fmt = (d?: string | null) => (d ? format(new Date(d), "dd 'de' MMM, HH:mm", { locale: ptBR }) : '');
+const dia = (d?: string | null) => (d ? format(new Date(`${d.slice(0, 10)}T12:00:00`), "dd 'de' MMM", { locale: ptBR }) : '');
+const quando = (d?: string | null) => (d ? format(new Date(d), 'dd/MM/yyyy', { locale: ptBR }) : '');
+const nomeRede = (k: string) => REDES.find((r) => r.key === k)?.label ?? k;
 
-function useCompanyRows<T>(table: 'editorial_items' | 'contents' | 'social_accounts' | 'subscriptions' | 'credit_ledger' | 'activity_log' | 'automation_jobs', companyId?: string, order = 'created_at') {
-  return useQuery({
-    queryKey: [table, companyId],
-    enabled: !!companyId,
-    queryFn: async () => {
-      const { data, error } = await supabase.from(table).select('*').eq('company_id', companyId!).order(order, { ascending: false }).limit(500);
-      if (error) throw error;
-      return data as unknown as T[];
-    },
-  });
-}
+export const ESTADO_ROTULO: Record<string, string> = {
+  planejado: 'Planejado', em_producao: 'Em produção', aguardando_creditos: 'Aguardando créditos', aguardando_midia: 'Aguardando mídia',
+  aguardando_aprovacao: 'Aguardando aprovação', alteracao_solicitada: 'Alteração solicitada', aprovado: 'Aprovado', agendado: 'Agendado',
+  publicado: 'Publicado', falhou: 'Falhou', cancelado: 'Cancelado',
+  ativa: 'Ativa', pendente: 'Pendente', inadimplente: 'Inadimplente', cancelada: 'Cancelada', suspensa: 'Suspensa',
+};
+const rotulo = (e: string) => ESTADO_ROTULO[e] ?? e;
 
-function NeedsCompany() {
-  return (
-    <EmptyState title="Cadastre sua empresa primeiro" text="Precisamos conhecer seu negócio, site e marca para gerar o planejamento e os conteúdos." />
-  );
-}
-
-/* ---------------- Dashboard ---------------- */
-export function DashboardPage() {
-  const { data: company, isLoading } = useCompany();
-  const id = company?.id;
-  const contents = useCompanyRows<any>('contents', id);
-  const editorial = useCompanyRows<any>('editorial_items', id);
-  const subs = useCompanyRows<any>('subscriptions', id);
-  const ledger = useCompanyRows<any>('credit_ledger', id);
-  const activity = useCompanyRows<any>('activity_log', id);
-  const jobs = useCompanyRows<any>('automation_jobs', id);
-
-  if (isLoading) return null;
-  if (!company) return (
-    <>
-      <PageHeader title="Bem-vindo à DesignoAI" description="Vamos começar pelo cadastro da sua empresa." />
-      <Button asChild className="rounded-full"><Link to="/app/empresa">Cadastrar empresa</Link></Button>
-    </>
-  );
-
-  const c = contents.data || [];
-  const sub = subs.data?.[0];
-  const upcoming = (editorial.data || []).filter((e) => e.scheduled_for && new Date(e.scheduled_for) > new Date())
-    .sort((a, b) => a.scheduled_for.localeCompare(b.scheduled_for)).slice(0, 5);
-  const stats = [
-    { k: 'Plano', v: sub ? STATUS_LABEL[sub.status] || sub.status : 'Sem assinatura' },
-    { k: 'Créditos disponíveis', v: creditBalance(ledger.data || []) },
-    { k: 'Conteúdos produzidos', v: c.filter((x) => ['ready', 'approved', 'scheduled', 'published'].includes(x.status)).length },
-    { k: 'Publicados', v: c.filter((x) => x.status === 'published').length },
-  ];
-
-  return (
-    <>
-      <PageHeader title={company.name} description="Visão geral da sua operação de conteúdo." />
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {stats.map((s) => (
-          <Panel key={s.k}><p className="text-xs text-muted-foreground">{s.k}</p><p className="mt-2 text-2xl font-semibold text-foreground">{s.v}</p></Panel>
-        ))}
-      </div>
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <Panel>
-          <h2 className="font-medium text-foreground">Próximas publicações</h2>
-          {upcoming.length ? (
-            <ul className="mt-4 divide-y divide-border">
-              {upcoming.map((u) => <li key={u.id} className="py-3 text-sm flex justify-between gap-4"><span className="text-foreground">{u.theme}</span><span className="text-muted-foreground whitespace-nowrap">{fmt(u.scheduled_for)}</span></li>)}
-            </ul>
-          ) : <p className="mt-3 text-sm text-muted-foreground">Nenhuma publicação agendada ainda.</p>}
-        </Panel>
-        <Panel>
-          <h2 className="font-medium text-foreground">Tarefas da automação</h2>
-          {(jobs.data || []).length ? (
-            <ul className="mt-4 divide-y divide-border">
-              {jobs.data!.slice(0, 6).map((j) => <li key={j.id} className="py-3 text-sm flex justify-between"><span className="text-foreground">{j.job_type}</span><span className="text-muted-foreground">{STATUS_LABEL[j.status] || j.status}</span></li>)}
-            </ul>
-          ) : <p className="mt-3 text-sm text-muted-foreground">Nenhuma tarefa em andamento.</p>}
-        </Panel>
-        <Panel className="lg:col-span-2">
-          <h2 className="font-medium text-foreground">Histórico de atividades</h2>
-          {(activity.data || []).length ? (
-            <ul className="mt-4 divide-y divide-border">
-              {activity.data!.slice(0, 10).map((a) => <li key={a.id} className="py-3 text-sm flex justify-between gap-4"><span className="text-foreground">{a.action}</span><span className="text-muted-foreground">{fmt(a.created_at)}</span></li>)}
-            </ul>
-          ) : <p className="mt-3 text-sm text-muted-foreground">Sem atividades registradas.</p>}
-        </Panel>
-      </div>
-    </>
-  );
-}
-
-/* ---------------- Company & brand ---------------- */
-const FIELDS: { key: string; label: string; long?: boolean; required?: boolean; placeholder?: string }[] = [
-  { key: 'name', label: 'Nome da empresa', required: true },
-  { key: 'website', label: 'Site oficial', placeholder: 'https://' },
-  { key: 'segment', label: 'Segmento' },
-  { key: 'description', label: 'Descrição do negócio', long: true },
-  { key: 'target_audience', label: 'Público-alvo (se souber)', long: true },
-  { key: 'products_services', label: 'Produtos e serviços', long: true },
-  { key: 'differentials', label: 'Diferenciais', long: true },
-  { key: 'communication_preferences', label: 'Preferências de comunicação', long: true, placeholder: 'Tom de voz, palavras a evitar, estilo...' },
-  { key: 'logo_url', label: 'Link do logotipo', placeholder: 'https://' },
+const GRUPOS = [
+  { titulo: 'Aguardando a sua aprovação', estados: ['aguardando_aprovacao'] },
+  { titulo: 'Alteração em andamento', estados: ['alteracao_solicitada'] },
+  { titulo: 'Em produção', estados: ['planejado', 'em_producao', 'aguardando_midia', 'aguardando_creditos'] },
+  { titulo: 'Aprovados e agendados', estados: ['aprovado', 'agendado'] },
+  { titulo: 'Publicados', estados: ['publicado'] },
+  { titulo: 'Com problema ou cancelados', estados: ['falhou', 'cancelado'] },
 ];
 
+function Carregando({ erro }: { erro?: Error | null }) {
+  return erro ? <p role="alert" className="text-sm text-destructive">{erro.message}</p> : <p className="text-sm text-muted-foreground">Carregando…</p>;
+}
+
+function AvisoAgente({ estado }: { estado?: { agenteAtivo: boolean; provedor: string } }) {
+  if (!estado || (estado.agenteAtivo && estado.provedor !== 'desligado')) return null;
+  return (
+    <p className="mb-6 rounded-xl border border-border bg-background px-4 py-3 text-sm text-muted-foreground">
+      A geração automática de textos ainda não está ligada nesta plataforma. Você pode cadastrar a empresa e ver o planejamento, mas os conteúdos só são produzidos depois que a administração ativar o agente.
+    </p>
+  );
+}
+
+/* ---------------- Painel ---------------- */
+export function DashboardPage() {
+  const { org } = useAuth();
+  const consumo = useMotor<Consumo>('/consumo');
+  const plano = useMotor<Planejamento>('/planejamento');
+  const contas = useMotor<Conta[]>('/contas');
+  const negocio = useMotor<{ negocio: Negocio | null }>('/negocio');
+  const pubs = useMotor<{ id: string; rede: string; status: string; agendadaPara: string; publicadoEm: string | null; url: string | null; erro: string | null }[]>('/publicacoes');
+  const avisos = useMotor<{ id: number; mensagem: string; criadaEm: string | null; lida: boolean }[]>('/notificacoes');
+
+  if (negocio.isLoading) return null;
+  const semEmpresa = !negocio.data?.negocio;
+  const itens = plano.data?.itens ?? [];
+  const aprovar = itens.filter((i) => i.estado === 'aguardando_aprovacao').length;
+  const proximos = itens.filter((i) => ['aprovado', 'agendado', 'planejado'].includes(i.estado) && i.dataPrevista >= (plano.data?.hoje ?? '')).slice(0, 5);
+  return (
+    <>
+      <PageHeader title={`Olá${org ? `, ${org.nome}` : ''}`} description="Resumo do seu planejamento, créditos e redes conectadas." />
+      <AvisoAgente estado={consumo.data?.estado} />
+      {semEmpresa && (
+        <Panel className="mb-6">
+          <p className="font-medium">Cadastre sua empresa</p>
+          <p className="mt-1 text-sm text-muted-foreground">Precisamos conhecer o seu negócio para gerar o planejamento e os conteúdos.</p>
+          <Button asChild className="mt-4 rounded-full"><Link to="/app/empresa">Cadastrar empresa</Link></Button>
+        </Panel>
+      )}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Panel><p className="text-xs text-muted-foreground">Créditos disponíveis</p><p className="mt-1 text-2xl font-semibold">{consumo.data?.creditos.disponivel ?? '–'}</p></Panel>
+        <Panel><p className="text-xs text-muted-foreground">Aguardando sua aprovação</p><p className="mt-1 text-2xl font-semibold">{aprovar}</p></Panel>
+        <Panel><p className="text-xs text-muted-foreground">Peças no mês</p><p className="mt-1 text-2xl font-semibold">{itens.length}</p></Panel>
+        <Panel><p className="text-xs text-muted-foreground">Redes conectadas</p><p className="mt-1 text-2xl font-semibold">{(contas.data ?? []).filter((c) => c.status === 'conectada').length}</p></Panel>
+      </div>
+      <Panel className="mt-6">
+        <h2 className="font-medium">Próximas publicações</h2>
+        {proximos.length === 0 ? <p className="mt-2 text-sm text-muted-foreground">Nada previsto por enquanto.</p> : (
+          <ul className="mt-3 divide-y divide-border text-sm">
+            {proximos.map((i) => <li key={i.id} className="flex justify-between gap-3 py-2"><span>{dia(i.dataPrevista)} · {nomeRede(i.rede)} · {i.tema}</span><span className="text-muted-foreground">{rotulo(i.estado)}</span></li>)}
+          </ul>
+        )}
+      </Panel>
+      <div className="mt-6 grid gap-4 lg:grid-cols-2">
+        <Panel>
+          <h2 className="font-medium">Publicações recentes</h2>
+          {(pubs.data ?? []).length === 0 ? <p className="mt-2 text-sm text-muted-foreground">Nenhuma publicação ainda.</p> : (
+            <ul className="mt-3 divide-y divide-border text-sm">
+              {(pubs.data ?? []).slice(0, 8).map((p) => (
+                <li key={p.id} className="flex flex-wrap justify-between gap-2 py-2">
+                  <span>{nomeRede(p.rede)} · {quando(p.publicadoEm ?? p.agendadaPara)}{p.url ? <> · <a href={p.url} target="_blank" rel="noreferrer" className="underline underline-offset-4">ver</a></> : null}</span>
+                  <span className={p.status === 'falhou' ? 'text-destructive' : 'text-muted-foreground'}>{PUB_ROTULO[p.status] ?? p.status}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Panel>
+        <Panel>
+          <h2 className="font-medium">Avisos</h2>
+          {(avisos.data ?? []).length === 0 ? <p className="mt-2 text-sm text-muted-foreground">Nenhum aviso.</p> : (
+            <ul className="mt-3 divide-y divide-border text-sm">
+              {(avisos.data ?? []).slice(0, 8).map((a) => <li key={a.id} className="py-2"><span className={a.lida ? 'text-muted-foreground' : ''}>{a.mensagem}</span>{a.criadaEm ? <span className="ml-2 text-xs text-muted-foreground">{quando(a.criadaEm)}</span> : null}</li>)}
+            </ul>
+          )}
+        </Panel>
+      </div>
+    </>
+  );
+}
+
+const PUB_ROTULO: Record<string, string> = { agendada: 'Agendada', em_execucao: 'Publicando', publicada: 'Publicada', falhou: 'Falhou', cancelada: 'Cancelada', pendente_reconciliacao: 'Em verificação' };
+
+/* ---------------- Empresa e marca ---------------- */
+const lista = (t: string) => t.split(/[\n,;]+/).map((s) => s.trim()).filter(Boolean);
+const texto = (l?: string[]) => (l ?? []).join('\n');
+
 export function CompanyPage() {
-  const { user } = useAuth();
+  const { orgId } = useAuth();
   const qc = useQueryClient();
-  const { data: company, isLoading } = useCompany();
-  const [form, setForm] = useState<Record<string, string>>({});
-  const [colors, setColors] = useState('');
-  const [mode, setMode] = useState('assisted');
+  const q = useMotor<{ negocio: Negocio | null; versao: number | null }>('/negocio');
+  const [f, setF] = useState({ nomeFantasia: '', segmento: '', descricao: '', publicoAlvo: '', tomDeVoz: '', siteUrl: '', observacoes: '', objetivos: '', diferenciais: '', produtos: '', regioes: '', palavrasEvitar: '' });
+  const [redes, setRedes] = useState<Rede[]>([]);
+  const [freq, setFreq] = useState<Partial<Record<Rede, string>>>({});
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    if (!company) return;
-    const f: Record<string, string> = {};
-    FIELDS.forEach(({ key }) => (f[key] = (company as any)[key] || ''));
-    setForm(f); setColors((company.brand_colors || []).join(', ')); setMode(company.publishing_mode);
-  }, [company]);
+    const n = q.data?.negocio; if (!n) return;
+    setF({ nomeFantasia: n.nomeFantasia, segmento: n.segmento, descricao: n.descricao, publicoAlvo: n.publicoAlvo, tomDeVoz: n.tomDeVoz, siteUrl: n.siteUrl, observacoes: n.observacoes,
+      objetivos: texto(n.objetivos), diferenciais: texto(n.diferenciais), produtos: texto(n.produtos), regioes: texto(n.regioes), palavrasEvitar: texto(n.palavrasEvitar) });
+    setRedes(n.redes);
+    setFreq(Object.fromEntries(Object.entries(n.frequenciaSemanal).map(([k, v]) => [k, String(v)])));
+  }, [q.data]);
 
-  const submit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!form.name?.trim()) return toast.error('Informe o nome da empresa.');
-    if (form.website && !/^https?:\/\/.+\..+/.test(form.website)) return toast.error('Informe o site com https://');
-    setBusy(true);
-    const payload: any = { ...Object.fromEntries(FIELDS.map(({ key }) => [key, (form[key] || '').trim().slice(0, 4000) || null])),
-      brand_colors: colors.split(',').map((c) => c.trim()).filter((c) => /^#[0-9a-fA-F]{3,8}$/.test(c)), publishing_mode: mode };
-    const res = company
-      ? await supabase.from('companies').update(payload).eq('id', company.id)
-      : await supabase.from('companies').insert({ ...payload, owner_id: user!.id });
-    setBusy(false);
-    if (res.error) return toast.error(res.error.message);
-    toast.success('Dados salvos.');
-    qc.invalidateQueries({ queryKey: ['company'] });
+  const set = (k: keyof typeof f) => (e: { target: { value: string } }) => setF((p) => ({ ...p, [k]: e.target.value }));
+  const alternar = (r: Rede) => setRedes((p) => (p.includes(r) ? p.filter((x) => x !== r) : [...p, r]));
+
+  const salvar = async (e: FormEvent) => {
+    e.preventDefault(); setBusy(true);
+    const dados = {
+      nomeFantasia: f.nomeFantasia, segmento: f.segmento, descricao: f.descricao, publicoAlvo: f.publicoAlvo, tomDeVoz: f.tomDeVoz, siteUrl: f.siteUrl, observacoes: f.observacoes,
+      objetivos: lista(f.objetivos), diferenciais: lista(f.diferenciais), produtos: lista(f.produtos), regioes: lista(f.regioes), palavrasEvitar: lista(f.palavrasEvitar),
+      redes, frequenciaSemanal: Object.fromEntries(redes.filter((r) => freq[r] !== undefined && freq[r] !== '').map((r) => [r, Number(freq[r])])),
+    };
+    try {
+      await api('/negocio', { method: 'PUT', org: orgId, body: { dados, versao: q.data?.versao ?? null } });
+      await qc.invalidateQueries({ queryKey: ['motor', orgId] });
+      toast.success('Empresa salva.');
+    } catch (err) { toast.error((err as Error).message); } finally { setBusy(false); }
   };
 
-  if (isLoading) return null;
+  if (q.isLoading || q.error) return <Carregando erro={q.error as Error | null} />;
   return (
     <>
-      <PageHeader title="Empresa e marca" description="Essas informações orientam a IA no planejamento e na criação dos conteúdos." />
-      <form onSubmit={submit} className="space-y-6 max-w-3xl">
-        <Panel className="grid gap-5 sm:grid-cols-2">
-          {FIELDS.map((f) => (
-            <div key={f.key} className={f.long ? 'sm:col-span-2 space-y-2' : 'space-y-2'}>
-              <Label htmlFor={f.key}>{f.label}</Label>
-              {f.long
-                ? <Textarea id={f.key} rows={3} className="rounded-xl" placeholder={f.placeholder} value={form[f.key] || ''} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} maxLength={4000} />
-                : <Input id={f.key} className="h-11 rounded-xl" placeholder={f.placeholder} value={form[f.key] || ''} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} required={f.required} maxLength={500} />}
-            </div>
-          ))}
-          <div className="space-y-2 sm:col-span-2">
-            <Label htmlFor="colors">Cores da marca (hex, separadas por vírgula)</Label>
-            <Input id="colors" className="h-11 rounded-xl" placeholder="#111111, #2563EB" value={colors} onChange={(e) => setColors(e.target.value)} />
+      <PageHeader title="Empresa e marca" description="Quanto melhor a descrição, melhores serão os textos e o planejamento." />
+      <form onSubmit={salvar} className="max-w-3xl space-y-6">
+        <Panel className="space-y-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-2"><Label htmlFor="n1">Nome da empresa</Label><Input id="n1" value={f.nomeFantasia} onChange={set('nomeFantasia')} maxLength={120} required /></div>
+            <div className="space-y-2"><Label htmlFor="n2">Segmento</Label><Input id="n2" value={f.segmento} onChange={set('segmento')} maxLength={120} required /></div>
           </div>
+          <div className="space-y-2"><Label htmlFor="n3">Descreva o negócio</Label><Textarea id="n3" value={f.descricao} onChange={set('descricao')} rows={4} maxLength={2000} required /><p className="text-xs text-muted-foreground">Pelo menos 20 caracteres.</p></div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-2"><Label htmlFor="n4">Público-alvo</Label><Input id="n4" value={f.publicoAlvo} onChange={set('publicoAlvo')} /></div>
+            <div className="space-y-2"><Label htmlFor="n5">Tom de voz</Label><Input id="n5" value={f.tomDeVoz} onChange={set('tomDeVoz')} placeholder="Ex.: próximo, descontraído" /></div>
+          </div>
+          <div className="space-y-2"><Label htmlFor="n6">Site</Label><Input id="n6" value={f.siteUrl} onChange={set('siteUrl')} placeholder="https://" /></div>
+        </Panel>
+        <Panel className="grid gap-4 sm:grid-cols-2">
+          {([['objetivos', 'Objetivos'], ['diferenciais', 'Diferenciais'], ['produtos', 'Produtos e serviços'], ['regioes', 'Regiões atendidas'], ['palavrasEvitar', 'Palavras a evitar']] as const).map(([k, rot]) => (
+            <div key={k} className="space-y-2"><Label htmlFor={`l-${k}`}>{rot}</Label><Textarea id={`l-${k}`} value={f[k]} onChange={set(k)} rows={3} placeholder="Um por linha" /></div>
+          ))}
+          <div className="space-y-2"><Label htmlFor="n7">Observações</Label><Textarea id="n7" value={f.observacoes} onChange={set('observacoes')} rows={3} /></div>
         </Panel>
         <Panel>
-          <h2 className="font-medium text-foreground">Modo de publicação</h2>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {[{ v: 'assisted', t: 'Assistido', d: 'Cada conteúdo só é publicado após sua aprovação.' }, { v: 'automatic', t: 'Automático', d: 'Publica conforme as regras que você autorizou.' }].map((o) => (
-              <button type="button" key={o.v} onClick={() => setMode(o.v)}
-                className={`text-left rounded-xl border p-4 transition-colors ${mode === o.v ? 'border-foreground' : 'border-border'}`}>
-                <p className="text-sm font-medium text-foreground">{o.t}</p><p className="mt-1 text-xs text-muted-foreground">{o.d}</p>
-              </button>
+          <p className="mb-3 text-sm font-medium">Redes sociais e publicações por semana</p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {REDES.map((r) => (
+              <div key={r.key} className="flex items-center justify-between gap-3 rounded-xl border border-border px-3 py-2">
+                <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={redes.includes(r.key)} onChange={() => alternar(r.key)} />{r.label}</label>
+                {redes.includes(r.key) && <Input aria-label={`Publicações por semana no ${r.label}`} type="number" min={0} max={14} className="h-9 w-20" value={freq[r.key] ?? ''} onChange={(e) => setFreq((p) => ({ ...p, [r.key]: e.target.value }))} placeholder="padrão" />}
+              </div>
             ))}
           </div>
         </Panel>
-        <Panel className="flex flex-wrap items-center justify-between gap-3">
-          <div><p className="text-sm font-medium text-foreground">Análise automática do site</p><p className="text-xs text-muted-foreground">Extrai informações do site informado para completar o perfil.</p></div>
-          <PendingBadge>Aguardando integração de IA</PendingBadge>
-        </Panel>
-        <Button type="submit" disabled={busy} className="rounded-full h-11 px-8">{busy ? 'Salvando...' : company ? 'Salvar alterações' : 'Cadastrar empresa'}</Button>
+        <Button type="submit" disabled={busy} className="rounded-full">Salvar empresa</Button>
       </form>
     </>
   );
 }
 
-/* ---------------- Editorial planning ---------------- */
+/* ---------------- Planejamento ---------------- */
 export function PlanningPage() {
-  const { data: company } = useCompany();
-  const items = useCompanyRows<any>('editorial_items', company?.id, 'scheduled_for');
-  const [month, setMonth] = useState(() => new Date());
-  const byDay = useMemo(() => {
-    const m: Record<number, any[]> = {};
-    (items.data || []).forEach((i) => {
-      if (!i.scheduled_for) return; const d = new Date(i.scheduled_for);
-      if (d.getMonth() === month.getMonth() && d.getFullYear() === month.getFullYear()) (m[d.getDate()] ||= []).push(i);
-    });
-    return m;
-  }, [items.data, month]);
-  if (!company) return <><PageHeader title="Planejamento editorial" /><NeedsCompany /></>;
-  const list = items.data || [];
-  const days = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate();
-  const offset = new Date(month.getFullYear(), month.getMonth(), 1).getDay();
-
+  const { orgId } = useAuth();
+  const qc = useQueryClient();
+  const [mes, setMes] = useState(() => new Date().toISOString().slice(0, 7));
+  // Enquanto há tarefas do agente em andamento ou peças sendo produzidas, a tela se atualiza sozinha.
+  const q = useMotor<Planejamento>(`/planejamento?mes=${mes}`, { refetchInterval: (d) => (d && (d.pendentes > 0 || d.itens.some((i) => i.estado === 'em_producao')) ? 5000 : false) });
+  const [busy, setBusy] = useState(false);
+  const gerar = async (refazer = false) => {
+    if (refazer && !window.confirm('Refazer o planejamento do mês? As peças que já estão em produção são preservadas.')) return;
+    setBusy(true);
+    try { await api(refazer ? '/planejamento/refazer' : '/planejamento/gerar', { org: orgId, body: { mes } }); toast.success('Planejamento pedido. Ele aparece aqui em instantes.'); await qc.invalidateQueries({ queryKey: ['motor', orgId] }); }
+    catch (err) { toast.error((err as Error).message); } finally { setBusy(false); }
+  };
+  const d = q.data;
   return (
     <>
-      <PageHeader title="Planejamento editorial" description="Planejamento mensal gerado pela IA a partir do perfil da sua empresa." />
-      {!list.length ? <EmptyState title="Nenhum planejamento gerado ainda" text="A geração automática começa quando a integração de IA estiver ativa e sua assinatura confirmada." /> : (
-        <Tabs defaultValue="list">
-          <TabsList className="rounded-full"><TabsTrigger value="list" className="rounded-full">Lista</TabsTrigger><TabsTrigger value="calendar" className="rounded-full">Calendário</TabsTrigger></TabsList>
-          <TabsContent value="list" className="mt-6 grid gap-4">
-            {list.map((i) => (
-              <Panel key={i.id}>
-                <div className="flex flex-wrap justify-between gap-2">
-                  <p className="font-medium text-foreground">{i.theme}</p>
-                  <span className="text-xs text-muted-foreground">{STATUS_LABEL[i.status] || i.status}</span>
-                </div>
-                <dl className="mt-3 grid gap-x-6 gap-y-2 text-sm sm:grid-cols-3">
-                  {[['Pilar', i.pillar], ['Objetivo', i.objective], ['Formato', i.format], ['Rede', i.network], ['Data', fmt(i.scheduled_for)], ['CTA', i.cta]].map(([k, v]) => v ? <div key={k}><dt className="text-xs text-muted-foreground">{k}</dt><dd className="text-foreground">{v}</dd></div> : null)}
-                </dl>
-                {i.script && <details className="mt-3 text-sm"><summary className="cursor-pointer text-muted-foreground">Roteiro e legenda</summary><p className="mt-2 whitespace-pre-line text-foreground">{i.script}</p><p className="mt-2 whitespace-pre-line text-muted-foreground">{i.caption}</p><p className="mt-2 text-xs text-muted-foreground">{(i.hashtags || []).join(' ')}</p></details>}
-              </Panel>
-            ))}
-          </TabsContent>
-          <TabsContent value="calendar" className="mt-6">
-            <Panel>
-              <div className="flex items-center justify-between mb-4">
-                <Button variant="ghost" size="sm" onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() - 1, 1))}>Anterior</Button>
-                <p className="font-medium capitalize text-foreground">{format(month, 'MMMM yyyy', { locale: ptBR })}</p>
-                <Button variant="ghost" size="sm" onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() + 1, 1))}>Próximo</Button>
-              </div>
-              <div className="grid grid-cols-7 gap-1 text-xs">
-                {['D', 'S', 'T', 'Q', 'Q', 'S', 'S'].map((d, i) => <div key={i} className="text-center text-muted-foreground py-1">{d}</div>)}
-                {Array.from({ length: offset }).map((_, i) => <div key={`o${i}`} />)}
-                {Array.from({ length: days }).map((_, i) => (
-                  <div key={i} className="min-h-20 rounded-lg border border-border p-1.5">
-                    <p className="text-muted-foreground">{i + 1}</p>
-                    {(byDay[i + 1] || []).map((e) => <p key={e.id} className="mt-1 truncate rounded bg-secondary px-1 text-foreground">{e.theme}</p>)}
-                  </div>
-                ))}
-              </div>
+      <PageHeader title="Planejamento" description="Calendário de conteúdos do mês, por rede." />
+      <div className="mb-6 flex flex-wrap items-end gap-3">
+        <div className="space-y-2"><Label htmlFor="mes">Mês</Label><Input id="mes" type="month" value={mes} onChange={(e) => e.target.value && setMes(e.target.value)} className="h-10 w-44" /></div>
+        {d?.podeGerar && <Button onClick={() => gerar()} disabled={busy || d.pendentes > 0} className="rounded-full">Gerar planejamento</Button>}
+        {d?.podeRefazer && <Button variant="outline" onClick={() => gerar(true)} disabled={busy || d.pendentes > 0} className="rounded-full">Refazer planejamento</Button>}
+      </div>
+      {q.isLoading || q.error ? <Carregando erro={q.error as Error | null} /> : d && (
+        <>
+          <AvisoAgente estado={d.estado} />
+          {d.pendentes > 0 && <p role="status" className="mb-6 rounded-xl border border-border bg-background px-4 py-3 text-sm">O agente está trabalhando no seu planejamento ({d.pendentes} tarefa{d.pendentes === 1 ? '' : 's'} em andamento). Esta tela se atualiza sozinha.</p>}
+          {d.plano && (
+            <Panel className="mb-6">
+              {d.plano.resumo && <p className="text-sm">{d.plano.resumo}</p>}
+              {d.plano.pilares.length > 0 && <ul className="mt-3 grid gap-2 text-sm sm:grid-cols-2">{d.plano.pilares.map((p) => <li key={p.nome}><span className="font-medium">{p.nome}</span>: <span className="text-muted-foreground">{p.descricao}</span></li>)}</ul>}
             </Panel>
-          </TabsContent>
-        </Tabs>
+          )}
+          {d.itens.length === 0 ? (
+            <EmptyState title="Nenhuma peça neste mês" text={d.podeGerar ? 'Use "Gerar planejamento" para criar o calendário do mês.' : 'Cadastre a empresa e aguarde a ativação do agente para gerar o planejamento.'} />
+          ) : (
+            <Panel>
+              <ul className="divide-y divide-border text-sm">
+                {d.itens.map((i) => (
+                  <li key={i.id} className="flex flex-wrap justify-between gap-2 py-2.5">
+                    <span><span className="text-muted-foreground">{dia(i.dataPrevista)}</span> · {nomeRede(i.rede)} · {i.tema}</span>
+                    <span className="text-muted-foreground">{rotulo(i.estado)}</span>
+                  </li>
+                ))}
+              </ul>
+            </Panel>
+          )}
+          {d.falhas.length > 0 && (
+            <Panel className="mt-4 border-destructive/40">
+              <p className="text-sm font-medium text-destructive">{d.falhas.length} tarefa(s) do agente com problema</p>
+              <ul className="mt-2 list-disc pl-5 text-sm text-muted-foreground">{d.falhas.map((f) => <li key={f.id}>{f.erroMensagem ?? 'Falha sem detalhe.'}</li>)}</ul>
+              {d.podeRefazer && <p className="mt-2 text-xs text-muted-foreground">Use "Refazer planejamento" para tentar de novo. Créditos reservados em tarefas que falham são devolvidos.</p>}
+            </Panel>
+          )}
+        </>
       )}
     </>
   );
 }
 
-/* ---------------- Production ---------------- */
-export function ProductionPage() {
-  const { data: company } = useCompany();
+/* ---------------- Produção (revisão e aprovação) ---------------- */
+function Detalhe({ id, onClose }: { id: string; onClose: () => void }) {
+  const { orgId } = useAuth();
   const qc = useQueryClient();
-  const contents = useCompanyRows<any>('contents', company?.id);
-  if (!company) return <><PageHeader title="Produção" /><NeedsCompany /></>;
-  const approve = async (id: string) => {
-    const { error } = await supabase.from('contents').update({ status: 'approved', approved_at: new Date().toISOString() }).eq('id', id);
-    if (error) return toast.error(error.message);
-    toast.success('Conteúdo aprovado.'); qc.invalidateQueries({ queryKey: ['contents'] });
+  const q = useMotor<Conteudo>(`/conteudos/${id}`, { refetchInterval: (d) => (d && ['em_producao', 'alteracao_solicitada'].includes(d.item.estado) ? 5000 : false) });
+  const [pedido, setPedido] = useState('');
+  const [escolhidas, setEscolhidas] = useState<string[]>([]);
+  const [pct, setPct] = useState<number | null>(null);
+  const [busy, setBusy] = useState(false);
+  const refrescar = () => qc.invalidateQueries({ queryKey: ['motor', orgId] });
+  const c = q.data;
+  const aprovar = async () => {
+    if (!c?.hash) return; setBusy(true);
+    try { await api(`/conteudos/${id}/aprovacao`, { org: orgId, body: { hash: c.hash } }); toast.success('Conteúdo aprovado.'); await refrescar(); }
+    catch (e) { toast.error((e as Error).message); } finally { setBusy(false); }
   };
-  const list = contents.data || [];
+  const alterar = async () => {
+    setBusy(true);
+    try { await api(`/conteudos/${id}/alteracao`, { org: orgId, body: { pedido } }); toast.success('Pedido de alteração enviado.'); setPedido(''); await refrescar(); }
+    catch (e) { toast.error((e as Error).message); } finally { setBusy(false); }
+  };
+  const enviar = async (arquivo: File | undefined) => {
+    if (!arquivo || !orgId) return; setBusy(true); setPct(0);
+    try {
+      const r = arquivo.type.startsWith('video/') ? await enviarVideo(orgId, arquivo, setPct) : await enviarImagem(orgId, arquivo);
+      if (r.status !== 'aprovada_tecnicamente') toast.error(`A mídia não passou na validação: ${(r.erros as string[]).join('; ') || 'formato não aceito'}`);
+      else { toast.success('Mídia enviada e validada.'); setEscolhidas((p) => [...p, r.id]); }
+      setBusy(false); setPct(null); void refrescar();
+    } catch (e) { toast.error((e as Error).message); } finally { setBusy(false); setPct(null); }
+  };
+  const anexar = async () => {
+    setBusy(true);
+    try { await api(`/conteudos/${id}/midias`, { org: orgId, body: { midiaIds: escolhidas } }); toast.success('Mídia anexada. O conteúdo segue para a produção.'); setEscolhidas([]); await refrescar(); }
+    catch (e) { toast.error((e as Error).message); } finally { setBusy(false); }
+  };
+  const alternarMidia = (m: string) => setEscolhidas((p) => (p.includes(m) ? p.filter((x) => x !== m) : [...p, m]));
+  return (
+    <Panel className="mb-6">
+      <div className="flex items-start justify-between gap-3"><h2 className="font-medium">{c?.item.titulo ?? c?.item.tema ?? 'Conteúdo'}</h2><button onClick={onClose} className="text-sm text-muted-foreground">Fechar</button></div>
+      {q.isLoading || q.error ? <Carregando erro={q.error as Error | null} /> : c && (
+        <div className="mt-3 space-y-4 text-sm">
+          <p className="text-muted-foreground">{nomeRede(c.item.rede)} · {dia(c.item.dataPrevista)} · {rotulo(c.item.estado)}</p>
+          {c.item.roteiro && <div><p className="font-medium">Roteiro</p><p className="whitespace-pre-wrap">{c.item.roteiro}</p></div>}
+          {c.item.legenda && <div><p className="font-medium">Legenda</p><p className="whitespace-pre-wrap">{c.item.legenda}</p>{c.item.hashtags.length > 0 && <p className="mt-1 text-muted-foreground">{c.item.hashtags.map((h) => `#${h.replace(/^#/, '')}`).join(' ')}</p>}</div>}
+          {c.item.estado === 'em_producao' && <p role="status" className="text-muted-foreground">O agente está produzindo este conteúdo. A tela se atualiza sozinha.</p>}
+          {c.item.estado === 'alteracao_solicitada' && <p role="status" className="text-muted-foreground">Sua alteração está sendo aplicada. A tela se atualiza sozinha.</p>}
+          {c.item.estado === 'aguardando_creditos' && <p className="text-muted-foreground">Faltam créditos para produzir este conteúdo. Veja o saldo em <Link to="/app/assinatura" className="underline underline-offset-4">Assinatura</Link>.</p>}
+          {c.item.estado === 'falhou' && <p className="text-destructive">A produção deste conteúdo falhou{c.item.motivoBloqueio ? `: ${c.item.motivoBloqueio}` : '.'} Refaça o planejamento para tentar de novo.</p>}
+          {c.item.motivoBloqueio && c.item.estado !== 'falhou' && <p className="text-destructive">{c.item.motivoBloqueio}</p>}
+          {c.item.estado === 'aguardando_midia' && (
+            <div className="space-y-3 rounded-xl border border-border p-4">
+              <p className="font-medium">Esta peça precisa da sua mídia</p>
+              {!c.podeAnexar ? <p className="text-muted-foreground">Peça a um administrador ou editor para enviar a mídia.</p> : (
+                <>
+                  <p className="text-muted-foreground">{c.item.formato === 'video_curto' ? 'Envie um vídeo MP4 ou MOV na vertical (9:16).' : c.item.rede === 'instagram' ? 'O Instagram aceita somente imagens JPEG.' : 'Envie imagens PNG ou JPEG.'}</p>
+                  <input type="file" aria-label="Enviar mídia" disabled={busy} accept={c.item.formato === 'video_curto' ? 'video/mp4,video/quicktime' : c.item.formato === 'carrossel' ? 'image/png,image/jpeg,video/mp4,video/quicktime' : c.item.rede === 'instagram' ? 'image/jpeg' : 'image/png,image/jpeg'} onChange={(e) => { void enviar(e.target.files?.[0]); e.target.value = ''; }} />
+                  {pct !== null && <p role="status">Enviando… {pct}%</p>}
+                  {c.midias.length > 0 && (
+                    <ul className="space-y-1">
+                      {c.midias.map((m) => (
+                        <li key={m.id}><label className="flex items-center gap-2"><input type="checkbox" checked={escolhidas.includes(m.id)} onChange={() => alternarMidia(m.id)} />{m.video ? `Vídeo${m.duracaoS ? ` de ${Math.round(m.duracaoS)} s` : ''}` : 'Imagem'}{m.largura && m.altura ? ` (${m.largura}×${m.altura})` : ''}</label></li>
+                      ))}
+                    </ul>
+                  )}
+                  <Button onClick={anexar} disabled={busy || escolhidas.length === 0} className="rounded-full">Anexar à peça</Button>
+                </>
+              )}
+            </div>
+          )}
+          {c.revisoes.length > 0 && <ul className="list-disc pl-5 text-muted-foreground">{c.revisoes.map((r) => <li key={r.numero}>Alteração {r.numero}: {r.pedido}{r.atendidaEm ? ' (atendida)' : ' (em andamento)'}</li>)}</ul>}
+          {c.item.estado === 'aguardando_aprovacao' && c.hash && <Button onClick={aprovar} disabled={busy} className="rounded-full">Aprovar este conteúdo</Button>}
+          {c.podePedir && (
+            <div className="space-y-2">
+              <Label htmlFor="alt">Pedir alteração ({c.restantes} restante{c.restantes === 1 ? '' : 's'})</Label>
+              <Textarea id="alt" value={pedido} onChange={(e) => setPedido(e.target.value)} rows={3} maxLength={1000} />
+              <Button variant="outline" onClick={alterar} disabled={busy || pedido.trim().length < 5} className="rounded-full">Enviar pedido</Button>
+            </div>
+          )}
+        </div>
+      )}
+    </Panel>
+  );
+}
+
+export function ProductionPage() {
+  const q = useMotor<Item[]>('/conteudos');
+  const [aberto, setAberto] = useState<string | null>(null);
+  const itens = q.data ?? [];
   return (
     <>
-      <PageHeader title="Produção de conteúdo" description="Reels, YouTube Shorts, vídeos verticais, carrosséis e artes estáticas." />
-      {!list.length ? <EmptyState title="Nenhum conteúdo em produção" text="Os conteúdos aparecem aqui assim que a produção automática for iniciada." /> : (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {list.map((c) => (
-            <Panel key={c.id} className="p-0 overflow-hidden">
-              <div className="aspect-[4/5] bg-secondary grid place-items-center">
-                {c.preview_url ? <img src={c.preview_url} alt={c.title || c.format} className="h-full w-full object-cover" loading="lazy" /> : <span className="text-xs text-muted-foreground">Prévia indisponível</span>}
-              </div>
-              <div className="p-5">
-                <div className="flex justify-between text-xs text-muted-foreground"><span>{c.format}</span><span>{STATUS_LABEL[c.status] || c.status}</span></div>
-                <p className="mt-2 font-medium text-foreground">{c.title || 'Sem título'}</p>
-                {c.due_at && <p className="mt-1 text-xs text-muted-foreground">Previsto: {fmt(c.due_at)}</p>}
-                <p className="mt-1 text-xs text-muted-foreground">Versão {c.version}</p>
-                <div className="mt-4 flex gap-2">
-                  {c.file_url && <Button asChild size="sm" variant="outline" className="rounded-full"><a href={c.file_url} target="_blank" rel="noreferrer">Arquivo final</a></Button>}
-                  {company.publishing_mode === 'assisted' && c.status === 'ready' && <Button size="sm" className="rounded-full" onClick={() => approve(c.id)}>Aprovar</Button>}
-                </div>
-              </div>
-            </Panel>
-          ))}
+      <PageHeader title="Produção" description="Revise, aprove ou peça alterações nos conteúdos. Nada é publicado sem a sua aprovação." />
+      {q.isLoading || q.error ? <Carregando erro={q.error as Error | null} /> : (
+        <>
+          {aberto && <Detalhe id={aberto} onClose={() => setAberto(null)} />}
+          {itens.length === 0 ? <EmptyState title="Nenhum conteúdo ainda" text="Quando o planejamento do mês for gerado, os conteúdos aparecem aqui para a sua revisão." /> : (
+            <div className="space-y-6">
+              {GRUPOS.map((g) => {
+                const doGrupo = itens.filter((i) => g.estados.includes(i.estado));
+                if (doGrupo.length === 0) return null;
+                return (
+                  <Panel key={g.titulo}>
+                    <h2 className="font-medium">{g.titulo} <span className="text-muted-foreground">({doGrupo.length})</span></h2>
+                    <ul className="mt-3 divide-y divide-border text-sm">
+                      {doGrupo.map((i) => (
+                        <li key={i.id} className="flex flex-wrap items-center justify-between gap-2 py-2.5">
+                          <span>{dia(i.dataPrevista)} · {nomeRede(i.rede)} · {i.titulo ?? i.tema}</span>
+                          <button onClick={() => setAberto(i.id)} className="text-sm underline underline-offset-4">Abrir</button>
+                        </li>
+                      ))}
+                    </ul>
+                  </Panel>
+                );
+              })}
+            </div>
+          )}
+        </>
+      )}
+    </>
+  );
+}
+
+/* ---------------- Redes sociais ---------------- */
+function Escolha({ selecao, onFim }: { selecao: string; onFim: () => void }) {
+  const { orgId } = useAuth();
+  const q = useMotor<{ opcoes: { id: string; nome: string }[] }>(`/contas/selecao/${selecao}`);
+  const [busy, setBusy] = useState(false);
+  const escolher = async (paginaId: string) => {
+    setBusy(true);
+    try { const r = await api<{ nome: string }>('/contas/selecao', { org: orgId, body: { selecaoId: selecao, paginaId } }); toast.success(`Conta conectada: ${r.nome}`); onFim(); }
+    catch (e) { toast.error((e as Error).message); setBusy(false); }
+  };
+  return (
+    <Panel className="mb-6">
+      <h2 className="font-medium">Escolha a conta a conectar</h2>
+      {q.isLoading || q.error ? <Carregando erro={q.error as Error | null} /> : (
+        <ul className="mt-3 space-y-2">
+          {(q.data?.opcoes ?? []).map((o) => <li key={o.id} className="flex items-center justify-between gap-3 text-sm"><span>{o.nome}</span><Button size="sm" variant="outline" disabled={busy} onClick={() => escolher(o.id)} className="rounded-full">Conectar esta</Button></li>)}
+        </ul>
+      )}
+    </Panel>
+  );
+}
+
+export function ConnectionsPage() {
+  const { orgId, org } = useAuth();
+  const qc = useQueryClient();
+  const [params, setParams] = useSearchParams();
+  const q = useMotor<Conta[]>('/contas');
+  const [busy, setBusy] = useState<string | null>(null);
+  const podeGerir = ['administrador', 'editor'].includes(org?.papel ?? '');
+  const selecao = params.get('conexao') === 'selecao' ? params.get('selecao') : null;
+
+  // Retorno do OAuth: o motor devolve o usuário aqui com o resultado na URL.
+  useEffect(() => {
+    const r = params.get('conexao'); if (!r) return;
+    if (r === 'ok') toast.success(`Conta conectada${params.get('nome') ? `: ${params.get('nome')}` : ''}.`);
+    if (r === 'erro') toast.error(params.get('msg') || 'Não foi possível conectar a conta.');
+    if (r !== 'selecao') { setParams({}, { replace: true }); void qc.invalidateQueries({ queryKey: ['motor', orgId] }); }
+  }, [params, setParams, qc, orgId]);
+
+  const conectar = async (rede: Rede) => {
+    setBusy(rede);
+    try { const r = await api<{ url: string }>('/contas/conectar', { org: orgId, body: { rede, retorno: '/app/conexoes' } }); window.location.assign(r.url); }
+    catch (e) { toast.error((e as Error).message); setBusy(null); }
+  };
+  const desconectar = async (c: Conta) => {
+    if (!window.confirm(`Desconectar ${c.nome}? As publicações agendadas nessa conta não serão feitas.`)) return;
+    setBusy(c.id);
+    try { await api(`/contas/${c.id}/desconectar`, { org: orgId, method: 'POST', body: {} }); toast.success('Conta desconectada.'); await qc.invalidateQueries({ queryKey: ['motor', orgId] }); }
+    catch (e) { toast.error((e as Error).message); } finally { setBusy(null); }
+  };
+  const contas = q.data ?? [];
+  return (
+    <>
+      <PageHeader title="Redes sociais" description="Conecte as contas onde o conteúdo será publicado. Você autoriza na própria rede e pode desconectar quando quiser." />
+      {selecao && <Escolha selecao={selecao} onFim={() => { setParams({}, { replace: true }); void qc.invalidateQueries({ queryKey: ['motor', orgId] }); }} />}
+      {q.isLoading || q.error ? <Carregando erro={q.error as Error | null} /> : (
+        <div className="grid gap-4 sm:grid-cols-2">
+          {REDES.map((r) => {
+            const doTipo = contas.filter((c) => c.rede === r.key && !['desconectada', 'revogada'].includes(c.status));
+            return (
+              <Panel key={r.key}>
+                <h2 className="font-medium">{r.label}</h2>
+                {doTipo.length === 0 ? <p className="mt-2 text-sm text-muted-foreground">Não conectada.</p> : (
+                  <ul className="mt-2 space-y-2 text-sm">
+                    {doTipo.map((c) => (
+                      <li key={c.id} className="flex items-start justify-between gap-3">
+                        <span>{c.nome} · <span className={c.status === 'conectada' ? '' : 'text-destructive'}>{c.status}</span>
+                          {c.erro ? <span className="block text-xs text-destructive">{c.erro}</span> : null}
+                          {c.tokenExpiraEm ? <span className="block text-xs text-muted-foreground">Acesso válido até {quando(c.tokenExpiraEm)}</span> : null}</span>
+                        {podeGerir && <button disabled={busy === c.id} onClick={() => desconectar(c)} className="shrink-0 text-xs text-muted-foreground underline underline-offset-4">Desconectar</button>}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {podeGerir ? <Button variant="outline" className="mt-4 rounded-full" disabled={busy === r.key} onClick={() => conectar(r.key)}>{doTipo.length ? 'Reconectar' : 'Conectar'}</Button>
+                  : <p className="mt-4 text-xs text-muted-foreground">Só administradores e editores conectam contas.</p>}
+              </Panel>
+            );
+          })}
         </div>
       )}
     </>
   );
 }
 
-/* ---------------- Social connections ---------------- */
-export function ConnectionsPage() {
-  const { data: company } = useCompany();
-  const accounts = useCompanyRows<any>('social_accounts', company?.id);
-  const contents = useCompanyRows<any>('contents', company?.id);
-  if (!company) return <><PageHeader title="Redes sociais" /><NeedsCompany /></>;
-  const published = (contents.data || []).filter((c) => c.status === 'published');
-  return (
-    <>
-      <PageHeader title="Redes sociais" description="Conexões feitas pelos acessos oficiais de cada plataforma. Os status abaixo refletem apenas dados reais." />
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        {NETWORKS.map((n) => {
-          const acc = (accounts.data || []).find((a) => a.platform === n.key);
-          return (
-            <Panel key={n.key}>
-              <p className="font-medium text-foreground">{n.label}</p>
-              {acc && acc.status === 'connected'
-                ? <p className="mt-2 text-sm text-foreground">Conectado: {acc.account_name}</p>
-                : <p className="mt-2 text-sm text-muted-foreground">{acc?.status === 'error' ? `Erro: ${acc.last_error}` : 'Não conectado'}</p>}
-              <div className="mt-4"><PendingBadge>Conexão oficial em preparação</PendingBadge></div>
-            </Panel>
-          );
-        })}
-      </div>
-      <Panel className="mt-6">
-        <h2 className="font-medium text-foreground">Publicações concluídas</h2>
-        {published.length ? (
-          <ul className="mt-4 divide-y divide-border">
-            {published.map((p) => <li key={p.id} className="py-3 text-sm flex justify-between gap-4"><span className="text-foreground">{p.title} · {p.network}</span>{p.published_url && <a href={p.published_url} target="_blank" rel="noreferrer" className="underline text-foreground">Ver</a>}</li>)}
-          </ul>
-        ) : <p className="mt-3 text-sm text-muted-foreground">Nenhuma publicação realizada ainda.</p>}
-      </Panel>
-    </>
-  );
-}
-
-/* ---------------- Subscription ---------------- */
-const brl = (cents?: number | null, cur = 'BRL') => ((cents || 0) / 100).toLocaleString('pt-BR', { style: 'currency', currency: cur });
-const PAY_LABEL: Record<string, string> = {
-  PENDING: 'Aguardando pagamento', RECEIVED: 'Pago', CONFIRMED: 'Confirmado', RECEIVED_IN_CASH: 'Pago', OVERDUE: 'Vencido',
-  REFUNDED: 'Estornado', REFUND_REQUESTED: 'Estorno solicitado', CHARGEBACK_REQUESTED: 'Contestação', CHARGEBACK_DISPUTE: 'Contestação em disputa',
-  AWAITING_CHARGEBACK_REVERSAL: 'Contestação em análise', DELETED: 'Removida',
-};
-const METHOD_LABEL: Record<string, string> = { CREDIT_CARD: 'Cartão de crédito', PIX: 'Pix', BOLETO: 'Boleto', UNDEFINED: 'A escolher' };
-const day = (d?: string | null) => (d ? format(new Date(d.length === 10 ? `${d}T12:00:00` : d), 'dd/MM/yyyy') : '');
-
-async function callFn(name: string, body: unknown) {
-  const { data, error } = await supabase.functions.invoke(name, { body });
-  if (error) {
-    let msg = error.message;
-    try { const ctx = await (error as any).context?.json?.(); if (ctx?.error) msg = typeof ctx.error === 'string' ? ctx.error : 'Dados inválidos.'; } catch { /* keep message */ }
-    throw new Error(msg);
-  }
-  return data;
-}
-
+/* ---------------- Assinatura ---------------- */
 export function BillingPage() {
+  const { orgId, org } = useAuth();
   const qc = useQueryClient();
-  const { data: company } = useCompany();
-  const subs = useCompanyRows<any>('subscriptions', company?.id);
-  const ledger = useCompanyRows<any>('credit_ledger', company?.id);
-  const plans = useQuery({ queryKey: ['plans'], queryFn: async () => (await supabase.from('plans').select('*').eq('is_active', true).order('sort_order')).data || [] });
-  const payments = useQuery({
-    queryKey: ['billing_payments', company?.id], enabled: !!company?.id,
-    queryFn: async () => (await supabase.from('billing_payments').select('*').eq('company_id', company!.id).order('due_date', { ascending: false })).data || [],
-  });
-  const changes = useQuery({
-    queryKey: ['subscription_changes', company?.id], enabled: !!company?.id,
-    queryFn: async () => (await supabase.from('subscription_changes').select('*').eq('company_id', company!.id).eq('status', 'notified')).data || [],
-  });
-  const [plan, setPlan] = useState<string | null>(null);
-  const [method, setMethod] = useState<'PIX' | 'BOLETO' | 'CREDIT_CARD'>('PIX');
-  const [doc, setDoc] = useState('');
+  const q = useMotor<AssinaturaApi>('/assinatura');
+  const consumo = useMotor<Consumo>('/consumo');
+  const [f, setF] = useState({ plano: '', nome: '', cpfCnpj: '', email: '' });
   const [busy, setBusy] = useState(false);
+  const d = q.data;
+  const admin = org?.papel === 'administrador';
 
-  if (!company) return <NeedsCompany />;
-  const sub = (subs.data || []).find((s) => ['pending', 'active', 'past_due', 'suspended'].includes(s.status)) || subs.data?.[0];
-  const open = sub && ['pending', 'active', 'past_due', 'suspended'].includes(sub.status);
-  const balance = creditBalance(ledger.data || []);
-  const refresh = () => ['subscriptions', 'billing_payments', 'credit_ledger', 'subscription_changes'].forEach((k) => qc.invalidateQueries({ queryKey: [k] }));
-
-  const subscribe = async (e: FormEvent) => {
-    e.preventDefault();
-    const digits = doc.replace(/\D/g, '');
-    if (!plan) return toast.error('Escolha um plano.');
-    if (digits.length !== 11 && digits.length !== 14) return toast.error('Informe um CPF ou CNPJ válido.');
-    setBusy(true);
+  const contratar = async (e: FormEvent) => {
+    e.preventDefault(); setBusy(true);
     try {
-      const res = await callFn('asaas-create-subscription', { plan_slug: plan, billing_type: method, cpf_cnpj: digits });
-      toast.success('Assinatura criada. O acesso é liberado assim que o pagamento for confirmado.');
-      if (res?.invoice_url) window.open(res.invoice_url, '_blank', 'noopener');
-      refresh();
-    } catch (err: any) { toast.error(err.message); } finally { setBusy(false); }
+      const r = await api<{ urlPagamento: string | null }>('/assinatura/contratar', { org: orgId, body: f });
+      if (r.urlPagamento) { window.location.assign(r.urlPagamento); return; }
+      toast.success('Assinatura criada. O link de pagamento chega no e-mail informado.'); await qc.invalidateQueries({ queryKey: ['motor', orgId] });
+    } catch (err) { toast.error((err as Error).message); } finally { setBusy(false); }
   };
-  const manage = async (body: any, ok?: string) => {
+  const cancelar = async () => {
+    if (!window.confirm('Cancelar a assinatura? O acesso continua até o fim do período já pago.')) return;
     setBusy(true);
-    try {
-      const res = await callFn('asaas-manage-subscription', body);
-      if (res?.invoice_url) window.open(res.invoice_url, '_blank', 'noopener');
-      else if (body.action === 'pending_invoice') toast.message('Nenhuma cobrança em aberto.');
-      if (ok) toast.success(res?.message || ok);
-      refresh();
-    } catch (err: any) { toast.error(err.message); } finally { setBusy(false); }
-  };
-  const respond = async (id: string, accept: boolean) => {
-    const { error } = await supabase.rpc('respond_subscription_change' as any, { _change: id, _accept: accept });
-    if (error) return toast.error(error.message);
-    toast.success(accept ? 'Concordância registrada.' : 'Recusa registrada. Seu contrato atual continua.');
-    refresh();
+    try { await api('/assinatura/cancelar', { org: orgId, method: 'POST', body: {} }); toast.success('Assinatura cancelada.'); await qc.invalidateQueries({ queryKey: ['motor', orgId] }); }
+    catch (err) { toast.error((err as Error).message); } finally { setBusy(false); }
   };
 
   return (
     <>
-      <PageHeader title="Assinatura" description="Pagamentos processados pelo Asaas. O acesso é liberado apenas após a confirmação do pagamento." />
-      {sub?.environment === 'sandbox' && <p className="mb-4 text-xs text-muted-foreground">Ambiente de testes: nenhuma cobrança real é feita.</p>}
-
-      {(changes.data || []).map((c: any) => (
-        <Panel key={c.id} className="mb-6">
-          <p className="font-medium text-foreground">Proposta de alteração do seu contrato</p>
-          <p className="mt-2 text-sm text-muted-foreground">{c.reason}</p>
-          <p className="mt-2 text-sm text-foreground">Mensalidade: {brl(c.old_price_cents)} para {brl(c.new_price_cents)} · a partir de {day(c.effective_date)}</p>
-          <div className="mt-4 flex gap-2">
-            <Button className="rounded-full" onClick={() => respond(c.id, true)}>Concordo</Button>
-            <Button variant="outline" className="rounded-full" onClick={() => respond(c.id, false)}>Não concordo</Button>
-          </div>
-        </Panel>
-      ))}
-
-      {open ? (
-        <Panel className="mb-6">
-          <div className="grid gap-4 sm:grid-cols-4">
-            <div><p className="text-xs text-muted-foreground">Plano</p><p className="mt-1 font-medium text-foreground">{sub.contracted_limits?.plan_name}</p></div>
-            <div><p className="text-xs text-muted-foreground">Status</p><p className="mt-1 font-medium text-foreground">{STATUS_LABEL[sub.status] || sub.status}</p></div>
-            <div><p className="text-xs text-muted-foreground">Mensalidade contratada</p><p className="mt-1 font-medium text-foreground">{brl(sub.price_cents, sub.currency)}</p></div>
-            <div><p className="text-xs text-muted-foreground">Créditos disponíveis</p><p className="mt-1 font-medium text-foreground">{balance}</p></div>
-          </div>
-          {sub.current_period_end && <p className="mt-4 text-sm text-muted-foreground">Período pago até {day(sub.current_period_end)}{sub.billing_type ? ` · ${METHOD_LABEL[sub.billing_type] || sub.billing_type}` : ''}</p>}
-          {sub.status === 'pending' && <p className="mt-4 text-sm text-foreground">Aguardando a confirmação do primeiro pagamento.</p>}
-          {sub.status === 'past_due' && <p className="mt-4 text-sm text-foreground">Há uma cobrança vencida. A produção fica pausada até o pagamento.</p>}
-          {sub.status === 'suspended' && <p className="mt-4 text-sm text-foreground">Assinatura suspensa por estorno ou contestação. Fale com a DesignoAI.</p>}
-          <div className="mt-6 flex flex-wrap gap-2">
-            <Button className="rounded-full" disabled={busy} onClick={() => manage({ action: 'pending_invoice' })}>Pagar cobrança em aberto</Button>
-            <select aria-label="Forma de pagamento" className="rounded-full border border-border bg-background px-4 text-sm" disabled={busy}
-              value={sub.billing_type || ''} onChange={(e) => manage({ action: 'change_billing_type', billing_type: e.target.value }, 'Forma de pagamento alterada.')}>
-              {['PIX', 'BOLETO', 'CREDIT_CARD'].map((m) => <option key={m} value={m}>{METHOD_LABEL[m]}</option>)}
-            </select>
-            <Button variant="ghost" className="rounded-full" disabled={busy}
-              onClick={() => { if (confirm('Cancelar a assinatura? O acesso continua até o fim do período pago.')) manage({ action: 'cancel' }, 'Cancelamento solicitado.'); }}>Cancelar assinatura</Button>
-          </div>
-        </Panel>
-      ) : (
-        <form onSubmit={subscribe} className="mb-6">
-          {sub?.status === 'canceled' && sub.current_period_end && new Date(sub.current_period_end) > new Date() &&
-            <p className="mb-4 text-sm text-foreground">Assinatura cancelada. Seu acesso continua até {day(sub.current_period_end)}.</p>}
-          <div className="grid gap-4 md:grid-cols-3">
-            {(plans.data || []).map((p: any) => (
-              <button type="button" key={p.id} onClick={() => setPlan(p.slug)} className="text-left">
-                <Panel className={plan === p.slug ? 'border-foreground' : ''}>
-                  <p className="font-medium text-foreground">{p.name}</p>
-                  <p className="mt-2 text-2xl font-semibold text-foreground">{brl(p.price_cents, p.currency)}<span className="text-sm font-normal text-muted-foreground">/mês</span></p>
-                  {p.description && <p className="mt-1 text-sm text-muted-foreground">{p.description}</p>}
-                  <ul className="mt-4 space-y-1 text-sm text-foreground">
-                    <li>{p.monthly_videos} vídeos por mês</li><li>{p.monthly_carousels} carrosséis por mês</li>
-                    <li>{p.monthly_static} posts estáticos por mês</li><li>{p.posts_per_week} publicações por semana</li><li>{p.monthly_credits} créditos por mês</li>
-                  </ul>
-                </Panel>
-              </button>
-            ))}
-          </div>
-          <Panel className="mt-4 grid gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
-            <div className="space-y-1.5"><Label htmlFor="doc">CPF ou CNPJ</Label><Input id="doc" className="rounded-xl" inputMode="numeric" value={doc} onChange={(e) => setDoc(e.target.value)} maxLength={18} /></div>
-            <div className="space-y-1.5"><Label htmlFor="method">Forma de pagamento</Label>
-              <select id="method" className="h-10 w-full rounded-xl border border-border bg-background px-3 text-sm" value={method} onChange={(e) => setMethod(e.target.value as any)}>
-                {['PIX', 'BOLETO', 'CREDIT_CARD'].map((m) => <option key={m} value={m}>{METHOD_LABEL[m]}</option>)}
-              </select></div>
-            <Button type="submit" className="rounded-full" disabled={busy || !plan}>Assinar</Button>
+      <PageHeader title="Assinatura" description="Seu plano, o uso do mês e os créditos." />
+      {q.isLoading || q.error ? <Carregando erro={q.error as Error | null} /> : d && (
+        <div className="max-w-3xl space-y-6">
+          <Panel>
+            {d.assinatura ? (
+              <div className="space-y-1 text-sm">
+                <p className="text-lg font-medium">{d.assinatura.planoNome} · {reais(d.assinatura.valorCentavos)}/{d.assinatura.ciclo === 'YEARLY' ? 'ano' : 'mês'}</p>
+                <p>Situação: <strong>{rotulo(d.assinatura.status)}</strong></p>
+                {d.assinatura.proximoVencimento && <p className="text-muted-foreground">Próximo vencimento: {quando(d.assinatura.proximoVencimento)}</p>}
+                {d.assinatura.acessoAte && <p className="text-muted-foreground">Acesso até: {quando(d.assinatura.acessoAte)}</p>}
+                {d.assinatura.inadimplenteDesde && <p className="text-destructive">Pagamento em atraso desde {quando(d.assinatura.inadimplenteDesde)}.</p>}
+                {admin && d.assinatura.status !== 'cancelada' && <Button variant="outline" onClick={cancelar} disabled={busy} className="mt-3 rounded-full">Cancelar assinatura</Button>}
+              </div>
+            ) : <p className="text-sm text-muted-foreground">Esta organização ainda não tem assinatura.</p>}
           </Panel>
-        </form>
+          <Panel>
+            <h2 className="font-medium">Uso do mês</h2>
+            <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+              <li>Publicações: {d.uso?.usado ?? 0}{d.plano?.limitePublicacoesMes != null ? ` de ${d.plano.limitePublicacoesMes}` : ' (sem limite)'}</li>
+              {d.plano?.limiteContas != null && <li>Contas de redes: até {d.plano.limiteContas}</li>}
+              {consumo.data && <li>Créditos disponíveis: {consumo.data.creditos.disponivel} (incluídos {consumo.data.creditos.incluido}, consumidos {consumo.data.creditos.consumido})</li>}
+            </ul>
+          </Panel>
+          {(!d.assinatura || d.assinatura.status === 'cancelada') && admin && (
+            <Panel>
+              <h2 className="font-medium">Contratar um plano</h2>
+              {!d.cobrancaDisponivel ? <p className="mt-2 text-sm text-muted-foreground">A contratação ainda não está disponível.</p>
+                : d.planosParaContratar.length === 0 ? <p className="mt-2 text-sm text-muted-foreground">Nenhum plano está disponível para contratação no momento.</p> : (
+                <form onSubmit={contratar} className="mt-3 space-y-4">
+                  <div className="space-y-2">
+                    {d.planosParaContratar.map((p) => (
+                      <label key={p.codigo} className="flex items-center justify-between gap-3 rounded-xl border border-border px-3 py-2 text-sm">
+                        <span className="flex items-center gap-2"><input type="radio" name="plano" required checked={f.plano === p.codigo} onChange={() => setF((x) => ({ ...x, plano: p.codigo }))} />{p.nome}</span>
+                        <span>{reais(p.precoCentavos)}/{p.ciclo === 'YEARLY' ? 'ano' : 'mês'}</span>
+                      </label>
+                    ))}
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="space-y-2"><Label htmlFor="b1">Nome ou razão social</Label><Input id="b1" value={f.nome} onChange={(e) => setF((x) => ({ ...x, nome: e.target.value }))} required /></div>
+                    <div className="space-y-2"><Label htmlFor="b2">CPF ou CNPJ</Label><Input id="b2" value={f.cpfCnpj} onChange={(e) => setF((x) => ({ ...x, cpfCnpj: e.target.value }))} required /></div>
+                  </div>
+                  <div className="space-y-2"><Label htmlFor="b3">E-mail para a cobrança</Label><Input id="b3" type="email" value={f.email} onChange={(e) => setF((x) => ({ ...x, email: e.target.value }))} required /></div>
+                  <p className="text-xs text-muted-foreground">O pagamento é feito na página segura do Asaas (Pix, boleto ou cartão). A DesignoAI não guarda dados de cartão nem o CPF ou CNPJ informados aqui.</p>
+                  <Button type="submit" disabled={busy || !f.plano} className="rounded-full">Contratar</Button>
+                </form>
+              )}
+            </Panel>
+          )}
+        </div>
       )}
-
-      <Panel>
-        <p className="font-medium text-foreground">Histórico de cobranças</p>
-        {(payments.data || []).length ? (
-          <div className="mt-4 overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead><tr className="text-left text-xs text-muted-foreground"><th className="py-2 pr-4 font-normal">Vencimento</th><th className="py-2 pr-4 font-normal">Valor</th><th className="py-2 pr-4 font-normal">Forma</th><th className="py-2 pr-4 font-normal">Status</th><th className="py-2 font-normal">Fatura</th></tr></thead>
-              <tbody className="divide-y divide-border">
-                {payments.data!.map((p: any) => (
-                  <tr key={p.id}><td className="py-3 pr-4 text-foreground">{day(p.due_date)}</td><td className="py-3 pr-4 text-foreground">{brl(p.value_cents)}</td>
-                    <td className="py-3 pr-4 text-foreground">{METHOD_LABEL[p.billing_type] || p.billing_type}</td><td className="py-3 pr-4 text-foreground">{PAY_LABEL[p.status] || p.status}</td>
-                    <td className="py-3">{p.invoice_url && <a href={p.invoice_url} target="_blank" rel="noreferrer" className="underline text-foreground">Abrir</a>}</td></tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : <p className="mt-3 text-sm text-muted-foreground">Nenhuma cobrança registrada ainda.</p>}
-      </Panel>
     </>
   );
 }

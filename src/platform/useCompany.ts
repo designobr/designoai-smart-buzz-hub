@@ -1,18 +1,14 @@
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { useQuery, type QueryKey } from '@tanstack/react-query';
+import { api } from './motor';
 import { useAuth } from './AuthProvider';
 
-/** The signed-in client's company (first one they own). */
-export function useCompany() {
-  const { user } = useAuth();
+/** Consulta GET da API v1 na organização escolhida. A chave inclui a organização, então trocar de organização recarrega tudo. */
+export function useMotor<T>(path: string, opts: { enabled?: boolean; extraKey?: QueryKey; refetchInterval?: number | false | ((dados: T | undefined) => number | false) } = {}) {
+  const { orgId } = useAuth();
   return useQuery({
-    queryKey: ['company', user?.id],
-    enabled: !!user,
-    queryFn: async () => {
-      const { data, error } = await supabase.from('companies').select('*')
-        .eq('owner_id', user!.id).order('created_at').limit(1).maybeSingle();
-      if (error) throw error;
-      return data;
-    },
+    queryKey: ['motor', orgId, path, ...(opts.extraKey ?? [])],
+    enabled: !!orgId && (opts.enabled ?? true),
+    queryFn: () => api<T>(path, { org: orgId }),
+    refetchInterval: typeof opts.refetchInterval === 'function' ? (q) => (opts.refetchInterval as (d: T | undefined) => number | false)(q.state.data as T | undefined) : opts.refetchInterval,
   });
 }
