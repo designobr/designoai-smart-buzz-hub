@@ -60,9 +60,12 @@ export type Planejamento = {
   mes: string; hoje: string; plano: { resumo: string | null; objetivos: string[]; pilares: { nome: string; descricao: string }[]; estado: string } | null;
   itens: Item[]; falhas: { id: string; tipo: string; erroMensagem: string | null }[]; pendentes: number; podeGerar: boolean; podeRefazer: boolean; estado: Estado;
 };
+export type MidiaBiblioteca = { id: string; video: boolean; largura: number | null; altura: number | null; duracaoS: number | null };
 export type Conteudo = {
-  item: Item; revisoes: { numero: number; pedido: string; atendidaEm: string | null }[]; restantes: number; podePedir: boolean; hash: string | null;
+  item: Item; revisoes: { numero: number; pedido: string; atendidaEm: string | null }[]; restantes: number; podePedir: boolean; podeAnexar: boolean;
+  midias: MidiaBiblioteca[]; hash: string | null;
 };
+export type ResultadoMidia = { id: string; status: string; erros: unknown[] };
 export type Consumo = {
   creditos: { periodo: string; incluido: number; avulso: number; reservado: number; consumido: number; disponivel: number };
   lancamentos: { id: number; tipo: string; quantidade: number; motivo: string | null; criadoEm: string }[];
@@ -83,3 +86,38 @@ export type AssinaturaApi = {
 };
 
 export const reais = (centavos: number) => (centavos / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+async function token(): Promise<string> {
+  const { data } = await motorAuth.auth.getSession();
+  if (!data.session) throw new ApiError('Sua sessão expirou. Entre de novo.', 401);
+  return data.session.access_token;
+}
+
+/** Imagem (PNG ou JPEG, até 8 MB): bytes no corpo, nome no cabeçalho. */
+export async function enviarImagem(org: string, arquivo: File): Promise<ResultadoMidia> {
+  if (!['image/png', 'image/jpeg'].includes(arquivo.type)) throw new ApiError('Use uma imagem PNG ou JPEG.', 422);
+  if (arquivo.size > 8 * 1024 * 1024) throw new ApiError('A imagem passa de 8 MB.', 422);
+  const r = await fetch(`${MOTOR_API}/api/v1/midias/imagem`, {
+    method: 'POST', body: arquivo,
+    headers: { Authorization: `Bearer ${await token()}`, 'X-Organizacao-Id': org, 'Content-Type': arquivo.type, 'X-Nome-Arquivo': encodeURIComponent(arquivo.name) },
+  }).catch(() => { throw new ApiError('Não foi possível enviar. Tente de novo.', 0); });
+  const j = (await r.json().catch(() => ({}))) as ResultadoMidia & { erro?: string };
+  if (!r.ok) throw new ApiError(j.erro ?? `Erro ${r.status}`, r.status);
+  return j;
+}
+
+/** Vídeo MP4 ou MOV: o navegador envia direto ao armazenamento por URL temporária e o motor valida (formato, duração, proporção). */
+export async function enviarVideo(org: string, arquivo: File, progresso: (pct: number) => void): Promise<ResultadoMidia> {
+  const mime = arquivo.type === 'video/quicktime' ? 'video/quicktime' : 'video/mp4';
+  if (!['video/mp4', 'video/quicktime'].includes(arquivo.type)) throw new ApiError('Use um vídeo MP4 ou MOV.', 422);
+  const prep = await api<{ upload_id: string; upload_url: string }>('/midias/video/preparar', { org, body: { nome: arquivo.name, mime, tamanho: arquivo.size } });
+  await new Promise<void>((ok, falha) => {
+    const x = new XMLHttpRequest();
+    x.open('PUT', prep.upload_url); x.setRequestHeader('Content-Type', mime);
+    x.upload.onprogress = (e) => { if (e.lengthComputable) progresso(Math.round((e.loaded / e.total) * 100)); };
+    x.onload = () => (x.status >= 200 && x.status < 300 ? ok() : falha(new ApiError('O envio do vídeo foi recusado. Confira o formato e o tamanho.', x.status)));
+    x.onerror = () => falha(new ApiError('A conexão caiu durante o envio. Tente de novo.', 0));
+    x.send(arquivo);
+  });
+  return api<ResultadoMidia>('/midias/video/finalizar', { org, body: { uploadId: prep.upload_id } });
+}

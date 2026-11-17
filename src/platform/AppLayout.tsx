@@ -1,6 +1,6 @@
 import { NavLink, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { LayoutGrid, Building2, CalendarDays, Clapperboard, Share2, CreditCard, Shield, LogOut, Loader2 } from 'lucide-react';
+import { LayoutGrid, Building2, CalendarDays, Clapperboard, Share2, CreditCard, Shield, LogOut, Loader2, Settings } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -17,6 +17,7 @@ const NAV = [
   { to: '/app/producao', label: 'Produção', icon: Clapperboard },
   { to: '/app/conexoes', label: 'Redes sociais', icon: Share2 },
   { to: '/app/assinatura', label: 'Assinatura', icon: CreditCard },
+  { to: '/app/configuracoes', label: 'Configurações', icon: Settings },
 ];
 
 export function RequireAuth({ admin = false }: { admin?: boolean }) {

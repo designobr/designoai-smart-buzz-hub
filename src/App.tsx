@@ -38,6 +38,7 @@ import { RequireAuth } from "./platform/AppLayout";
 import { LoginPage, SignupPage, ForgotPasswordPage, ResetPasswordPage } from "./platform/AuthPages";
 import { DashboardPage, CompanyPage, PlanningPage, ProductionPage, ConnectionsPage, BillingPage } from "./platform/AppPages";
 import { AdminPage } from "./platform/AdminPages";
+import { SettingsPage } from "./platform/SettingsPage";
 
 const queryClient = new QueryClient();
 
@@ -102,6 +103,7 @@ const App = () => (
                 <Route path="producao" element={<ProductionPage />} />
                 <Route path="conexoes" element={<ConnectionsPage />} />
                 <Route path="assinatura" element={<BillingPage />} />
+                <Route path="configuracoes" element={<SettingsPage />} />
               </Route>
               <Route path="/admin" element={<RequireAuth admin />}>
                 <Route index element={<AdminPage />} />

@@ -26,10 +26,23 @@ Definidos em `src/platform/motor.ts`, sobrescritos por variáveis de build quand
 5. Verifique: abra `https://designoai.com.br/app`, entre, crie a organização e confira que o painel carrega.
 6. O motor já aceita a origem `https://designoai.com.br` (`API_ORIGENS`). Para um domínio de testes do Lovable (por exemplo `*.lovable.app`), acrescente a origem exata em `API_ORIGENS` no Railway.
 
-## Teste
-`e2e/motor-app.cjs` (Playwright) roda o fluxo inteiro contra a homologação: login, criar organização, salvar empresa, planejamento, produção, redes, contratar no Asaas Sandbox e bloqueio de `/admin` para não administradores.
+## Funcionalidades do /app (todas pela API v1)
+- **Conexão de redes dentro do app:** o botão Conectar leva à rede e o retorno volta para `/app/conexoes` com o resultado (conta conectada, erro ou escolha de conta). O destino viaja no `state` do OAuth e só vale para origens de `API_ORIGENS` e caminhos sob `/app`.
+- **Desconectar contas** (administrador e editor), com confirmação.
+- **Envio de mídia:** imagem PNG ou JPEG (até 8 MB) e vídeo MP4 ou MOV (envio direto ao armazenamento por URL temporária, validação no motor). Instagram aceita só JPEG, e o app avisa antes.
+- **Agente de IA:** estados de processamento (a tela se atualiza sozinha), erros com mensagem, refazer planejamento, aviso claro quando o agente está desligado, créditos e falta de crédito. A administração liga, desliga e configura o provedor e a chave em `/admin`.
+- **Revisão e aprovação** de conteúdos, pedido de alteração e anexar mídia à peça.
+- **Configurações:** dados da organização, membros e convites, perfil de publicação automática (com as declarações do YouTube e do TikTok feitas pelo administrador), exportação e exclusão LGPD.
+- **Painel:** publicações recentes (com link), avisos e resumo.
+- **Assinatura:** planos, contratar e cancelar (Asaas), uso do mês e créditos.
+
+## Testes
+Em navegador real (Playwright), contra a homologação, servindo o build como `https://designoai.com.br`:
+- `e2e/app-completo.cjs`: 23 verificações (login, painel, conexões com retorno do OAuth, desconectar, produção com envio de imagem e a regra de JPEG do Instagram, planejamento, configurações, perfil de publicação, exportação e administração do agente).
+- `e2e/video.cjs`: envio de vídeo direto ao armazenamento, validação e anexo.
+Uso: `npm run build` e `E=<email> S=<senha> node e2e/app-completo.cjs` com um usuário descartável e uma organização de teste semeada (ver o cabeçalho do script).
 
 ## Limites conhecidos
-- Aprovar um conteúdo depende do agente de IA estar ligado e de haver mídia; sem isso a Produção fica vazia.
-- Anexar mídia às peças e desconectar contas ainda são feitos nas telas do motor (`/app` do domínio do motor).
-- Depois de autorizar uma rede, o retorno do OAuth termina numa página do motor, não no `/app`.
+- O motor ainda exige o agente de IA ligado (chave de provedor) para gerar planejamento e textos; sem isso o app mostra o aviso e a Produção fica vazia.
+- Agendamento manual avulso, relatórios por cliente (agências) e calendário editorial do motor ainda não têm tela no app. A rotina padrão (planejar, revisar, aprovar, publicar) está completa.
+- Recuperação de senha e confirmação de e-mail dependem da configuração de URLs e SMTP do Auth (passo 3 acima).

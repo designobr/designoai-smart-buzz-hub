@@ -1,6 +1,6 @@
 // Telas do cliente em /app. Todos os dados vêm da API v1 do motor (src/platform/motor.ts); nada é lido direto de tabelas.
 import { useEffect, useState, type FormEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -13,7 +13,7 @@ import { useAuth } from './AuthProvider';
 import { useMotor } from './useCompany';
 import { EmptyState, PageHeader, Panel } from './AppLayout';
 import {
-  api, reais, REDES, type AssinaturaApi, type Conta, type Conteudo, type Consumo, type Item, type Negocio, type Planejamento, type Rede,
+  api, enviarImagem, enviarVideo, reais, REDES, type AssinaturaApi, type Conta, type Conteudo, type Consumo, type Item, type Negocio, type Planejamento, type Rede,
 } from './motor';
 
 const dia = (d?: string | null) => (d ? format(new Date(`${d.slice(0, 10)}T12:00:00`), "dd 'de' MMM", { locale: ptBR }) : '');
@@ -57,6 +57,8 @@ export function DashboardPage() {
   const plano = useMotor<Planejamento>('/planejamento');
   const contas = useMotor<Conta[]>('/contas');
   const negocio = useMotor<{ negocio: Negocio | null }>('/negocio');
+  const pubs = useMotor<{ id: string; rede: string; status: string; agendadaPara: string; publicadoEm: string | null; url: string | null; erro: string | null }[]>('/publicacoes');
+  const avisos = useMotor<{ id: number; mensagem: string; criadaEm: string | null; lida: boolean }[]>('/notificacoes');
 
   if (negocio.isLoading) return null;
   const semEmpresa = !negocio.data?.negocio;
@@ -88,9 +90,34 @@ export function DashboardPage() {
           </ul>
         )}
       </Panel>
+      <div className="mt-6 grid gap-4 lg:grid-cols-2">
+        <Panel>
+          <h2 className="font-medium">Publicações recentes</h2>
+          {(pubs.data ?? []).length === 0 ? <p className="mt-2 text-sm text-muted-foreground">Nenhuma publicação ainda.</p> : (
+            <ul className="mt-3 divide-y divide-border text-sm">
+              {(pubs.data ?? []).slice(0, 8).map((p) => (
+                <li key={p.id} className="flex flex-wrap justify-between gap-2 py-2">
+                  <span>{nomeRede(p.rede)} · {quando(p.publicadoEm ?? p.agendadaPara)}{p.url ? <> · <a href={p.url} target="_blank" rel="noreferrer" className="underline underline-offset-4">ver</a></> : null}</span>
+                  <span className={p.status === 'falhou' ? 'text-destructive' : 'text-muted-foreground'}>{PUB_ROTULO[p.status] ?? p.status}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Panel>
+        <Panel>
+          <h2 className="font-medium">Avisos</h2>
+          {(avisos.data ?? []).length === 0 ? <p className="mt-2 text-sm text-muted-foreground">Nenhum aviso.</p> : (
+            <ul className="mt-3 divide-y divide-border text-sm">
+              {(avisos.data ?? []).slice(0, 8).map((a) => <li key={a.id} className="py-2"><span className={a.lida ? 'text-muted-foreground' : ''}>{a.mensagem}</span>{a.criadaEm ? <span className="ml-2 text-xs text-muted-foreground">{quando(a.criadaEm)}</span> : null}</li>)}
+            </ul>
+          )}
+        </Panel>
+      </div>
     </>
   );
 }
+
+const PUB_ROTULO: Record<string, string> = { agendada: 'Agendada', em_execucao: 'Publicando', publicada: 'Publicada', falhou: 'Falhou', cancelada: 'Cancelada', pendente_reconciliacao: 'Em verificação' };
 
 /* ---------------- Empresa e marca ---------------- */
 const lista = (t: string) => t.split(/[\n,;]+/).map((s) => s.trim()).filter(Boolean);
@@ -175,11 +202,13 @@ export function PlanningPage() {
   const { orgId } = useAuth();
   const qc = useQueryClient();
   const [mes, setMes] = useState(() => new Date().toISOString().slice(0, 7));
-  const q = useMotor<Planejamento>(`/planejamento?mes=${mes}`);
+  // Enquanto há tarefas do agente em andamento ou peças sendo produzidas, a tela se atualiza sozinha.
+  const q = useMotor<Planejamento>(`/planejamento?mes=${mes}`, { refetchInterval: (d) => (d && (d.pendentes > 0 || d.itens.some((i) => i.estado === 'em_producao')) ? 5000 : false) });
   const [busy, setBusy] = useState(false);
-  const gerar = async () => {
+  const gerar = async (refazer = false) => {
+    if (refazer && !window.confirm('Refazer o planejamento do mês? As peças que já estão em produção são preservadas.')) return;
     setBusy(true);
-    try { await api('/planejamento/gerar', { org: orgId, body: { mes } }); toast.success('Planejamento pedido. Ele aparece aqui em instantes.'); await qc.invalidateQueries({ queryKey: ['motor', orgId] }); }
+    try { await api(refazer ? '/planejamento/refazer' : '/planejamento/gerar', { org: orgId, body: { mes } }); toast.success('Planejamento pedido. Ele aparece aqui em instantes.'); await qc.invalidateQueries({ queryKey: ['motor', orgId] }); }
     catch (err) { toast.error((err as Error).message); } finally { setBusy(false); }
   };
   const d = q.data;
@@ -188,11 +217,13 @@ export function PlanningPage() {
       <PageHeader title="Planejamento" description="Calendário de conteúdos do mês, por rede." />
       <div className="mb-6 flex flex-wrap items-end gap-3">
         <div className="space-y-2"><Label htmlFor="mes">Mês</Label><Input id="mes" type="month" value={mes} onChange={(e) => e.target.value && setMes(e.target.value)} className="h-10 w-44" /></div>
-        {d?.podeGerar && <Button onClick={gerar} disabled={busy} className="rounded-full">Gerar planejamento</Button>}
+        {d?.podeGerar && <Button onClick={() => gerar()} disabled={busy || d.pendentes > 0} className="rounded-full">Gerar planejamento</Button>}
+        {d?.podeRefazer && <Button variant="outline" onClick={() => gerar(true)} disabled={busy || d.pendentes > 0} className="rounded-full">Refazer planejamento</Button>}
       </div>
       {q.isLoading || q.error ? <Carregando erro={q.error as Error | null} /> : d && (
         <>
           <AvisoAgente estado={d.estado} />
+          {d.pendentes > 0 && <p role="status" className="mb-6 rounded-xl border border-border bg-background px-4 py-3 text-sm">O agente está trabalhando no seu planejamento ({d.pendentes} tarefa{d.pendentes === 1 ? '' : 's'} em andamento). Esta tela se atualiza sozinha.</p>}
           {d.plano && (
             <Panel className="mb-6">
               {d.plano.resumo && <p className="text-sm">{d.plano.resumo}</p>}
@@ -213,7 +244,13 @@ export function PlanningPage() {
               </ul>
             </Panel>
           )}
-          {d.falhas.length > 0 && <p className="mt-4 text-sm text-destructive">{d.falhas.length} tarefa(s) com problema. A administração foi avisada.</p>}
+          {d.falhas.length > 0 && (
+            <Panel className="mt-4 border-destructive/40">
+              <p className="text-sm font-medium text-destructive">{d.falhas.length} tarefa(s) do agente com problema</p>
+              <ul className="mt-2 list-disc pl-5 text-sm text-muted-foreground">{d.falhas.map((f) => <li key={f.id}>{f.erroMensagem ?? 'Falha sem detalhe.'}</li>)}</ul>
+              {d.podeRefazer && <p className="mt-2 text-xs text-muted-foreground">Use "Refazer planejamento" para tentar de novo. Créditos reservados em tarefas que falham são devolvidos.</p>}
+            </Panel>
+          )}
         </>
       )}
     </>
@@ -224,8 +261,10 @@ export function PlanningPage() {
 function Detalhe({ id, onClose }: { id: string; onClose: () => void }) {
   const { orgId } = useAuth();
   const qc = useQueryClient();
-  const q = useMotor<Conteudo>(`/conteudos/${id}`);
+  const q = useMotor<Conteudo>(`/conteudos/${id}`, { refetchInterval: (d) => (d && ['em_producao', 'alteracao_solicitada'].includes(d.item.estado) ? 5000 : false) });
   const [pedido, setPedido] = useState('');
+  const [escolhidas, setEscolhidas] = useState<string[]>([]);
+  const [pct, setPct] = useState<number | null>(null);
   const [busy, setBusy] = useState(false);
   const refrescar = () => qc.invalidateQueries({ queryKey: ['motor', orgId] });
   const c = q.data;
@@ -239,6 +278,21 @@ function Detalhe({ id, onClose }: { id: string; onClose: () => void }) {
     try { await api(`/conteudos/${id}/alteracao`, { org: orgId, body: { pedido } }); toast.success('Pedido de alteração enviado.'); setPedido(''); await refrescar(); }
     catch (e) { toast.error((e as Error).message); } finally { setBusy(false); }
   };
+  const enviar = async (arquivo: File | undefined) => {
+    if (!arquivo || !orgId) return; setBusy(true); setPct(0);
+    try {
+      const r = arquivo.type.startsWith('video/') ? await enviarVideo(orgId, arquivo, setPct) : await enviarImagem(orgId, arquivo);
+      if (r.status !== 'aprovada_tecnicamente') toast.error(`A mídia não passou na validação: ${(r.erros as string[]).join('; ') || 'formato não aceito'}`);
+      else { toast.success('Mídia enviada e validada.'); setEscolhidas((p) => [...p, r.id]); }
+      setBusy(false); setPct(null); void refrescar();
+    } catch (e) { toast.error((e as Error).message); } finally { setBusy(false); setPct(null); }
+  };
+  const anexar = async () => {
+    setBusy(true);
+    try { await api(`/conteudos/${id}/midias`, { org: orgId, body: { midiaIds: escolhidas } }); toast.success('Mídia anexada. O conteúdo segue para a produção.'); setEscolhidas([]); await refrescar(); }
+    catch (e) { toast.error((e as Error).message); } finally { setBusy(false); }
+  };
+  const alternarMidia = (m: string) => setEscolhidas((p) => (p.includes(m) ? p.filter((x) => x !== m) : [...p, m]));
   return (
     <Panel className="mb-6">
       <div className="flex items-start justify-between gap-3"><h2 className="font-medium">{c?.item.titulo ?? c?.item.tema ?? 'Conteúdo'}</h2><button onClick={onClose} className="text-sm text-muted-foreground">Fechar</button></div>
@@ -247,7 +301,31 @@ function Detalhe({ id, onClose }: { id: string; onClose: () => void }) {
           <p className="text-muted-foreground">{nomeRede(c.item.rede)} · {dia(c.item.dataPrevista)} · {rotulo(c.item.estado)}</p>
           {c.item.roteiro && <div><p className="font-medium">Roteiro</p><p className="whitespace-pre-wrap">{c.item.roteiro}</p></div>}
           {c.item.legenda && <div><p className="font-medium">Legenda</p><p className="whitespace-pre-wrap">{c.item.legenda}</p>{c.item.hashtags.length > 0 && <p className="mt-1 text-muted-foreground">{c.item.hashtags.map((h) => `#${h.replace(/^#/, '')}`).join(' ')}</p>}</div>}
-          {c.item.motivoBloqueio && <p className="text-destructive">{c.item.motivoBloqueio}</p>}
+          {c.item.estado === 'em_producao' && <p role="status" className="text-muted-foreground">O agente está produzindo este conteúdo. A tela se atualiza sozinha.</p>}
+          {c.item.estado === 'alteracao_solicitada' && <p role="status" className="text-muted-foreground">Sua alteração está sendo aplicada. A tela se atualiza sozinha.</p>}
+          {c.item.estado === 'aguardando_creditos' && <p className="text-muted-foreground">Faltam créditos para produzir este conteúdo. Veja o saldo em <Link to="/app/assinatura" className="underline underline-offset-4">Assinatura</Link>.</p>}
+          {c.item.estado === 'falhou' && <p className="text-destructive">A produção deste conteúdo falhou{c.item.motivoBloqueio ? `: ${c.item.motivoBloqueio}` : '.'} Refaça o planejamento para tentar de novo.</p>}
+          {c.item.motivoBloqueio && c.item.estado !== 'falhou' && <p className="text-destructive">{c.item.motivoBloqueio}</p>}
+          {c.item.estado === 'aguardando_midia' && (
+            <div className="space-y-3 rounded-xl border border-border p-4">
+              <p className="font-medium">Esta peça precisa da sua mídia</p>
+              {!c.podeAnexar ? <p className="text-muted-foreground">Peça a um administrador ou editor para enviar a mídia.</p> : (
+                <>
+                  <p className="text-muted-foreground">{c.item.formato === 'video_curto' ? 'Envie um vídeo MP4 ou MOV na vertical (9:16).' : c.item.rede === 'instagram' ? 'O Instagram aceita somente imagens JPEG.' : 'Envie imagens PNG ou JPEG.'}</p>
+                  <input type="file" aria-label="Enviar mídia" disabled={busy} accept={c.item.formato === 'video_curto' ? 'video/mp4,video/quicktime' : c.item.formato === 'carrossel' ? 'image/png,image/jpeg,video/mp4,video/quicktime' : c.item.rede === 'instagram' ? 'image/jpeg' : 'image/png,image/jpeg'} onChange={(e) => { void enviar(e.target.files?.[0]); e.target.value = ''; }} />
+                  {pct !== null && <p role="status">Enviando… {pct}%</p>}
+                  {c.midias.length > 0 && (
+                    <ul className="space-y-1">
+                      {c.midias.map((m) => (
+                        <li key={m.id}><label className="flex items-center gap-2"><input type="checkbox" checked={escolhidas.includes(m.id)} onChange={() => alternarMidia(m.id)} />{m.video ? `Vídeo${m.duracaoS ? ` de ${Math.round(m.duracaoS)} s` : ''}` : 'Imagem'}{m.largura && m.altura ? ` (${m.largura}×${m.altura})` : ''}</label></li>
+                      ))}
+                    </ul>
+                  )}
+                  <Button onClick={anexar} disabled={busy || escolhidas.length === 0} className="rounded-full">Anexar à peça</Button>
+                </>
+              )}
+            </div>
+          )}
           {c.revisoes.length > 0 && <ul className="list-disc pl-5 text-muted-foreground">{c.revisoes.map((r) => <li key={r.numero}>Alteração {r.numero}: {r.pedido}{r.atendidaEm ? ' (atendida)' : ' (em andamento)'}</li>)}</ul>}
           {c.item.estado === 'aguardando_aprovacao' && c.hash && <Button onClick={aprovar} disabled={busy} className="rounded-full">Aprovar este conteúdo</Button>}
           {c.podePedir && (
@@ -301,32 +379,81 @@ export function ProductionPage() {
 }
 
 /* ---------------- Redes sociais ---------------- */
-export function ConnectionsPage() {
+function Escolha({ selecao, onFim }: { selecao: string; onFim: () => void }) {
   const { orgId } = useAuth();
+  const q = useMotor<{ opcoes: { id: string; nome: string }[] }>(`/contas/selecao/${selecao}`);
+  const [busy, setBusy] = useState(false);
+  const escolher = async (paginaId: string) => {
+    setBusy(true);
+    try { const r = await api<{ nome: string }>('/contas/selecao', { org: orgId, body: { selecaoId: selecao, paginaId } }); toast.success(`Conta conectada: ${r.nome}`); onFim(); }
+    catch (e) { toast.error((e as Error).message); setBusy(false); }
+  };
+  return (
+    <Panel className="mb-6">
+      <h2 className="font-medium">Escolha a conta a conectar</h2>
+      {q.isLoading || q.error ? <Carregando erro={q.error as Error | null} /> : (
+        <ul className="mt-3 space-y-2">
+          {(q.data?.opcoes ?? []).map((o) => <li key={o.id} className="flex items-center justify-between gap-3 text-sm"><span>{o.nome}</span><Button size="sm" variant="outline" disabled={busy} onClick={() => escolher(o.id)} className="rounded-full">Conectar esta</Button></li>)}
+        </ul>
+      )}
+    </Panel>
+  );
+}
+
+export function ConnectionsPage() {
+  const { orgId, org } = useAuth();
+  const qc = useQueryClient();
+  const [params, setParams] = useSearchParams();
   const q = useMotor<Conta[]>('/contas');
   const [busy, setBusy] = useState<string | null>(null);
+  const podeGerir = ['administrador', 'editor'].includes(org?.papel ?? '');
+  const selecao = params.get('conexao') === 'selecao' ? params.get('selecao') : null;
+
+  // Retorno do OAuth: o motor devolve o usuário aqui com o resultado na URL.
+  useEffect(() => {
+    const r = params.get('conexao'); if (!r) return;
+    if (r === 'ok') toast.success(`Conta conectada${params.get('nome') ? `: ${params.get('nome')}` : ''}.`);
+    if (r === 'erro') toast.error(params.get('msg') || 'Não foi possível conectar a conta.');
+    if (r !== 'selecao') { setParams({}, { replace: true }); void qc.invalidateQueries({ queryKey: ['motor', orgId] }); }
+  }, [params, setParams, qc, orgId]);
+
   const conectar = async (rede: Rede) => {
     setBusy(rede);
-    try { const r = await api<{ url: string }>('/contas/conectar', { org: orgId, body: { rede } }); window.location.assign(r.url); }
+    try { const r = await api<{ url: string }>('/contas/conectar', { org: orgId, body: { rede, retorno: '/app/conexoes' } }); window.location.assign(r.url); }
     catch (e) { toast.error((e as Error).message); setBusy(null); }
+  };
+  const desconectar = async (c: Conta) => {
+    if (!window.confirm(`Desconectar ${c.nome}? As publicações agendadas nessa conta não serão feitas.`)) return;
+    setBusy(c.id);
+    try { await api(`/contas/${c.id}/desconectar`, { org: orgId, method: 'POST', body: {} }); toast.success('Conta desconectada.'); await qc.invalidateQueries({ queryKey: ['motor', orgId] }); }
+    catch (e) { toast.error((e as Error).message); } finally { setBusy(null); }
   };
   const contas = q.data ?? [];
   return (
     <>
       <PageHeader title="Redes sociais" description="Conecte as contas onde o conteúdo será publicado. Você autoriza na própria rede e pode desconectar quando quiser." />
+      {selecao && <Escolha selecao={selecao} onFim={() => { setParams({}, { replace: true }); void qc.invalidateQueries({ queryKey: ['motor', orgId] }); }} />}
       {q.isLoading || q.error ? <Carregando erro={q.error as Error | null} /> : (
         <div className="grid gap-4 sm:grid-cols-2">
           {REDES.map((r) => {
-            const doTipo = contas.filter((c) => c.rede === r.key);
+            const doTipo = contas.filter((c) => c.rede === r.key && !['desconectada', 'revogada'].includes(c.status));
             return (
               <Panel key={r.key}>
                 <h2 className="font-medium">{r.label}</h2>
                 {doTipo.length === 0 ? <p className="mt-2 text-sm text-muted-foreground">Não conectada.</p> : (
-                  <ul className="mt-2 space-y-1 text-sm">
-                    {doTipo.map((c) => <li key={c.id}>{c.nome} · <span className={c.status === 'conectada' ? '' : 'text-destructive'}>{c.status}</span>{c.erro ? <span className="block text-xs text-destructive">{c.erro}</span> : null}</li>)}
+                  <ul className="mt-2 space-y-2 text-sm">
+                    {doTipo.map((c) => (
+                      <li key={c.id} className="flex items-start justify-between gap-3">
+                        <span>{c.nome} · <span className={c.status === 'conectada' ? '' : 'text-destructive'}>{c.status}</span>
+                          {c.erro ? <span className="block text-xs text-destructive">{c.erro}</span> : null}
+                          {c.tokenExpiraEm ? <span className="block text-xs text-muted-foreground">Acesso válido até {quando(c.tokenExpiraEm)}</span> : null}</span>
+                        {podeGerir && <button disabled={busy === c.id} onClick={() => desconectar(c)} className="shrink-0 text-xs text-muted-foreground underline underline-offset-4">Desconectar</button>}
+                      </li>
+                    ))}
                   </ul>
                 )}
-                <Button variant="outline" className="mt-4 rounded-full" disabled={busy === r.key} onClick={() => conectar(r.key)}>{doTipo.length ? 'Reconectar' : 'Conectar'}</Button>
+                {podeGerir ? <Button variant="outline" className="mt-4 rounded-full" disabled={busy === r.key} onClick={() => conectar(r.key)}>{doTipo.length ? 'Reconectar' : 'Conectar'}</Button>
+                  : <p className="mt-4 text-xs text-muted-foreground">Só administradores e editores conectam contas.</p>}
               </Panel>
             );
           })}
