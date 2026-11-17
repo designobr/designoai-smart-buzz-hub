@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import type { Session, User } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
+import { motorSupabase as supabase } from './motor-cliente';
+import { chamarMotor } from './motor-api';
 
 type AuthState = { user: User | null; session: Session | null; loading: boolean; isAdmin: boolean };
 const AuthContext = createContext<AuthState>({ user: null, session: null, loading: true, isAdmin: false });
@@ -23,9 +24,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const uid = session?.user.id;
     if (!uid) return setIsAdmin(false);
     // Role is read from the protected user_roles table; RLS enforces it server-side too.
+    // Administrador da plataforma: a API só responde à lista de organizações para quem é administrador (a função do banco confere).
     setTimeout(() => {
-      supabase.from('user_roles').select('role').eq('user_id', uid).eq('role', 'admin').maybeSingle()
-        .then(({ data }) => setIsAdmin(!!data));
+      chamarMotor('/admin/planos').then(() => setIsAdmin(true)).catch(() => setIsAdmin(false));
     }, 0);
   }, [session?.user.id]);
 

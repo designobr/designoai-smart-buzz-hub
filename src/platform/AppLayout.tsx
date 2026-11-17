@@ -1,7 +1,7 @@
 import { NavLink, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { LayoutGrid, Building2, CalendarDays, Clapperboard, Share2, CreditCard, Shield, LogOut, Loader2 } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
+import { motorSupabase as supabase } from './motor-cliente';
 import { cn } from '@/lib/utils';
 import { useAuth } from './AuthProvider';
 
