@@ -1,6 +1,7 @@
 import { ArrowRight, Cpu, FileText, LayoutDashboard, RefreshCw, TrendingUp, Users } from 'lucide-react';
 import Reveal from '@/components/Reveal';
 import ActionButton from '@/components/ActionButton';
+import EditorialImageOverlay from '@/components/EditorialImageOverlay';
 import LocaleLink from '@/components/LocaleLink';
 import editorialTeam from '@/assets/editorial-team.jpg';
 import editorialBrand from '@/assets/editorial-brand.jpg';
@@ -45,16 +46,18 @@ const Features = () => {
 
         <div className="mt-20 grid items-center gap-14 lg:grid-cols-12 lg:gap-20">
           <Reveal className="lg:col-span-7">
-            <div className="overflow-hidden rounded-3xl border border-border">
-              <img
-                src={editorialTeam}
-                alt={t('home.features.imageAlt1')}
-                loading="lazy"
-                width={1408}
-                height={1008}
-                className="h-[320px] w-full object-cover md:h-[460px]"
-              />
-            </div>
+            <EditorialImageOverlay
+              src={editorialTeam}
+              alt={t('home.features.imageAlt1')}
+              eyebrow={t('home.features.creativeOne.eyebrow')}
+              title={t('home.features.creativeOne.title')}
+              description={t('home.features.creativeOne.description')}
+              actionLabel={t('home.features.creativeOne.action')}
+              href="#services"
+              width={1408}
+              height={1008}
+              className="h-[360px] md:h-[460px]"
+            />
           </Reveal>
           <Reveal delay={0.08} className="lg:col-span-5">
             <h3 className="text-2xl font-bold tracking-[-0.03em] text-foreground md:text-3xl">
@@ -72,16 +75,18 @@ const Features = () => {
 
         <div className="mt-24 grid items-center gap-14 lg:grid-cols-12 lg:gap-20">
           <Reveal className="lg:col-span-5 lg:order-2">
-            <div className="overflow-hidden rounded-3xl border border-border">
-              <img
-                src={editorialBrand}
-                alt={t('home.features.imageAlt2')}
-                loading="lazy"
-                width={1408}
-                height={1008}
-                className="h-[320px] w-full object-cover md:h-[460px]"
-              />
-            </div>
+            <EditorialImageOverlay
+              src={editorialBrand}
+              alt={t('home.features.imageAlt2')}
+              eyebrow={t('home.features.creativeTwo.eyebrow')}
+              title={t('home.features.creativeTwo.title')}
+              description={t('home.features.creativeTwo.description')}
+              actionLabel={t('home.features.creativeTwo.action')}
+              href="#contact"
+              width={1408}
+              height={1008}
+              className="h-[360px] md:h-[460px]"
+            />
           </Reveal>
           <Reveal delay={0.08} className="lg:col-span-7 lg:order-1">
             <h3 className="text-2xl font-bold tracking-[-0.03em] text-foreground md:text-3xl">

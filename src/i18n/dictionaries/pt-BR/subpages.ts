@@ -18,6 +18,15 @@ const subpages = {
     ],
   },
   gestaoRedesSociais: {
+    video: {
+      "badge": "Nosso processo",
+      "title": "Muito mais que uma arte bonita.",
+      "description": "Uma presença profissional começa antes da publicação. Conheça o processo da DesignoAI: planejamento, criação dos designs, aprovação do cliente e organização do agendamento para uma comunicação consistente.",
+      "cta": "Quero organizar minhas redes sociais",
+      "whatsappMessage": "Olá! Quero saber mais sobre planejamento e gestão de redes sociais da DesignoAI.",
+      "videoLabel": "DesignoAI: planejamento, criação, aprovação e agendamento de conteúdo",
+      "caption": "Vídeo original em português."
+    },
     seo: { title: 'Gestão de Redes Sociais', description: 'Gestão completa de redes sociais com IA: posts automatizados, stories, engajamento e monitoramento para ampliar sua presença digital.' },
     title: 'Gestão de Redes Sociais',
     subtitle: 'Automação inteligente para postagens, engajamento e monitoramento de suas redes sociais.',
@@ -32,6 +41,15 @@ const subpages = {
     ],
   },
   criacaoConteudo: {
+    video: {
+      "badge": "Estratégia de conteúdo",
+      "title": "Publique com propósito.",
+      "description": "Cada conteúdo precisa de um objetivo: atrair pessoas, gerar confiança ou apresentar soluções. Antes do próximo post, defina quem você quer alcançar, qual problema vai resolver e qual ação espera do público.",
+      "cta": "Quero conteúdo com estratégia",
+      "whatsappMessage": "Olá! Quero saber mais sobre criação de conteúdo estratégico da DesignoAI.",
+      "videoLabel": "DesignoAI: publicar com propósito nas redes sociais",
+      "caption": "Vídeo original em português."
+    },
     seo: { title: 'Criação de Conteúdo', description: 'Criação de conteúdo com IA: textos, imagens e gráficos de alta qualidade para redes sociais, blogs e campanhas. Aumente seu engajamento com a DesignoAI.' },
     title: 'Criação de Conteúdo',
     subtitle: 'Transforme sua comunicação com inteligência artificial que gera textos, imagens e gráficos de alta qualidade.',

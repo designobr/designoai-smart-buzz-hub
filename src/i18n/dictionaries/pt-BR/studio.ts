@@ -35,6 +35,17 @@ const studio = {
     subtitle: 'Veja a qualidade profissional que a DesignoAI entrega aos seus clientes',
     imageAlt: 'Exemplo de foto profissional {number}',
     badge: 'Criado com IA',
+    action: 'Quero criar o meu',
+    creatives: [
+      { title: 'Presença que inspira confiança', description: 'Retratos pensados para posicionar sua imagem profissional.' },
+      { title: 'Autoridade em cada detalhe', description: 'Uma apresentação visual alinhada ao seu momento.' },
+      { title: 'Sua marca começa por você', description: 'Imagens consistentes para todos os seus canais.' },
+      { title: 'Expressão com propósito', description: 'Naturalidade e direção visual em equilíbrio.' },
+      { title: 'Pronto para novas oportunidades', description: 'Fotografia profissional com acabamento editorial.' },
+      { title: 'Identidade que se destaca', description: 'Uma imagem forte sem perder sua essência.' },
+      { title: 'Profissionalismo visível', description: 'Retratos que comunicam antes mesmo das palavras.' },
+      { title: 'Seu melhor posicionamento', description: 'Consistência visual para fortalecer sua presença.' },
+    ],
     footnote: 'Todas as imagens foram geradas com inteligência artificial a partir de selfies simples',
   },
   testimonials: {

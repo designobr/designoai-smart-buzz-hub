@@ -18,6 +18,15 @@ const subpages = {
     ],
   },
   gestaoRedesSociais: {
+    video: {
+      "badge": "Notre processus",
+      "title": "Bien plus qu’un beau design.",
+      "description": "Une présence professionnelle commence avant la publication. Découvrez le processus DesignoAI : planification, création des visuels, validation du client et organisation de la programmation pour une communication cohérente.",
+      "cta": "Organiser mes réseaux sociaux",
+      "whatsappMessage": "Bonjour ! Je souhaite en savoir plus sur la planification et la gestion des réseaux sociaux avec DesignoAI.",
+      "videoLabel": "DesignoAI : planification, création, validation et programmation de contenu",
+      "caption": "Vidéo originale en portugais."
+    },
     seo: { title: 'Gestion des Réseaux Sociaux', description: 'Gestion complète des réseaux sociaux avec IA : publications automatisées, stories, engagement et suivi pour développer votre présence digitale.' },
     title: 'Gestion des Réseaux Sociaux',
     subtitle: 'Automatisation intelligente pour les publications, l\'engagement et le suivi de vos réseaux sociaux.',
@@ -32,6 +41,15 @@ const subpages = {
     ],
   },
   criacaoConteudo: {
+    video: {
+      "badge": "Stratégie de contenu",
+      "title": "Publiez avec un objectif.",
+      "description": "Chaque contenu doit avoir un objectif : attirer, inspirer confiance ou présenter des solutions. Avant votre prochaine publication, définissez votre public, le problème à résoudre et la réaction attendue.",
+      "cta": "Je veux du contenu stratégique",
+      "whatsappMessage": "Bonjour ! Je souhaite en savoir plus sur la création de contenu stratégique avec DesignoAI.",
+      "videoLabel": "DesignoAI : publier avec un objectif sur les réseaux sociaux",
+      "caption": "Vidéo originale en portugais."
+    },
     seo: { title: 'Création de Contenu', description: 'Création de contenu avec IA : textes, images et graphiques de haute qualité pour les réseaux sociaux, blogs et campagnes. Boostez votre engagement avec DesignoAI.' },
     title: 'Création de Contenu',
     subtitle: 'Transformez votre communication avec une intelligence artificielle qui génère des textes, images et graphiques de haute qualité.',
