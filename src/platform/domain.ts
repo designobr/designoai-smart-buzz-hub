@@ -1,6 +1,5 @@
 export const NETWORKS = [
   { key: 'instagram', label: 'Instagram' },
-  { key: 'facebook', label: 'Facebook' },
   { key: 'youtube', label: 'YouTube' },
   { key: 'threads', label: 'Threads' },
   { key: 'tiktok', label: 'TikTok' },
