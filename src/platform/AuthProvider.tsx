@@ -6,9 +6,9 @@ import { api, motorAuth, type Organizacao, type SessaoApi } from './motor';
 type AuthState = {
   user: User | null; session: Session | null; loading: boolean; isAdmin: boolean;
   /** Organizações do usuário no motor, a escolhida e a troca. `ready` indica que /sessao já respondeu. */
-  orgs: Organizacao[]; org: Organizacao | null; orgId: string | null; setOrgId: (id: string) => void; ready: boolean; erro: string; reload: () => Promise<void>;
+  orgs: Organizacao[]; org: Organizacao | null; orgId: string | null; principalId: string | null; naPrincipal: boolean; setOrgId: (id: string) => void; ready: boolean; erro: string; reload: () => Promise<void>;
 };
-const vazio: AuthState = { user: null, session: null, loading: true, isAdmin: false, orgs: [], org: null, orgId: null, setOrgId: () => undefined, ready: false, erro: '', reload: async () => undefined };
+const vazio: AuthState = { user: null, session: null, loading: true, isAdmin: false, orgs: [], org: null, orgId: null, principalId: null, naPrincipal: false, setOrgId: () => undefined, ready: false, erro: '', reload: async () => undefined };
 const AuthContext = createContext<AuthState>(vazio);
 const CHAVE_ORG = 'motor-org';
 const lerOrg = () => { try { return localStorage.getItem(CHAVE_ORG); } catch { return null; } };
@@ -36,7 +36,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // setTimeout: o cliente do Supabase não deve ser chamado dentro do próprio callback de mudança de sessão.
   useEffect(() => { const t = setTimeout(() => { void reload(); }, 0); return () => clearTimeout(t); }, [reload]);
 
-  const orgs = sessao?.organizacoes ?? [];
+  // Organização principal (a da própria DesignoAI) primeiro; as demais por nome. O app abre nela quando não há escolha guardada.
+  const principalId = sessao?.principal ?? null;
+  const orgs = [...(sessao?.organizacoes ?? [])].sort((a, b) => (a.organizacao_id === principalId ? -1 : b.organizacao_id === principalId ? 1 : a.nome.localeCompare(b.nome)));
   const org = orgs.find((o) => o.organizacao_id === escolhida) ?? orgs[0] ?? null;
   const setOrgId = useCallback((id: string) => {
     setEscolhida(id); try { localStorage.setItem(CHAVE_ORG, id); } catch { /* sem armazenamento */ }
@@ -45,7 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const valor = useMemo<AuthState>(() => ({
     user: session?.user ?? null, session, loading, isAdmin: sessao?.admin ?? false,
-    orgs, org, orgId: org?.organizacao_id ?? null, setOrgId, ready: !!sessao, erro, reload,
+    orgs, org, orgId: org?.organizacao_id ?? null, principalId, naPrincipal: !principalId || org?.organizacao_id === principalId, setOrgId, ready: !!sessao, erro, reload,
   }), [session, loading, sessao, orgs, org, setOrgId, erro, reload]);
 
   return <AuthContext.Provider value={valor}>{children}</AuthContext.Provider>;

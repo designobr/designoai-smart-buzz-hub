@@ -21,12 +21,13 @@ const NAV = [
 ];
 
 export function RequireAuth({ admin = false }: { admin?: boolean }) {
-  const { user, loading, isAdmin, ready, erro, orgs } = useAuth();
+  const { user, loading, isAdmin, ready, erro, orgs, naPrincipal } = useAuth();
   const loc = useLocation();
   if (loading) return <div className="min-h-screen grid place-items-center"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>;
   if (!user) return <Navigate to="/auth/login" replace state={{ from: loc.pathname }} />;
   if (!ready && !erro) return <div className="min-h-screen grid place-items-center"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>;
-  if (admin && !isAdmin) return <Navigate to="/app" replace />;
+  // A administração do sistema é da organização principal: em organização de cliente só valem as telas do próprio plano.
+  if (admin && (!isAdmin || !naPrincipal)) return <Navigate to="/app" replace />;
   return <AppShell semOrg={ready && orgs.length === 0 && !admin} />;
 }
 
@@ -51,9 +52,9 @@ function CriarOrganizacao() {
 }
 
 function AppShell({ semOrg }: { semOrg: boolean }) {
-  const { user, isAdmin, orgs, orgId, setOrgId, erro } = useAuth();
+  const { user, isAdmin, orgs, orgId, setOrgId, erro, principalId, naPrincipal } = useAuth();
   const nav = useNavigate();
-  const items = isAdmin ? [...NAV, { to: '/admin', label: 'Administração', icon: Shield }] : NAV;
+  const items = isAdmin && naPrincipal ? [...NAV, { to: '/admin', label: 'Administração', icon: Shield }] : NAV;
   const signOut = async () => { await supabase.auth.signOut(); nav('/auth/login'); };
 
   return (
@@ -77,7 +78,7 @@ function AppShell({ semOrg }: { semOrg: boolean }) {
           <div className="hidden md:block px-4 pb-3">
             <label className="text-xs text-muted-foreground" htmlFor="troca-org">Organização</label>
             <select id="troca-org" value={orgId ?? ''} disabled={orgs.length < 2} onChange={(e) => setOrgId(e.target.value)} className="mt-1 w-full rounded-lg border border-border bg-background px-2 py-1.5 text-sm">
-              {orgs.map((o) => <option key={o.organizacao_id} value={o.organizacao_id}>{o.nome}</option>)}
+              {orgs.map((o) => <option key={o.organizacao_id} value={o.organizacao_id}>{o.nome}{o.organizacao_id === principalId ? ' (principal)' : ''}</option>)}
             </select>
           </div>
         )}
@@ -96,7 +97,7 @@ function AppShell({ semOrg }: { semOrg: boolean }) {
           <div className="mb-6 flex items-center gap-2 text-sm md:hidden">
             <label htmlFor="troca-org-m" className="text-muted-foreground">Organização</label>
             <select id="troca-org-m" value={orgId ?? ''} onChange={(e) => setOrgId(e.target.value)} className="min-w-0 flex-1 rounded-lg border border-border bg-background px-2 py-1.5">
-              {orgs.map((o) => <option key={o.organizacao_id} value={o.organizacao_id}>{o.nome}</option>)}
+              {orgs.map((o) => <option key={o.organizacao_id} value={o.organizacao_id}>{o.nome}{o.organizacao_id === principalId ? ' (principal)' : ''}</option>)}
             </select>
           </div>
         )}
