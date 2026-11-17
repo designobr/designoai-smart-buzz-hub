@@ -5,10 +5,11 @@ import { toast } from 'sonner';
 import { chamarMotor } from './motor-api';
 import { EmptyState, PageHeader, Panel } from './AppLayout';
 
-type Plano = { codigo: string; nome: string; ativo?: boolean; creditos_mes: number | null; preco_centavos?: number | null };
+type Plano = { codigo: string; nome: string; ativo: boolean; limite_contas: number | null; limite_publicacoes_mes: number | null; limite_clientes: number | null; organizacoes: number };
+const lim = (n: number | null) => (n == null ? 'sem limite' : String(n));
 type Org = { id: string; nome: string; slug: string; status: string; plano_codigo: string | null };
 
-/* Planos e preços são editados no painel do motor (/admin). Aqui: leitura e atribuição de plano aos clientes. */
+/* Planos (limites e preços) são cadastrados pelo motor; aqui: leitura e atribuição de plano aos clientes. */
 function PlansAdmin() {
   const planos = useQuery({ queryKey: ['admin-planos'], queryFn: () => chamarMotor<Plano[]>('/admin/planos') });
   if (!(planos.data || []).length) return <EmptyState title="Nenhum plano" text="Os planos cadastrados no motor aparecem aqui." />;
@@ -18,8 +19,7 @@ function PlansAdmin() {
         <Panel key={p.codigo}>
           <p className="font-medium text-foreground">{p.nome} <span className="text-xs text-muted-foreground">({p.codigo})</span></p>
           <p className="mt-2 text-xs text-muted-foreground">
-            Créditos de produção por mês: {p.creditos_mes ?? 'não incluído'}
-            {p.preco_centavos != null ? ` · Preço: R$ ${(p.preco_centavos / 100).toFixed(2).replace('.', ',')}` : ''}
+            Contas: {lim(p.limite_contas)} · Publicações por mês: {lim(p.limite_publicacoes_mes)} · Clientes: {lim(p.limite_clientes)} · Organizações neste plano: {p.organizacoes}
           </p>
         </Panel>
       ))}

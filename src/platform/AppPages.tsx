@@ -20,7 +20,8 @@ type Item = {
 };
 type Conta = { id: string; rede: string; nome: string; status: string; erro: string | null };
 type Planejamento = { mes: string; hoje: string; itens: Item[]; podeGerar: boolean; estado: { agenteAtivo: boolean; provedor: string } };
-type Assinatura = { plano: { nome?: string; creditos_mes?: number | null } | null; uso: { usado: number; reservado: number } | null };
+type Assinatura = { plano: { ativo: boolean; limiteContas: number | null; limitePublicacoesMes: number | null; limiteClientes: number | null } | null; uso: { usado: number; reservado: number } | null };
+const limite = (n: number | null | undefined) => (n == null ? 'sem limite' : String(n));
 
 const REDES = [
   { key: 'instagram', label: 'Instagram' }, { key: 'threads', label: 'Threads' },
@@ -71,7 +72,7 @@ export function DashboardPage() {
     .filter((i) => i.dataPrevista && new Date(i.dataPrevista).getTime() > agora && ['agendado', 'aprovado'].includes(i.estado))
     .sort((a, b) => a.dataPrevista.localeCompare(b.dataPrevista)).slice(0, 5);
   const stats = [
-    { k: 'Plano', v: assinatura.data?.plano?.nome ?? 'Sem plano' },
+    { k: 'Plano', v: assinatura.data?.plano?.ativo ? 'Ativo' : 'Sem plano ativo' },
     { k: 'Aguardando sua aprovação', v: itens.filter((i) => i.estado === 'aguardando_aprovacao').length },
     { k: 'Agendados ou aprovados', v: itens.filter((i) => ['agendado', 'aprovado'].includes(i.estado)).length },
     { k: 'Publicados', v: itens.filter((i) => i.estado === 'publicado').length },
@@ -367,15 +368,17 @@ export function BillingPage() {
     queryFn: () => chamarMotor<Assinatura>('/assinatura', { organizacaoId: company!.id }),
   });
   if (!company) return <NeedsCompany />;
+  const plano = assinatura.data?.plano;
   const uso = assinatura.data?.uso;
   return (
     <>
-      <PageHeader title="Assinatura" description="Plano contratado e uso do mês. Alterações de plano e cobrança são feitas pela equipe DesignoAI." />
+      <PageHeader title="Assinatura" description="Limites do seu plano e uso do mês. Alterações de plano e cobrança são feitas pela equipe DesignoAI." />
       <Panel>
-        <div className="grid gap-4 sm:grid-cols-3">
-          <div><p className="text-xs text-muted-foreground">Plano</p><p className="mt-1 font-medium text-foreground">{assinatura.data?.plano?.nome ?? 'Sem plano ativo'}</p></div>
-          <div><p className="text-xs text-muted-foreground">Créditos de produção no mês</p><p className="mt-1 font-medium text-foreground">{assinatura.data?.plano?.creditos_mes ?? 'Não incluído'}</p></div>
-          <div><p className="text-xs text-muted-foreground">Créditos usados ou reservados</p><p className="mt-1 font-medium text-foreground">{uso ? uso.usado + uso.reservado : 0}</p></div>
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div><p className="text-xs text-muted-foreground">Situação do plano</p><p className="mt-1 font-medium text-foreground">{plano?.ativo ? 'Ativo' : 'Sem plano ativo'}</p></div>
+          <div><p className="text-xs text-muted-foreground">Contas conectadas (máximo)</p><p className="mt-1 font-medium text-foreground">{limite(plano?.limiteContas)}</p></div>
+          <div><p className="text-xs text-muted-foreground">Publicações no mês (máximo)</p><p className="mt-1 font-medium text-foreground">{limite(plano?.limitePublicacoesMes)}</p></div>
+          <div><p className="text-xs text-muted-foreground">Publicações usadas neste mês</p><p className="mt-1 font-medium text-foreground">{uso ? uso.usado + uso.reservado : 0}</p></div>
         </div>
       </Panel>
     </>
