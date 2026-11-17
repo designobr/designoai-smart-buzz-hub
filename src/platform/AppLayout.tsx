@@ -73,10 +73,10 @@ function AppShell({ semOrg }: { semOrg: boolean }) {
             </NavLink>
           ))}
         </nav>
-        {orgs.length > 1 && (
+        {orgs.length > 0 && (
           <div className="hidden md:block px-4 pb-3">
             <label className="text-xs text-muted-foreground" htmlFor="troca-org">Organização</label>
-            <select id="troca-org" value={orgId ?? ''} onChange={(e) => setOrgId(e.target.value)} className="mt-1 w-full rounded-lg border border-border bg-background px-2 py-1.5 text-sm">
+            <select id="troca-org" value={orgId ?? ''} disabled={orgs.length < 2} onChange={(e) => setOrgId(e.target.value)} className="mt-1 w-full rounded-lg border border-border bg-background px-2 py-1.5 text-sm">
               {orgs.map((o) => <option key={o.organizacao_id} value={o.organizacao_id}>{o.nome}</option>)}
             </select>
           </div>
@@ -91,6 +91,15 @@ function AppShell({ semOrg }: { semOrg: boolean }) {
       </aside>
       <main className="flex-1 min-w-0 px-4 py-8 sm:px-8 lg:px-12">
         {erro && <p role="alert" className="mb-6 rounded-xl border border-destructive/40 px-4 py-3 text-sm text-destructive">{erro}</p>}
+        {/* Celular: o seletor da barra lateral fica oculto, então a organização atual e a troca aparecem aqui. */}
+        {orgs.length > 0 && !semOrg && (
+          <div className="mb-6 flex items-center gap-2 text-sm md:hidden">
+            <label htmlFor="troca-org-m" className="text-muted-foreground">Organização</label>
+            <select id="troca-org-m" value={orgId ?? ''} onChange={(e) => setOrgId(e.target.value)} className="min-w-0 flex-1 rounded-lg border border-border bg-background px-2 py-1.5">
+              {orgs.map((o) => <option key={o.organizacao_id} value={o.organizacao_id}>{o.nome}</option>)}
+            </select>
+          </div>
+        )}
         {semOrg ? <CriarOrganizacao /> : <Outlet />}
       </main>
     </div>
