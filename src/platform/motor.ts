@@ -42,7 +42,7 @@ export async function api<T>(path: string, opts: { method?: 'GET' | 'POST' | 'PU
 
 // ---- Tipos da API v1 (espelham src/web/api/v1.ts do motor) ----
 export type Organizacao = { organizacao_id: string; nome: string; slug: string; papel: string; status: string };
-export type SessaoApi = { usuario: { id: string; email: string | null }; organizacoes: Organizacao[]; admin: boolean };
+export type SessaoApi = { usuario: { id: string; email: string | null }; organizacoes: Organizacao[]; admin: boolean; principal?: string | null };
 
 export type Rede = 'instagram' | 'threads' | 'tiktok' | 'youtube';
 export const REDES: { key: Rede; label: string }[] = [
