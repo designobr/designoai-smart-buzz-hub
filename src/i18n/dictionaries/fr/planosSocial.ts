@@ -1,21 +1,29 @@
 const planosSocial = {
-  seo: { title: 'Offres DesignoAI Social Automation', description: 'Planification mensuelle par IA, textes, légendes et publication avec validation humaine sur Instagram, Threads, TikTok et YouTube. Offres Start, Professional et Premium pour entreprises et agences.' },
-  hero: { badge: 'Social Automation', subtitle: 'Planification, contenu et publication sur vos réseaux, toujours avec votre validation avant la mise en ligne. Choisissez la taille adaptée à votre activité et parlez-nous pour démarrer.' },
-  period: '/mois',
-  highlightLabel: 'Le plus choisi',
+  seo: { title: 'Tarifs DesignoAI Social Automation', description: 'Une offre de base à 149,90 R$ par mois avec 1 client, jusqu’à 4 comptes et 15 publications. Ajoutez des clients et des packs de publications selon vos besoins.' },
+  hero: { badge: 'Tarifs', subtitle: 'Une offre de base simple et des options que vous ajoutez seulement quand vous en avez besoin. Composez un abonnement à la taille de votre activité.' },
+  base: {
+    tag: 'Offre de base', name: 'DesignoAI', period: '/mois', stats: ['client', 'comptes de réseaux sociaux', 'publications par mois'],
+    groups: [
+      { title: 'Planification et création', items: ['Planification de contenu', 'Création de posts et de scripts', 'Textes et légendes', 'Hashtags stratégiques', 'Calendrier de contenu', 'Jusqu’à 2 demandes de modification par contenu'] },
+      { title: 'Publication', items: ['Programmation automatique des publications', 'Instagram', 'Threads', 'YouTube Shorts'] },
+    ],
+  },
   cta: 'Contactez-nous',
-  soon: 'La souscription en ligne arrive bientôt. Pour l’instant, l’activation se fait avec notre équipe sur WhatsApp.',
-  waMessage: 'Bonjour ! Je souhaite en savoir plus sur l’offre {plan} de DesignoAI Social Automation.',
-  includedTitle: 'Dans toutes les offres',
-  included: ['Planification mensuelle du contenu avec IA', 'Textes et légendes par réseau, avec 2 modifications incluses par contenu', 'Validation humaine avant toute publication', 'Instagram, Threads, TikTok et YouTube', 'Calendrier, historique et alertes de publication'],
-  noteTitle: 'Comment nous comptons',
-  note: 'Chaque publication sur chaque réseau compte pour une. Les limites par client s’appliquent séparément à chaque client enregistré, en plus des totaux de l’offre. Prix en reais brésiliens, facturation mensuelle.',
-  plans: [
-    { name: 'Start', price: 'R$ 149,90', highlight: false, features: ['1 client', '4 comptes de réseaux', '40 publications par mois'] },
-    { name: 'Professional', price: 'R$ 299,90', highlight: true, features: ['5 clients', '4 comptes de réseaux + 40 publications par mois par client', 'Total de l’offre: 20 comptes de réseaux · 200 publications par mois'] },
-    { name: 'Premium', price: 'R$ 599,90', highlight: false, features: ['20 clients', '4 comptes de réseaux + 40 publications par mois par client', 'Total de l’offre: 80 comptes de réseaux · 800 publications par mois'] },
-  ],
-  final: { title: 'Un doute sur l’offre à choisir ?', text: 'Dites-nous comment vous travaillez et nous recommandons la bonne offre.', waMessage: 'Bonjour ! Je souhaite de l’aide pour choisir l’offre DesignoAI Social Automation.' },
+  soon: 'La souscription en ligne arrive bientôt. Pour l’instant, l’abonnement est activé avec notre équipe sur WhatsApp.',
+  note: 'Prix en reais brésiliens, facturation mensuelle.',
+  addons: {
+    title: 'Options', subtitle: 'Étendez votre abonnement quand vous en avez besoin. Chaque option est facturée au mois, séparément de l’offre de base.',
+    client: { title: 'Client supplémentaire', description: 'Augmente de 1 le nombre de clients que vous gérez sur la plateforme.', unit: 'par client supplémentaire' },
+    posts: { title: 'Publications supplémentaires', description: 'Packs cumulables : prenez-en plusieurs, y compris de tailles différentes.', pack: '+{n} publications par mois' },
+  },
+  builder: {
+    title: 'Composez votre abonnement', subtitle: 'Choisissez vos options et voyez le prix mensuel tout de suite.', clients: 'Clients supplémentaires', packs: 'Packs de publications', less: 'Diminuer', more: 'Augmenter',
+    resultClients: 'Clients', resultPosts: 'Publications par mois', resultTotal: 'Prix mensuel', includedBase: 'Offre de base incluse', cta: 'Parler de cette configuration',
+    waMessage: 'Bonjour ! Je souhaite composer un abonnement DesignoAI Social Automation : {clientes} client(s), {pubs} publications par mois, {total} par mois.',
+  },
+  examples: { title: 'Exemples d’abonnement', subtitle: 'Voyez comment le prix évolue quand vous ajoutez des clients et des publications.', headers: ['Configuration', 'Clients', 'Publications par mois', 'Prix mensuel'], labels: ['Offre de base', 'Base + 1 client supplémentaire', 'Base + pack de 10 publications', 'Base + 1 client + 10 publications', 'Base + 2 clients + 20 publications', 'Base + 4 clients + 50 publications'] },
+  rule: { title: 'Comment nous comptons les publications', text: 'Un contenu publié en même temps sur plusieurs réseaux sociaux ne consomme qu’1 publication de votre quota. Le décompte porte sur le contenu créé, pas sur le nombre de réseaux.', example: 'Exemple : le même contenu publié sur Instagram, Threads et YouTube Shorts compte pour 1 publication, et non 3.' },
+  final: { title: 'Des questions sur votre configuration ?', text: 'Parlez-nous et nous composons l’abonnement avec vous.', waMessage: 'Bonjour ! Je souhaite de l’aide pour composer l’abonnement DesignoAI Social Automation.' },
 };
 
 export default planosSocial;
