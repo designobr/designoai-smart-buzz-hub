@@ -24,7 +24,7 @@ function api(route) {
   if (m !== 'GET') estado.chamadas.push(`${m} ${p} ${JSON.stringify(corpo)}`);
   if (p === '/sessao') return json(200, { usuario: { id: 'u1', email: 't@example.com' }, organizacoes: [{ organizacao_id: ORG, nome: 'Org Teste', slug: 'org', papel: estado.papel, status: 'ativa' }], admin: false, principal: null });
   if (p === '/assinatura' && m === 'GET') return json(200, { plano: estado.plano, uso: { usado: 3, reservado: 3 }, cobrancaDisponivel: true, assinatura: estado.assinatura, planosParaContratar: estado.planos, adicionaisDisponiveis: CATALOGO });
-  if (p === '/assinatura/adicionais') return json(200, { valorCentavos: 21970, clientes: 2, publicacoes: 25 });
+  if (p === '/assinatura/adicionais') return json(200, { valorCentavos: 66970, clientes: 2, publicacoes: 25 });
   if (p === '/assinatura/contratar') return json(200, { urlPagamento: 'https://sandbox.asaas.com/i/abc' });
   if (p === '/consumo') return json(200, { creditos: { periodo: '2026-11', incluido: 0, avulso: 0, reservado: 0, consumido: 0, disponivel: 0 }, lancamentos: [], revisoesPorConteudo: 2, estado: { agenteAtivo: false, provedor: 'x' } });
   return json(200, {});
@@ -46,25 +46,25 @@ function api(route) {
   const ir = async () => { await p.goto('https://designoai.com.br/app/assinatura', { waitUntil: 'networkidle' }); await esperar('Assinatura'); };
 
   // 1) Assinatura ativa só com o plano base
-  ativa({}, 14990, 1, 15); await ir(); await esperar('Adicionais');
+  ativa({}, 59990, 1, 15); await ir(); await esperar('Adicionais');
   let t = await txt();
-  ok('plano ativo mostra DesignoAI R$ 149,90/mês e o editor de adicionais', /DesignoAI · R\$ 149,90\/mês/.test(t) && /Adicionais/.test(t));
+  ok('plano ativo mostra DesignoAI R$ 599,90/mês e o editor de adicionais', /DesignoAI · R\$ 599,90\/mês/.test(t) && /Adicionais/.test(t));
   ok('uso do mês: 3 de 15, 1 cliente, 4 contas (4 por cliente) e a regra de contagem', /Publicações: 3 de 15/.test(t) && /Clientes gerenciados: até 1/.test(t) && /Contas de redes: até 4 \(4 por cliente\)/.test(t) && /conta como 1 publicação/.test(t));
-  let v = await ver(); ok('prévia inicial: 1 cliente, 15 publicações, R$ 149,90', v.c === 1 && v.p === 15 && v.t === 'R$ 149,90', JSON.stringify(v));
+  let v = await ver(); ok('prévia inicial: 1 cliente, 15 publicações, R$ 599,90', v.c === 1 && v.p === 15 && v.t === 'R$ 599,90', JSON.stringify(v));
   ok('botão de salvar desabilitado sem mudança', await p.getByRole('button', { name: 'Salvar alterações' }).isDisabled());
-  await clicar('Aumentar: Cliente adicional'); v = await ver(); ok('+1 cliente: 2, 15, R$ 189,80', v.c === 2 && v.p === 15 && v.t === 'R$ 189,80', JSON.stringify(v));
-  await clicar('Aumentar: +10 publicações por mês'); v = await ver(); ok('+1 cliente +10: 2, 25, R$ 219,70', v.c === 2 && v.p === 25 && v.t === 'R$ 219,70', JSON.stringify(v));
-  await clicar('Aumentar: +10 publicações por mês'); v = await ver(); ok('pacotes iguais acumulam: 2, 35, R$ 249,60', v.p === 35 && v.t === 'R$ 249,60', JSON.stringify(v));
+  await clicar('Aumentar: Cliente adicional'); v = await ver(); ok('+1 cliente: 2, 15, R$ 639,80', v.c === 2 && v.p === 15 && v.t === 'R$ 639,80', JSON.stringify(v));
+  await clicar('Aumentar: +10 publicações por mês'); v = await ver(); ok('+1 cliente +10: 2, 25, R$ 669,70', v.c === 2 && v.p === 25 && v.t === 'R$ 669,70', JSON.stringify(v));
+  await clicar('Aumentar: +10 publicações por mês'); v = await ver(); ok('pacotes iguais acumulam: 2, 35, R$ 699,60', v.p === 35 && v.t === 'R$ 699,60', JSON.stringify(v));
   await clicar('Diminuir: +10 publicações por mês');
   await p.getByRole('button', { name: 'Salvar alterações' }).click();
   ok('salvar envia só os adicionais escolhidos', await esperar('Adicionais atualizados') && estado.chamadas.some((c) => c === 'POST /assinatura/adicionais {"adicionais":{"cliente_1":1,"pub_10":1}}'), estado.chamadas.at(-1));
   await p.screenshot({ path: '/tmp/assinatura-ativa.png', fullPage: true });
 
   // 2) Assinatura com adicionais já contratados: a prévia parte do que existe
-  ativa({ cliente_1: 4, pub_50: 1 }, 40940, 5, 65); await ir(); await esperar('Adicionais');
-  v = await ver(); ok('assinatura com +4 clientes e +50: prévia 5, 65, R$ 409,40 e base recalculada', v.c === 5 && v.p === 65 && v.t === 'R$ 409,40', JSON.stringify(v));
+  ativa({ cliente_1: 4, pub_50: 1 }, 85940, 5, 65); await ir(); await esperar('Adicionais');
+  v = await ver(); ok('assinatura com +4 clientes e +50: prévia 5, 65, R$ 859,40 e base recalculada', v.c === 5 && v.p === 65 && v.t === 'R$ 859,40', JSON.stringify(v));
   await clicar('Diminuir: Cliente adicional', 4); await clicar('Diminuir: +50 publicações por mês'); v = await ver();
-  ok('remover os adicionais volta ao plano base: 1, 15, R$ 149,90', v.c === 1 && v.p === 15 && v.t === 'R$ 149,90', JSON.stringify(v));
+  ok('remover os adicionais volta ao plano base: 1, 15, R$ 599,90', v.c === 1 && v.p === 15 && v.t === 'R$ 599,90', JSON.stringify(v));
 
   // 3) Papéis
   estado.papel = 'editor'; await ir();
@@ -72,12 +72,12 @@ function api(route) {
 
   // 4) Sem assinatura, plano modular público: contratar com adicionais
   estado.papel = 'administrador'; estado.assinatura = null; estado.plano = null;
-  estado.planos = [{ codigo: 'designoai', nome: 'DesignoAI', precoCentavos: 14990, ciclo: 'MONTHLY', limiteClientes: 1, limiteContas: 4, limitePublicacoesMes: 15, modular: true }];
+  estado.planos = [{ codigo: 'designoai', nome: 'DesignoAI', precoCentavos: 59990, ciclo: 'MONTHLY', limiteClientes: 1, limiteContas: 4, limitePublicacoesMes: 15, modular: true }];
   await ir(); await esperar('Contratar');
   await p.locator('input[name=plano]').check();
-  v = await ver(); ok('contratar: prévia do plano base R$ 149,90, 1 cliente, 15 publicações', v.c === 1 && v.p === 15 && v.t === 'R$ 149,90', JSON.stringify(v));
+  v = await ver(); ok('contratar: prévia do plano base R$ 599,90, 1 cliente, 15 publicações', v.c === 1 && v.p === 15 && v.t === 'R$ 599,90', JSON.stringify(v));
   await clicar('Aumentar: +20 publicações por mês'); await clicar('Aumentar: Cliente adicional', 2); v = await ver();
-  ok('contratar +2 clientes +20: 3, 35, R$ 279,60', v.c === 3 && v.p === 35 && v.t === 'R$ 279,60', JSON.stringify(v));
+  ok('contratar +2 clientes +20: 3, 35, R$ 729,60', v.c === 3 && v.p === 35 && v.t === 'R$ 729,60', JSON.stringify(v));
   await p.fill('#b1', 'Empresa Teste'); await p.fill('#b2', '52998224725'); await p.fill('#b3', 'financeiro@example.com');
   const nav = p.waitForRequest((r) => r.url().startsWith('https://sandbox.asaas.com/'), { timeout: 8000 }).catch(() => null);
   await p.getByRole('button', { name: 'Contratar', exact: true }).click(); await nav;

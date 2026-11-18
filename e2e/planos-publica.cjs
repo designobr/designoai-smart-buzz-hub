@@ -6,7 +6,7 @@ const MIME = { '.html': 'text/html', '.js': 'application/javascript', '.css': 't
 const out = []; const ok = (n, c, d = '') => { out.push(c); console.log(`${c ? 'OK     ' : 'FALHOU '} ${n}${d ? ' (' + d + ')' : ''}`); };
 const norm = (s) => s.replace(/[\s ]+/g, ' ');
 // Cálculo independente do código da página (em centavos), só com os valores do enunciado.
-const calc = (cli, p10 = 0, p20 = 0, p50 = 0) => ({ clientes: 1 + cli, pubs: 15 + 10 * p10 + 20 * p20 + 50 * p50, total: 14990 + 3990 * cli + 2990 * p10 + 4990 * p20 + 9990 * p50 });
+const calc = (cli, p10 = 0, p20 = 0, p50 = 0) => ({ clientes: 1 + cli, pubs: 15 + 10 * p10 + 20 * p20 + 50 * p50, total: 59990 + 3990 * cli + 2990 * p10 + 4990 * p20 + 9990 * p50 });
 const fmt = (c) => 'R$ ' + (c / 100).toFixed(2).replace('.', ',');
 (async () => {
   const b = await chromium.launch({ proxy: process.env.HTTPS_PROXY ? { server: process.env.HTTPS_PROXY } : undefined });
@@ -19,7 +19,7 @@ const fmt = (c) => 'R$ ' + (c / 100).toFixed(2).replace('.', ',');
 
   // --- Português: conteúdo do plano base e adicionais
   await ir('/planos-social-automation'); let t = await txt();
-  ok('plano base R$ 149,90/mês, DesignoAI', norm(await p.getByTestId('preco-base').innerText()).includes('R$ 149,90') && t.includes('DesignoAI'));
+  ok('plano base R$ 599,90/mês, DesignoAI', norm(await p.getByTestId('preco-base').innerText()).includes('R$ 599,90') && t.includes('DesignoAI'));
   ok('base: 1 cliente, 4 contas, 15 publicações', /1 cliente/.test(t) && /4 contas de redes sociais/.test(t) && /15 publicações por mês/.test(t));
   const itens = ['Planejamento de conteúdo', 'Criação de posts e roteiros', 'Textos e legendas', 'Hashtags estratégicas', 'Calendário de conteúdo', 'Agendamento automático das publicações', 'Instagram', 'Threads', 'YouTube Shorts', 'Até 2 solicitações de alteração por conteúdo'];
   ok('todas as funcionalidades do plano base listadas', itens.every((x) => t.includes(x)), itens.filter((x) => !t.includes(x)).join(','));
@@ -38,14 +38,14 @@ const fmt = (c) => 'R$ ' + (c / 100).toFixed(2).replace('.', ',');
   // --- Configurador
   const lerR = async () => ({ c: +(await p.getByTestId('r-clientes').innerText()), p: +(await p.getByTestId('r-publicacoes').innerText()), t: norm(await p.getByTestId('r-total').innerText()) });
   const clicar = async (label, n = 1) => { for (let i = 0; i < n; i++) await p.getByRole('button', { name: label, exact: true }).click(); };
-  let r = await lerR(); ok('configurador inicial: 1 cliente, 15 publicações, R$ 149,90', r.c === 1 && r.p === 15 && r.t === 'R$ 149,90', JSON.stringify(r));
-  await clicar('Aumentar: Clientes adicionais'); r = await lerR(); ok('+1 cliente: 2, 15, R$ 189,80', r.c === 2 && r.p === 15 && r.t === 'R$ 189,80', JSON.stringify(r));
-  await clicar('Aumentar: +10'); r = await lerR(); ok('+1 cliente e +10: 2, 25, R$ 219,70', r.c === 2 && r.p === 25 && r.t === 'R$ 219,70', JSON.stringify(r));
-  await clicar('Diminuir: Clientes adicionais'); await clicar('Diminuir: +10'); r = await lerR(); ok('voltar ao base: 1, 15, R$ 149,90', r.t === 'R$ 149,90' && r.c === 1 && r.p === 15);
-  await clicar('Aumentar: +10', 2); r = await lerR(); ok('dois pacotes de 10 acumulam: 35 publicações, R$ 209,70', r.p === 35 && r.t === 'R$ 209,70', JSON.stringify(r));
+  let r = await lerR(); ok('configurador inicial: 1 cliente, 15 publicações, R$ 599,90', r.c === 1 && r.p === 15 && r.t === 'R$ 599,90', JSON.stringify(r));
+  await clicar('Aumentar: Clientes adicionais'); r = await lerR(); ok('+1 cliente: 2, 15, R$ 639,80', r.c === 2 && r.p === 15 && r.t === 'R$ 639,80', JSON.stringify(r));
+  await clicar('Aumentar: +10'); r = await lerR(); ok('+1 cliente e +10: 2, 25, R$ 669,70', r.c === 2 && r.p === 25 && r.t === 'R$ 669,70', JSON.stringify(r));
+  await clicar('Diminuir: Clientes adicionais'); await clicar('Diminuir: +10'); r = await lerR(); ok('voltar ao base: 1, 15, R$ 599,90', r.t === 'R$ 599,90' && r.c === 1 && r.p === 15);
+  await clicar('Aumentar: +10', 2); r = await lerR(); ok('dois pacotes de 10 acumulam: 35 publicações, R$ 659,70', r.p === 35 && r.t === 'R$ 659,70', JSON.stringify(r));
   await clicar('Diminuir: +10', 2);
-  await clicar('Aumentar: Clientes adicionais', 2); await clicar('Aumentar: +20'); r = await lerR(); ok('2 clientes + 20: 3, 35, R$ 279,60', r.c === 3 && r.p === 35 && r.t === 'R$ 279,60', JSON.stringify(r));
-  await clicar('Diminuir: +20'); await clicar('Aumentar: Clientes adicionais', 2); await clicar('Aumentar: +50'); r = await lerR(); ok('4 clientes + 50: 5, 65, R$ 409,40 (fórmula)', r.c === 5 && r.p === 65 && r.t === 'R$ 409,40', JSON.stringify(r));
+  await clicar('Aumentar: Clientes adicionais', 2); await clicar('Aumentar: +20'); r = await lerR(); ok('2 clientes + 20: 3, 35, R$ 729,60', r.c === 3 && r.p === 35 && r.t === 'R$ 729,60', JSON.stringify(r));
+  await clicar('Diminuir: +20'); await clicar('Aumentar: Clientes adicionais', 2); await clicar('Aumentar: +50'); r = await lerR(); ok('4 clientes + 50: 5, 65, R$ 859,40 (fórmula)', r.c === 5 && r.p === 65 && r.t === 'R$ 859,40', JSON.stringify(r));
   await clicar('Aumentar: +10'); await clicar('Aumentar: +20'); await clicar('Aumentar: Clientes adicionais'); r = await lerR();
   const e2 = calc(5, 1, 1, 1); ok('combinação mista (+10, +20, +50, 5 clientes): confere com o cálculo independente', r.c === e2.clientes && r.p === e2.pubs && r.t === fmt(e2.total), JSON.stringify(r) + ' esperado ' + fmt(e2.total));
   const pop = ctx.waitForEvent('page', { timeout: 6000 }).catch(() => null);
@@ -56,7 +56,7 @@ const fmt = (c) => 'R$ ' + (c / 100).toFixed(2).replace('.', ',');
   // --- Outros idiomas
   for (const [loc, url, base] of [['en', '/en/social-automation-plans', 'Base plan'], ['es', '/es/planes-social-automation', 'Plan base'], ['fr', '/fr/offres-social-automation', 'Offre de base']]) {
     await ir(url); const tl = await txt(); const linhasL = await p.locator('table tbody tr').count();
-    ok(`${loc}: preços, 6 exemplos, regra e sem chaves soltas`, ['R$ 149,90', 'R$ 39,90', 'R$ 29,90', 'R$ 49,90', 'R$ 99,90'].every((x) => tl.includes(x)) && tl.includes(base) && linhasL === 6 && !/planosSocial\./.test(tl) && /YouTube Shorts/.test(tl));
+    ok(`${loc}: preços, 6 exemplos, regra e sem chaves soltas`, ['R$ 599,90', 'R$ 39,90', 'R$ 29,90', 'R$ 49,90', 'R$ 99,90'].every((x) => tl.includes(x)) && tl.includes(base) && linhasL === 6 && !/planosSocial\./.test(tl) && /YouTube Shorts/.test(tl));
   }
 
   // --- Celular
@@ -66,7 +66,7 @@ const fmt = (c) => 'R$ ' + (c / 100).toFixed(2).replace('.', ',');
   ok('celular: sem rolagem horizontal', await m.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1));
   ok('celular: exemplos em cartões (tabela oculta)', await m.locator('table').isHidden() && (await m.locator('div[data-exemplo]:visible').count()) === 6);
   await m.getByRole('button', { name: 'Aumentar: Clientes adicionais' }).click();
-  ok('celular: configurador funciona', norm(await m.getByTestId('r-total').innerText()) === 'R$ 189,80');
+  ok('celular: configurador funciona', norm(await m.getByTestId('r-total').innerText()) === 'R$ 639,80');
   await m.screenshot({ path: '/tmp/planos-celular.png', fullPage: true });
   const tab = await b.newContext({ ignoreHTTPSErrors: true, locale: 'pt-BR', viewport: { width: 820, height: 1100 } });
   await tab.route('https://designoai.com.br/**', async (r) => { const u = new URL(r.request().url()); let f = path.join(DIST, decodeURIComponent(u.pathname)); if (!fs.existsSync(f) || fs.statSync(f).isDirectory()) f = path.join(DIST, 'index.html'); await r.fulfill({ status: 200, contentType: MIME[path.extname(f)] ?? 'application/octet-stream', body: fs.readFileSync(f) }); });
