@@ -1,5 +1,5 @@
 const planosSocial = {
-  seo: { title: 'Valores de DesignoAI Social Automation', description: 'Un plan base de R$ 149,90 al mes con 1 cliente, hasta 4 cuentas y 15 publicaciones. Añade clientes y paquetes de publicaciones según lo necesites.' },
+  seo: { title: 'Valores de DesignoAI Social Automation', description: 'Un plan base de R$ 599,90 al mes con 1 cliente, hasta 4 cuentas y 15 publicaciones. Añade clientes y paquetes de publicaciones según lo necesites.' },
   hero: { badge: 'Valores', subtitle: 'Un plan base simple y complementos que contratas solo cuando los necesitas. Arma una suscripción a la medida de tu operación.' },
   base: {
     tag: 'Plan base', name: 'DesignoAI', period: '/mes', stats: ['cliente', 'cuentas de redes sociales', 'publicaciones al mes'],

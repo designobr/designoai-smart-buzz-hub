@@ -1,5 +1,5 @@
 const planosSocial = {
-  seo: { title: 'DesignoAI Social Automation pricing', description: 'A base plan at R$ 149.90 per month with 1 client, up to 4 accounts and 15 posts. Add clients and post packs as you need them.' },
+  seo: { title: 'DesignoAI Social Automation pricing', description: 'A base plan at R$ 599.90 per month with 1 client, up to 4 accounts and 15 posts. Add clients and post packs as you need them.' },
   hero: { badge: 'Pricing', subtitle: 'A simple base plan and add-ons you only get when you need them. Build a subscription that fits your operation.' },
   base: {
     tag: 'Base plan', name: 'DesignoAI', period: '/month', stats: ['client', 'social accounts', 'posts per month'],

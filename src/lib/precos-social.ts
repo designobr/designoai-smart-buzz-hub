@@ -1,6 +1,6 @@
 // Modelo comercial modular do DesignoAI Social Automation: um plano base mais adicionais. Valores em CENTAVOS (inteiros), para não haver erro de ponto flutuante.
 // Só alimenta a página pública de valores; não cobra nem ativa nada.
-export const BASE = { precoCentavos: 14990, clientes: 1, contas: 4, publicacoes: 15, alteracoesPorConteudo: 2 } as const;
+export const BASE = { precoCentavos: 59990, clientes: 1, contas: 4, publicacoes: 15, alteracoesPorConteudo: 2 } as const;
 export const CLIENTE_ADICIONAL_CENTAVOS = 3990;
 export const PACOTES = [
   { publicacoes: 10, precoCentavos: 2990 },

@@ -1,5 +1,5 @@
 const planosSocial = {
-  seo: { title: 'Tarifs DesignoAI Social Automation', description: 'Une offre de base à 149,90 R$ par mois avec 1 client, jusqu’à 4 comptes et 15 publications. Ajoutez des clients et des packs de publications selon vos besoins.' },
+  seo: { title: 'Tarifs DesignoAI Social Automation', description: 'Une offre de base à 599,90 R$ par mois avec 1 client, jusqu’à 4 comptes et 15 publications. Ajoutez des clients et des packs de publications selon vos besoins.' },
   hero: { badge: 'Tarifs', subtitle: 'Une offre de base simple et des options que vous ajoutez seulement quand vous en avez besoin. Composez un abonnement à la taille de votre activité.' },
   base: {
     tag: 'Offre de base', name: 'DesignoAI', period: '/mois', stats: ['client', 'comptes de réseaux sociaux', 'publications par mois'],
