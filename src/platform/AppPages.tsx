@@ -57,6 +57,7 @@ export function DashboardPage() {
   const plano = useMotor<Planejamento>('/planejamento');
   const contas = useMotor<Conta[]>('/contas');
   const negocio = useMotor<{ negocio: Negocio | null }>('/negocio');
+  const assin = useMotor<AssinaturaApi>('/assinatura');
   const pubs = useMotor<{ id: string; rede: string; status: string; agendadaPara: string; publicadoEm: string | null; url: string | null; erro: string | null }[]>('/publicacoes');
   const avisos = useMotor<{ id: number; mensagem: string; criadaEm: string | null; lida: boolean }[]>('/notificacoes');
 
@@ -77,7 +78,7 @@ export function DashboardPage() {
         </Panel>
       )}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Panel><p className="text-xs text-muted-foreground">Créditos disponíveis</p><p className="mt-1 text-2xl font-semibold">{consumo.data?.creditos.disponivel ?? '–'}</p></Panel>
+        <Panel><p className="text-xs text-muted-foreground">Publicações no mês</p><p className="mt-1 text-2xl font-semibold">{assin.data ? `${(assin.data.uso?.usado ?? 0) + (assin.data.uso?.reservado ?? 0)}${assin.data.plano?.limitePublicacoesMes != null ? ` de ${assin.data.plano.limitePublicacoesMes}` : ''}` : '–'}</p></Panel>
         <Panel><p className="text-xs text-muted-foreground">Aguardando sua aprovação</p><p className="mt-1 text-2xl font-semibold">{aprovar}</p></Panel>
         <Panel><p className="text-xs text-muted-foreground">Peças no mês</p><p className="mt-1 text-2xl font-semibold">{itens.length}</p></Panel>
         <Panel><p className="text-xs text-muted-foreground">Redes conectadas</p><p className="mt-1 text-2xl font-semibold">{(contas.data ?? []).filter((c) => c.status === 'conectada').length}</p></Panel>
@@ -405,6 +406,7 @@ export function ConnectionsPage() {
   const qc = useQueryClient();
   const [params, setParams] = useSearchParams();
   const q = useMotor<Conta[]>('/contas');
+  const clientes = useMotor<{ id: string; nome: string }[]>('/clientes').data ?? [];
   const [busy, setBusy] = useState<string | null>(null);
   const podeGerir = ['administrador', 'editor'].includes(org?.papel ?? '');
   const selecao = params.get('conexao') === 'selecao' ? params.get('selecao') : null;
@@ -445,6 +447,7 @@ export function ConnectionsPage() {
                     {doTipo.map((c) => (
                       <li key={c.id} className="flex items-start justify-between gap-3">
                         <span>{c.nome} · <span className={c.status === 'conectada' ? '' : 'text-destructive'}>{c.status}</span>
+                          {c.clienteId && clientes.find((x) => x.id === c.clienteId) ? <span className="block text-xs text-muted-foreground">Cliente: {clientes.find((x) => x.id === c.clienteId)?.nome}</span> : null}
                           {c.erro ? <span className="block text-xs text-destructive">{c.erro}</span> : null}
                           {c.tokenExpiraEm ? <span className="block text-xs text-muted-foreground">Acesso válido até {quando(c.tokenExpiraEm)}</span> : null}</span>
                         {podeGerir && <button disabled={busy === c.id} onClick={() => desconectar(c)} className="shrink-0 text-xs text-muted-foreground underline underline-offset-4">Desconectar</button>}
@@ -482,6 +485,13 @@ export function BillingPage() {
       toast.success('Assinatura criada. O link de pagamento chega no e-mail informado.'); await qc.invalidateQueries({ queryKey: ['motor', orgId] });
     } catch (err) { toast.error((err as Error).message); } finally { setBusy(false); }
   };
+  const [novoPlano, setNovoPlano] = useState('');
+  const trocar = async () => {
+    if (!novoPlano || !window.confirm('Trocar de plano? O novo valor vale a partir das próximas cobranças e os limites do novo plano valem agora.')) return;
+    setBusy(true);
+    try { await api('/assinatura/alterar-plano', { org: orgId, body: { plano: novoPlano } }); toast.success('Plano alterado.'); setNovoPlano(''); await qc.invalidateQueries({ queryKey: ['motor', orgId] }); }
+    catch (err) { toast.error((err as Error).message); } finally { setBusy(false); }
+  };
   const cancelar = async () => {
     if (!window.confirm('Cancelar a assinatura? O acesso continua até o fim do período já pago.')) return;
     setBusy(true);
@@ -502,6 +512,16 @@ export function BillingPage() {
                 {d.assinatura.proximoVencimento && <p className="text-muted-foreground">Próximo vencimento: {quando(d.assinatura.proximoVencimento)}</p>}
                 {d.assinatura.acessoAte && <p className="text-muted-foreground">Acesso até: {quando(d.assinatura.acessoAte)}</p>}
                 {d.assinatura.inadimplenteDesde && <p className="text-destructive">Pagamento em atraso desde {quando(d.assinatura.inadimplenteDesde)}.</p>}
+                {admin && d.assinatura.status === 'ativa' && d.planosParaContratar.length > 0 && (
+                  <div className="mt-4 flex flex-wrap items-end gap-3">
+                    <div className="space-y-2"><Label htmlFor="trocar-plano">Trocar de plano</Label>
+                      <select id="trocar-plano" value={novoPlano} onChange={(e) => setNovoPlano(e.target.value)} className="h-10 rounded-lg border border-border bg-background px-2 text-sm">
+                        <option value="">Escolha o plano</option>
+                        {d.planosParaContratar.filter((p) => p.nome !== d.assinatura!.planoNome).map((p) => <option key={p.codigo} value={p.codigo}>{p.nome} ({reais(p.precoCentavos)}/mês)</option>)}
+                      </select></div>
+                    <Button variant="outline" onClick={trocar} disabled={busy || !novoPlano} className="rounded-full">Trocar</Button>
+                  </div>
+                )}
                 {admin && d.assinatura.status !== 'cancelada' && <Button variant="outline" onClick={cancelar} disabled={busy} className="mt-3 rounded-full">Cancelar assinatura</Button>}
               </div>
             ) : <p className="text-sm text-muted-foreground">Esta organização ainda não tem assinatura.</p>}
@@ -511,7 +531,8 @@ export function BillingPage() {
             <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
               <li>Publicações: {d.uso?.usado ?? 0}{d.plano?.limitePublicacoesMes != null ? ` de ${d.plano.limitePublicacoesMes}` : ' (sem limite)'}</li>
               {d.plano?.limiteContas != null && <li>Contas de redes: até {d.plano.limiteContas}</li>}
-              {consumo.data && <li>Créditos disponíveis: {consumo.data.creditos.disponivel} (incluídos {consumo.data.creditos.incluido}, consumidos {consumo.data.creditos.consumido})</li>}
+              {d.plano?.limiteClientes != null && <li>Clientes gerenciados: até {d.plano.limiteClientes}</li>}
+              <li className="text-xs">Cada publicação conta por rede social: um conteúdo em quatro redes usa quatro. Planejamento, textos e duas alterações por conteúdo estão incluídos.</li>
             </ul>
           </Panel>
           {(!d.assinatura || d.assinatura.status === 'cancelada') && admin && (

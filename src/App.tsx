@@ -36,6 +36,7 @@ import AiSdr from "./pages/AiSdr";
 import { AuthProvider } from "./platform/AuthProvider";
 import { RequireAuth } from "./platform/AppLayout";
 import { LoginPage, SignupPage, ForgotPasswordPage, ResetPasswordPage } from "./platform/AuthPages";
+import { ClientsPage } from "./platform/ClientsPage";
 import { DashboardPage, CompanyPage, PlanningPage, ProductionPage, ConnectionsPage, BillingPage } from "./platform/AppPages";
 import { AdminPage } from "./platform/AdminPages";
 import { SettingsPage } from "./platform/SettingsPage";
@@ -102,6 +103,7 @@ const App = () => (
                 <Route path="planejamento" element={<PlanningPage />} />
                 <Route path="producao" element={<ProductionPage />} />
                 <Route path="conexoes" element={<ConnectionsPage />} />
+                <Route path="clientes" element={<ClientsPage />} />
                 <Route path="assinatura" element={<BillingPage />} />
                 <Route path="configuracoes" element={<SettingsPage />} />
               </Route>
