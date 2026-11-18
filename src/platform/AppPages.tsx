@@ -406,6 +406,7 @@ export function ConnectionsPage() {
   const qc = useQueryClient();
   const [params, setParams] = useSearchParams();
   const q = useMotor<Conta[]>('/contas');
+  const clientes = useMotor<{ id: string; nome: string }[]>('/clientes').data ?? [];
   const [busy, setBusy] = useState<string | null>(null);
   const podeGerir = ['administrador', 'editor'].includes(org?.papel ?? '');
   const selecao = params.get('conexao') === 'selecao' ? params.get('selecao') : null;
@@ -446,6 +447,7 @@ export function ConnectionsPage() {
                     {doTipo.map((c) => (
                       <li key={c.id} className="flex items-start justify-between gap-3">
                         <span>{c.nome} · <span className={c.status === 'conectada' ? '' : 'text-destructive'}>{c.status}</span>
+                          {c.clienteId && clientes.find((x) => x.id === c.clienteId) ? <span className="block text-xs text-muted-foreground">Cliente: {clientes.find((x) => x.id === c.clienteId)?.nome}</span> : null}
                           {c.erro ? <span className="block text-xs text-destructive">{c.erro}</span> : null}
                           {c.tokenExpiraEm ? <span className="block text-xs text-muted-foreground">Acesso válido até {quando(c.tokenExpiraEm)}</span> : null}</span>
                         {podeGerir && <button disabled={busy === c.id} onClick={() => desconectar(c)} className="shrink-0 text-xs text-muted-foreground underline underline-offset-4">Desconectar</button>}

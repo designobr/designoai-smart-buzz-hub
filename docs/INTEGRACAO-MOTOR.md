@@ -27,6 +27,7 @@ Definidos em `src/platform/motor.ts`, sobrescritos por variáveis de build quand
 6. O motor já aceita a origem `https://designoai.com.br` (`API_ORIGENS`). Para um domínio de testes do Lovable (por exemplo `*.lovable.app`), acrescente a origem exata em `API_ORIGENS` no Railway.
 
 ## Funcionalidades do /app (todas pela API v1)
+- **Clientes (`/app/clientes`):** cadastro e edição (`GET/POST /clientes`, `PUT /clientes/:id`), uso e limites do plano (`GET /clientes/uso`: totais da organização e limites por cliente, com contas e publicações do mês de cada cliente e da própria organização), conta de rede de cada cliente (`POST /contas/conectar` com `clienteId`, `PUT /contas/:id/cliente`, `clienteId` em `GET /contas`). Os limites são conferidos no banco do motor; a tela só mostra o consumo e desabilita ações que seriam recusadas. Cadastrar e renomear: administrador; mover e conectar contas: administrador e editor. Teste do navegador com API simulada: `node e2e/clientes-mock.cjs` (após `npm run build`).
 - **Conexão de redes dentro do app:** o botão Conectar leva à rede e o retorno volta para `/app/conexoes` com o resultado (conta conectada, erro ou escolha de conta). O destino viaja no `state` do OAuth e só vale para origens de `API_ORIGENS` e caminhos sob `/app`.
 - **Desconectar contas** (administrador e editor), com confirmação.
 - **Envio de mídia:** imagem PNG ou JPEG (até 8 MB) e vídeo MP4 ou MOV (envio direto ao armazenamento por URL temporária, validação no motor). Instagram aceita só JPEG, e o app avisa antes.

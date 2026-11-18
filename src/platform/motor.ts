@@ -75,7 +75,13 @@ export type Negocio = {
   nomeFantasia: string; segmento: string; descricao: string; publicoAlvo: string; tomDeVoz: string; objetivos: string[]; diferenciais: string[];
   produtos: string[]; regioes: string[]; siteUrl: string; palavrasEvitar: string[]; redes: Rede[]; frequenciaSemanal: Partial<Record<Rede, number>>; observacoes: string;
 };
-export type Conta = { id: string; rede: string; nome: string; status: string; erro: string | null; tokenExpiraEm: string | null };
+export type Conta = { id: string; rede: string; nome: string; status: string; erro: string | null; tokenExpiraEm: string | null; clienteId?: string | null };
+export type Cliente = { id: string; nome: string; criadoEm: string };
+/** Contas e publicações do mês de um cliente; clienteId nulo é a própria organização (sem cliente). */
+export type UsoCliente = { clienteId: string | null; nome: string | null; contas: number; publicacoesMes: number };
+/** Limites do plano (nulo = sem limite): totais da organização e individuais por cliente. */
+export type LimitesClientes = { clientes: number | null; contas: number | null; publicacoesMes: number | null; contasPorCliente: number | null; publicacoesPorClienteMes: number | null };
+export type UsoClientes = { limites: LimitesClientes; clientes: UsoCliente[] };
 export type PlanoVenda = { codigo: string; nome: string; precoCentavos: number; ciclo: 'MONTHLY' | 'YEARLY'; limiteContas?: number | null; limitePublicacoesMes?: number | null; limiteClientes?: number | null };
 export type Assinatura = {
   planoNome: string; status: string; valorCentavos: number; ciclo: string; proximoVencimento: string | null; acessoAte: string | null; inadimplenteDesde: string | null;
