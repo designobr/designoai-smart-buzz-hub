@@ -31,6 +31,7 @@ import Cookies from "./pages/Cookies";
 import OtimizacaoImagens from "./pages/OtimizacaoImagens";
 import Studio from "./pages/Studio";
 import SitesIA from "./pages/SitesIA";
+import PlanosSocial from "./pages/PlanosSocial";
 import AiSdr from "./pages/AiSdr";
 
 import { AuthProvider } from "./platform/AuthProvider";
@@ -66,6 +67,7 @@ const COMPONENTS: Record<PageKey, ComponentType> = {
   cookies: Cookies,
   studio: Studio,
   sitesIa: SitesIA,
+  planosSocial: PlanosSocial,
   aiSdr: AiSdr,
 };
 

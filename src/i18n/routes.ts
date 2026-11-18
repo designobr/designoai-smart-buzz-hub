@@ -23,6 +23,7 @@ export type PageKey =
   | 'cookies'
   | 'studio'
   | 'sitesIa'
+  | 'planosSocial'
   | 'aiSdr';
 
 export interface PageRoute {
@@ -60,6 +61,12 @@ export const PAGES: PageRoute[] = [
     slugs: { 'pt-BR': 'sites-ia', en: 'ai-websites', es: 'sitios-ia', fr: 'sites-ia' },
     changefreq: 'monthly',
     priority: '0.9',
+  },
+  {
+    key: 'planosSocial',
+    slugs: { 'pt-BR': 'planos-social-automation', en: 'social-automation-plans', es: 'planes-social-automation', fr: 'offres-social-automation' },
+    changefreq: 'monthly',
+    priority: '0.8',
   },
   {
     key: 'aiSdr',

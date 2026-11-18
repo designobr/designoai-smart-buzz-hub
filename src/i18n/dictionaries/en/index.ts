@@ -7,6 +7,7 @@ import forms from './forms';
 import servicesPage from './servicesPage';
 import studio from './studio';
 import sitesIa from './sitesIa';
+import planosSocial from './planosSocial';
 import aiSdr from './aiSdr';
 import company from './company';
 import subpages from './subpages';
@@ -22,6 +23,7 @@ const dictionary = {
   servicesPage,
   studio,
   sitesIa,
+  planosSocial,
   aiSdr,
   company,
   subpages,

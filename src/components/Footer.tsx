@@ -7,6 +7,7 @@ import type { PageKey } from '@/i18n/routes';
 
 const solutions: { page: PageKey; key: string }[] = [
   { page: 'aiSdr', key: 'footer.solutions.aiSdr' },
+  { page: 'planosSocial', key: 'footer.solutions.planosSocial' },
   { page: 'socialMedia', key: 'footer.solutions.socialMedia' },
   { page: 'criacaoConteudo', key: 'footer.solutions.criacaoConteudo' },
   { page: 'seoInteligente', key: 'footer.solutions.seoInteligente' },

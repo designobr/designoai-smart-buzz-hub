@@ -15,6 +15,7 @@ const footer = {
   },
   solutions: {
     aiSdr: 'AI SDR',
+    planosSocial: 'Offres Social Automation',
     socialMedia: 'Social Media',
     criacaoConteudo: 'Création de contenu',
     seoInteligente: 'SEO intelligent',
