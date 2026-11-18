@@ -8,7 +8,7 @@ const MIME = { '.html': 'text/html', '.js': 'application/javascript', '.css': 't
 const ORG = '11111111-1111-4111-8111-111111111111';
 const out = []; const ok = (n, c, d = '') => { out.push(c); console.log(`${c ? 'OK     ' : 'FALHOU '} ${n}${d ? ' (' + d + ')' : ''}`); };
 
-// Estado simulado do motor: plano Professional (5 clientes, 20 contas, 200 publicações; 4 contas e 40 publicações por cliente).
+// Estado simulado do motor: plano DesignoAI com 4 clientes adicionais e +50 publicações (5 clientes, 20 contas, 65 publicações; 4 contas por cliente).
 const estado = {
   papel: 'administrador',
   clientes: [{ id: 'c1000000-0000-4000-8000-000000000001', nome: 'Padaria Aurora', criadoEm: '2026-11-01' }, { id: 'c2000000-0000-4000-8000-000000000002', nome: 'Pizzaria Lume', criadoEm: '2026-11-02' }],
@@ -17,7 +17,7 @@ const estado = {
 const C1 = estado.clientes[0].id, C2 = estado.clientes[1].id;
 const conta = (i, rede, cli) => ({ id: `a000000${i}-0000-4000-8000-00000000000${i}`, rede, nome: `Conta ${i}`, status: 'conectada', erro: null, tokenExpiraEm: null, clienteId: cli });
 estado.contas = [conta(1, 'instagram', C1), conta(2, 'youtube', C1), conta(3, 'tiktok', C1), conta(4, 'threads', C1), conta(5, 'instagram', C2)];
-const limites = { clientes: 5, contas: 20, publicacoesMes: 200, contasPorCliente: 4, publicacoesPorClienteMes: 40 };
+const limites = { clientes: 5, contas: 20, publicacoesMes: 65, contasPorCliente: 4, publicacoesPorClienteMes: null };
 const usoLista = () => [...estado.clientes.map((c) => ({ clienteId: c.id, nome: c.nome, contas: estado.contas.filter((a) => a.clienteId === c.id).length, publicacoesMes: estado.pubs[c.id] ?? 0 })),
   { clienteId: null, nome: null, contas: estado.contas.filter((a) => !a.clienteId).length, publicacoesMes: 0 }];
 
@@ -66,11 +66,11 @@ function api(route) {
   ok('a tela de clientes abre', await esperar('Uso do plano'));
   let t = await txt();
   ok('menu lateral tem Clientes', await p.locator('nav >> text=Clientes').count() > 0);
-  ok('uso do plano: clientes 2 de 5, contas 5 de 20, publicações 52 de 200', /Clientes 2 de 5/.test(t) && /Contas de redes \(total\) 5 de 20/.test(t) && /Publicações no mês \(total\) 52 de 200/.test(t), t.slice(t.indexOf('Uso do plano'), t.indexOf('Uso do plano') + 220));
+  ok('uso do plano: clientes 2 de 5, contas 5 de 20, publicações 52 de 65', /Clientes 2 de 5/.test(t) && /Contas de redes \(total\) 5 de 20/.test(t) && /Publicações no mês \(total\) 52 de 65/.test(t), t.slice(t.indexOf('Uso do plano'), t.indexOf('Uso do plano') + 220));
   const cartaoA = p.locator('section:has(h2:text-is("Padaria Aurora"))'); const cartaoB = p.locator('section:has(h2:text-is("Pizzaria Lume"))');
   const ta = (await cartaoA.innerText()).replace(/\s+/g, ' '); const tb = (await cartaoB.innerText()).replace(/\s+/g, ' ');
-  ok('cliente cheio: 4 de 4 contas e 40 de 40 publicações, limite atingido', /Contas de redes 4 de 4/.test(ta) && /Publicações no mês 40 de 40/.test(ta) && (ta.match(/Limite atingido/g) || []).length === 2, ta.slice(0, 160));
-  ok('outro cliente: 1 de 4 contas (3 disponíveis) e 12 de 40 (28 disponíveis)', /Contas de redes 1 de 4/.test(tb) && /3 disponíveis/.test(tb) && /28 disponíveis/.test(tb), tb.slice(0, 160));
+  ok('cliente cheio: 4 de 4 contas (limite atingido) e 40 publicações no total do plano, sem barra própria', /Contas de redes 4 de 4/.test(ta) && /Publicações no mês 40/.test(ta) && /Contam na franquia total/.test(ta) && (ta.match(/Limite atingido/g) || []).length === 1, ta.slice(0, 160));
+  ok('outro cliente: 1 de 4 contas (3 disponíveis) e 12 publicações no total', /Contas de redes 1 de 4/.test(tb) && /3 disponíveis/.test(tb) && /Publicações no mês 12/.test(tb), tb.slice(0, 160));
   ok('conectar conta bloqueado no cliente cheio e liberado no outro', await cartaoA.locator('button:has-text("Conectar conta")').isDisabled() && !(await cartaoB.locator('button:has-text("Conectar conta")').isDisabled()));
   await p.screenshot({ path: '/tmp/claude-0/clientes-desktop.png', fullPage: true });
 

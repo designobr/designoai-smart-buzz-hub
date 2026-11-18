@@ -12,8 +12,9 @@ import { toast } from 'sonner';
 import { useAuth } from './AuthProvider';
 import { useMotor } from './useCompany';
 import { EmptyState, PageHeader, Panel } from './AppLayout';
+import { AdicionaisEditor, totalAdicionais } from './AdicionaisEditor';
 import {
-  api, enviarImagem, enviarVideo, reais, REDES, type AssinaturaApi, type Conta, type Conteudo, type Consumo, type Item, type Negocio, type Planejamento, type Rede,
+  api, enviarImagem, enviarVideo, reais, REDES, type Adicionais, type AssinaturaApi, type Conta, type Conteudo, type Consumo, type Item, type Negocio, type Planejamento, type Rede,
 } from './motor';
 
 const dia = (d?: string | null) => (d ? format(new Date(`${d.slice(0, 10)}T12:00:00`), "dd 'de' MMM", { locale: ptBR }) : '');
@@ -471,25 +472,27 @@ export function BillingPage() {
   const { orgId, org } = useAuth();
   const qc = useQueryClient();
   const q = useMotor<AssinaturaApi>('/assinatura');
-  const consumo = useMotor<Consumo>('/consumo');
   const [f, setF] = useState({ plano: '', nome: '', cpfCnpj: '', email: '' });
+  const [novos, setNovos] = useState<Adicionais>({});
+  const [edit, setEdit] = useState<Adicionais | null>(null);
   const [busy, setBusy] = useState(false);
   const d = q.data;
   const admin = org?.papel === 'administrador';
+  const catalogo = d?.adicionaisDisponiveis ?? [];
+  const limpo = (v: Adicionais) => Object.fromEntries(Object.entries(v).filter(([, n]) => n > 0));
 
   const contratar = async (e: FormEvent) => {
     e.preventDefault(); setBusy(true);
     try {
-      const r = await api<{ urlPagamento: string | null }>('/assinatura/contratar', { org: orgId, body: f });
+      const r = await api<{ urlPagamento: string | null }>('/assinatura/contratar', { org: orgId, body: { ...f, adicionais: limpo(novos) } });
       if (r.urlPagamento) { window.location.assign(r.urlPagamento); return; }
       toast.success('Assinatura criada. O link de pagamento chega no e-mail informado.'); await qc.invalidateQueries({ queryKey: ['motor', orgId] });
     } catch (err) { toast.error((err as Error).message); } finally { setBusy(false); }
   };
-  const [novoPlano, setNovoPlano] = useState('');
-  const trocar = async () => {
-    if (!novoPlano || !window.confirm('Trocar de plano? O novo valor vale a partir das próximas cobranças e os limites do novo plano valem agora.')) return;
+  const salvarAdicionais = async () => {
+    if (!edit || !window.confirm('Alterar os adicionais? O novo valor vale a partir das próximas cobranças e os limites novos valem agora.')) return;
     setBusy(true);
-    try { await api('/assinatura/alterar-plano', { org: orgId, body: { plano: novoPlano } }); toast.success('Plano alterado.'); setNovoPlano(''); await qc.invalidateQueries({ queryKey: ['motor', orgId] }); }
+    try { await api('/assinatura/adicionais', { org: orgId, body: { adicionais: limpo(edit) } }); toast.success('Adicionais atualizados.'); setEdit(null); await qc.invalidateQueries({ queryKey: ['motor', orgId] }); }
     catch (err) { toast.error((err as Error).message); } finally { setBusy(false); }
   };
   const cancelar = async () => {
@@ -499,9 +502,17 @@ export function BillingPage() {
     catch (err) { toast.error((err as Error).message); } finally { setBusy(false); }
   };
 
+  // Plano base sem os adicionais atuais: valor, clientes e publicações da assinatura menos o que os adicionais contratados acrescentam.
+  const atuais = d?.assinatura?.adicionais ?? {};
+  const tAtual = totalAdicionais(catalogo, atuais);
+  const baseAtual = d?.assinatura ? { centavos: d.assinatura.valorCentavos - tAtual.centavos, clientes: (d.plano?.limiteClientes ?? 1) - tAtual.clientes, publicacoes: (d.plano?.limitePublicacoesMes ?? 15) - tAtual.publicacoes } : null;
+  const planoNovo = d?.planosParaContratar.find((p) => p.codigo === f.plano);
+  const editando = edit ?? atuais;
+  const mudou = JSON.stringify(limpo(editando)) !== JSON.stringify(limpo(atuais));
+
   return (
     <>
-      <PageHeader title="Assinatura" description="Seu plano, o uso do mês e os créditos." />
+      <PageHeader title="Assinatura" description="Seu plano, os adicionais e o uso do mês." />
       {q.isLoading || q.error ? <Carregando erro={q.error as Error | null} /> : d && (
         <div className="max-w-3xl space-y-6">
           <Panel>
@@ -512,35 +523,36 @@ export function BillingPage() {
                 {d.assinatura.proximoVencimento && <p className="text-muted-foreground">Próximo vencimento: {quando(d.assinatura.proximoVencimento)}</p>}
                 {d.assinatura.acessoAte && <p className="text-muted-foreground">Acesso até: {quando(d.assinatura.acessoAte)}</p>}
                 {d.assinatura.inadimplenteDesde && <p className="text-destructive">Pagamento em atraso desde {quando(d.assinatura.inadimplenteDesde)}.</p>}
-                {admin && d.assinatura.status === 'ativa' && d.planosParaContratar.length > 0 && (
-                  <div className="mt-4 flex flex-wrap items-end gap-3">
-                    <div className="space-y-2"><Label htmlFor="trocar-plano">Trocar de plano</Label>
-                      <select id="trocar-plano" value={novoPlano} onChange={(e) => setNovoPlano(e.target.value)} className="h-10 rounded-lg border border-border bg-background px-2 text-sm">
-                        <option value="">Escolha o plano</option>
-                        {d.planosParaContratar.filter((p) => p.nome !== d.assinatura!.planoNome).map((p) => <option key={p.codigo} value={p.codigo}>{p.nome} ({reais(p.precoCentavos)}/mês)</option>)}
-                      </select></div>
-                    <Button variant="outline" onClick={trocar} disabled={busy || !novoPlano} className="rounded-full">Trocar</Button>
-                  </div>
-                )}
                 {admin && d.assinatura.status !== 'cancelada' && <Button variant="outline" onClick={cancelar} disabled={busy} className="mt-3 rounded-full">Cancelar assinatura</Button>}
               </div>
             ) : <p className="text-sm text-muted-foreground">Esta organização ainda não tem assinatura.</p>}
           </Panel>
+
+          {admin && d.assinatura?.status === 'ativa' && catalogo.length > 0 && baseAtual && (
+            <Panel>
+              <h2 className="font-medium">Adicionais</h2>
+              <p className="mt-1 mb-4 text-sm text-muted-foreground">Adicione clientes e pacotes de publicações à sua assinatura. Reduzir só é possível se o uso atual couber nos novos limites.</p>
+              <AdicionaisEditor catalogo={catalogo} valor={editando} onChange={setEdit} base={baseAtual} disabled={busy} />
+              <Button onClick={salvarAdicionais} disabled={busy || !mudou} className="mt-5 rounded-full">Salvar alterações</Button>
+            </Panel>
+          )}
+
           <Panel>
             <h2 className="font-medium">Uso do mês</h2>
             <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
               <li>Publicações: {d.uso?.usado ?? 0}{d.plano?.limitePublicacoesMes != null ? ` de ${d.plano.limitePublicacoesMes}` : ' (sem limite)'}</li>
-              {d.plano?.limiteContas != null && <li>Contas de redes: até {d.plano.limiteContas}</li>}
               {d.plano?.limiteClientes != null && <li>Clientes gerenciados: até {d.plano.limiteClientes}</li>}
-              <li className="text-xs">Cada publicação conta por rede social: um conteúdo em quatro redes usa quatro. Planejamento, textos e duas alterações por conteúdo estão incluídos.</li>
+              {d.plano?.limiteContas != null && <li>Contas de redes: até {d.plano.limiteContas}{d.plano.limiteContasPorCliente != null ? ` (${d.plano.limiteContasPorCliente} por cliente)` : ''}</li>}
+              <li className="text-xs">Um conteúdo publicado em várias redes conta como 1 publicação. Planejamento, textos e duas alterações por conteúdo estão incluídos.</li>
             </ul>
           </Panel>
+
           {(!d.assinatura || d.assinatura.status === 'cancelada') && admin && (
             <Panel>
-              <h2 className="font-medium">Contratar um plano</h2>
+              <h2 className="font-medium">Contratar</h2>
               {!d.cobrancaDisponivel ? <p className="mt-2 text-sm text-muted-foreground">A contratação ainda não está disponível.</p>
-                : d.planosParaContratar.length === 0 ? <p className="mt-2 text-sm text-muted-foreground">Nenhum plano está disponível para contratação no momento.</p> : (
-                <form onSubmit={contratar} className="mt-3 space-y-4">
+                : d.planosParaContratar.length === 0 ? <p className="mt-2 text-sm text-muted-foreground">A contratação online ainda não está disponível. Fale com a DesignoAI para ativar a sua assinatura.</p> : (
+                <form onSubmit={contratar} className="mt-3 space-y-5">
                   <div className="space-y-2">
                     {d.planosParaContratar.map((p) => (
                       <label key={p.codigo} className="flex items-center justify-between gap-3 rounded-xl border border-border px-3 py-2 text-sm">
@@ -549,6 +561,10 @@ export function BillingPage() {
                       </label>
                     ))}
                   </div>
+                  {planoNovo?.modular && catalogo.length > 0 && (
+                    <div><p className="mb-3 text-sm font-medium">Adicionais (opcional)</p>
+                      <AdicionaisEditor catalogo={catalogo} valor={novos} onChange={setNovos} disabled={busy} base={{ centavos: planoNovo.precoCentavos, clientes: planoNovo.limiteClientes ?? 1, publicacoes: planoNovo.limitePublicacoesMes ?? 15 }} /></div>
+                  )}
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2"><Label htmlFor="b1">Nome ou razão social</Label><Input id="b1" value={f.nome} onChange={(e) => setF((x) => ({ ...x, nome: e.target.value }))} required /></div>
                     <div className="space-y-2"><Label htmlFor="b2">CPF ou CNPJ</Label><Input id="b2" value={f.cpfCnpj} onChange={(e) => setF((x) => ({ ...x, cpfCnpj: e.target.value }))} required /></div>
