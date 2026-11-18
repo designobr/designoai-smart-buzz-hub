@@ -82,13 +82,16 @@ export type UsoCliente = { clienteId: string | null; nome: string | null; contas
 /** Limites do plano (nulo = sem limite): totais da organização e individuais por cliente. */
 export type LimitesClientes = { clientes: number | null; contas: number | null; publicacoesMes: number | null; contasPorCliente: number | null; publicacoesPorClienteMes: number | null };
 export type UsoClientes = { limites: LimitesClientes; clientes: UsoCliente[] };
-export type PlanoVenda = { codigo: string; nome: string; precoCentavos: number; ciclo: 'MONTHLY' | 'YEARLY'; limiteContas?: number | null; limitePublicacoesMes?: number | null; limiteClientes?: number | null };
+export type PlanoVenda = { codigo: string; nome: string; precoCentavos: number; ciclo: 'MONTHLY' | 'YEARLY'; limiteContas?: number | null; limitePublicacoesMes?: number | null; limiteClientes?: number | null; modular?: boolean };
+/** Adicional do catálogo do motor (cliente adicional ou pacote de publicações). Preços e máximos vêm do servidor. */
+export type AdicionalVenda = { codigo: string; tipo: 'cliente' | 'publicacoes'; quantidade: number; precoCentavos: number; maximo: number; nome: string };
+export type Adicionais = Record<string, number>;
 export type Assinatura = {
-  planoNome: string; status: string; valorCentavos: number; ciclo: string; proximoVencimento: string | null; acessoAte: string | null; inadimplenteDesde: string | null;
+  planoNome: string; status: string; valorCentavos: number; ciclo: string; proximoVencimento: string | null; acessoAte: string | null; inadimplenteDesde: string | null; adicionais?: Adicionais;
 } | null;
 export type AssinaturaApi = {
-  plano: { limiteContas: number | null; limitePublicacoesMes: number | null; limiteClientes: number | null; ativo: boolean } | null;
-  uso: { usado: number; reservado: number } | null; cobrancaDisponivel: boolean; assinatura: Assinatura; planosParaContratar: PlanoVenda[];
+  plano: { limiteContas: number | null; limitePublicacoesMes: number | null; limiteClientes: number | null; limiteContasPorCliente?: number | null; limitePublicacoesPorClienteMes?: number | null; ativo: boolean } | null;
+  uso: { usado: number; reservado: number } | null; cobrancaDisponivel: boolean; assinatura: Assinatura; planosParaContratar: PlanoVenda[]; adicionaisDisponiveis?: AdicionalVenda[];
 };
 
 export const reais = (centavos: number) => (centavos / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });

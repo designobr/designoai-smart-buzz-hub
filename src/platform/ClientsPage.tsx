@@ -118,7 +118,11 @@ function CartaoCliente({ g, todos, limites, podeGerir, podeRenomear, onMudou }: 
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         <Medidor rotulo="Contas de redes" usado={g.usoContas} limite={limites.contasPorCliente} />
-        <Medidor rotulo="Publicações no mês" usado={g.usoPubs} limite={limites.publicacoesPorClienteMes} />
+        {limites.publicacoesPorClienteMes === null ? (
+          // Plano com franquia só no total: o cliente mostra quanto consumiu, sem barra própria.
+          <div><div className="flex items-baseline justify-between gap-3 text-sm"><span className="text-muted-foreground">Publicações no mês</span><span className="tabular-nums">{g.usoPubs}</span></div>
+            <p className="mt-1 text-xs text-muted-foreground">Contam na franquia total do plano.</p></div>
+        ) : <Medidor rotulo="Publicações no mês" usado={g.usoPubs} limite={limites.publicacoesPorClienteMes} />}
       </div>
 
       <div className="mt-5">
@@ -189,7 +193,7 @@ export function ClientsPage() {
 
   return (
     <>
-      <PageHeader title="Clientes" description="Cadastre os clientes que você gerencia. Cada cliente tem as suas contas de redes e os seus próprios limites de contas e de publicações por mês, além dos totais do plano." />
+      <PageHeader title="Clientes" description="Cadastre os clientes que você gerencia. Cada cliente tem as suas contas de redes (até 4 por cliente). As publicações do mês contam no total do plano, e um conteúdo publicado em várias redes conta como 1." />
 
       <Panel className="mb-6">
         <h2 className="font-medium">Uso do plano</h2>
@@ -198,7 +202,7 @@ export function ClientsPage() {
           <Medidor rotulo="Contas de redes (total)" usado={totContas} limite={limites.contas} />
           <Medidor rotulo="Publicações no mês (total)" usado={totPubs} limite={limites.publicacoesMes} />
         </div>
-        <p className="mt-4 text-xs text-muted-foreground">Cada publicação em cada rede conta como uma. O mês de contagem é o da sua organização.</p>
+        <p className="mt-4 text-xs text-muted-foreground">Um conteúdo publicado em várias redes conta como 1 publicação. O mês de contagem é o da sua organização.</p>
       </Panel>
 
       {podeRenomear && <NovoCliente bloqueado={clientesCheio} motivo={clientesCheio ? 'O plano atingiu o limite de clientes. Troque de plano em Assinatura para cadastrar mais.' : null} onCriado={refazer} />}
