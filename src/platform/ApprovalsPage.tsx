@@ -57,8 +57,8 @@ function Revisao({ id, onFim }: { id: string; onFim: () => void }) {
       )}
       {d.midia && (
         <p className="mt-2 text-xs text-muted-foreground">
-          {d.midia.largura && d.midia.altura ? `${d.midia.largura}×${d.midia.altura}` : ''}
-          {d.midia.duracaoS ? ` · ${d.midia.duracaoS.toFixed(1)} s` : ''}
+          {d.midia.largura && d.midia.altura ? `${Number(d.midia.largura)}×${Number(d.midia.altura)}` : ''}
+          {d.midia.duracaoS ? ` · ${Number(d.midia.duracaoS).toFixed(1)} s` : ''}
           {d.midia.codecVideo ? ` · ${d.midia.codecVideo.toUpperCase()}` : ''}
           {d.midia.codecAudio ? ` · ${d.midia.codecAudio.toUpperCase()}` : ''}
           {d.midia.validacao === 'aprovada_tecnicamente' ? ' · validação técnica aprovada' : ''}
