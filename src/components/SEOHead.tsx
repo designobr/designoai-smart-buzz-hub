@@ -15,7 +15,7 @@ interface SEOHeadProps {
   jsonLd?: Record<string, unknown>;
 }
 
-const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`;
+const DEFAULT_IMAGE = `${BASE_URL}/og-image.jpg`;
 
 const SEOHead = ({
   title,
@@ -42,7 +42,8 @@ const SEOHead = ({
   const defaultJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'DesignoAI',
+    name: 'Designo',
+    alternateName: 'DesignoAI',
     url: BASE_URL,
     logo: `${BASE_URL}/android-chrome-512x512.png`,
     description: t('seo.orgDescription'),
@@ -90,6 +91,8 @@ const SEOHead = ({
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={resolvedDescription} />
       <meta property="og:image" content={image} />
+      <meta property="og:image:secure_url" content={image} />
+      <meta property="og:image:type" content="image/jpeg" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={t('seo.imageAlt')} />
@@ -103,6 +106,7 @@ const SEOHead = ({
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={resolvedDescription} />
       <meta name="twitter:image" content={image} />
+      <meta name="twitter:image:alt" content={t('seo.imageAlt')} />
 
       <meta
         name="robots"
@@ -112,7 +116,7 @@ const SEOHead = ({
             : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
         }
       />
-      <meta name="theme-color" content="#ffffff" />
+      <meta name="theme-color" content="#0080F8" />
 
       <script type="application/ld+json">{JSON.stringify(jsonLd || defaultJsonLd)}</script>
     </Helmet>
