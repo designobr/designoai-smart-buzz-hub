@@ -15,6 +15,7 @@ export interface HomeCopy {
   cta: { title: string; text: string; button: string; whatsapp: string };
   method: { title: string; desc: string; more: string; steps: { title: string; text: string }[] };
   footer: { instagram: string; whatsapp: string; top: string; rights: string };
+  pageCta: string;
   waLabel: string;
   closeLabel: string;
 }
@@ -72,6 +73,7 @@ export const HOME_COPY: Record<Locale, HomeCopy> = {
       ],
     },
     footer: { instagram: 'Instagram', whatsapp: 'WhatsApp', top: 'Voltar ao topo', rights: 'Todos os direitos reservados.' },
+    pageCta: 'Ver página completa',
     waLabel: 'Chamar no WhatsApp',
     closeLabel: 'Fechar',
   },
@@ -127,6 +129,7 @@ export const HOME_COPY: Record<Locale, HomeCopy> = {
       ],
     },
     footer: { instagram: 'Instagram', whatsapp: 'WhatsApp', top: 'Back to top', rights: 'All rights reserved.' },
+    pageCta: 'View full page',
     waLabel: 'Chat on WhatsApp',
     closeLabel: 'Close',
   },
@@ -182,6 +185,7 @@ export const HOME_COPY: Record<Locale, HomeCopy> = {
       ],
     },
     footer: { instagram: 'Instagram', whatsapp: 'WhatsApp', top: 'Volver arriba', rights: 'Todos los derechos reservados.' },
+    pageCta: 'Ver página completa',
     waLabel: 'Escribir por WhatsApp',
     closeLabel: 'Cerrar',
   },
@@ -237,6 +241,7 @@ export const HOME_COPY: Record<Locale, HomeCopy> = {
       ],
     },
     footer: { instagram: 'Instagram', whatsapp: 'WhatsApp', top: 'Haut de page', rights: 'Tous droits réservés.' },
+    pageCta: 'Voir la page complète',
     waLabel: 'Écrire sur WhatsApp',
     closeLabel: 'Fermer',
   },

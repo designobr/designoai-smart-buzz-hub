@@ -1,8 +1,14 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent } from 'react';
+import { Menu, X } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
+import LocaleLink from '@/components/LocaleLink';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { Locale } from '@/i18n/config';
+import type { PageKey } from '@/i18n/routes';
 import logoBlue from '@/assets/home/logo-blue.png.asset.json';
+import managementVideo from '@/assets/designoai-processo-redes-sociais.mp4.asset.json';
+import compatibleManagementVideo from '@/assets/designoai-processo-redes-sociais.webm.asset.json';
+import managementPoster from '@/assets/designoai-processo-redes-sociais-poster.jpg.asset.json';
 import { HOME_COPY, type ServiceKey } from './home/homeCopy';
 import { CtaIllustration, HeroIllustration, HomeSprite, ServiceIllustration } from './home/HomeIllustrations';
 import './home/home-editorial.css';
@@ -10,11 +16,48 @@ import './home/home-editorial.css';
 const CALENDLY_URL = 'https://calendly.com/suportedesigno/reuniao-de-apresentacao';
 const WA_URL = 'https://wa.me/5511947968158';
 const PLATFORMS = ['Instagram', 'Facebook', 'TikTok', 'YouTube', 'Google Ads', 'WhatsApp'];
-const SERVICES: { key: ServiceKey; variant: 'light' | 'dark'; delay: string }[] = [
-  { key: 'social', variant: 'light', delay: '0s' },
-  { key: 'traffic', variant: 'dark', delay: '0.12s' },
-  { key: 'seo', variant: 'dark', delay: '0s' },
-  { key: 'design', variant: 'light', delay: '0.12s' },
+
+const HEADER_PAGES: { page: PageKey; key: string }[] = [
+  { page: 'studio', key: 'nav.links.studio' },
+  { page: 'sitesIa', key: 'nav.links.sitesIa' },
+  { page: 'aiSdr', key: 'nav.links.aiSdr' },
+  { page: 'services', key: 'nav.links.services' },
+  { page: 'recursos', key: 'nav.links.recursos' },
+  { page: 'planosSocial', key: 'nav.anchors.pricing' },
+];
+
+const FOOTER_PAGES: { page: PageKey; key: string }[] = [
+  { page: 'sobreNos', key: 'footer.company.sobreNos' },
+  { page: 'casosSucesso', key: 'footer.company.casosSucesso' },
+  { page: 'blog', key: 'footer.company.blog' },
+  { page: 'politicaPrivacidade', key: 'footer.legal.politicaPrivacidade' },
+  { page: 'termosUso', key: 'footer.legal.termosUso' },
+];
+
+interface ServiceConfig {
+  key: ServiceKey;
+  variant: 'light' | 'dark';
+  delay: string;
+  page: PageKey;
+  video?: { src: string; compatibleSrc: string; poster: string; labelKey: string };
+}
+
+const SERVICES: ServiceConfig[] = [
+  {
+    key: 'social',
+    variant: 'light',
+    delay: '0s',
+    page: 'gestaoRedesSociais',
+    video: {
+      src: managementVideo.url,
+      compatibleSrc: compatibleManagementVideo.url,
+      poster: managementPoster.url,
+      labelKey: 'subpages.gestaoRedesSociais.video.videoLabel',
+    },
+  },
+  { key: 'traffic', variant: 'dark', delay: '0.12s', page: 'estrategiasPersonalizadas' },
+  { key: 'seo', variant: 'dark', delay: '0s', page: 'seoInteligente' },
+  { key: 'design', variant: 'light', delay: '0.12s', page: 'designAutomatizado' },
 ];
 
 const dStyle = (d: string): CSSProperties => ({ '--d': d } as CSSProperties);
@@ -42,17 +85,19 @@ function burstSparks(x: number, y: number) {
 }
 
 const Index = () => {
-  const { locale, switchLocale } = useI18n();
+  const { locale, switchLocale, t } = useI18n();
   const copy = HOME_COPY[locale] ?? HOME_COPY['pt-BR'];
   const rootRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const heroArtRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const modalVideoRef = useRef<HTMLVideoElement>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
 
   const [activeService, setActiveService] = useState<ServiceKey | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const openService = useCallback((key: ServiceKey) => {
     lastFocusedRef.current = document.activeElement as HTMLElement | null;
@@ -61,12 +106,20 @@ const Index = () => {
   }, []);
 
   const closeService = useCallback(() => {
+    modalVideoRef.current?.pause();
     setModalOpen(false);
     window.setTimeout(() => {
       setActiveService(null);
       lastFocusedRef.current?.focus();
     }, 350);
   }, []);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const onKey = (e: globalThis.KeyboardEvent) => { if (e.key === 'Escape') setMobileMenuOpen(false); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     if (!activeService) return;
@@ -169,6 +222,7 @@ const Index = () => {
   };
 
   const activeModalData = activeService ? copy.services.items[activeService] : null;
+  const activeServiceConfig = activeService ? SERVICES.find((s) => s.key === activeService) ?? null : null;
 
   return (
     <div className="designo-home" ref={rootRef}>
@@ -202,10 +256,11 @@ const Index = () => {
           </a>
 
           <nav className="nav-links" aria-label="Principal">
-            <a href="#sobre">{copy.nav.about}</a>
-            <a href="#servicos">{copy.nav.services}</a>
-            <a href="#metodo">{copy.nav.method}</a>
-            <a href="#contato">{copy.nav.contact}</a>
+            {HEADER_PAGES.map((item) => (
+              <LocaleLink key={item.page} page={item.page}>
+                {t(item.key)}
+              </LocaleLink>
+            ))}
           </nav>
 
           <div className="nav-actions">
@@ -222,7 +277,35 @@ const Index = () => {
             <a className="btn btn-outline btn-sm" data-ripple href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
               <span>{copy.nav.cta}</span>
             </a>
+            <button
+              type="button"
+              className="nav-menu-btn"
+              aria-label={mobileMenuOpen ? t('nav.aria.closeMenu') : t('nav.aria.openMenu')}
+              aria-expanded={mobileMenuOpen}
+              onClick={() => setMobileMenuOpen((v) => !v)}
+            >
+              {mobileMenuOpen ? <X size={18} strokeWidth={2} /> : <Menu size={18} strokeWidth={2} />}
+            </button>
           </div>
+
+          {mobileMenuOpen && (
+            <nav className="mobile-menu" aria-label="Menu de páginas">
+              {HEADER_PAGES.map((item) => (
+                <LocaleLink key={item.page} page={item.page} onClick={() => setMobileMenuOpen(false)}>
+                  <span>{t(item.key)}</span>
+                  <span aria-hidden="true">↗</span>
+                </LocaleLink>
+              ))}
+              <div className="mobile-menu-actions">
+                <a className="btn btn-dark btn-sm" data-ripple href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)}>
+                  <span>{copy.nav.cta}</span>
+                </a>
+                <a className="btn btn-outline btn-sm" href="/app/login" onClick={() => setMobileMenuOpen(false)}>
+                  <span>{copy.nav.login}</span>
+                </a>
+              </div>
+            </nav>
+          )}
         </header>
 
         <main>
@@ -321,6 +404,9 @@ const Index = () => {
             <img src={logoBlue.url} alt="Designo" width={100} height={24} />
           </a>
           <div className="foot-links">
+            {FOOTER_PAGES.map((item) => (
+              <LocaleLink key={item.page} page={item.page}>{t(item.key)}</LocaleLink>
+            ))}
             <a href="https://www.instagram.com/designobr" target="_blank" rel="noopener noreferrer">{copy.footer.instagram}</a>
             <a href={WA_URL} target="_blank" rel="noopener noreferrer">{copy.footer.whatsapp}</a>
             <a href="#home">{copy.footer.top}</a>
@@ -329,17 +415,44 @@ const Index = () => {
         </footer>
       </div>
 
-      {activeModalData && (
+      {activeModalData && activeServiceConfig && (
         <div className={`modal ${modalOpen ? 'open' : ''}`} role="dialog" aria-modal="true" aria-labelledby="modalTitle">
           <div className="modal-backdrop" onClick={closeService} />
-          <div className="modal-card">
+          <div className={`modal-card ${activeServiceConfig.video ? 'modal-card--video' : ''}`}>
             <button ref={closeBtnRef} className="modal-close" type="button" onClick={closeService} aria-label={copy.closeLabel}>
               &times;
             </button>
-            <h3 id="modalTitle"><span className="hl">{activeModalData.title}</span></h3>
-            <p>{activeModalData.modal}</p>
-            <ul>{activeModalData.bullets.map((item) => <li key={item}>{item}</li>)}</ul>
-            <a className="btn btn-dark" data-ripple href={WA_URL} target="_blank" rel="noopener noreferrer">{copy.waLabel}</a>
+            <div className="modal-body">
+              <div>
+                <h3 id="modalTitle"><span className="hl">{activeModalData.title}</span></h3>
+                <p>{activeModalData.modal}</p>
+                <ul>{activeModalData.bullets.map((item) => <li key={item}>{item}</li>)}</ul>
+                <div className="modal-actions">
+                  <LocaleLink className="btn btn-dark" data-ripple page={activeServiceConfig.page} onClick={closeService}>
+                    <span>{copy.pageCta}</span> <span className="arr" aria-hidden="true">↗</span>
+                  </LocaleLink>
+                  <a className="btn btn-outline" data-ripple href={WA_URL} target="_blank" rel="noopener noreferrer">
+                    <span>{copy.waLabel}</span>
+                  </a>
+                </div>
+              </div>
+              {activeServiceConfig.video && (
+                <figure className="modal-video">
+                  <video
+                    ref={modalVideoRef}
+                    poster={activeServiceConfig.video.poster}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    aria-label={t(activeServiceConfig.video.labelKey)}
+                  >
+                    <source src={activeServiceConfig.video.src} type='video/mp4; codecs="avc1.640028, mp4a.40.2"' />
+                    <source src={activeServiceConfig.video.compatibleSrc} type="video/webm" />
+                    <a href={activeServiceConfig.video.src}>{t(activeServiceConfig.video.labelKey)}</a>
+                  </video>
+                </figure>
+              )}
+            </div>
           </div>
         </div>
       )}
